@@ -13,6 +13,7 @@
 | [比赛配置摘录](bigquant-2026-end-to-end/competition-config.json) | 经过筛选的比赛配置；保留存在冲突的字段，便于后续比较 |
 | [结构化数据字典](bigquant-2026-end-to-end/data-schemas.json) | 行情页面字段、三张辅助表的实际元数据；包含来源与可核查范围 |
 | [数据字典 CSV](bigquant-2026-end-to-end/data-dictionary.csv) | 按字段展开，方便检索和导入工具 |
+| [Git 忽略规则](../.gitignore) | 本地环境、缓存、凭据目录、行情数据与运行产物的忽略规则 |
 
 ## 首先关注
 
