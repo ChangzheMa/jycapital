@@ -26,6 +26,7 @@ __pycache__/
 !.env.sample
 /credentials/
 /secrets/
+/.bigquant/
 
 # 本地行情数据与运行产物
 /data/

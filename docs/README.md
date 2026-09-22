@@ -14,6 +14,7 @@
 | [结构化数据字典](bigquant-2026-end-to-end/data-schemas.json) | 行情页面字段、三张辅助表的实际元数据；包含来源与可核查范围 |
 | [数据字典 CSV](bigquant-2026-end-to-end/data-dictionary.csv) | 按字段展开，方便检索和导入工具 |
 | [Git 忽略规则](../.gitignore) | 本地环境、缓存、凭据目录、行情数据与运行产物的忽略规则 |
+| [本地配置与辅助表下载记录](bigquant-2026-end-to-end/local-download.md) | AK/SK 本地配置位置、SDK 环境、查询失败结果与下载状态 |
 
 ## 首先关注
 
