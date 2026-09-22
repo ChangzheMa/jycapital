@@ -1,0 +1,770 @@
+{
+  "checked_date": "2026-09-22",
+  "timezone": "UTC+08:00",
+  "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+  "notes": [
+    "Types for bar1m are copied from the competition page, not verified by querying the table.",
+    "Types for auxiliary tables come from datasource metadata.",
+    "Descriptions identify data fields, not permission to use each field as model input.",
+    "Empty fields lists mean that the schema was not verified.",
+    "No credentials or account profile fields are retained."
+  ],
+  "tables": {
+    "cpt_jyc_2026_stock_bar1m": {
+      "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "schema_origin": "competition_page",
+      "metadata_http_status": 404,
+      "data_queried": false,
+      "fields": [
+        {
+          "name": "date",
+          "dtype": "np.datetime64",
+          "description": "日期（Bar 结束时刻）",
+          "primary": null
+        },
+        {
+          "name": "instrument",
+          "dtype": "pd.StringDtype",
+          "description": "股票代码",
+          "primary": null
+        },
+        {
+          "name": "instrument_id",
+          "dtype": "np.int16",
+          "description": "股票代码 ID",
+          "primary": null
+        },
+        {
+          "name": "adjust_factor",
+          "dtype": "np.float32",
+          "description": "复权因子",
+          "primary": null
+        },
+        {
+          "name": "pre_close",
+          "dtype": "np.float32",
+          "description": "前收盘价",
+          "primary": null
+        },
+        {
+          "name": "high",
+          "dtype": "np.float32",
+          "description": "最高价",
+          "primary": null
+        },
+        {
+          "name": "open",
+          "dtype": "np.float32",
+          "description": "开盘价",
+          "primary": null
+        },
+        {
+          "name": "low",
+          "dtype": "np.float32",
+          "description": "最低价",
+          "primary": null
+        },
+        {
+          "name": "close",
+          "dtype": "np.float32",
+          "description": "收盘价",
+          "primary": null
+        },
+        {
+          "name": "deal_number",
+          "dtype": "np.int32",
+          "description": "成交笔数",
+          "primary": null
+        },
+        {
+          "name": "volume",
+          "dtype": "np.int32",
+          "description": "成交量",
+          "primary": null
+        },
+        {
+          "name": "amount",
+          "dtype": "np.float32",
+          "description": "成交额",
+          "primary": null
+        },
+        {
+          "name": "ask_price1",
+          "dtype": "np.float32",
+          "description": "1档委卖价",
+          "primary": null
+        },
+        {
+          "name": "ask_price2",
+          "dtype": "np.float32",
+          "description": "2档委卖价",
+          "primary": null
+        },
+        {
+          "name": "ask_price3",
+          "dtype": "np.float32",
+          "description": "3档委卖价",
+          "primary": null
+        },
+        {
+          "name": "ask_price4",
+          "dtype": "np.float32",
+          "description": "4档委卖价",
+          "primary": null
+        },
+        {
+          "name": "ask_price5",
+          "dtype": "np.float32",
+          "description": "5档委卖价",
+          "primary": null
+        },
+        {
+          "name": "bid_price1",
+          "dtype": "np.float32",
+          "description": "1档委买价",
+          "primary": null
+        },
+        {
+          "name": "bid_price2",
+          "dtype": "np.float32",
+          "description": "2档委买价",
+          "primary": null
+        },
+        {
+          "name": "bid_price3",
+          "dtype": "np.float32",
+          "description": "3档委买价",
+          "primary": null
+        },
+        {
+          "name": "bid_price4",
+          "dtype": "np.float32",
+          "description": "4档委买价",
+          "primary": null
+        },
+        {
+          "name": "bid_price5",
+          "dtype": "np.float32",
+          "description": "5档委买价",
+          "primary": null
+        },
+        {
+          "name": "ask_volume1",
+          "dtype": "np.int32",
+          "description": "1档委卖量",
+          "primary": null
+        },
+        {
+          "name": "ask_volume2",
+          "dtype": "np.int32",
+          "description": "2档委卖量",
+          "primary": null
+        },
+        {
+          "name": "ask_volume3",
+          "dtype": "np.int32",
+          "description": "3档委卖量",
+          "primary": null
+        },
+        {
+          "name": "ask_volume4",
+          "dtype": "np.int32",
+          "description": "4档委卖量",
+          "primary": null
+        },
+        {
+          "name": "ask_volume5",
+          "dtype": "np.int32",
+          "description": "5档委卖量",
+          "primary": null
+        },
+        {
+          "name": "bid_volume1",
+          "dtype": "np.int32",
+          "description": "1档委买量",
+          "primary": null
+        },
+        {
+          "name": "bid_volume2",
+          "dtype": "np.int32",
+          "description": "2档委买量",
+          "primary": null
+        },
+        {
+          "name": "bid_volume3",
+          "dtype": "np.int32",
+          "description": "3档委买量",
+          "primary": null
+        },
+        {
+          "name": "bid_volume4",
+          "dtype": "np.int32",
+          "description": "4档委买量",
+          "primary": null
+        },
+        {
+          "name": "bid_volume5",
+          "dtype": "np.int32",
+          "description": "5档委买量",
+          "primary": null
+        },
+        {
+          "name": "ask_num_orders1",
+          "dtype": "np.int32",
+          "description": "卖1档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "ask_num_orders2",
+          "dtype": "np.int32",
+          "description": "卖2档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "ask_num_orders3",
+          "dtype": "np.int32",
+          "description": "卖3档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "ask_num_orders4",
+          "dtype": "np.int32",
+          "description": "卖4档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "ask_num_orders5",
+          "dtype": "np.int32",
+          "description": "卖5档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "bid_num_orders1",
+          "dtype": "np.int32",
+          "description": "买1档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "bid_num_orders2",
+          "dtype": "np.int32",
+          "description": "买2档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "bid_num_orders3",
+          "dtype": "np.int32",
+          "description": "买3档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "bid_num_orders4",
+          "dtype": "np.int32",
+          "description": "买4档委托笔数",
+          "primary": null
+        },
+        {
+          "name": "bid_num_orders5",
+          "dtype": "np.int32",
+          "description": "买5档委托笔数",
+          "primary": null
+        }
+      ],
+      "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar1m",
+      "checked_at": "2026-09-22T22:13:36.832099+08:00"
+    },
+    "cpt_jyc_2026_stock_bar5m": {
+      "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "schema_origin": "not_verified",
+      "metadata_http_status": 404,
+      "data_queried": false,
+      "fields": [],
+      "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar5m",
+      "checked_at": "2026-09-22T22:14:16.175012+08:00"
+    },
+    "cpt_jyc_2026_stock_bar15m": {
+      "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "schema_origin": "not_verified",
+      "metadata_http_status": 404,
+      "data_queried": false,
+      "fields": [],
+      "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar15m",
+      "checked_at": "2026-09-22T22:14:16.163934+08:00"
+    },
+    "cpt_jyc_2026_stock_bar30m": {
+      "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "schema_origin": "not_verified",
+      "metadata_http_status": 404,
+      "data_queried": false,
+      "fields": [],
+      "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar30m",
+      "checked_at": "2026-09-22T22:14:16.175012+08:00"
+    },
+    "cpt_jyc_2026_instruments": {
+      "source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_instruments",
+      "checked_at": "2026-09-22T22:13:36.823695+08:00",
+      "schema_origin": "authenticated_datasource_metadata",
+      "metadata_http_status": 200,
+      "data_queried": false,
+      "cn_name": "股票列表",
+      "fields": [
+        {
+          "name": "date",
+          "dtype": "timestamp[ns]",
+          "description": "日期",
+          "primary": true,
+          "visible": true
+        },
+        {
+          "name": "instrument",
+          "dtype": "string",
+          "description": "证券代码",
+          "primary": true,
+          "visible": true
+        },
+        {
+          "name": "name",
+          "dtype": "string",
+          "description": "证券简称",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "__PARTITION__",
+          "dtype": "int64",
+          "description": null,
+          "primary": null,
+          "visible": null
+        }
+      ],
+      "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_instruments"
+    },
+    "cpt_jyc_2026_exposure": {
+      "source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_exposure",
+      "checked_at": "2026-09-22T22:13:36.841012+08:00",
+      "schema_origin": "authenticated_datasource_metadata",
+      "metadata_http_status": 200,
+      "data_queried": false,
+      "cn_name": "风格暴露",
+      "fields": [
+        {
+          "name": "date",
+          "dtype": "timestamp[ns]",
+          "description": "日期",
+          "primary": true,
+          "visible": true
+        },
+        {
+          "name": "instrument",
+          "dtype": "string",
+          "description": "证券代码",
+          "primary": true,
+          "visible": true
+        },
+        {
+          "name": "SIZE",
+          "dtype": "double",
+          "description": "风格因子: 市值",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "BETA",
+          "dtype": "double",
+          "description": "风格因子: 贝塔",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "MOMENTUM",
+          "dtype": "double",
+          "description": "风格因子: 传统动量",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "RESVOL",
+          "dtype": "double",
+          "description": "风格因子: 残差波动率",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "SIZENL",
+          "dtype": "double",
+          "description": "风格因子: 非线性市值",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "BTOP",
+          "dtype": "double",
+          "description": "风格因子: 账面市值比",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "LIQUIDTY",
+          "dtype": "double",
+          "description": "风格因子: 流动性",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "EARNYILD",
+          "dtype": "double",
+          "description": "风格因子: 盈利能力",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "GROWTH",
+          "dtype": "double",
+          "description": "风格因子: 成长",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "LEVERAGE",
+          "dtype": "double",
+          "description": "风格因子: 杠杆",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "industry_level1_code",
+          "dtype": "string",
+          "description": "一级行业代码",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "float_market_cap",
+          "dtype": "double",
+          "description": "流通市值",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "weights",
+          "dtype": "double",
+          "description": "市值权重（截面归一化）",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "ret",
+          "dtype": "double",
+          "description": "当期收益率",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "AGRIFOREST",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于农林牧渔. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "MINING",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于采掘. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "CHEM",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于化工. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "IRONSTEEL",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于钢铁. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "NONFERMETAL",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于有色金属. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "ELECTRONICS",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于电子. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "AUTO",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于汽车. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "HOUSEAPP",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于家用电气. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "FOODBEVER",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于食品饮料. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "TEXTILE",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于纺织服饰. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "LIGHTINDUS",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于轻工制造. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "HEALTH",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于医药生物. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "UTILITIES",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于公用事业. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "TRANSPORTATION",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于交通运输. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "REALESTATE",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于房地产. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "COMMETRADE",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于商业贸易. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "LEISERVICE",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于休闲服务. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "BANK",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于银行. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "NONBANKFINAN",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于非银金融. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "CONGLOMERATES",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于综合. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "CONMAT",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于建筑材料. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "BUILDDECO",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于建筑装饰. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "ELECEQP",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于电气设备. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "MACHIEQUIP",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于机械设备. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "AERODEF",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于国防军工. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "COMPUTER",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于计算机. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "MEDIA",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于传媒. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "TELECOM",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于通信. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "COAL",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于煤炭. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "PETRO",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于石油石化. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "ENVP",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于环保. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "BEAUTY",
+          "dtype": "int8",
+          "description": "行业哑变量: 是否属于美容护理. 0: 不属于; 1: 属于",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "__PARTITION__",
+          "dtype": "int64",
+          "description": null,
+          "primary": null,
+          "visible": null
+        }
+      ],
+      "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_exposure"
+    },
+    "cpt_jyc_2026_vwap": {
+      "source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_vwap",
+      "checked_at": "2026-09-22T22:13:36.826865+08:00",
+      "schema_origin": "authenticated_datasource_metadata",
+      "metadata_http_status": 200,
+      "data_queried": false,
+      "cn_name": "未来30分VWAP收益率",
+      "fields": [
+        {
+          "name": "date",
+          "dtype": "timestamp[ns]",
+          "description": "采样时点（未来30分钟窗口起点）",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "instrument",
+          "dtype": "string",
+          "description": "股票或指数代码",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "vwap_return",
+          "dtype": "float",
+          "description": "窗口终点价格相对未来30分钟VWAP的收益率",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "vwap",
+          "dtype": "float",
+          "description": "未来30分钟成交量加权平均价",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "end_price",
+          "dtype": "float",
+          "description": "未来30分钟窗口终点最新有效成交价",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "volume",
+          "dtype": "int64",
+          "description": "未来30分钟成交量",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "amount",
+          "dtype": "double",
+          "description": "未来30分钟成交额（元）",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "num_trades",
+          "dtype": "int32",
+          "description": "未来30分钟成交笔数",
+          "primary": false,
+          "visible": true
+        },
+        {
+          "name": "__PARTITION__",
+          "dtype": "int64",
+          "description": null,
+          "primary": null,
+          "visible": null
+        }
+      ],
+      "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_vwap"
+    }
+  }
+}
