@@ -11,9 +11,11 @@
 | [冲突与待确认事项](bigquant-2026-end-to-end/open-questions.md) | 当前来源冲突及尚未明确的数据、模板和评测细节 |
 | [来源与核查范围](bigquant-2026-end-to-end/sources.md) | 官方页面与接口、获取日期及验证边界 |
 | [比赛配置摘录](bigquant-2026-end-to-end/competition-config.json) | 当前比赛配置及 UTC+08:00 截止时间；不替代正文规则 |
-| [结构化数据字典](bigquant-2026-end-to-end/data-schemas.json) | 已核实的 104 条字段及尚未核查 schema 的表入口 |
+| [结构化数据字典](bigquant-2026-end-to-end/data-schemas.json) | 保留页面与历史元数据口径的 104 条字段及表入口 |
 | [数据字典 CSV](bigquant-2026-end-to-end/data-dictionary.csv) | 104 条字段记录，便于检索和导入工具 |
 | [本地配置与数据申请](bigquant-2026-end-to-end/local-download.md) | 官方下载申请、既有 SDK 查询结果和本地保存位置 |
+| [下载数据验证](bigquant-2026-end-to-end/data-validation.md) | 243 个文件全量检查；2026-09-30 七张表平台内容摘要全部匹配，保留原始数值异常 |
+| [数据验证摘要](bigquant-2026-end-to-end/data-validation-summary.json) | 已匹配的内容哈希、日期覆盖、行数、实际字段类型及来源时间 |
 | [Git 忽略规则](../.gitignore) | 本地环境、凭据、行情数据和运行产物的忽略规则 |
 
 ## 参赛要点
