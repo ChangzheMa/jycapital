@@ -1,32 +1,37 @@
 # 比赛数据与字段说明
 
-核查日期：2026-09-22（UTC+08:00）。[返回目录](../README.md) · [规则](rules.md) · [待确认事项](open-questions.md)
+页面核查日期：2026-09-29（UTC+08:00）；数据表元数据核查日期：2026-09-22（UTC+08:00）。[返回目录](../README.md) · [规则](rules.md) · [待确认事项](open-questions.md)
 
-本文件区分赛事页介绍与登录后读取的表元数据。**已读取字段和说明，未运行 DAI 查询、统计实际数据或下载比赛行情。** 完整字段清单见 [data-dictionary.csv](data-dictionary.csv) 和 [data-schemas.json](data-schemas.json)。
+本文件区分当前公开页面与注明日期的表元数据。**本次只核对页面规则、数据说明和配置，没有执行数据查询或下载。** 辅助表的实际查询结果见 [本地访问记录](local-download.md)，不能用元数据可读代替查询成功。完整字段清单见 [data-dictionary.csv](data-dictionary.csv) 和 [data-schemas.json](data-schemas.json)。
 
 ## 1. 范围与访问方式
 
 | 项目 | 官方页面公布内容 |
 | --- | --- |
 | 股票池 | 以中证 1000 指数历史成分股为基础 |
-| 数据年份 | 2020—2024 年；未给出每张表精确首末时间 |
+| 数据年份 | 数据页总体说明为 2020—2024 年；未给出各表精确首末时间或本地下载数据的独立范围 |
 | 行情频率 | 1、5、15、30 分钟 K 线及盘口快照 |
 | 预测窗口 | 未来 30 分钟；不预测隔夜收益 |
 | 采样 | 每隔 30 分钟，每日约 8 个截面，跳过集合竞价等特殊时段 |
 | 空间 | [进益资本空间](https://jinyicapital.bigquant.com/) |
 | 数据目录 | 数据平台 `/进益资本杯2026` |
 | 授权流程 | 报名审核通过后加入该空间并获得数据权限 |
+| 本地训练数据 | 通过身份核验、签署限制协议后申请下载，下载数据仅限本人或本队参赛使用 |
 | 数据限制 | 仅可使用比赛指定且获授权的数据源 |
 
 来源：[比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)、[介绍中的数据要求](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)。
 
-训练集、公榜验证集与私榜数据互不重叠，但未公布精确分界。本次没有把 2020—2024 年自行拆成训练/验证/测试，也没有假定这些年份全部可以本地训练使用。
+训练集、公榜验证集与私榜的评测数据区间互不重叠，但未公布精确分界，不能把 2020—2024 年自行拆成训练/验证/测试，也不能假定这些年份全部属于本地训练数据。《新手入门》说明验证集在正式评测区间前额外提供一年历史上下文，供滚动窗口、滞后项和序列模型使用；最终输出必须限制在 `start_date` 至 `end_date` 内，公榜仍只加载已训练权重推理。
 
-## 2. 数据表清单及本次核查结果
+## 2. 数据表、逻辑名与本地下载
 
 比赛空间 ID：`db3bf8c9-0b87-4b89-a17a-d42cb0b7567b`，来自比赛详情配置。
 
-| 表名 | 公布用途 | 登录后详情接口结果 |
+### 2.1 开发数据表与元数据
+
+以下接口结果的核查日期为 **2026-09-22**，本次未重查表详情，不能视为 2026-09-29 的数据可用性结论。
+
+| 表名 | 公布用途 | 2026-09-22 登录后详情接口结果 |
 | --- | --- | --- |
 | `cpt_jyc_2026_stock_bar1m` | 1 分钟行情与盘口 | HTTP 404 / `NOT_FOUND`；只能引用赛事页字段表 |
 | `cpt_jyc_2026_stock_bar5m` | 5 分钟行情与盘口 | HTTP 404 / `NOT_FOUND` |
@@ -36,9 +41,28 @@
 | `cpt_jyc_2026_exposure` | 风险/风格暴露 | HTTP 200，读到 schema 与字段说明 |
 | `cpt_jyc_2026_vwap` | 未来 30 分钟 VWAP 相关标签 | HTTP 200，读到 schema 与字段说明 |
 
-当前授权账号报名记录的状态为 `approved_join_space`。元数据可读不等于已验证实际行情查询权限；404 也不能区分表未发布、表名调整、空间配置或权限屏蔽等原因。另检查了 1 分钟表的全局详情接口，同样为 404；空间表列表返回空列表，不能据此覆盖三张辅助表的直接读取结果。
+元数据可读不等于实际行情查询权限已经验证；404 也不能区分表未发布、表名调整、空间配置或权限屏蔽等原因。辅助表 SDK 查询存在权限错误，具体日期和结果见 [本地访问记录](local-download.md)。
 
-原文提供了 [1 分钟行情详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_stock_bar1m)、[股票列表详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_instruments)、[风险暴露详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_exposure) 的完整链接。VWAP 在正文中只有表名，本次通过该表名成功读取官方详情接口，接口路径见 [来源记录](sources.md)。
+当前数据页提供了 [1 分钟行情详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_stock_bar1m)、[股票列表详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_instruments)、[风险暴露详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_exposure) 和 [VWAP 标签详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_vwap) 链接。元数据接口路径见 [来源记录](sources.md)。
+
+### 2.2 评测数据源映射
+
+评测入口为 `main(datasources, start_date, end_date)`。`datasources` 将 `bar1m`、`bar5m`、`bar15m`、`bar30m` 映射到当前评测数据表，必须通过逻辑名取得行情表，例如 `datasources["bar1m"]`，不能在评测 SQL 中硬编码开发表或下载表名称。股票池可使用 `cpt_jyc_2026_instruments`。
+
+来源：[新手入门“三、实现评测入口”](https://bigquant.com/wiki/doc/oSGtQiGtq0)。
+
+### 2.3 本地训练下载数据
+
+| 页面列出的表 | 用途 |
+| --- | --- |
+| [`cpt_jyc_2026_e2e_bar1m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar1m) | 端到端本地下载，1 分钟 |
+| [`cpt_jyc_2026_e2e_bar5m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar5m) | 端到端本地下载，5 分钟 |
+| [`cpt_jyc_2026_e2e_bar15m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar15m) | 端到端本地下载，15 分钟 |
+| [`cpt_jyc_2026_e2e_bar30m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar30m) | 端到端本地下载，30 分钟 |
+
+申请须向比赛小助手提交本人学生卡照片和平台用户 ID，签署并回传限制协议，审核通过后领取下载链接。**2026-09-30 开放申请并集中处理一天；10 月 1—7 日暂停处理；10 月 8 日起继续处理未完成申请。** 下载数据只限本人或本队参赛使用，不得外传或用于其他用途。
+
+这些表在当前页面中有明确入口，但本次未读取其 schema 或数据内容，不能假定与 `stock_bar*` 同频表字段完全一致。下载包格式、大小、精确日期范围及与公榜训练集的关系仍待官方材料确认。申请流程和小助手二维码见 [新手入门“六、端到端模型数据下载”](https://bigquant.com/wiki/doc/oSGtQiGtq0)；表清单见 [比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。
 
 ## 3. 分钟行情字段：赛事页公布的 1 分钟表
 
@@ -71,7 +95,7 @@
 
 来源：[比赛数据页“数据格式”“读取示例”](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。
 
-## 4. 股票列表：登录后读取的元数据
+## 4. 股票列表：2026-09-22 读取的元数据
 
 `cpt_jyc_2026_instruments` 的 schema 有 4 列，其中 3 列有业务字段说明。
 
@@ -84,9 +108,9 @@
 
 表说明未明确历史成分有效区间、调整日生效方式、停牌/ST/上市与退市处理，也没有公布每个截面的评估股票集合。实际取样时应使用相应历史时点股票池，不能用未来成分列表回填历史；这是根据禁止未来信息规则提出的实现要求。
 
-来源：[股票列表官方详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_instruments)，本次读取其对应元数据接口，详见 [sources.md](sources.md)。
+来源：[股票列表官方详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_instruments)，元数据读取日期与接口见 [sources.md](sources.md)。
 
-## 5. 风险暴露：登录后读取的元数据
+## 5. 风险暴露：2026-09-22 读取的元数据
 
 `cpt_jyc_2026_exposure` 的 schema 有 **49 列**：日期与股票、10 个风格暴露、32 个行业哑变量、4 个辅助业务字段和 1 个系统分区字段。完整名字及说明见 CSV。
 
@@ -125,7 +149,7 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 
 ## 6. VWAP 标签：需要特别核实的口径
 
-`cpt_jyc_2026_vwap` 的官方中文名称为“未来30分VWAP收益率”，schema 有 9 列。元数据说明如下：
+`cpt_jyc_2026_vwap` 的官方中文名称为“未来30分VWAP收益率”，2026-09-22 读取的 schema 有 9 列。元数据说明如下：
 
 | 字段 | 元数据类型 | 字段定义 |
 | --- | --- | --- |
@@ -172,7 +196,7 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 
 ## 8. 读取方式与开发资源
 
-数据页使用 `dai.query(SQL, filters={"date": [start, end]})`，并通过 `.df()` 得到 Pandas DataFrame。下面为按页面接口形式改写的最小读取示例，**未在本次核查中执行**；表可用性和权限需要在获授权的比赛环境验证。
+数据页使用 `dai.query(SQL, filters={"date": [start, end]})`，并通过 `.df()` 得到 Pandas DataFrame。下面仅为开发环境的少量行读取示例，**未在本次核查中执行**；它不是可提交的推理入口，正式提交须通过 `datasources` 取得表名并返回全部要求的预测结果。表可用性和权限需要在获授权的比赛环境验证。
 
 ```python
 import dai
@@ -195,11 +219,11 @@ preview = dai.query(
 - `compression=True` 可压缩内存，页面特别提到 `instrument` 转为 category；绑定回 DAI SQL 时可能需转回 string。
 - 可以用 `bind_relations` 绑定本地 DataFrame；DAI 支持 UDF。
 - `m_` 前缀时序算子及 `c_` 前缀截面算子在页面有示例，但 `c_` 的文字解释存在疑似复制错误，使用前应查函数文档。
-- 页面建议 4C/16G 或更高开发规格，参赛宽币可用于升级。GPU 评测规格仍待公告。
+- 数据页建议 4C/16G 或更高开发规格；《新手入门》列出免费 4 核/16 GiB、8 核/32 GiB CPU，以及每小时 600 宽币的 A100 80G × 1、32 VCPU、256 GiB GPU。每队组长开赛时获 5,000 宽币。开发资源与最终评测配额应区分，详见 [运行环境](rules.md)。
 - 原文的按日聚合因子、UDF 因子案例仅说明数据引擎能力，不能据此认定可把这些因子作为本赛道输入。
 
 来源：[比赛数据页“读取示例”“因子计算示例”“Tips”“计算资源”](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。扩展阅读：[官方 DAI 使用文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)、[官方 DAI 函数文档](https://bigquant.com/wiki/doc/Rceb2JQBdS)；本次仅记录这些官方参考入口，未逐项验证函数实现。
 
 ## 9. 本次未取得的信息
 
-尚未取得实际数据行数和大小、各表精确时间范围、训练/验证/私榜边界、官方采样点清单、行情复权和量额单位、盘口聚合算法、历史股票池变更规则、标签精确生成程序、完整评测代码以及正式端到端模板。具体影响和确认事项见 [open-questions.md](open-questions.md)。
+尚未取得实际数据行数和大小、各表精确时间范围、训练/验证/私榜边界、本地下载表 schema 与下载包格式、官方采样点清单、行情复权和量额单位、盘口聚合算法、历史股票池变更规则、标签精确生成程序、完整评测代码以及端到端模板文件内容。具体影响和确认事项见 [open-questions.md](open-questions.md)。

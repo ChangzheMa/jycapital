@@ -1,5 +1,5 @@
 {
-  "checked_date": "2026-09-22",
+  "checked_date": "2026-09-29",
   "timezone": "UTC+08:00",
   "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
   "notes": [
@@ -7,7 +7,9 @@
     "Types for auxiliary tables come from datasource metadata.",
     "Descriptions identify data fields, not permission to use each field as model input.",
     "Empty fields lists mean that the schema was not verified.",
-    "No credentials or account profile fields are retained."
+    "No credentials or account profile fields are retained.",
+    "The competition page and table list were checked on 2026-09-29; datasource metadata timestamps remain at their last actual checks.",
+    "Local-download e2e tables are listed by the current competition page; no schema or data rows were retrieved for them."
   ],
   "tables": {
     "cpt_jyc_2026_stock_bar1m": {
@@ -270,7 +272,8 @@
         }
       ],
       "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar1m",
-      "checked_at": "2026-09-22T22:13:36.832099+08:00"
+      "checked_at": "2026-09-22T22:13:36.832099+08:00",
+      "page_checked_at": "2026-09-29T16:26:46.417146+08:00"
     },
     "cpt_jyc_2026_stock_bar5m": {
       "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
@@ -765,6 +768,51 @@
         }
       ],
       "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_vwap"
+    },
+    "cpt_jyc_2026_e2e_bar1m": {
+      "source_url": "https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar1m",
+      "listing_source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "application_guide_url": "https://bigquant.com/wiki/doc/oSGtQiGtq0",
+      "purpose": "local_training_download",
+      "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
+      "schema_origin": "not_verified",
+      "metadata_http_status": null,
+      "data_queried": false,
+      "fields": []
+    },
+    "cpt_jyc_2026_e2e_bar5m": {
+      "source_url": "https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar5m",
+      "listing_source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "application_guide_url": "https://bigquant.com/wiki/doc/oSGtQiGtq0",
+      "purpose": "local_training_download",
+      "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
+      "schema_origin": "not_verified",
+      "metadata_http_status": null,
+      "data_queried": false,
+      "fields": []
+    },
+    "cpt_jyc_2026_e2e_bar15m": {
+      "source_url": "https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar15m",
+      "listing_source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "application_guide_url": "https://bigquant.com/wiki/doc/oSGtQiGtq0",
+      "purpose": "local_training_download",
+      "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
+      "schema_origin": "not_verified",
+      "metadata_http_status": null,
+      "data_queried": false,
+      "fields": []
+    },
+    "cpt_jyc_2026_e2e_bar30m": {
+      "source_url": "https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar30m",
+      "listing_source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
+      "application_guide_url": "https://bigquant.com/wiki/doc/oSGtQiGtq0",
+      "purpose": "local_training_download",
+      "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
+      "schema_origin": "not_verified",
+      "metadata_http_status": null,
+      "data_queried": false,
+      "fields": []
     }
-  }
+  },
+  "metadata_checked_date": "2026-09-22"
 }
