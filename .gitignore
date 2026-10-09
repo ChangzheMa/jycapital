@@ -28,6 +28,9 @@ __pycache__/
 /secrets/
 /.bigquant/
 
+# 本地 DAI 兼容层，不上传云端或提交到仓库
+/dai.py
+
 # 本地行情数据与运行产物
 /data/
 /outputs/
