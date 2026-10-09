@@ -1,49 +1,68 @@
-# 本地配置、数据申请与访问结果
+# 本地运行与数据申请
 
-官方申请流程核查日期：**2026-09-29（UTC+08:00）**；历史 SDK 查询日期：**2026-09-22（UTC+08:00）**；平台下载数据比对日期：**2026-09-30（UTC+08:00）**。[返回目录](../README.md) · [数据说明](data.md) · [来源记录](sources.md)
+更新日期：**2026-10-10（UTC+08:00）**。[返回目录](../README.md) · [数据说明](data.md) · [来源](sources.md)
 
-## 端到端本地训练数据申请
+## 运行结论
 
-官方[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)要求先向比赛小助手提交本人学生卡照片和平台用户 ID，签署并回传限制协议，审核通过后领取数据下载链接。小助手二维码在该指南中。本地训练数据只限本人或本队参赛使用，不得外传或用于其他用途。
+用户已确认 [mock-submission.ipynb](../../examples/mock-submission.ipynb) 在本地和平台均可正常运行，测试 submission 已通过。两端使用同一 `main(datasources, start_date, end_date)` 入口，返回 `date`、`instrument`、`factor` 三列 DataFrame。
 
-申请自 **2026-09-30** 开放，当天集中处理一天；**10 月 1—7 日暂停处理**，未完成申请从 **10 月 8 日起**继续处理。本次仅核对公开申请说明，未提交身份材料、签署协议或发起申请。
+本地查询依赖现有 Parquet，不需要联网、凭据或 SDK 数据权限；平台查询使用真实 DAI。本地兼容层不包含 `bigmodule` 或 `M.jyc_eval`，官方评测在平台执行。
 
-当前[比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)列出 `cpt_jyc_2026_e2e_bar1m`、`cpt_jyc_2026_e2e_bar5m`、`cpt_jyc_2026_e2e_bar15m`、`cpt_jyc_2026_e2e_bar30m` 作为本地下载数据，详见 [数据说明](data.md)。该流程提供经审核的下载链接，与下面记录的辅助表 SDK 直连查询权限分别处理；本次未确认 SDK 权限是否已经开通。
+## 本地环境
 
-## 本地配置
+本地兼容层位于项目根目录 `dai.py`，受 `/dai.py` 忽略规则保护，不随 Git 仓库分发。重新克隆仓库时需另行保留或配置该本地文件。
 
-用户授权将 AK/SK 保存到仓库根目录下的 `.bigquant/config.json`，JSON 使用 UTF-8 和两空格缩进，字段为 `ak`、`sk`。实际凭据只保存在本地，本文不包含其内容。密码未写入配置。
+项目使用 Python 3.11，本地依赖见 [requirements-local.txt](../../requirements-local.txt)，其中 DuckDB 固定为 `1.5.6`。从仓库根目录安装：
 
-[`.gitignore`](../../.gitignore) 中的 `/.bigquant/` 忽略项目配置目录，`/data/` 忽略下载目录。已检查配置文件未被 Git 跟踪，且忽略规则生效。
+```powershell
+.venv/Scripts/python.exe -m pip install -r requirements-local.txt
+```
 
-本次下载环境位于 `.venv/bqsdk-download/`，Python 为 3.11，使用 `bigquant==0.1.11`、`bigquant-core==0.1.14`。版本来自本次查阅的[官方 SDK 使用文档](https://bigquant.com/wiki/doc/vac4qwmQr4)，安装源为 `https://pypi.bigquant.com/simple/`。原有 `.venv/` 中的 `bigquant==6.0.2` 未替换。
+Notebook 应使用安装了这些依赖的 Python 内核。其他内核可执行 `%pip install -r E:/src/jycapital/requirements-local.txt`。
 
-本次从项目 JSON 读取凭据后，调用 `bigquant.init(ak=..., sk=...)` 初始化。该版本的 `init_from_config(path)` 对此配置返回 `Config file must contain ak/sk or token`，因此实际使用显式初始化接口；接口定义见[官方 SDK API 手册](https://bigquant.com/wiki/doc/064mz8zFJD)。
+Mock 支持从项目根目录或 `examples/` 启动。只有 `dai` 本身无法导入时，Notebook 才向上定位本地兼容层；平台模块的内部依赖错误不会触发本地回退。
 
-## 历史 SDK 查询结果（2026-09-22）
+## 本地数据位置
 
-2026-09-22 23:54（UTC+08:00），通过 SDK 对三张辅助表分别执行全表聚合查询，尝试取得 `COUNT(*)`、`MIN(date)` 和 `MAX(date)`，作为完整下载前的核对依据。
+| 表 | 路径 | 实际字段数 |
+| --- | --- | ---: |
+| `cpt_jyc_2026_stock_bar1m` | `data/cpt_jyc_2026_stock_bar1m/*.parquet` | 42 |
+| `cpt_jyc_2026_stock_bar5m` | `data/cpt_jyc_2026_stock_bar5m/*.parquet` | 42 |
+| `cpt_jyc_2026_stock_bar15m` | `data/cpt_jyc_2026_stock_bar15m/*.parquet` | 42 |
+| `cpt_jyc_2026_stock_bar30m` | `data/cpt_jyc_2026_stock_bar30m/*.parquet` | 42 |
+| `cpt_jyc_2026_instruments` | `data/cpt_jyc_2026_instruments.parquet` | 3 |
+| `cpt_jyc_2026_vwap` | `data/cpt_jyc_2026_vwap.parquet` | 8 |
+| `cpt_jyc_2026_exposure` | `data/cpt_jyc_2026_exposure.parquet` | 48 |
 
-| 表名 | SDK 直连结果 | 已保存的数据行 |
-| --- | --- | --- |
-| `cpt_jyc_2026_instruments` | `FlightUnavailableError`：请先申请 SDK 使用权限 | 0 |
-| `cpt_jyc_2026_vwap` | 同上 | 0 |
-| `cpt_jyc_2026_exposure` | 同上 | 0 |
+这些文件已采用云端 `stock` 和辅助表口径，保留五档盘口、`pre_close`、实际字段类型及原始空值；不再除以 100，不需要股票 ID 映射。目录可通过环境变量 `JYCAPITAL_DATA_DIR` 覆盖。总量与数据质量结论见 [data-validation.md](data-validation.md)。
 
-补充检查：
+## 本地 DAI 支持范围
 
-- 股票列表的 `DataSource.read_bdb()`，日期过滤为 `2020-01-02`，同样返回 SDK 使用权限错误。
-- 使用 `dai.query(..., use_studio=True, space_id="db3bf8c9-0b87-4b89-a17a-d42cb0b7567b")` 在比赛空间尝试读取股票列表的 1 行，返回 `Failed to start AIStudio within 60 seconds`。该失败不能证明比赛空间的数据查询权限不足。
-- SDK 的数据源读取、空间参数及默认免费计算规格说明见[官方 DAI 数据管理 API](https://bigquant.com/wiki/doc/obft7eKPjB)，本次访问日期为 2026-09-22（UTC+08:00）。
+- 支持 DuckDB 的单条 `SELECT`、CTE、聚合及连接，使用平台表名查询本地文件。
+- 支持 `query(...).df()`、`.arrow()`；`.pl()` 需要可选依赖 Polars。
+- `filters={"date": [lo, hi]}` 为本地闭区间约定。纯日期字符串表示当天零点，`None` 表示开放端点，带时区端点转换为 UTC+08:00。SQL 内的更严格条件继续生效。
+- `bind_relations` 支持 Pandas 或 Arrow 对象，日期过滤不修改绑定对象。
+- `compression=True` 仅将 DataFrame 的 `instrument` 转为 category，不降低数值精度；`full_db_scan` 作为兼容参数接收。
+- `m_*`、`c_*`、`PRUNE JOIN`、`udf_list` 和 `DaiUDF` 不支持；缺表、缺文件和不支持的参数明确报错。
 
-当次三张表直连查询均未取得数据，未生成 Parquet 文件；这些历史错误不能用于判断后来平台会话中的读取结果。
+## 平台运行与提交
 
-## 平台导出与本地验证（2026-09-29—30）
+上传 Mock 时只需 [mock-submission.ipynb](../../examples/mock-submission.ipynb)。**不上传本地 `dai.py`**，避免遮蔽平台真实模块。平台可直接运行：
 
-根据 2026-09-22 的查询错误，SDK 直连方式需要先为密钥对应的账号开通 SDK 使用权限。[官方 SDK 使用文档](https://bigquant.com/wiki/doc/vac4qwmQr4)提供了联系入口，本地训练下载则按上述比赛专用流程申请。
+```python
+from bigmodule import M
 
-用户已在平台读取数据、导出 Parquet 并手动下载。四张五档 `cpt_jyc_2026_stock_bar*` 按月保存于 `data/bigquant-2026-stock-export/`，三张辅助表分别保存于 `data/bigquant-2026-end-to-end-export/` 下的同名 Parquet 文件。
+datasources = {"bar1m": "cpt_jyc_2026_stock_bar1m"}
+factor_data = main(datasources, "2022-01-01 00:00:00", "2022-03-01 23:59:59")
+result = M.jyc_eval._latest(factor_data=factor_data, show=True)
+```
 
-2026-09-30 已完成 243 个文件、723,258,293 行的本地全量检查与用户回传的平台内容摘要比较，七张表全部一致。股票列表覆盖至 2026-09-22，风险暴露覆盖至 2026-09-21，VWAP 覆盖至 2024-12-31；各表实际覆盖范围与缺失值见 [下载数据验证](data-validation.md)，校验基准见 [结构化摘要](data-validation-summary.json)。
+测试 submission 通过验证了当前 Mock 的运行与提交接口。正式模型的训练、权重加载及预测表现需独立验证，材料要求见 [rules.md](rules.md)。
 
-本次成功路径为平台会话导出与手动下载，不据此推断本地 SDK 权限已经开通。记录区分历史元数据与 SDK 查询、平台实际数据和本地比对，未运行模型。
+## 数据下载授权
+
+端到端本地训练数据须完成身份核验并签署限制协议，审核通过后由工作人员提供下载链接和密码。下载数据仅限本人或本队参赛使用，不得外传或用于其他用途。
+
+官方安排为 2026-10-08 起继续处理申请。申请方式见[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)，压缩下载版格式见[端到端模型数据下载指南](https://bigquant.com/wiki/doc/cay6LBmvc1)。
+
+凭据及受限材料仅存本地忽略目录。SDK 直连访问权限与当前本地离线查询、平台运行和测试提交的通过结论分别管理。

@@ -1,94 +1,42 @@
-# 来源与核查范围
+# 来源与结论范围
 
-公开页面与比赛配置核查日期：**2026-09-29（UTC+08:00）**。[返回目录](../README.md)
+整理日期：**2026-10-10（UTC+08:00）**。[返回目录](../README.md)
 
-## 1. 当前官方来源
+## 已确认结论
 
-| 来源 | 获取日期（UTC+08:00） | 已核对内容 |
+| 事项 | 结论 | 依据日期（UTC+08:00） | 依据 |
+| --- | --- | --- | --- |
+| Mock 本地运行 | 正常 | 2026-10-10 | 用户确认 |
+| Mock 平台运行 | 正常 | 2026-10-10 | 用户确认 |
+| 测试 submission | 已通过 | 2026-10-10 | 用户确认 |
+| 有效输出格式 | Pandas DataFrame，列顺序为 `date`、`instrument`、`factor` | 2026-10-10 | 当前已通过提交的 Mock |
+| 本地与平台数据一致性 | 七张表全量逻辑内容一致，243 个文件、723,258,293 行 | 2026-09-30 | [结构化验证摘要](data-validation-summary.json)，平台证据来自用户回传的查询摘要 |
+| 本地查询口径 | 直接读取原始五档 `stock` 表及辅助表，保留字段类型与数值 | 2026-10-10 | 本地兼容层与现有 Parquet |
+| 字段字典 | 104 条记录，CSV 与 JSON 对应 | 2026-09-22／29 | 官方数据页与辅助表元数据 |
+
+Mock 的运行与提交通过结论不代表模型训练、权重复现或预测能力已获验证。数据一致性结论对应所记录的平台查询基准，不保证源表后续不发生修订。
+
+## 官方来源
+
+| 来源 | 获取日期（UTC+08:00） | 适用内容 |
 | --- | --- | --- |
-| [比赛主页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca) | 2026-09-29 | 资格、端到端限制、模板名称、提交、评分、赛程、答辩和奖励 |
-| [比赛数据](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data) | 2026-09-29 | 通过主页 HTML 的 `id=data` 区读取数据表、42 个行情字段、本地下载入口及查询示例 |
-| [比赛规则](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=rule) | 2026-09-29 | 通过主页 HTML 的 `id=rule` 区读取完整通用规则 |
-| [新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0) | 2026-09-29 | 数据页指定的申请指南；核对评测入口、唯一 Notebook、下载审批、历史上下文、提交和资源 |
-| [比赛详情接口](https://bigquant.com/bigapis/alphathon/v1/competitions) | 2026-09-29 | HTTP 200、业务 `code=0`，返回目标比赛，摘录截止时间、人数、模板和奖励配置 |
-| [赛道讨论入口](https://bigquant.com/wiki/doc/zkrliPcm32) | 2026-09-29 | 页面链接回比赛，未提供可用于裁定规则冲突的补充内容 |
+| [比赛介绍](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca) | 2026-09-29；输出与赛程 2026-10-09 | 资格、方法限制、模型材料、评分、赛程与奖励；页面仍使用 `score` 字段名 |
+| [比赛数据](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data) | 2026-09-29／10-09 | 表名、逻辑数据源、1 分钟行情字段、读取方式 |
+| [比赛规则](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=rule) | 2026-09-29／10-09 | 通用研究、数据与提交要求 |
+| [新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0) | 2026-10-09 | 唯一 Notebook、`main` 入口、资源及本地训练授权 |
+| [端到端模型数据下载指南](https://bigquant.com/wiki/doc/cay6LBmvc1) | 2026-10-09 | `e2e` 与 `stock` 的字段对应、单位缩放和缺失值 |
+| [比赛配置接口](https://bigquant.com/bigapis/alphathon/v1/competitions) | 2026-10-09 | [配置摘录](competition-config.json)，以比赛 ID 限定查询 |
+| [股票列表元数据](https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_instruments) | 2026-09-22 | 股票列表字段定义 |
+| [风险暴露元数据](https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_exposure) | 2026-09-22 | 风险暴露字段定义 |
+| [VWAP 元数据](https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_vwap) | 2026-09-22 | 标签字段文字定义，不能替代精确生成公式 |
+| [DAI 使用文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)、[DAI 函数文档](https://bigquant.com/wiki/doc/Rceb2JQBdS) | 2026-09-29 | 平台数据查询 API |
+| [DuckDB Parquet 文档](https://duckdb.org/docs/current/data/parquet/overview)、[Python API](https://duckdb.org/docs/current/clients/python/reference/) | 2026-10-10 | 本地兼容层所用的 Parquet 查询与结果转换能力 |
 
-主页 HTTP 200，响应体为 **88,129 字节**，同时包含 `overview`、`data`、`rule` 三个区域。响应体 SHA-256：
+## 来源适用原则
 
-```text
-277223532822f886cbdd85ddf8a7609794a15ed1df04b72737931f35d532e279
-```
-
-《新手入门》由比赛数据页直接引用，页面显示更新于 `2026-09-29 06:30`；该显示值未注明时区，不能自行按 UTC+08:00 解读。本文的获取日期使用 UTC+08:00。数据页原始链接带邀请参数，正文引用使用相同文档的无参数地址。
-
-## 2. 比赛配置
-
-接口查询限定当前比赛：
-
-```text
-GET https://bigquant.com/bigapis/alphathon/v1/competitions
-constraints = {"id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca"}
-```
-
-记录级 `updated_at` 为 **2026-09-29T14:33:21.656666+08:00**，不代表各条规则都有独立版本时间。相关字段保存于 [competition-config.json](competition-config.json)：
-
-- `data.items[0]`：比赛名称、起止时间、总奖金和空间 ID。
-- `summary`：报名、提交、候选选择和合队截止配置。
-- `data.competition`：队伍人数、模板链接、提交配置、奖励等字段。
-
-接口值与正文的差异见 [open-questions.md](open-questions.md)。本次接口读取不使用登录凭据，也不复核个人报名或数据访问权限。
-
-## 3. 数据表与字典来源
-
-当前[数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)公布四张 `stock_bar*` 开发表、三张辅助表及四张 `e2e_bar*` 本地下载表。当前核对的是公开表名、链接及 1 分钟行情字段表；没有重新请求表详情或查询数据内容。
-
-辅助表字段与开发行情表的详情接口结果来自 **2026-09-22（UTC+08:00）** 的核查，逐表获取时间保存在 [data-schemas.json](data-schemas.json)。接口形式如下，实际 URL 不换行：
-
-```text
-GET https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/
-    db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/{table_name}
-```
-
-| 表组 | 元数据核查结果（2026-09-22） | 字典来源 |
-| --- | --- | --- |
-| `cpt_jyc_2026_stock_bar1m` | HTTP 404 / `NOT_FOUND` | 赛事页字段表，42 列；已与当前页面核对 |
-| `cpt_jyc_2026_stock_bar5m`、`stock_bar15m`、`stock_bar30m` | HTTP 404 / `NOT_FOUND` | 未取得 schema，不复制 1 分钟字段 |
-| `cpt_jyc_2026_instruments` | HTTP 200 / `code=0` | `metadata.schema` 与 `docs.schema`，4 列 |
-| `cpt_jyc_2026_exposure` | HTTP 200 / `code=0` | 同上，49 列 |
-| `cpt_jyc_2026_vwap` | HTTP 200 / `code=0` | 同上，9 列 |
-
-四张本地下载表的 schema 本次未核查，JSON 仅记录当前官方入口和空字段列表。字典仍有 **104 条字段记录**，CSV 使用带 BOM 的 UTF-8，列顺序保持一致。字段定义不代表各字段均获准作为端到端输入。
-
-## 4. 模板来源与范围
-
-当前介绍和《新手入门》列出的端到端模板为 `Transformer_modelsave_train.ipynb` 和 `Transformer_modelsave_predict.ipynb`，获取路径为“比赛 → 代码”。已核对模板名称、用途及参考提交组合，未取得两个文件的实际内容。
-
-当前配置中的[代码分享](https://bigquant.com/codesharev3/7c55a1c9-7591-43d1-b934-1ae943513ce5)对应以下读取接口：
-
-```text
-GET https://bigquant.com/bigapis/codeshare/v1/v2shares/7c55a1c9-7591-43d1-b934-1ae943513ce5
-POST https://bigquant.com/bigapis/codeshare/v1/v2shares/download
-请求体：{"share_id": "7c55a1c9-7591-43d1-b934-1ae943513ce5"}
-```
-
-该分享最近一次内容核查为 **2026-09-22**，名称“模型评估v2_3”，创建和更新于 2025-08-19，共 5 个代码单元，包含旧表和日频逻辑。未把其实现作为当前赛道规则；本次没有运行或克隆该 Notebook。
-
-## 5. 验证边界
-
-- **页面与配置检查**：核对当前官方正文、指南、配置及字段表，区分规则、配置与整理建议。
-- **表元数据检查**：结构化字段字典中的三张辅助表 schema 沿用注明日期的官方接口结果；下载文件的实际类型另见 [数据说明](data.md) 和 [验证摘要](data-validation-summary.json)。
-- **实际数据查询**：本节所述规则资料核对期间未执行；此前 SDK 和 Studio 查询结果见 [local-download.md](local-download.md)。后续用户完成平台导出，并回传独立验证摘要，2026-09-30 的内容比较结果见下一节。
-- **模型运行**：未训练、推理或提交模型；文档中的代码仅作接口说明。
-- **本地文档检查**：检查相对链接、代码围栏、JSON 解析，以及 CSV/JSON 字段唯一性和一致性。
-
-正文还提供 [DAI 使用文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)和[DAI 函数文档](https://bigquant.com/wiki/doc/Rceb2JQBdS)作为参考；本次没有逐项验证函数实现。本目录不保存凭据、账号个人资料、学生卡、限制协议签署材料或受限行情数据。
-
-## 6. 下载数据与平台验证摘要（2026-09-30）
-
-实际数据验证覆盖四张 `cpt_jyc_2026_stock_bar*` 五档分钟表及三张辅助表，来源为用户在比赛平台导出后下载到本地的 243 个 Parquet 文件、导出清单，以及用户回传的平台验证摘要。平台读取入口依据[官方 DAI 文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)，校验方法与结论见 [下载数据验证](data-validation.md)。
-
-- 本地全量验证完成时间：**2026-09-29 23:44:49+08:00**。
-- 平台独立验证完成时间：**2026-09-30 00:11:14+08:00**，来自回传摘要的 `finished_at`。
-- 摘要本地比较时间：**2026-09-30 00:16:21+08:00**。七张表、723,258,293 行，138 个比较项全部匹配，其中包括七个全表内容 SHA-256 和七个逐日行数 SHA-256。
-
-平台证据为用户回传的 JSON 摘要，本次未另行连接平台查询。长期归档的 [data-validation-summary.json](data-validation-summary.json) 保存已匹配的内容哈希、覆盖范围、实际字段类型和来源时间；原始运行报告仅保留在本地忽略目录。已确认本地数据与这次平台查询结果逻辑内容一致，原始数据的缺失值和异常数值也保留一致，其业务原因不由哈希比较判定。未运行模型。
+- 正文规则、接口配置、用户提供的模板与实际提交结论分别标注；差异保留在 [open-questions.md](open-questions.md)。
+- 实际接口采用已通过测试提交的 `factor`；页面字段名差异不改变这一结论。
+- [data-schemas.json](data-schemas.json) 和 [data-dictionary.csv](data-dictionary.csv) 保留页面／元数据口径；实际文件类型以 [data-validation-summary.json](data-validation-summary.json) 为准。
+- 用户提供的 Transformer 推理模板说明了完整时间连接、三列输出及训练／推理分离；实际正式模型的附件、导入名与权重协议仍须以提交包为准。
+- 配置中的[代码分享](https://bigquant.com/codesharev3/7c55a1c9-7591-43d1-b934-1ae943513ce5)的内容依据日期为 2026-09-22，属于旧日频评估代码，不能作为当前赛道评测算法。
+- [通用模型本地化训练指南](https://bigquant.com/wiki/doc/MvWIurzUct)包含 BigAlpha 表名和未来一日收益示例，不适用于确定本赛事的标签或训练边界。

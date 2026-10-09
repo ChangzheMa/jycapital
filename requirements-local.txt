@@ -1,0 +1,5 @@
+# 本地 Parquet 查询环境；不要在 AIStudio 中安装或上传本依赖清单。
+duckdb==1.5.6
+numpy>=1.26,<3
+pandas>=2.2,<3
+pyarrow>=14

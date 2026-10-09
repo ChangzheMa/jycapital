@@ -3,20 +3,18 @@
   "timezone": "UTC+08:00",
   "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
   "notes": [
-    "Types for bar1m are copied from the competition page, not verified by querying the table.",
-    "Types for auxiliary tables come from datasource metadata.",
-    "Descriptions identify data fields, not permission to use each field as model input.",
-    "Empty fields lists mean that the schema was not verified.",
-    "No credentials or account profile fields are retained.",
-    "The competition page and table list were checked on 2026-09-29; datasource metadata timestamps remain at their last actual checks.",
-    "Local-download e2e tables are listed by the current competition page; no schema or data rows were retrieved for them."
+    "本字典包含 104 条字段定义；行情字段采用比赛页面口径，辅助表字段采用官方元数据口径。",
+    "实际下载文件的字段类型与内容结论见 data-validation-summary.json；本字典不混入不同来源的类型。",
+    "字段存在不表示获准作为端到端模型输入，未来信息不能作为推理输入。",
+    "空 fields 列表表示该表未纳入本字典；不代表当前本地数据不存在或不可查询。",
+    "来源日期分别保存在 checked_date、checked_at 和 page_checked_at，不代表当前访问权限。",
+    "e2e 下载版的整数单位、三档盘口和缺失值规则见 data.md。",
+    "本字典不包含凭据、账号资料或实际行情记录。"
   ],
   "tables": {
     "cpt_jyc_2026_stock_bar1m": {
       "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
       "schema_origin": "competition_page",
-      "metadata_http_status": 404,
-      "data_queried": false,
       "fields": [
         {
           "name": "date",
@@ -278,8 +276,6 @@
     "cpt_jyc_2026_stock_bar5m": {
       "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
       "schema_origin": "not_verified",
-      "metadata_http_status": 404,
-      "data_queried": false,
       "fields": [],
       "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar5m",
       "checked_at": "2026-09-22T22:14:16.175012+08:00"
@@ -287,8 +283,6 @@
     "cpt_jyc_2026_stock_bar15m": {
       "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
       "schema_origin": "not_verified",
-      "metadata_http_status": 404,
-      "data_queried": false,
       "fields": [],
       "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar15m",
       "checked_at": "2026-09-22T22:14:16.163934+08:00"
@@ -296,8 +290,6 @@
     "cpt_jyc_2026_stock_bar30m": {
       "source_url": "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data",
       "schema_origin": "not_verified",
-      "metadata_http_status": 404,
-      "data_queried": false,
       "fields": [],
       "metadata_source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_stock_bar30m",
       "checked_at": "2026-09-22T22:14:16.175012+08:00"
@@ -306,8 +298,6 @@
       "source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_instruments",
       "checked_at": "2026-09-22T22:13:36.823695+08:00",
       "schema_origin": "authenticated_datasource_metadata",
-      "metadata_http_status": 200,
-      "data_queried": false,
       "cn_name": "股票列表",
       "fields": [
         {
@@ -345,8 +335,6 @@
       "source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_exposure",
       "checked_at": "2026-09-22T22:13:36.841012+08:00",
       "schema_origin": "authenticated_datasource_metadata",
-      "metadata_http_status": 200,
-      "data_queried": false,
       "cn_name": "风格暴露",
       "fields": [
         {
@@ -699,8 +687,6 @@
       "source_url": "https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_vwap",
       "checked_at": "2026-09-22T22:13:36.826865+08:00",
       "schema_origin": "authenticated_datasource_metadata",
-      "metadata_http_status": 200,
-      "data_queried": false,
       "cn_name": "未来30分VWAP收益率",
       "fields": [
         {
@@ -776,8 +762,6 @@
       "purpose": "local_training_download",
       "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
       "schema_origin": "not_verified",
-      "metadata_http_status": null,
-      "data_queried": false,
       "fields": []
     },
     "cpt_jyc_2026_e2e_bar5m": {
@@ -787,8 +771,6 @@
       "purpose": "local_training_download",
       "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
       "schema_origin": "not_verified",
-      "metadata_http_status": null,
-      "data_queried": false,
       "fields": []
     },
     "cpt_jyc_2026_e2e_bar15m": {
@@ -798,8 +780,6 @@
       "purpose": "local_training_download",
       "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
       "schema_origin": "not_verified",
-      "metadata_http_status": null,
-      "data_queried": false,
       "fields": []
     },
     "cpt_jyc_2026_e2e_bar30m": {
@@ -809,8 +789,6 @@
       "purpose": "local_training_download",
       "page_checked_at": "2026-09-29T16:26:46.417146+08:00",
       "schema_origin": "not_verified",
-      "metadata_http_status": null,
-      "data_queried": false,
       "fields": []
     }
   },

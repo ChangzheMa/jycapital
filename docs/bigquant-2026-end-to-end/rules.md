@@ -1,6 +1,8 @@
 # 规则、提交、评分与赛程
 
-核查日期：2026-09-29（UTC+08:00）。[返回目录](../README.md) · [数据说明](data.md) · [冲突与待确认](open-questions.md)
+规则来源日期：2026-09-29／10-09；实际提交结论日期：**2026-10-10（UTC+08:00）**。[返回目录](../README.md) · [数据说明](data.md) · [冲突与待确认](open-questions.md)
+
+**当前 Mock 在本地和平台正常运行，测试 submission 已通过。有效输出为 `date`、`instrument`、`factor` 三列 Pandas DataFrame。** 页面使用 `score` 的文案差异见待确认事项；不影响当前已通过的接口约定。
 
 本文依据官方页面的“介绍”“数据”“规则”和数据页链接的《新手入门》。接口配置另行标注，不能自动替代正文。来源：[比赛主页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)、[规则标签页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=rule)、[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)、[来源记录](sources.md)。
 
@@ -75,11 +77,13 @@ def main(datasources, start_date, end_date):
 
 ### 4.2 输出约束
 
+以下格式已由当前 Mock 的平台运行及测试提交确认。
+
 | 列 | 含义与要求 |
 | --- | --- |
-| `datetime` | 精确到分钟，属于平台指定的 30 分钟采样时点 |
+| `date` | 时间类型，保留完整分钟，属于评测要求的采样时点；不强制转换为特定时间精度 |
 | `instrument` | 使用平台要求的股票标识 |
-| `score` | 预测信号；数值越大默认表示预期收益越高 |
+| `factor` | 有限 `float64` 预测值；数值越大默认表示预期收益越高 |
 
 - 列必须恰好为上述三列，不可额外输出索引、标签或中间特征列。
 - 应覆盖评估区间要求的全部交易日与采样截面。
@@ -87,7 +91,7 @@ def main(datasources, start_date, end_date):
 - 不允许重复键、无穷值、不可解析数值、未来时间或非法采样点。
 - 正文未解释缺失率分母、停牌/退市股票豁免和逐列 dtype，需确认。
 
-《新手入门》中的 `date`、`instrument`、`factor` 三列 DataFrame 要求位于“因子挖掘赛道要求”，不能据此替换端到端介绍规定的 `datetime`、`instrument`、`score`。指南未单独明确端到端结果的具体 Python 类型，应以本赛道实际模板和评测接口为准。
+输出按完整 `date`、`instrument` 与股票池内连接，清理无穷值和空因子后去重、选列、排序并重置索引。[当前 Mock](../../examples/mock-submission.ipynb) 已通过测试提交，确认该输出路径有效。此结论来自用户确认，不扩展为正式模型的训练、权重复现或预测表现已经通过。
 
 来源：[比赛介绍“代码提交”](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)、[新手入门“四、因子挖掘赛道要求”](https://bigquant.com/wiki/doc/oSGtQiGtq0)。
 
@@ -100,7 +104,7 @@ def main(datasources, start_date, end_date):
 
 官方指定获取方式为进入“比赛 → 代码”，选择模板并克隆到自己的开发环境，不直接修改公共模板。指南给出的参考提交组合是预测 Notebook、`transformer_train.py` 和 `transformer_model.json`；这不免除训练/推理代码、配置、依赖、随机种子和完整权重的要求。
 
-本次未取得这两个模板的文件内容。当前接口的 `code_template_url` 指向另一份代码分享；其最近一次内容核查（2026-09-22）为 2025 年“模型评估v2_3”，含日频逻辑和旧表名，不能直接作为当前赛道的模板或评分程序。详见 [待确认事项](open-questions.md)。来源：[新手入门“选择赛道与模板”“不同赛道的提交内容”](https://bigquant.com/wiki/doc/oSGtQiGtq0)。
+用户提供的推理模板从训练侧模块复用模型结构、数据构建及权重加载函数，使用随权重保存的归一化统计，仅加载权重推理。正式提交须保证训练脚本导入名、附件路径和权重格式一致。配置中的旧日频代码分享不作为当前模板或评分程序。来源：[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)及用户提供的 Transformer 推理模板；证据范围见 [sources.md](sources.md)。
 
 ## 5. 本地训练、运行环境与冻结
 
@@ -108,11 +112,7 @@ def main(datasources, start_date, end_date):
 
 端到端赛道提供本地训练数据下载，须完成身份核验并签署限制协议：向比赛小助手提交本人学生卡照片和平台用户 ID，签署并回传限制协议，审核通过后接收下载链接。小助手二维码位于[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)。
 
-| 申请处理安排 | 时间 |
-| --- | --- |
-| 申请开放、集中审核 | **2026-09-30**，当天集中处理一天 |
-| 假期暂停处理 | **2026-10-01 至 2026-10-07** |
-| 未完成申请继续处理 | **2026-10-08 起** |
+官方安排为 **2026-10-08 起继续处理申请**。
 
 下载数据仅限本人或本队参赛使用，不得外传或用于其他用途。官方数据页列出 `cpt_jyc_2026_e2e_bar1m`、`cpt_jyc_2026_e2e_bar5m`、`cpt_jyc_2026_e2e_bar15m`、`cpt_jyc_2026_e2e_bar30m` 四张本地下载表，详见 [数据说明](data.md)。本地数据申请流程不等于 SDK 直连查询权限已经开通。
 
@@ -137,7 +137,7 @@ def main(datasources, start_date, end_date):
 
 ## 6. 评分
 
-校验后，平台先按截面对 `score` 去极值、标准化，再回归 BARRA 风险因子，以残差信号评估增量贡献。具体算法参数未完整公布。
+校验后，平台先按截面对提交的预测值去极值、标准化，再回归 BARRA 风险因子，以残差信号评估增量贡献。实际输出列名为 `factor`；正文将预测值称为 `score`。具体算法参数未完整公布。
 
 | 指标 | 关注内容 | 排名方向 | 权重 |
 | --- | --- | --- | --- |
@@ -180,7 +180,7 @@ IC 是否严格使用 Spearman RankIC、IC_IR 和夏普的年化方法、交易�
 | 决赛 | 私榜后预计安排约两周，具体时间待通知 |
 | 颁奖 | 预计 2026 年 11 月第三周，可与答辩合并 |
 
-2026-09-29 读取的接口 `summary.pull_deadline` 为 `2026-10-31T15:59:59.033Z`，`summary.selection_deadline` 为 `2026-11-01T06:59:59.181Z`，与正文及指南冲突。报名截止配置在秒级与正文一致；合队截止配置同为 10 月 7 日 23:59:59（UTC+08:00）。不要将配置中的较晚时间视为已确认延期。来源：[正文赛程](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)、[新手入门“公榜与私榜”](https://bigquant.com/wiki/doc/oSGtQiGtq0)、[配置摘录](competition-config.json)。
+2026-10-09 的接口快照将公榜提交、候选选择分别配置为 10 月 31 日 23:59:59.033、11 月 1 日 14:59:59.181，与正文及指南冲突；安排上采用正文的较早时间。报名截止配置为 10 月 7 日，合队截止配置为 **10 月 18 日 23:59:59.109**，均为 UTC+08:00；合队日期不表示报名延期。来源：[正文赛程](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)、[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)、[配置摘录](competition-config.json)。
 
 ## 8. 决赛与奖励
 

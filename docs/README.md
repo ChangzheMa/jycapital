@@ -1,31 +1,46 @@
 # 进益资本杯比赛资料
 
-规则与公开说明核查日期：**2026-09-29（UTC+08:00）**。本目录记录 BigQuant 上的 **2026 年第二届“进益资本”杯量化因子挑战赛——端到端赛道**，比赛 ID 为 `45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca`。
+更新日期：**2026-10-10（UTC+08:00）**。本仓库整理 BigQuant 2026 年第二届“进益资本”杯量化因子挑战赛端到端赛道资料，比赛 ID 为 `45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca`。
 
-资料依据当前官方介绍、数据、规则、《新手入门》和比赛配置整理。正文规则、接口配置及整理建议分别标注；数据表元数据和实际查询结果保留各自核查日期，不能视为当前访问权限的保证。
+**当前结论：`mock-submission.ipynb` 已在本地和平台正常运行，测试 submission 已通过。** 该结论由用户确认；有效返回格式为 Pandas DataFrame，列顺序为 `["date", "instrument", "factor"]`。Mock 用于验证运行与提交接口，分数不代表模型预测能力。
+
+## 文档索引
 
 | 文档 | 内容 |
 | --- | --- |
-| [规则与赛程](bigquant-2026-end-to-end/rules.md) | 参赛资格、方法限制、提交接口、本地训练申请、资源、评分、赛程与奖励 |
-| [数据说明](bigquant-2026-end-to-end/data.md) | 开发表、本地下载表、评测逻辑名、字段、标签与时间对齐 |
-| [冲突与待确认事项](bigquant-2026-end-to-end/open-questions.md) | 当前来源冲突及尚未明确的数据、模板和评测细节 |
-| [来源与核查范围](bigquant-2026-end-to-end/sources.md) | 官方页面与接口、获取日期及验证边界 |
-| [比赛配置摘录](bigquant-2026-end-to-end/competition-config.json) | 当前比赛配置及 UTC+08:00 截止时间；不替代正文规则 |
-| [结构化数据字典](bigquant-2026-end-to-end/data-schemas.json) | 保留页面与历史元数据口径的 104 条字段及表入口 |
-| [数据字典 CSV](bigquant-2026-end-to-end/data-dictionary.csv) | 104 条字段记录，便于检索和导入工具 |
-| [本地配置与数据申请](bigquant-2026-end-to-end/local-download.md) | 官方下载申请、既有 SDK 查询结果和本地保存位置 |
-| [下载数据验证](bigquant-2026-end-to-end/data-validation.md) | 243 个文件全量检查；2026-09-30 七张表平台内容摘要全部匹配，保留原始数值异常 |
-| [数据验证摘要](bigquant-2026-end-to-end/data-validation-summary.json) | 已匹配的内容哈希、日期覆盖、行数、实际字段类型及来源时间 |
-| [Git 忽略规则](../.gitignore) | 本地环境、凭据、行情数据和运行产物的忽略规则 |
+| [规则与赛程](bigquant-2026-end-to-end/rules.md) | 参赛要求、有效提交格式、评分、赛程及奖励 |
+| [数据说明](bigquant-2026-end-to-end/data.md) | 数据表、字段、下载版与云端口径、标签和时间对齐 |
+| [冲突与待确认事项](bigquant-2026-end-to-end/open-questions.md) | 尚未解决的规则差异与正式模型开发问题 |
+| [来源与结论范围](bigquant-2026-end-to-end/sources.md) | 官方来源、获取日期及用户确认的运行结论 |
+| [比赛配置摘录](bigquant-2026-end-to-end/competition-config.json) | 2026-10-09 官方配置快照，不替代正文规则 |
+| [结构化数据字典](bigquant-2026-end-to-end/data-schemas.json) | 页面及元数据口径的 104 条字段定义 |
+| [数据字典 CSV](bigquant-2026-end-to-end/data-dictionary.csv) | 与 JSON 对应的 104 条字段记录 |
+| [本地运行与数据申请](bigquant-2026-end-to-end/local-download.md) | 本地数据位置、DAI 兼容层、环境配置及下载授权 |
+| [数据一致性结论](bigquant-2026-end-to-end/data-validation.md) | 七张表的覆盖范围、一致性结论及原始数值异常 |
+| [数据验证摘要](bigquant-2026-end-to-end/data-validation-summary.json) | 行数、字段类型、缺失计数和已匹配的内容哈希 |
+| [提交格式 Mock](../examples/mock-submission.ipynb) | 已通过本地运行、平台运行和测试提交的 Notebook |
+| [本地依赖](../requirements-local.txt) | 本地 Parquet 查询环境的依赖 |
+| [Git 忽略规则](../.gitignore) | 本地兼容层、环境、凭据、行情和运行产物的忽略范围 |
+
+## 当前可用接口
+
+```python
+def main(datasources, start_date, end_date):
+    # 返回评测区间内的结果。
+    return result[["date", "instrument", "factor"]]
+```
+
+- `date` 保留完整分钟时间，`instrument` 使用平台股票代码，`factor` 为有限的 `float64` 数值；`(date, instrument)` 不重复。
+- Mock 根据股票池记录生成确定性分数，按完整时间和股票代码对齐，清理非法值后返回三列 DataFrame。
+- 本地通过被 Git 忽略的根目录 `dai.py` 读取现有 Parquet；平台使用真实 `dai`。本地兼容层不随仓库分发，安装和使用说明见[本地运行](bigquant-2026-end-to-end/local-download.md)。
+- 测试 Mock 只需上传一个 Notebook；不上传本地 `dai.py`、凭据或行情文件。正式模型需按[提交规范](bigquant-2026-end-to-end/rules.md)提供训练脚本、依赖、配置、随机种子和权重。
 
 ## 参赛要点
 
-- **任务与输入**：使用授权的原始分钟量价序列预测未来 30 分钟 VWAP 收益，按 30 分钟采样，不预测隔夜；允许必要清洗、归一化和切窗，禁止以手工设计的技术指标、统计量、价量或盘口衍生特征作为输入，禁止外部预训练权重。[比赛介绍](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)
-- **提交**：有且仅有一个推理 Notebook，包含 `main(datasources, start_date, end_date)`，同时提供训练/推理代码、依赖、超参数、随机种子和权重。行情表从 `datasources` 逻辑名取得。公榜只加载权重推理；端到端输出恰好为 `datetime`、`instrument`、`score`，每截面缺失率不超过 40%。[规则与接口](bigquant-2026-end-to-end/rules.md)
-- **本地训练申请**：向比赛小助手提交学生卡照片、平台用户 ID 并签署限制协议，审核后领取下载链接；仅限本人或本队参赛使用。**9 月 30 日开放并集中处理一天，10 月 1—7 日暂停处理，10 月 8 日起继续处理。**[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)
-- **数据**：数据页总体年份为 2020—2024，股票池以中证 1000 历史成分股为基础；本地下载使用四张 `cpt_jyc_2026_e2e_bar*` 表。训练/验证/私榜精确边界未明确；验证集额外提供评测前一年历史上下文，输出仍须限定于评测区间。[数据说明](bigquant-2026-end-to-end/data.md)
-- **时间与资格**：报名截止为 10 月 7 日 23:59:59，正文及指南规定公榜提交截止为 10 月 29 日 23:59:59、私榜候选选择截止为 10 月 30 日 23:59:59，均按 UTC+08:00 整理。决赛队伍至少有一名清华大学在读学生。[规则与赛程](bigquant-2026-end-to-end/rules.md)
-- **运行资源**：指南要求总运行不超过 3 小时、评测环境无外网；公布免费 CPU 和 A100 80G 开发资源，每队组长开赛时获 5,000 宽币。最终评测配额与推理放宽条件仍以官方通知为准。[运行环境](bigquant-2026-end-to-end/rules.md)
-- **待确认事项**：当前接口截止时间、奖励金额与正文仍不一致，模板配置链接也不能直接作为当前端到端模板；标签公式、完整采样点和评测算法尚未明确。[当前待确认事项](bigquant-2026-end-to-end/open-questions.md)
+- **任务**：使用授权原始分钟量价序列预测未来 30 分钟 VWAP 收益，按 30 分钟采样，不预测隔夜；允许必要清洗、归一化和切窗，禁止人工衍生特征输入及外部预训练权重。
+- **数据**：本地已有四张五档分钟表及三张辅助表，共 243 个文件、723,258,293 行。七张表与 2026-09-30 平台基准的全量逻辑内容一致；原始数据异常仍需按业务规则处理。
+- **赛程**：按正文的公榜提交截止 **10 月 29 日 23:59:59**、私榜候选选择截止 **10 月 30 日 23:59:59** 安排；接口的较晚时间仍与正文冲突。时间均为 UTC+08:00。
+- **资源与资格**：按 3 小时运行限制及无外网环境准备；进入决赛的队伍须至少有一名清华大学在读学生。
+- **剩余问题**：标签精确公式、训练与评测日期边界、正式模型附件协议及完整评测算法仍需明确。测试 submission 通过不替代这些要求。
 
-本目录仅保存最终整理结果、必要来源和核查范围，不保存登录凭据、账号个人资料或实际行情数据。
+来源及证据日期见 [sources.md](bigquant-2026-end-to-end/sources.md)。仓库仅保存代码示例、结论、必要来源及结构化字典，不保存凭据、账号个人资料或实际行情数据。

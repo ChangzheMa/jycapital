@@ -1,10 +1,10 @@
 # 比赛数据与字段说明
 
-页面核查日期：2026-09-29（UTC+08:00）；数据表元数据核查日期：2026-09-22（UTC+08:00）。[返回目录](../README.md) · [规则](rules.md) · [待确认事项](open-questions.md)
+整理日期：**2026-10-10（UTC+08:00）**。页面与元数据来源日期见 [sources.md](sources.md)。[返回目录](../README.md) · [规则](rules.md) · [待确认事项](open-questions.md)
 
-本文件区分公开页面、注明日期的表元数据和后续实际数据检查。历史 SDK 查询记录及平台下载结果见 [本地访问记录](local-download.md)。[data-dictionary.csv](data-dictionary.csv) 和 [data-schemas.json](data-schemas.json) 保留原有 104 条页面 / 元数据字段记录；实际下载数据的字段类型和验证摘要单独保存，避免混淆来源口径。
+本地已有四张五档分钟表和三张辅助表；当前 Mock 已在本地和平台正常运行，测试 submission 已通过。运行方式和文件路径见 [local-download.md](local-download.md)。[data-dictionary.csv](data-dictionary.csv) 与 [data-schemas.json](data-schemas.json) 保存 104 条页面／元数据字段定义，实际文件类型以 [data-validation-summary.json](data-validation-summary.json) 为准。
 
-后续实际数据检查：2026-09-29 已对用户下载的四张五档分钟表及三张辅助表完成本地全量验证；2026-09-30 将用户回传的平台验证摘要与本地基准逐字段比较，七张表的全量内容摘要及逐日行数摘要全部一致。平台运行完成时间为 2026-09-30 00:11:14+08:00，详见 [下载数据验证结果](data-validation.md)。实际行数、日期范围及原有缺失值 / 异常另行记录，不覆盖上述页面 / 元数据来源口径。
+七张表共 243 个文件、723,258,293 行，与 2026-09-30 平台基准的全量逻辑内容一致。该结论包含原始缺失值和异常值，不能据此将所有数值视为有效。日期覆盖、字段类型及异常统计见 [数据一致性结论](data-validation.md)。
 
 ## 1. 范围与访问方式
 
@@ -29,23 +29,21 @@
 
 比赛空间 ID：`db3bf8c9-0b87-4b89-a17a-d42cb0b7567b`，来自比赛详情配置。
 
-### 2.1 开发数据表与元数据
+### 2.1 开发数据表
 
-以下接口结果的核查日期为 **2026-09-22**，本次未重查表详情，不能视为 2026-09-29 的数据可用性结论。
+| 表名 | 用途 | 本地实际字段数 |
+| --- | --- | ---: |
+| `cpt_jyc_2026_stock_bar1m` | 1 分钟行情与五档盘口 | 42 |
+| `cpt_jyc_2026_stock_bar5m` | 5 分钟行情与五档盘口 | 42 |
+| `cpt_jyc_2026_stock_bar15m` | 15 分钟行情与五档盘口 | 42 |
+| `cpt_jyc_2026_stock_bar30m` | 30 分钟行情与五档盘口 | 42 |
+| `cpt_jyc_2026_instruments` | 采样时刻及股票池 | 3 |
+| `cpt_jyc_2026_exposure` | 风险／风格暴露 | 48 |
+| `cpt_jyc_2026_vwap` | 未来 30 分钟 VWAP 相关标签 | 8 |
 
-| 表名 | 公布用途 | 2026-09-22 登录后详情接口结果 |
-| --- | --- | --- |
-| `cpt_jyc_2026_stock_bar1m` | 1 分钟行情与盘口 | HTTP 404 / `NOT_FOUND`；只能引用赛事页字段表 |
-| `cpt_jyc_2026_stock_bar5m` | 5 分钟行情与盘口 | HTTP 404 / `NOT_FOUND` |
-| `cpt_jyc_2026_stock_bar15m` | 15 分钟行情与盘口 | HTTP 404 / `NOT_FOUND` |
-| `cpt_jyc_2026_stock_bar30m` | 30 分钟行情与盘口 | HTTP 404 / `NOT_FOUND` |
-| `cpt_jyc_2026_instruments` | 股票列表 | HTTP 200，读到 schema 与字段说明 |
-| `cpt_jyc_2026_exposure` | 风险/风格暴露 | HTTP 200，读到 schema 与字段说明 |
-| `cpt_jyc_2026_vwap` | 未来 30 分钟 VWAP 相关标签 | HTTP 200，读到 schema 与字段说明 |
+辅助表元数据中的 `__PARTITION__` 不在实际导出文件中，因此元数据字段数分别为 4／49／9，实际文件为 3／48／8。字段定义与查询口径分开保留。
 
-元数据可读不等于实际行情查询权限已经验证；404 也不能区分表未发布、表名调整、空间配置或权限屏蔽等原因。辅助表 SDK 查询存在权限错误，具体日期和结果见 [本地访问记录](local-download.md)。
-
-当前数据页提供了 [1 分钟行情详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_stock_bar1m)、[股票列表详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_instruments)、[风险暴露详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_exposure) 和 [VWAP 标签详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_vwap) 链接。元数据接口路径见 [来源记录](sources.md)。
+来源：[比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)及[实际数据摘要](data-validation-summary.json)。访问权限依赖所用环境，当前 Mock 的本地与平台运行已确认可用。
 
 ### 2.2 评测数据源映射
 
@@ -62,11 +60,24 @@
 | [`cpt_jyc_2026_e2e_bar15m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar15m) | 端到端本地下载，15 分钟 |
 | [`cpt_jyc_2026_e2e_bar30m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar30m) | 端到端本地下载，30 分钟 |
 
-申请须向比赛小助手提交本人学生卡照片和平台用户 ID，签署并回传限制协议，审核通过后领取下载链接。**2026-09-30 开放申请并集中处理一天；10 月 1—7 日暂停处理；10 月 8 日起继续处理未完成申请。** 下载数据只限本人或本队参赛使用，不得外传或用于其他用途。
+本地训练数据下载须完成身份核验并签署限制协议，审核通过后领取链接。官方安排为 **2026-10-08 起继续处理申请**。下载数据只限本人或本队参赛使用，不得外传或用于其他用途。
 
 申请流程和小助手二维码见 [新手入门“六、端到端模型数据下载”](https://bigquant.com/wiki/doc/oSGtQiGtq0)；表清单见 [比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。下载版数据与公榜训练集的关系仍待官方材料确认。
 
-2026-09-30（UTC+08:00）的本地 Parquet 元数据检查确认，四张 `e2e_bar*` 各有 **28 列、三档盘口**，使用 `instrument_id`，没有 `instrument`，OHLC 为 `int32`；四张五档 `stock_bar*` 则为 **42 列**并包含 `instrument`，OHLC 为 `float`。该差异来自实际文件观察，不代表已确认价格缩放或字段转换关系。全量平台内容比对覆盖 `stock_bar*` 及三张辅助表，未对四张 `e2e_bar*` 执行同等内容比较。
+[官方端到端数据下载指南](https://bigquant.com/wiki/doc/cay6LBmvc1)明确了压缩版与云端表的对应关系：
+
+| 维度 | 压缩下载版 `e2e_bar*` | 云端及当前本地 `stock_bar*` |
+| --- | --- | --- |
+| 字段与盘口 | 28 列，三档 | 42 列，五档 |
+| 股票代码 | 仅 `instrument_id` | 同时有 `instrument` 和 `instrument_id` |
+| OHLC／盘口价格 | 整数，单位“分” | 浮点，单位“元” |
+| 成交金额 | 整数，单位“分” | `double`，单位“元” |
+| OHLC 缺失 | `-1` | 缺失值 |
+| 盘口价格缺失 | `0` | `0` |
+| `pre_close` | 无 | 有 |
+| `date` | Bar 结束时刻 | Bar 结束时刻 |
+
+使用压缩版时，OHLC 的 `-1` 先转为空值，价格和成交金额再除以 100；两端模型输入统一为前三档及共同字段。**当前项目实际存放的是 `stock` 版本，不应再次缩放。** 全量一致性结论覆盖 `stock` 及三张辅助表，不包含压缩版全量内容比较。
 
 ## 3. 分钟行情字段：赛事页公布的 1 分钟表
 
@@ -85,7 +96,7 @@
 | `close` | `np.float32` | Bar 收盘价 |
 | `deal_number` | `np.int32` | 成交笔数 |
 | `volume` | `np.int32` | 成交量，单位未在该字段表中明确 |
-| `amount` | `np.float32` | 成交额，单位未在该字段表中明确 |
+| `amount` | `np.float32` | 页面类型；云端实际为 `double`，单位“元” |
 | `ask_price1` … `ask_price5` | `np.float32` | 卖方 1—5 档报价 |
 | `bid_price1` … `bid_price5` | `np.float32` | 买方 1—5 档报价 |
 | `ask_volume1` … `ask_volume5` | `np.int32` | 卖方各档委托量 |
@@ -95,11 +106,11 @@
 
 页面示例中股票标识采用类似 `000010.SZ` 的格式，`date` 保留分钟。原文提到可用 `instrument_id` 节省内存，但未解释 ID 的跨表稳定性及映射规则。输出仍应按比赛要求提供 `instrument`。
 
-盘口快照具体取样时刻、高频聚合规则、零值含义、复权方式和量额单位均应结合实际表进一步确认。不能由字段名推断 5/15/30 分钟表的盘口是区间平均或末值。
+盘口快照具体取样时刻、高频聚合规则、零值含义、复权方式和成交量单位均需明确。不能由字段名推断 5/15/30 分钟表的盘口是区间平均或末值。
 
 来源：[比赛数据页“数据格式”“读取示例”](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。
 
-## 4. 股票列表：2026-09-22 读取的元数据
+## 4. 股票列表（元数据口径）
 
 `cpt_jyc_2026_instruments` 的 schema 有 4 列，其中 3 列有业务字段说明。
 
@@ -110,11 +121,11 @@
 | `name` | `string` | 证券简称 |
 | `__PARTITION__` | `int64` | 系统 schema 中存在，未提供业务说明 |
 
-表说明未明确历史成分有效区间、调整日生效方式、停牌/ST/上市与退市处理，也没有公布每个截面的评估股票集合。实际取样时应使用相应历史时点股票池，不能用未来成分列表回填历史；这是根据禁止未来信息规则提出的实现要求。
+当前提交按表中的完整 `date`、`instrument` 记录对齐股票池，该做法已随 Mock 通过测试提交。历史成分调整、停牌／ST／上市／退市的业务处理细则仍需明确；不得用未来成分列表回填历史。
 
 来源：[股票列表官方详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_instruments)，元数据读取日期与接口见 [sources.md](sources.md)。
 
-## 5. 风险暴露：2026-09-22 读取的元数据
+## 5. 风险暴露（元数据口径）
 
 `cpt_jyc_2026_exposure` 的 schema 有 **49 列**：日期与股票、10 个风格暴露、32 个行业哑变量、4 个辅助业务字段和 1 个系统分区字段。完整名字及说明见 CSV。
 
@@ -173,7 +184,7 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 
 1. **正文概述**：未来 30 分钟 VWAP 收益；开头又出现残差收益率目标。
 2. **表字段说明**：`vwap_return` 使用窗口终点价格与未来窗口 VWAP 比较，文字上并未以当前价为分母。
-3. **尚未确认**：精确代数公式、是否为简单/对数收益、是否再做风险残差化、窗口端点包含规则及无成交处理。本次未读取实际行来验证公式。
+3. **尚未确认**：精确代数公式、是否为简单／对数收益、是否再做风险残差化、窗口端点包含规则及无成交处理。
 
 因此不应直接把标签写成 `future_vwap/current_price - 1`，也不应未经核实就把 `end_price/vwap - 1` 当作官方确认公式。后者仅是依据字段描述可能作出的解释。
 
@@ -181,14 +192,17 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 
 ## 7. 时间对齐与覆盖
 
-| 数据或输出 | 本次查到的时间语义 |
+| 数据或输出 | 时间语义 |
 | --- | --- |
 | 行情 `date` | Bar 结束时间 |
 | VWAP 表 `date` | 预测窗口开始时间 |
-| 模型输出 `datetime` | 约定采样时刻，精确到分钟 |
-| 风险暴露/股票列表 `date` | 仅描述为日期，可获得时间待确认 |
+| 模型输出 `date` | 与股票池的完整分钟采样时刻对齐 |
+| 股票列表 `date` | 含完整分钟的采样时刻 |
+| 风险暴露 `date` | 日频日期；实际可获得时间待确认 |
 
-整理者据此建议：
+本地股票池的日内时刻为 `09:30`、`10:00`、`10:30`、`11:00`、`11:30`、`13:30`、`14:00`、`14:30`。当前 Mock 直接采用云端股票池的实际记录并已通过测试提交，不把这份列表硬编码为所有评测区间的日历。
+
+时间对齐要求：
 
 - 对齐前先确定“信息已可获得”的时点，不能仅因时间字符串相等就拼接所有字段。
 - 获取官方采样点列表，并核实午休是否跨越、最后一个窗口如何截断、集合竞价是否排除。
@@ -200,11 +214,11 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 
 ## 8. 读取方式与开发资源
 
-本次已验证的五档数据来自四张 `cpt_jyc_2026_stock_bar*` 表，按自然月读取和保存；三张辅助表各保存一个文件。读取全部原始列并核对实际五档字段、月份范围、行数与内容摘要，结果见 [下载数据验证](data-validation.md)。
+本地四张 `cpt_jyc_2026_stock_bar*` 按自然月存储，三张辅助表各保存一个文件。路径与本地 DAI 支持范围见 [local-download.md](local-download.md)，一致性结论见 [data-validation.md](data-validation.md)。当前 Mock 已在本地和平台正常运行，测试 submission 已通过。
 
-按月读取应同时设置 SQL 和 `filters`，两者使用相同的下月 1 日上界。例如 2020 年 11 月采用 `date >= '2020-11-01' AND date < '2020-12-01'`，并传入 `filters={"date": ["2020-11-01", "2020-12-01"]}`。不要把 `filters` 上界减一天：日期字符串可能按当天零点解释，从而漏掉月末日内行情。严格的 SQL `<` 条件负责排除下月起点。这是本次实际导出和全量核对中确认的实现要点。
+按月读取应同时设置 SQL 和 `filters`，两者使用相同的下月 1 日上界。例如 2020 年 11 月采用 `date >= '2020-11-01' AND date < '2020-12-01'`，并传入 `filters={"date": ["2020-11-01", "2020-12-01"]}`。不要把 `filters` 上界减一天：日期字符串可能按当天零点解释，从而漏掉月末日内行情。严格的 SQL `<` 条件负责排除下月起点。该边界同时适用于本地兼容层的查询。
 
-数据页使用 `dai.query(SQL, filters={"date": [start, end]})`，并通过 `.df()` 得到 Pandas DataFrame。下面仅为开发环境的少量行读取示例，**未在本次核查中执行**；它不是可提交的推理入口，正式提交须通过 `datasources` 取得表名并返回全部要求的预测结果。表可用性和权限需要在获授权的比赛环境验证。
+数据页使用 `dai.query(SQL, filters={"date": [start, end]})`，通过 `.df()` 得到 Pandas DataFrame。以下是开发环境的少量行查询示例；正式推理须通过 `datasources` 取得行情表名，并返回完整评测区间结果。
 
 ```python
 import dai
@@ -230,8 +244,8 @@ preview = dai.query(
 - 数据页建议 4C/16G 或更高开发规格；《新手入门》列出免费 4 核/16 GiB、8 核/32 GiB CPU，以及每小时 600 宽币的 A100 80G × 1、32 VCPU、256 GiB GPU。每队组长开赛时获 5,000 宽币。开发资源与最终评测配额应区分，详见 [运行环境](rules.md)。
 - 原文的按日聚合因子、UDF 因子案例仅说明数据引擎能力，不能据此认定可把这些因子作为本赛道输入。
 
-来源：[比赛数据页“读取示例”“因子计算示例”“Tips”“计算资源”](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。扩展阅读：[官方 DAI 使用文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)、[官方 DAI 函数文档](https://bigquant.com/wiki/doc/Rceb2JQBdS)；本次仅记录这些官方参考入口，未逐项验证函数实现。
+来源：[比赛数据页“读取示例”“因子计算示例”“Tips”“计算资源”](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。扩展阅读：[官方 DAI 使用文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)、[官方 DAI 函数文档](https://bigquant.com/wiki/doc/Rceb2JQBdS)。本地兼容层只支持文档中明确列出的功能，不替代平台专有算子。
 
-## 9. 本次未取得的信息
+## 9. 待明确事项
 
-已验证四张五档分钟表和三张辅助表的行数、文件大小、精确日期范围及实际字段类型。仍未明确训练/验证/私榜边界、下载表与开发表的完整字段映射及量额缩放关系、官方采样点清单、复权和量额单位、盘口聚合算法、历史股票池变更规则、异常值业务定义、标签精确生成程序、完整评测代码及端到端模板文件内容。具体影响见 [open-questions.md](open-questions.md)。
+训练／验证／私榜的精确日期边界、压缩版与训练样本的日期对应、复权与成交量单位、盘口聚合、股票池变更及覆盖豁免、异常值业务含义、标签生成程序、完整评测算法和正式模型附件协议仍需明确。当前 Mock 的运行、返回类型和测试提交已确认通过，见 [open-questions.md](open-questions.md) 中仍需解决的问题。
