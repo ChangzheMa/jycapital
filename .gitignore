@@ -35,3 +35,6 @@ __pycache__/
 /data/
 /outputs/
 /logs/
+
+# 个人文档
+/我的文档/
