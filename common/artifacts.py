@@ -6,6 +6,7 @@ import hashlib
 import importlib.metadata
 import json
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -43,10 +44,12 @@ def environment():
             "packages": packages}
 
 
-def snapshot_sources(project, run):
+def snapshot_sources(project, run, solution_id="v1"):
     project, run = Path(project), Path(run)
+    if not re.fullmatch(r"[a-z][a-z0-9_-]*", solution_id):
+        raise ValueError("非法方案标识")
     paths = []
-    for directory in ["solutions/v1", "evaluation", "common", "scripts", "tests"]:
+    for directory in [f"solutions/{solution_id}", "evaluation", "common", "scripts", "tests"]:
         if (project / directory).exists():
             paths.extend(p for p in (project / directory).rglob("*") if p.is_file() and p.suffix in {".py", ".json", ".txt"})
     sources = {}

@@ -1,0 +1,73 @@
+{
+  "solution_id": "v2",
+  "parent_run_id": "v1-20261010-s42",
+  "status": "training_data_preprocessing_complete",
+  "run_id": "v2-20261010",
+  "run_path": "outputs/preprocessing/v2-20261010",
+  "protocol_id": "local-v1",
+  "fit_interval": {
+    "start": "2020-01-01",
+    "stop": "2024-01-01"
+  },
+  "session": "all",
+  "fields_per_frequency": 36,
+  "numeric_channels_per_frequency": 72,
+  "columns_per_partition": 74,
+  "output_dtype": "float32",
+  "missing_values": "preserved_as_parquet_null",
+  "model_status": "not_designed",
+  "frequencies": {
+    "bar1m": {
+      "rows": 424521291,
+      "bytes": 95469426393,
+      "partitions": 48,
+      "stocks": 1906,
+      "statistics_sha256": "250f2728a47eddbd9fd7ed7013e31f352beab5266a34f479bee0a96dd48d6742"
+    },
+    "bar5m": {
+      "rows": 83255457,
+      "bytes": 20598339503,
+      "partitions": 48,
+      "stocks": 1906,
+      "statistics_sha256": "8a81bc26a16acc6bbb57df219a9df44ce8e125a233d11dbdfbfc89410975a9e4"
+    },
+    "bar15m": {
+      "rows": 28885566,
+      "bytes": 7331107527,
+      "partitions": 48,
+      "stocks": 1906,
+      "statistics_sha256": "563de6116769f2fd7282eb95b703e181a6051cee334003188280eff6def418bf"
+    },
+    "bar30m": {
+      "rows": 15292193,
+      "bytes": 3903463720,
+      "partitions": 48,
+      "stocks": 1906,
+      "statistics_sha256": "f79327f3f1d560bf7887cac26fdfb19c04cff2cd25d12a4a1d73294f717b1811"
+    }
+  },
+  "total_rows": 551954507,
+  "total_data_bytes": 127302337143,
+  "processing_seconds": 3850.0,
+  "validation": {
+    "passed": true,
+    "scope": "all_partition_metadata_and_sampled_complete_cross_sections",
+    "partition_count": 192,
+    "sampled_rows": 1007052,
+    "sampled_sections": 576,
+    "max_z_abs_error": 4.767212775647067e-07,
+    "max_c_abs_error": 9.49091518265277e-07,
+    "report_path": "outputs/preprocessing/v2-20261010/verification.json"
+  },
+  "provenance": {
+    "config_sha256": "2731060c598b00abd8ae44a21eb4a7244ac88eca334f33e24742c4a57d1de2ce",
+    "protocol_sha256": "8290ee005de9fb8d18af41460b6294976f7d6a03015da8d7dd88c6c5c18eb708",
+    "source_git_commit": "184c95bac37ae003971ff0cf501240e1a31ca13d",
+    "source_git_dirty": true,
+    "manifest_sha256": "40c94205c89a9da80aa6d4bbeb64f40b373cdc0033c6cfc6608cd21a1a44964c",
+    "summary_sha256": "d538ee6d88e9826b3513785cb06e3dde4364a12a03b1498a5ce27ca8da310c69",
+    "data_manifest_sha256": "fd0991e44f06d2c2ae5196307ea1ce2e86f9730c3e38e98ba4a845fae6de4743",
+    "verification_sha256": "37b8ff2609f32ea7f07f7f3e3a39bbccd6e33e3f75d344b72e1682fa9edf6f23"
+  },
+  "config_path": "solutions/v2/config.json"
+}

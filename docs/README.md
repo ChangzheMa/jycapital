@@ -1,6 +1,6 @@
 # 进益资本杯比赛资料
 
-更新日期：**2026-10-10（UTC+08:00）**。本仓库整理 BigQuant 2026 年第二届“进益资本”杯量化因子挑战赛端到端赛道资料，比赛 ID 为 `45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca`。
+更新日期：**2026-10-11（UTC+08:00）**。本仓库整理 BigQuant 2026 年第二届“进益资本”杯量化因子挑战赛端到端赛道资料，比赛 ID 为 `45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca`。
 
 **当前结论：`mock-submission.ipynb` 已在本地和平台正常运行，测试 submission 已通过。** 该结论由用户确认；有效返回格式为 Pandas DataFrame，列顺序为 `["date", "instrument", "factor"]`。Mock 用于验证运行与提交接口，分数不代表模型预测能力。
 
@@ -14,6 +14,9 @@
 | [平台查分技能](../.agents/skills/jycapital-scores/SKILL.md) | 查询 BigQuant 提交的公榜/私榜总分及分项，按请求绑定本地版本并回填；认证仅从本地读取 |
 | [方案版本与评估协议](development.md) | 通用训练/验证/测试划分、统一指标、运行追溯和提交导出 |
 | [v1 深度学习基线](baseline-v1.md) | 版本绑定的数据处理、小型 MLP、训练与提交使用说明 |
+| [v2 四频单股方案](../solutions/v2/README.md) | 四频量价与五档盘口、训练期个股归一化及截面归一化双输入；先处理数据，窗口与模型另议 |
+| [v2 数据预处理结果](../experiments/v2-preprocessing.json) | 已生成 2020—2023 年四频全部时段的 551,954,507 行数据；192 个分区及独立抽样核验通过 |
+| [v2 验证与测试数据结果](../experiments/v2-holdout-preprocessing.json) | 2024 年四频复用冻结训练参数，已生成 146,928,874 行、48 个分区；包含动态历史回退的独立核验通过 |
 | [平台提交目录](../submissions/README.md) | 随 Git 推送的 Notebook、训练/推理脚本、配置和冻结模型权重 |
 | [v1 结果摘要](../experiments/v1-baseline.json) | 本地指标、源代码/模型哈希和导出验证证据 |
 | [运行索引](../experiments/runs.csv)、[提交索引](../experiments/submissions.csv) | 方案运行与待上传提交包的对应关系 |
