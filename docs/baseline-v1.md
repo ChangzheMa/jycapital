@@ -71,6 +71,8 @@ CUDA 安装命令依据 [PyTorch 官方版本安装说明](https://pytorch.org/g
 
 ## 提交
 
-使用 [导出和验证命令](development.md#运行和提交追溯) 生成平铺目录和 ZIP。平台上传唯一的推理 Notebook，并附目录内脚本、模型、配置和依赖声明。公榜入口只加载权重执行推理。
+可直接使用根目录的 [v1 提交目录](../submissions/v1-20261010-s42/README.md)，全部脚本、Notebook、冻结权重和配置随 Git 推送到远程。从远程仓库拉取后，将该目录文件放在平台同一目录，选择唯一的 `v1-submission.ipynb`，并附脚本、模型、配置和依赖声明。公榜入口只加载权重执行推理。
+
+后续使用 [导出和验证命令](development.md#运行和提交追溯) 生成新的平铺提交目录，不生成 ZIP。
 
 依据：[比赛介绍](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)、[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)，获取日期 2026-10-10（UTC+08:00）。平台实际附件协议、官方评分与正式提交结果不由本地验证替代。

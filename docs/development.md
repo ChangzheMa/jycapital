@@ -8,7 +8,7 @@
 
 一个方案可以运行多次。精确版本由方案标识、Git commit、实际源码快照哈希、完整配置和运行标识共同确定。未提交的新增代码也进入源码快照；`git_dirty=true` 如实记录，不能仅凭 Git commit 恢复本次运行。
 
-运行目录位于被 Git 忽略的 `outputs/runs/`。行情、预测、缓存、日志和权重不进入 Git。重要运行应在授权存储范围内另行备份。
+运行目录位于被 Git 忽略的 `outputs/runs/`，保存详细训练记录、预测、缓存和训练 checkpoint。正式提交材料导出到根目录 `submissions/<run_id>/`，其中的脚本、Notebook、配置和冻结推理权重一并进入 Git。行情、凭据和本地 DAI 不进入 Git；完整运行记录应在授权存储范围内另行备份。
 
 ## 通用时间划分
 
@@ -70,11 +70,13 @@
 
 `last.pt` 保存检查与后续开发所需状态；当前命令不提供断点续训入口，重新训练应使用新的运行目录。跨平台/硬件不承诺逐位一致。
 
-导出器从运行源码快照取文件，不混用当前工作区代码。包内有唯一推理 Notebook、训练/推理脚本、完整模型参数、配置、协议、随机种子和依赖声明，不包含行情、预测答案或本地 DAI。
+导出器从运行源码快照取文件，不混用当前工作区代码。提交目录包含唯一推理 Notebook、训练/推理脚本、完整模型参数、配置、协议、随机种子和依赖声明，不包含行情、预测答案或本地 DAI。默认导出到根目录 `submissions/<run_id>/`，不生成压缩包。
 
 ```powershell
-.venv/Scripts/python.exe scripts/export.py --run-dir outputs/runs/v1-20261010-s42 --destination outputs/submissions/v1-20261010-s42
-.venv/Scripts/python.exe scripts/verify-submission.py --run-dir outputs/runs/v1-20261010-s42 --package outputs/submissions/v1-20261010-s42
+.venv/Scripts/python.exe scripts/export.py --run-dir outputs/runs/v1-20261010-s42
+.venv/Scripts/python.exe scripts/verify-submission.py --run-dir outputs/runs/v1-20261010-s42 --package submissions/v1-20261010-s42
 ```
 
-导出包的本地验证与平台运行、正式提交分开记录。平台的附件识别方式和依赖环境仍需实际上传验证，用户负责提交。
+现有目录已冻结，导出器拒绝覆盖；后续运行使用新的运行标识。推送 `submissions/` 后，可从远程仓库拉取 [v1 提交目录](../submissions/v1-20261010-s42/README.md)，将其中材料直接上传平台。`.gitattributes` 对该目录禁用换行转换，保持模型和文件清单中的 SHA-256 在不同操作系统上一致。[提交索引](../experiments/submissions.csv) 记录目录路径及清单哈希。
+
+提交目录的本地验证与平台运行、正式提交分开记录。平台的附件识别方式和依赖环境仍需实际上传验证，用户负责提交。

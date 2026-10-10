@@ -1,0 +1,46 @@
+{
+  "solution_id": "v1",
+  "seed": 42,
+  "data": {
+    "logical_source": "bar5m",
+    "fields": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "volume",
+      "amount"
+    ],
+    "window_bars": 12,
+    "history_days": 20,
+    "exclude_auction_bars": true,
+    "normalization": "causal-window-v1",
+    "clip": 10.0
+  },
+  "model": {
+    "hidden_dims": [
+      64,
+      32
+    ],
+    "activation": "relu",
+    "dropout": 0.1
+  },
+  "training": {
+    "epochs": 12,
+    "batch_size": 8192,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "loss": "huber",
+    "huber_delta": 1.0,
+    "target_scale": 100.0,
+    "target_clip": 0.1,
+    "gradient_clip": 1.0,
+    "patience": 3,
+    "min_delta": 1e-05,
+    "cpu_threads": 4
+  },
+  "inference": {
+    "batch_size": 16384,
+    "backend": "numpy"
+  }
+}

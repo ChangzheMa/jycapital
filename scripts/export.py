@@ -1,10 +1,9 @@
-"""从完成的运行快照导出平铺提交包，不混用当前工作区模型代码。"""
+"""从完成的运行快照导出可由 Git 管理的平铺提交目录。"""
 
 import argparse
 import json
 import shutil
 import sys
-import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,8 +11,9 @@ sys.path.insert(0, str(ROOT / "common"))
 from artifacts import now, read_json, sha256, write_json
 
 
-def export(run, destination):
-    run, destination = Path(run).resolve(), Path(destination).resolve()
+def export(run, destination=None):
+    run = Path(run).resolve()
+    destination = Path(destination).resolve() if destination is not None else ROOT / "submissions" / run.name
     manifest = read_json(run / "manifest.json")
     if manifest["status"] != "complete":
         raise ValueError("只能导出已完成训练和评估的运行")
@@ -49,7 +49,7 @@ def export(run, destination):
 
 来源运行：`{run.name}`。生成日期：{now()}。
 
-将本目录文件放在平台同一目录，选择唯一的 `v1-submission.ipynb` 作为推理 Notebook，并附带全部 `.py`、模型、配置和依赖文件。ZIP 是本地交付容器；平台附件选择方式以界面为准。
+本目录作为 `submissions/` 下的完整提交材料随 Git 推送。拉取仓库后，将本目录文件放在平台同一目录，选择唯一的 `v1-submission.ipynb` 作为推理 Notebook，并附带全部 `.py`、模型、配置和依赖文件。平台附件选择方式以界面为准。
 
 ## 文件用途
 
@@ -78,12 +78,13 @@ python v1_train.py --run-dir reproduced-v1 --config config.json --protocol proto
 
 训练 2020—2023 年，验证 2024 年上半年，测试 2024 年下半年。标签直接使用 `vwap_return`；本地 IC/Rank IC 不包含平台 BARRA 处理，不等同于官方分数。
 
-本提交包由本地训练与评估产生；平台运行、附件识别和正式提交结果待用户实际提交确认。
+本提交目录由本地训练与评估产生；平台运行、附件识别和正式提交结果待用户实际提交确认。
 """
     (destination / "README.md").write_text(readme, encoding="utf-8")
     files = {p.name: sha256(p) for p in sorted(destination.iterdir()) if p.is_file()}
     write_json(destination / "submission-manifest.json", {
         "solution_id": "v1", "run_id": run.name, "exported_at": now(),
+        "layout": "flat-directory",
         "source_git_commit": manifest["source"]["git_commit"],
         "source_git_dirty": manifest["source"]["git_dirty"],
         "source_snapshot_hashes": manifest["source"]["files"],
@@ -92,18 +93,12 @@ python v1_train.py --run-dir reproduced-v1 --config config.json --protocol proto
         "export_script_sha256": sha256(__file__), "files": files,
         "platform_status": "not_submitted",
     })
-    archive = destination.with_suffix(".zip")
-    if archive.exists():
-        raise FileExistsError(archive)
-    with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as zipped:
-        for path in sorted(destination.iterdir()):
-            zipped.write(path, path.name)
-    print(json.dumps({"directory": str(destination), "zip": str(archive), "zip_sha256": sha256(archive)}, ensure_ascii=False))
+    print(json.dumps({"directory": str(destination), "manifest_sha256": sha256(destination / "submission-manifest.json")}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-dir", required=True)
-    parser.add_argument("--destination", required=True)
+    parser.add_argument("--destination", help="默认为仓库根目录的 submissions/<run_id>")
     args = parser.parse_args()
     export(args.run_dir, args.destination)

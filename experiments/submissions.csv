@@ -1,2 +1,2 @@
-﻿submission_id,run_id,status,zip_path,zip_sha256,platform_submission_id,platform_score
-v1-20261010-s42,v1-20261010-s42,prepared_not_submitted,outputs/submissions/v1-20261010-s42.zip,f8dd87c5fd64938ca6ef72c012254e1d4e41020ba5ebaffeb2501c671846eb23,,
+﻿submission_id,run_id,status,directory,manifest_sha256,platform_submission_id,platform_score
+v1-20261010-s42,v1-20261010-s42,prepared_not_submitted,submissions/v1-20261010-s42,5d048c8062e3edb13ec3786a5fa79f2a229237ea3f4d13421be0479f6fef6ebb,,

@@ -11,6 +11,8 @@
 
 示例 Notebook 位于 `examples/`，依赖清单位于 `requirements-local.txt`。根目录 `dai.py` 为仅限本地使用且被 Git 忽略的兼容层，不随仓库分发；实际行情只存于被忽略的 `data/`。相关资料应集中存放，新增文件时同步更新文档索引。
 
+模型方案位于 `solutions/`，通用评估位于 `evaluation/`。平台提交材料保存在根目录 `submissions/<run_id>/`，训练/推理脚本、Notebook、配置与冻结模型权重一并由 Git 管理，直接从远程仓库获取后提交，不生成 ZIP。`outputs/` 保存被忽略的训练记录、缓存和中间产物；行情、凭据和本地 `dai.py` 不进入提交目录。`submissions/` 使用 `.gitattributes` 保持文件原始字节，以便跨平台校验 SHA-256。
+
 当前 `mock-submission.ipynb` 已在本地和平台正常运行，测试 submission 已通过；有效返回列为 `date`、`instrument`、`factor`。
 
 ## 构建、检查与开发命令

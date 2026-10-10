@@ -12,6 +12,7 @@
 | --- | --- |
 | [方案版本与评估协议](development.md) | 通用训练/验证/测试划分、统一指标、运行追溯和提交导出 |
 | [v1 深度学习基线](baseline-v1.md) | 版本绑定的数据处理、小型 MLP、训练与提交使用说明 |
+| [平台提交目录](../submissions/README.md) | 随 Git 推送的 Notebook、训练/推理脚本、配置和冻结模型权重 |
 | [v1 结果摘要](../experiments/v1-baseline.json) | 本地指标、源代码/模型哈希和导出验证证据 |
 | [运行索引](../experiments/runs.csv)、[提交索引](../experiments/submissions.csv) | 方案运行与待上传提交包的对应关系 |
 | [规则与赛程](bigquant-2026-end-to-end/rules.md) | 参赛要求、有效提交格式、评分、赛程及奖励 |
@@ -26,7 +27,7 @@
 | [数据验证摘要](bigquant-2026-end-to-end/data-validation-summary.json) | 行数、字段类型、缺失计数和已匹配的内容哈希 |
 | [提交格式 Mock](../examples/mock-submission.ipynb) | 已通过本地运行、平台运行和测试提交的 Notebook |
 | [本地依赖](../requirements-local.txt) | 本地 Parquet 查询环境的依赖 |
-| [Git 忽略规则](../.gitignore) | 本地兼容层、环境、凭据、行情和运行产物的忽略范围 |
+| [Git 忽略规则](../.gitignore)、[文件字节规则](../.gitattributes) | 本地文件忽略范围及提交材料的跨平台哈希一致性 |
 
 ## 当前可用接口
 

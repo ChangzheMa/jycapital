@@ -1,0 +1,9 @@
+{
+  "best_epoch": 8,
+  "best_validation_rank_ic": 0.06133270889675243,
+  "epochs_completed": 11,
+  "selection_metric": "rank_ic_mean",
+  "model_sha256": "06c374f22569cf902fc8a38d05db3859229c145eaea98dcbba01ef4be573220b",
+  "selected_at": "2026-10-10T03:37:57+08:00",
+  "training_seconds": 36.287
+}
