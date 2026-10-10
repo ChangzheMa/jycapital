@@ -2,7 +2,7 @@
   "solution_id": "v1",
   "run_id": "v1-20261010-s42",
   "status": "local_training_and_evaluation_complete",
-  "platform_status": "not_submitted",
+  "platform_status": "submission_unconfirmed",
   "protocol_id": "local-v1",
   "protocol_sha256": "8290ee005de9fb8d18af41460b6294976f7d6a03015da8d7dd88c6c5c18eb708",
   "config_sha256": "34b9ec45dafe5fd1782b8861b168a9e4a6f4f2828b22f297c06472dfef54af5e",
@@ -218,5 +218,20 @@
         "scope": "本地导出包验证，尚未在平台运行"
       }
     }
-  ]
+  ],
+  "platform_runtime": {
+    "status": "passed",
+    "evidence": "user_confirmation",
+    "confirmed_date": "2026-10-10",
+    "timezone": "UTC+08:00",
+    "scope": "manual_platform_execution",
+    "official_submission_status": "unconfirmed"
+  },
+  "notebook_debug_validation": {
+    "passed": true,
+    "notebook_sha256": "cf9869d697399355b521ba17e8184272192269423fbe6f1710e8721de19f2120",
+    "import_runs_debug": false,
+    "debug_rows": 16000,
+    "scope": "local_execution_of_guarded_debug_cell"
+  }
 }

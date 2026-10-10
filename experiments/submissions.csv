@@ -1,2 +1,2 @@
 ﻿submission_id,run_id,status,directory,manifest_sha256,platform_submission_id,platform_score
-v1-20261010-s42,v1-20261010-s42,prepared_not_submitted,submissions/v1-20261010-s42,5d048c8062e3edb13ec3786a5fa79f2a229237ea3f4d13421be0479f6fef6ebb,,
+v1-20261010-s42,v1-20261010-s42,platform_run_confirmed_submission_unconfirmed,submissions/v1-20261010-s42,84f7fd95df8444c4bc984d051445fded856fed9c94210935349a4ce4a2059ebe,,

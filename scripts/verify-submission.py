@@ -1,7 +1,9 @@
 """验证导出包、阻断推理读标签，并与冻结运行的评估预测比较。"""
 
 import argparse
+import contextlib
 import importlib.util
+import io
 import json
 import sys
 import time
@@ -48,6 +50,8 @@ def verify(package, run):
     for cell in notebook.cells:
         if cell.cell_type == "code":
             exec(compile(cell.source, str(notebooks[0]), "exec"), namespace)
+    if guard.queries != 0 or "factor_data" in namespace:
+        raise AssertionError("导入 Notebook 时不能自动运行调试推理")
     begin = time.perf_counter()
     tests = []
     for split, lo, hi in [("validation", "2024-01-31", "2024-02-02"), ("test", "2024-12-30", "2024-12-31")]:
@@ -65,10 +69,18 @@ def verify(package, run):
     exact = namespace["main"]({"bar5m": "cpt_jyc_2026_stock_bar5m"}, "2024-12-31 10:00:00", "2024-12-31 10:00:00")
     if len(exact) != 1000 or not (exact["date"] == pd.Timestamp("2024-12-31 10:00")).all():
         raise AssertionError("精确分钟边界处理错误")
+    debug_namespace = {"__name__": "__main__", "display": lambda frame: None}
+    with contextlib.redirect_stdout(io.StringIO()):
+        for cell in notebook.cells:
+            if cell.cell_type == "code":
+                exec(compile(cell.source, str(notebooks[0]), "exec"), debug_namespace)
+    debug_result = debug_namespace["factor_data"]
+    pd.testing.assert_frame_equal(debug_result, actual)
     result = {"passed": True, "notebooks": 1, "queries": guard.queries,
               "torch_imported": "torch" in sys.modules, "tests": tests,
+              "import_runs_debug": False, "debug_rows": len(debug_result),
               "exact_minute_rows": len(exact), "seconds": round(time.perf_counter() - begin, 3),
-              "scope": "本地导出包验证，尚未在平台运行"}
+              "scope": "本地提交目录验证；平台运行与正式提交结论另行记录"}
     write_json(run / "submission-validation.json", result)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 

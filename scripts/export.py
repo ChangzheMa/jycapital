@@ -11,6 +11,41 @@ sys.path.insert(0, str(ROOT / "common"))
 from artifacts import now, read_json, sha256, write_json
 
 
+def build_notebook():
+    source = (
+        "def main(datasources, start_date, end_date):\n"
+        "    from v1_predict import main as predict_main\n"
+        "    return predict_main(datasources, start_date, end_date)\n"
+    )
+    debug_source = '''if __name__ == "__main__":
+    import numpy as np
+
+    factor_data = main(
+        datasources={"bar5m": "cpt_jyc_2026_stock_bar5m"},
+        start_date="2024-12-30",
+        end_date="2024-12-31",
+    )
+
+    assert list(factor_data.columns) == ["date", "instrument", "factor"]
+    assert not factor_data.empty
+    assert factor_data["factor"].dtype == np.dtype("float64")
+    assert not factor_data.duplicated(["date", "instrument"]).any()
+    assert np.isfinite(factor_data["factor"]).all()
+
+    print("输出行数：", len(factor_data))
+    print(factor_data.dtypes)
+    display(factor_data.head())
+'''
+    return {
+        "cells": [
+            {"cell_type": "code", "execution_count": None, "id": "v1-inference", "metadata": {}, "outputs": [], "source": source.splitlines(keepends=True)},
+            {"cell_type": "code", "execution_count": None, "id": "v1-debug", "metadata": {}, "outputs": [], "source": debug_source.splitlines(keepends=True)},
+        ],
+        "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}, "language_info": {"name": "python", "version": "3.11"}},
+        "nbformat": 4, "nbformat_minor": 5,
+    }
+
+
 def export(run, destination=None):
     run = Path(run).resolve()
     destination = Path(destination).resolve() if destination is not None else ROOT / "submissions" / run.name
@@ -33,18 +68,8 @@ def export(run, destination=None):
         shutil.copy2(run / "source" / relative, destination / Path(relative).name)
     for name in ["v1-model.json", "config.json", "protocol.json", "selection.json"]:
         shutil.copy2(run / name, destination / name)
-    # 推理 Notebook 仅导入同目录的脚本，所有模型逻辑来自冻结源码。
-    source = (
-        "def main(datasources, start_date, end_date):\n"
-        "    from v1_predict import main as predict_main\n"
-        "    return predict_main(datasources, start_date, end_date)\n"
-    )
-    notebook = {
-        "cells": [{"cell_type": "code", "execution_count": None, "id": "v1-inference", "metadata": {}, "outputs": [], "source": source.splitlines(keepends=True)}],
-        "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}, "language_info": {"name": "python", "version": "3.11"}},
-        "nbformat": 4, "nbformat_minor": 5,
-    }
-    write_json(destination / "v1-submission.ipynb", notebook)
+    # 模型逻辑来自冻结源码；末尾调试单元格只在交互运行时执行。
+    write_json(destination / "v1-submission.ipynb", build_notebook())
     readme = f"""# v1 平台提交材料
 
 来源运行：`{run.name}`。生成日期：{now()}。
@@ -67,6 +92,8 @@ def export(run, destination=None):
 ## 平台运行
 
 在平台已提供 NumPy、Pandas、DAI 的环境中，从本目录调用 Notebook 的 `main`。推理不需要 PyTorch、不联网、不读取标签。不得上传本地 `dai.py` 或行情文件。
+
+Notebook 末尾包含带 `if __name__ == "__main__":` 保护的调试单元格。交互运行时对 2024-12-30 至 2024-12-31 执行推理，检查输出列、`float64` 类型、非空、有限值和键唯一性，显示行数、类型及前五行。作为模块导入时不执行该调试调用。提交的 Notebook 不保存执行输出。
 
 模型使用 5 分钟原始 OHLC、volume、amount 的最近 12 条常规交易 Bar。历史不足时前补归一化后的零；完全无行情历史时也通过同一网络得到有限输出。价格按窗口最后有效 close 归一化，成交量和金额分别按窗口有效均值归一化。没有人工技术指标、外部权重或推理期拟合。
 
