@@ -1,0 +1,7 @@
+interface:
+  display_name: "进益资本实验迭代"
+  short_description: "为进益资本比赛设计实验、训练评估、比较版本并交付改善候选"
+  default_prompt: "使用 $jycapital-experiment 完成一个新方案的设计、训练与验证及测试，与本地验证最优、平台最优（如有）及父版本比较，仅为改善候选导出提交目录并推送远程。"
+
+policy:
+  allow_implicit_invocation: true
