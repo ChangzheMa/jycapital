@@ -65,7 +65,10 @@ class FakeOpener:
 
 
 def page(items, number=1, total=None):
-    return {"page": number, "size": 100, "total": len(items) if total is None else total, "items": items}
+    return {
+        "page": number, "size": 100, "count": len(items),
+        "total": (1 if items else 0) if total is None else total, "items": items,
+    }
 
 
 class PlatformScoresTests(unittest.TestCase):
@@ -102,6 +105,15 @@ class PlatformScoresTests(unittest.TestCase):
         self.assertEqual(result["total"], 2)
         self.assertEqual(result["pages_fetched"], 2)
         self.assertEqual(client.get_page.call_count, 2)
+
+    def test_total_is_pages_and_count_is_current_page_rows(self):
+        client = unittest.mock.Mock()
+        client.get_page.return_value = page([submission("one"), submission("two")])
+        result = scores.query_scores(client)
+        self.assertEqual(result["total"], 2)
+        self.assertEqual(result["total_pages"], 1)
+        self.assertEqual(result["pages_fetched"], 1)
+        self.assertEqual(client.get_page.call_count, 1)
 
     def test_inconsistent_pagination_does_not_return_partial_success(self):
         variants = [

@@ -233,18 +233,25 @@ def project_submission(item):
 def query_scores(client, competition_id=DEFAULT_COMPETITION, page_size=100, max_pages=100):
     items = []
     seen = set()
-    total = None
+    total_pages = None
     for page in range(1, max_pages + 1):
         data = client.get_page(competition_id, page, page_size)
         if not isinstance(data, dict) or not isinstance(data.get("items"), list):
             raise ScoreError("Unknown submissions response structure; expected data.items.")
         page_total = data.get("total")
-        if type(page_total) is not int or page_total < 0 or data.get("page") != page:
-            raise ScoreError("Invalid pagination metadata.")
-        if total is not None and total != page_total:
-            raise ScoreError("Submission count changed during pagination; query again for a consistent list.")
-        total = page_total
         batch = data["items"]
+        page_count = data.get("count")
+        if (type(page_total) is not int or page_total < 0
+                or type(data.get("page")) is not int or data["page"] != page
+                or type(page_count) is not int or page_count != len(batch)):
+            raise ScoreError("Invalid pagination metadata.")
+        if total_pages is not None and total_pages != page_total:
+            raise ScoreError("Page count changed during pagination; query again for a consistent list.")
+        total_pages = page_total
+        # BigQuant's total is the number of pages; count is this page's row count.
+        if ((total_pages == 0 and batch)
+                or (total_pages > 0 and (page > total_pages or not batch))):
+            raise ScoreError("Inconsistent pagination; refusing a partial list.")
         for item in batch:
             if not isinstance(item, dict) or not isinstance(item.get("id"), str) or not item["id"]:
                 raise ScoreError("Submission is missing its platform ID.")
@@ -254,14 +261,13 @@ def query_scores(client, competition_id=DEFAULT_COMPETITION, page_size=100, max_
                 raise ScoreError("Submission belongs to an unexpected competition.")
             seen.add(item["id"])
             items.append(project_submission(item))
-        if len(items) > total or (not batch and len(items) < total):
-            raise ScoreError("Inconsistent pagination; refusing a partial list.")
-        if len(items) == total:
+        if page == total_pages or total_pages == 0:
             return {
                 "source": "bigquant_submissions_api", "endpoint": SUBMISSIONS_URL,
                 "competition_id": competition_id,
                 "queried_at": datetime.now(timezone(timedelta(hours=8))).isoformat(timespec="seconds"),
-                "pages_fetched": page, "total": total, "returned": len(items), "submissions": items,
+                "pages_fetched": page, "total_pages": total_pages,
+                "total": len(items), "returned": len(items), "submissions": items,
             }
     raise ScoreError("Reached --max-pages before retrieving all submissions; no partial results saved.")
 

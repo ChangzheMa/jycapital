@@ -43,7 +43,7 @@
 | `page` | 从 1 开始逐页递增 |
 | `size` | 默认 100，可用 `--page-size` 调整，最多 1,000 |
 
-原请求的 `size=99999` 不作为查全保证。已验证结构为 `{code, reason, message, data: {page, size, total, count, items}}`。脚本依据 `total` 收集并去重校验；遇到重复页、总数变化、缺页、页数上限或未知响应结构会明确失败，不将截断列表报告为全部记录。默认最多 100 页，可用 `--max-pages` 调整；单次网络请求超时默认 30 秒。
+原请求的 `size=99999` 不作为查全保证。已验证结构为 `{code, reason, message, data: {page, size, total, count, items}}`，其中 **`total` 是总页数，`count` 是当前页条数**。脚本逐页取到 `total`，核对 `count == len(items)` 并去重校验，完成后再计算提交总数；遇到重复页、总页数变化、缺页、页数上限或未知响应结构会明确失败，不将截断列表报告为全部记录。默认最多 100 页，可用 `--max-pages` 调整；单次网络请求超时默认 30 秒。
 
 每条记录的已验证字段：
 
@@ -64,6 +64,6 @@
 
 ## 输出与筛选
 
-输出 JSON 包含 `source`、接口地址、比赛 ID、带 UTC+08:00 偏移的 `queried_at`、获取页数、`total`、筛选后的数量和 `submissions`。`--submission-id` 在完整获取后筛选；找不到指定 ID 时返回非零退出码，不输出一个看似成功的空成绩。
+输出 JSON 包含 `source`、接口地址、比赛 ID、带 UTC+08:00 偏移的 `queried_at`、获取页数、`total_pages`、`total`、筛选后的数量和 `submissions`。输出的 `total` 是完整获取后计算的提交总数，接口原始总页数保存在 `total_pages`。`--submission-id` 在完整获取后筛选；找不到指定 ID 时返回非零退出码，不输出一个看似成功的空成绩。
 
 `--output` 写入筛选后的成绩 JSON；未指定时打印到标准输出。脚本不修改实验索引，回填由技能按已确认的本地版本映射执行。
