@@ -4,10 +4,16 @@
 
 **当前结论：`mock-submission.ipynb` 已在本地和平台正常运行，测试 submission 已通过。** 该结论由用户确认；有效返回格式为 Pandas DataFrame，列顺序为 `["date", "instrument", "factor"]`。Mock 用于验证运行与提交接口，分数不代表模型预测能力。
 
+**v1 基线已完成本地训练、评估与提交包导出。** 采用 2020—2023 年训练、2024 年上半年验证、下半年测试；测试集本地 IC 为 0.083549、Rank IC 为 0.068316，预测覆盖率 100%。详细方法与结论见 [v1 基线](baseline-v1.md)。v1 的平台运行与正式提交尚未执行，不沿用 Mock 的平台验证结论。
+
 ## 文档索引
 
 | 文档 | 内容 |
 | --- | --- |
+| [方案版本与评估协议](development.md) | 通用训练/验证/测试划分、统一指标、运行追溯和提交导出 |
+| [v1 深度学习基线](baseline-v1.md) | 版本绑定的数据处理、小型 MLP、训练与提交使用说明 |
+| [v1 结果摘要](../experiments/v1-baseline.json) | 本地指标、源代码/模型哈希和导出验证证据 |
+| [运行索引](../experiments/runs.csv)、[提交索引](../experiments/submissions.csv) | 方案运行与待上传提交包的对应关系 |
 | [规则与赛程](bigquant-2026-end-to-end/rules.md) | 参赛要求、有效提交格式、评分、赛程及奖励 |
 | [数据说明](bigquant-2026-end-to-end/data.md) | 数据表、字段、下载版与云端口径、标签和时间对齐 |
 | [冲突与待确认事项](bigquant-2026-end-to-end/open-questions.md) | 尚未解决的规则差异与正式模型开发问题 |

@@ -1,0 +1,222 @@
+{
+  "solution_id": "v1",
+  "run_id": "v1-20261010-s42",
+  "status": "local_training_and_evaluation_complete",
+  "platform_status": "not_submitted",
+  "protocol_id": "local-v1",
+  "protocol_sha256": "8290ee005de9fb8d18af41460b6294976f7d6a03015da8d7dd88c6c5c18eb708",
+  "config_sha256": "34b9ec45dafe5fd1782b8861b168a9e4a6f4f2828b22f297c06472dfef54af5e",
+  "source_git_commit": "efbb58e7fb8713e2d48264e2927247ad73710811",
+  "source_git_dirty": true,
+  "source_snapshot_hashes": {
+    "common/artifacts.py": "3551e786d4689520d9017139b94f40681d20f3a95f9a94519eb6942bbaf86f3a",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v1.json": "e7eee31f20d445b0e494bccf718eb9d06f31f6f8dea02ab8e24caea8bcdcd9af",
+    "scripts/compare.py": "8d234d3651548a967c761e2a769f3654d5e29307a7ab0e96db441a32a6bd5950",
+    "scripts/export.py": "6dbd838910bee7b06158be43ca1a800bdc0476fece21f3c99ed318925b3bc821",
+    "scripts/verify-submission.py": "4801c138ca16cc92313d9601b46ef324b1219c6a352d60ff3261822e7f8eadc3",
+    "solutions/v1/config.json": "05c60c9af87b2f782f5747a21cb81a51949ef1dbbf056ebd3fb5aef329770bb4",
+    "solutions/v1/requirements-training.txt": "514446fb2aef717b6fd5a2ed431050e6c2ca4ab9dfe26e5e84b6b4cb1487f32f",
+    "solutions/v1/requirements.txt": "5db73403b4bbd20aea6e225a01a510782e6748b76b7b018458607a5f811f888d",
+    "solutions/v1/v1_data.py": "502c5da1b7212520cceaafe03a9777174404781142d2334216ac948a51fa4ac1",
+    "solutions/v1/v1_model.py": "e04726aafb7378378b07f2df83202b32357acce35b41afefdb4a03d6eadc7a8f",
+    "solutions/v1/v1_predict.py": "05d11698137ccb293b34aa0c180593cd4f3514beaeca7aba105c9bcbd2edf798",
+    "solutions/v1/v1_train.py": "3943b9584fba63a978c25cb5e3bdd0a7f879e7d7b1824c48586a59a44603c23e",
+    "tests/test_baseline.py": "f35535d8ffad0b59dcc3c3a454b6a2d22ff383d89c976728a82bc6ced1c0df3f"
+  },
+  "model_sha256": "06c374f22569cf902fc8a38d05db3859229c145eaea98dcbba01ef4be573220b",
+  "seed": 42,
+  "parameters": 6785,
+  "selection": {
+    "best_epoch": 8,
+    "best_validation_rank_ic": 0.06133270889675243,
+    "epochs_completed": 11,
+    "selection_metric": "rank_ic_mean",
+    "model_sha256": "06c374f22569cf902fc8a38d05db3859229c145eaea98dcbba01ef4be573220b",
+    "selected_at": "2026-10-10T03:37:57+08:00",
+    "training_seconds": 36.287
+  },
+  "metrics": {
+    "train": {
+      "protocol_id": "local-v1",
+      "expected_rows": 7760000,
+      "predicted_rows": 7760000,
+      "valid_label_rows": 7742958,
+      "evaluated_rows": 7742958,
+      "coverage": 1.0,
+      "min_cross_section_coverage": 1.0,
+      "coverage_violations": 0,
+      "cross_sections": 7760,
+      "mse": 0.000257305978296601,
+      "mae": 0.0031552312571031657,
+      "zero_prediction_mse": 0.00025739765260368586,
+      "ic_mean": 0.08422500887536799,
+      "ic_std": 0.10812375162587769,
+      "ic_ir": 0.7789686133607122,
+      "ic_valid_cross_sections": 7759,
+      "ic_undefined_cross_sections": 1,
+      "rank_ic_mean": 0.0800816796381734,
+      "rank_ic_std": 0.08829988371206927,
+      "rank_ic_ir": 0.9069284836127982,
+      "rank_ic_valid_cross_sections": 7759,
+      "rank_ic_undefined_cross_sections": 1
+    },
+    "validation": {
+      "protocol_id": "local-v1",
+      "expected_rows": 936000,
+      "predicted_rows": 936000,
+      "valid_label_rows": 935224,
+      "evaluated_rows": 935224,
+      "coverage": 1.0,
+      "min_cross_section_coverage": 1.0,
+      "coverage_violations": 0,
+      "cross_sections": 936,
+      "mse": 2.0562832234820454e-05,
+      "mae": 0.0029988281110087246,
+      "zero_prediction_mse": 2.057265373878181e-05,
+      "ic_mean": 0.07044462729051033,
+      "ic_std": 0.12427956261406674,
+      "ic_ir": 0.56682390739712,
+      "ic_valid_cross_sections": 936,
+      "ic_undefined_cross_sections": 0,
+      "rank_ic_mean": 0.06133269188586244,
+      "rank_ic_std": 0.11880534321859419,
+      "rank_ic_ir": 0.5162452312688852,
+      "rank_ic_valid_cross_sections": 936,
+      "rank_ic_undefined_cross_sections": 0
+    },
+    "test": {
+      "protocol_id": "local-v1",
+      "expected_rows": 1000000,
+      "predicted_rows": 1000000,
+      "valid_label_rows": 998539,
+      "evaluated_rows": 998539,
+      "coverage": 1.0,
+      "min_cross_section_coverage": 1.0,
+      "coverage_violations": 0,
+      "cross_sections": 1000,
+      "mse": 2.20558841885012e-05,
+      "mae": 0.0030913442309400806,
+      "zero_prediction_mse": 2.20817637455184e-05,
+      "ic_mean": 0.08354889956132129,
+      "ic_std": 0.14126366104306262,
+      "ic_ir": 0.5914394327912283,
+      "ic_valid_cross_sections": 1000,
+      "ic_undefined_cross_sections": 0,
+      "rank_ic_mean": 0.06831586201868786,
+      "rank_ic_std": 0.1301015104325115,
+      "rank_ic_ir": 0.5250966094980568,
+      "rank_ic_valid_cross_sections": 1000,
+      "rank_ic_undefined_cross_sections": 0
+    }
+  },
+  "inference_parity": {
+    "rows": 32768,
+    "max_abs_difference": 6.984919309616089e-10,
+    "passed": true
+  },
+  "submission_validation": {
+    "passed": true,
+    "notebooks": 1,
+    "queries": 8,
+    "torch_imported": false,
+    "tests": [
+      {
+        "split": "validation",
+        "start": "2024-01-31",
+        "end": "2024-02-02",
+        "rows": 24000,
+        "max_abs_difference": 0.0
+      },
+      {
+        "split": "test",
+        "start": "2024-12-30",
+        "end": "2024-12-31",
+        "rows": 16000,
+        "max_abs_difference": 0.0
+      }
+    ],
+    "exact_minute_rows": 1000,
+    "seconds": 3.574,
+    "scope": "本地导出包验证，尚未在平台运行"
+  },
+  "full_period_submission_validation": {
+    "passed": true,
+    "period_start": "2024-07-01",
+    "period_end_inclusive": "2024-12-31",
+    "rows": 1000000,
+    "cross_sections": 1000,
+    "inference_seconds": 13.11,
+    "max_abs_difference": 0.0,
+    "torch_imported": false,
+    "scope": "Full six-month inference from local raw data on CPU; not a platform runtime measurement."
+  },
+  "unit_tests": {
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "command": ".venv-training/Scripts/python.exe -m unittest discover -s tests -v"
+  },
+  "submission_validation_environments": [
+    {
+      "environment": "training",
+      "numpy": "1.26.4",
+      "pandas": "2.3.3",
+      "result": {
+        "passed": true,
+        "notebooks": 1,
+        "queries": 8,
+        "torch_imported": false,
+        "tests": [
+          {
+            "split": "validation",
+            "start": "2024-01-31",
+            "end": "2024-02-02",
+            "rows": 24000,
+            "max_abs_difference": 0.0
+          },
+          {
+            "split": "test",
+            "start": "2024-12-30",
+            "end": "2024-12-31",
+            "rows": 16000,
+            "max_abs_difference": 0.0
+          }
+        ],
+        "exact_minute_rows": 1000,
+        "seconds": 3.574,
+        "scope": "本地导出包验证，尚未在平台运行"
+      }
+    },
+    {
+      "environment": "local-query",
+      "numpy": "2.4.6",
+      "pandas": "2.3.3",
+      "result": {
+        "passed": true,
+        "notebooks": 1,
+        "queries": 8,
+        "torch_imported": false,
+        "tests": [
+          {
+            "split": "validation",
+            "start": "2024-01-31",
+            "end": "2024-02-02",
+            "rows": 24000,
+            "max_abs_difference": 9.313225746154785e-10
+          },
+          {
+            "split": "test",
+            "start": "2024-12-30",
+            "end": "2024-12-31",
+            "rows": 16000,
+            "max_abs_difference": 5.820766091346741e-10
+          }
+        ],
+        "exact_minute_rows": 1000,
+        "seconds": 3.517,
+        "scope": "本地导出包验证，尚未在平台运行"
+      }
+    }
+  ]
+}

@@ -11,6 +11,7 @@ Desktop.ini
 
 # Python 本地环境、缓存与 Notebook 检查点
 .venv/
+.venv-training/
 venv/
 __pycache__/
 *.py[cod]
