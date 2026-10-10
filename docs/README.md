@@ -11,6 +11,7 @@
 | 文档 | 内容 |
 | --- | --- |
 | [实验工作流技能](../.agents/skills/jycapital-experiment/SKILL.md) | 本仓库中按实验、训练、评估、比较和提交请求自动使用，无需重复项目名或技能名 |
+| [平台查分技能](../.agents/skills/jycapital-scores/SKILL.md) | 查询 BigQuant 提交的公榜/私榜总分及分项，按请求绑定本地版本并回填；认证仅从本地读取 |
 | [方案版本与评估协议](development.md) | 通用训练/验证/测试划分、统一指标、运行追溯和提交导出 |
 | [v1 深度学习基线](baseline-v1.md) | 版本绑定的数据处理、小型 MLP、训练与提交使用说明 |
 | [平台提交目录](../submissions/README.md) | 随 Git 推送的 Notebook、训练/推理脚本、配置和冻结模型权重 |

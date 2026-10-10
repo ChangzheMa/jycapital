@@ -1,0 +1,7 @@
+interface:
+  display_name: "进益资本平台查分"
+  short_description: "查询 BigQuant 提交成绩与公私榜分项，并按请求对应本地模型版本"
+  default_prompt: "使用 $jycapital-scores 查询进益资本比赛提交的最新平台成绩，区分公榜、私榜和未评分记录。"
+
+policy:
+  allow_implicit_invocation: true
