@@ -1,3 +1,3 @@
-﻿submission_id,run_id,status,directory,manifest_sha256,platform_submission_id,platform_score
-v1-20261010-s42,v1-20261010-s42,platform_run_confirmed_submission_unconfirmed,submissions/v1-20261010-s42,84f7fd95df8444c4bc984d051445fded856fed9c94210935349a4ce4a2059ebe,,
-v2-20261011-s42,v2-20261011-s42,local_verified_not_submitted,submissions/v2-20261011-s42,c2578622002e208c1f76a2d355e4310bbe9eb69a1e73466b791f91c2c251eda4,,
+﻿submission_id,run_id,status,directory,manifest_sha256,platform_submission_id,platform_score,manifest_path
+v1-20261010-s42,v1-20261010-s42,platform_run_confirmed_submission_unconfirmed,submissions/v1-20261010-s42,84f7fd95df8444c4bc984d051445fded856fed9c94210935349a4ce4a2059ebe,,,submissions/v1-20261010-s42/submission-manifest.json
+v2-20261011-s42,v2-20261011-s42,local_verified_not_submitted,submissions/v2-20261011-s42,6f7fb013f83c25c2d0326353e43fe311a2d4eac1670e4d5297bd785a3d9b2d8c,,,experiments/v2-20261011-s42-submission.json

@@ -1,4 +1,0 @@
-numpy>=1.26,<3
-pandas>=2.2,<3
-pyarrow>=14
-duckdb==1.5.6

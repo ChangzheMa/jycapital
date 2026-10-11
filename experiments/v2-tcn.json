@@ -414,20 +414,24 @@
   "implementation_checks": {
     "tests": {
       "command": ".venv-training/Scripts/python.exe -W ignore::DeprecationWarning -m unittest discover -s tests -q",
-      "passed": 59,
+      "passed": 64,
       "failed": 0
     },
     "checked_source_sha256": {
       "tests/test_v2_model.py": "7162949aebf97cc9ade0748259521430b3f55386891d2f593c2cd535d4e70146",
-      "tests/test_v2_predict.py": "e613ae66689ed2cd6c51bd6dda7b87a6f5e6e820ff6fca911e822cfc4a49f19e",
+      "tests/test_v2_predict.py": "7fb68cf7cd92e373368becbde3173ddeb319ec202f81237c2f2e5ea540e83295",
       "tests/test_assess.py": "cdf5098f29e0750894ec4ebda15a8c7534d5cbd57820b6e17a076c8e7108047d",
-      "solutions/v2/v2_predict.py": "13346422bc475bc837200a9732a2ecd0e29d633ef483785e308543b30dfba0bf",
+      "solutions/v2/v2_predict.py": "bc217951274eb9dd031a0e5b422d005232b64097dae7b7689e4062d8d01e3c33",
       "scripts/assess.py": "9febff8e355d97836bff0def331c3ef32701e9ff3cf8fbefbae99d96b97a7e92",
       "tests/test_experiment_monitor.py": "582fe0f37c0ecc6edca49ab2b1ed52db82617a8f1999508f1e8e6535b565d590",
       ".agents/skills/jycapital-experiment/scripts/monitor-run.py": "edaaccfb7afa2a56eae42c3e9d8f73afaacbb000b453232d5e3ae8a63b052663",
-      "scripts/export-v2.py": "4e6944ee1f61798fe2b110dadfcc6450cffa323269cb6e8be2fdd8acadf1ce2a",
-      "scripts/verify-v2-submission.py": "8913f00d0b215ac9c7f21b50e5986833562a534225d35ac9d2f8ba70e2c82b92",
-      "tests/test_export_v2.py": "30c54a626776e87e3c0b750ef32d5747e5e2b24890e84c38090ed58eeb2a91c7"
+      "scripts/export-v2.py": "3d3c7706f16087f0c863fb7ab8414ac3ef9f6f4e8ca758d2b6dc415544e376ba",
+      "scripts/verify-v2-submission.py": "c7505313c2b6e8343b3bd71ccc3765bfe44585a9c83c93e5fcbe74f91129c5bc",
+      "tests/test_export_v2.py": "3db8463d74af486b2f95f386ebd334bb2cdddec48a92eee0e7fc511377e5f6e0",
+      "solutions/v2/v2_reproduce.py": "7935aa1a31f85b99c4929c7201d1437af1b1ac5b6876fd50a4b86842a3ae218b",
+      "solutions/v2/v2_notebook.py": "d181af187d919c7283e3ef545bc2895b7cb93c6f2986e07ba1354044d2f80d28",
+      "solutions/v2/v2_text_artifact.py": "5588f781f86770f897d299b419a69a84d86f5b44dd4345b384ee9b9a42ad5cdc",
+      "tests/test_v2_text_artifact.py": "c60ed912c38ea44b176c6d56c59fd24a8e69e4014e3062b3c604773c45d29a0f"
     },
     "evaluation_key_counts_match_parent": {
       "train": 7760000,
@@ -482,7 +486,7 @@
   },
   "submission_directory": "submissions/v2-20261011-s42",
   "submission_validation": {
-    "checked_at": "2026-10-11T20:46:25+08:00",
+    "checked_at": "2026-10-11T21:46:47+08:00",
     "run_id": "v2-20261011-s42",
     "package": "submissions/v2-20261011-s42",
     "environment": "local_dai_shim",
@@ -495,7 +499,7 @@
     "p99_abs_difference": 0.0,
     "atol": 2e-07,
     "rtol": 0.0001,
-    "seconds": 33.341,
+    "seconds": 32.844,
     "device": "cuda",
     "torch": "2.11.0+cu130",
     "queried_tables": [
@@ -508,10 +512,17 @@
     "notebook_import_queried_data": false,
     "debug_cell_executed": true,
     "model_sha256": "6ba5a3ee10db5db267639071925acab14027eb28995f634285deabb5497604a8",
+    "text_tensor_sha256": "5644fb690626cda95aa9fd05579221fefa2f0b0bfb77fad9a6a33d5d4a211543",
+    "exact_weight_roundtrip": true,
+    "weight_tensors": 124,
+    "training_sources_restored": 13,
+    "isolated_two_file_inference": true,
+    "utf8_text_only": true,
     "passed": true,
     "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
   },
-  "submission_manifest_sha256": "c2578622002e208c1f76a2d355e4310bbe9eb69a1e73466b791f91c2c251eda4",
+  "submission_manifest_sha256": "6f7fb013f83c25c2d0326353e43fe311a2d4eac1670e4d5297bd785a3d9b2d8c",
   "export_purpose": "user_requested_platform_test",
-  "export_reason": "用户明确要求为 v2 生成平台测试材料；本地未超过 v1，保留原判定，用于验证平台运行和官方评分。"
+  "export_reason": "用户要求将 v2 重新打包为尽量少的纯文本附件，用于平台测试；保留本地未超过 v1 的判定。",
+  "submission_manifest_path": "experiments/v2-20261011-s42-submission.json"
 }

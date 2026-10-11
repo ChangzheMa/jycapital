@@ -83,16 +83,22 @@ def warm_history(dai_module, source, normalizer, start, stop):
         current = end
 
 
-def predict(datasources, start_date, end_date, model_dir=None, dai_module=None, device=None):
+def predict(datasources, start_date, end_date, model_dir=None, dai_module=None, device=None, bundle=None):
     if dai_module is None:
         import dai as dai_module
     directory = Path(model_dir) if model_dir else Path(__file__).resolve().parent
-    checkpoint = torch.load(directory / "best.pt", map_location="cpu", weights_only=True)
+    if bundle is not None or (directory / "v2-model.json").is_file():
+        from v2_text_artifact import decode_state, read_bundle
+        bundle = bundle if bundle is not None else read_bundle(directory / "v2-model.json")
+        checkpoint = {"config": bundle["config"], "state_dict": decode_state(bundle)}
+        preprocessing = bundle["preprocessing"]
+    else:
+        checkpoint = torch.load(directory / "best.pt", map_location="cpu", weights_only=True)
+        preprocessing_path = directory / "preprocessing-config.json"
+        if not preprocessing_path.is_file():
+            preprocessing_path = directory / "source/solutions/v2/config.json"
+        preprocessing = json.loads(preprocessing_path.read_text(encoding="utf-8"))
     config = checkpoint["config"]
-    preprocessing_path = directory / "preprocessing-config.json"
-    if not preprocessing_path.is_file():
-        preprocessing_path = directory / "source/solutions/v2/config.json"
-    preprocessing = json.loads(preprocessing_path.read_text(encoding="utf-8"))
     torch.set_num_threads(config["training"]["cpu_threads"])
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
@@ -127,10 +133,13 @@ def predict(datasources, start_date, end_date, model_dir=None, dai_module=None, 
     normalizers = {}
     all_stocks = set(universe.instrument.astype(str))
     for frequency in FREQUENCIES:
-        statistics_path = directory / "normalization" / (frequency + ".json")
-        if not statistics_path.is_file():
-            statistics_path = directory / ("normalization-" + frequency + ".json")
-        statistics = json.loads(statistics_path.read_text(encoding="utf-8"))
+        if bundle is not None:
+            statistics = bundle["normalization"][frequency]
+        else:
+            statistics_path = directory / "normalization" / (frequency + ".json")
+            if not statistics_path.is_file():
+                statistics_path = directory / ("normalization-" + frequency + ".json")
+            statistics = json.loads(statistics_path.read_text(encoding="utf-8"))
         fit_start, fit_stop = (pd.Timestamp(statistics["fit_interval"][k]) for k in ("start", "stop"))
         if start < fit_start:
             raise ValueError("请求早于训练数据起点")

@@ -18,6 +18,7 @@ from v2_data import regular_times
 from v2_model import MultiFrequencyTCN
 from v2_predict import platform_interval, predict
 from v2_preprocessing import FIELDS, FREQUENCIES, moments_from_values, pack_moments
+from v2_text_artifact import FORMAT, encode_state, state_digest
 
 
 class FakeDai:
@@ -93,6 +94,15 @@ class PredictTest(unittest.TestCase):
             for frequency in FREQUENCIES:
                 (directory / "normalization" / (frequency + ".json")).rename(directory / ("normalization-" + frequency + ".json"))
             suffix = predict(sources, "2024-01-04", "2024-01-05", directory, dai, device="cpu")
+            checkpoint = torch.load(directory / "best.pt", map_location="cpu", weights_only=True)
+            text_directory = directory / "text-only"
+            text_directory.mkdir()
+            bundle = {"format": FORMAT, "config": config, "preprocessing": preprocessing,
+                      "normalization": dict.fromkeys(FREQUENCIES, statistics),
+                      "state_dict": encode_state(checkpoint["state_dict"]), "tensor_sha256": state_digest(checkpoint["state_dict"])}
+            (text_directory / "v2-model.json").write_text(json.dumps(bundle), encoding="utf-8")
+            text_result = predict(sources, "2024-01-04", "2024-01-05", text_directory, dai, device="cpu")
+            pd.testing.assert_frame_equal(text_result, suffix, check_exact=True)
             expected = whole.loc[whole.date >= "2024-01-04"].reset_index(drop=True)
             pd.testing.assert_frame_equal(suffix[["date", "instrument"]], expected[["date", "instrument"]])
             np.testing.assert_allclose(suffix.factor, expected.factor, atol=1e-7, rtol=1e-5)

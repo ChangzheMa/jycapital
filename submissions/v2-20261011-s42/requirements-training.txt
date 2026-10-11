@@ -1,3 +1,0 @@
--r requirements.txt
--r requirements-preprocessing.txt
-matplotlib>=3.8,<4

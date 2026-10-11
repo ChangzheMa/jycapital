@@ -6,7 +6,7 @@
 
 **v1 基线已完成本地训练、评估与提交目录导出，用户已确认可在平台运行。** 采用 2020—2023 年训练、2024 年上半年验证、下半年测试；测试集本地 IC 为 0.083549、Rank IC 为 0.068316，预测覆盖率 100%。平台运行结论依据用户于 2026-10-10（UTC+08:00）的确认；正式模型提交结果尚未确认。详细方法与结论见 [v1 基线](baseline-v1.md)。
 
-**v2 四频 TCN 已完成本地训练与评估，未超过 v1。** 验证／测试 Rank IC 分别为 0.030664／0.033902，覆盖率均为 100%；按用户明确要求导出 [v2 平台测试材料](../submissions/v2-20261011-s42/README.md)，本地判定不变，平台运行及官方评分待确认。方法及完整比较见 [v2 方案](../solutions/v2/README.md) 和 [结果摘要](../experiments/v2-tcn.json)。
+**v2 四频 TCN 已完成本地训练与评估，未超过 v1。** 验证／测试 Rank IC 分别为 0.030664／0.033902，覆盖率均为 100%；按用户明确要求导出 [v2 平台 Notebook](../submissions/v2-20261011-s42/v2-submission.ipynb) 和同目录参数 JSON，共两个文本附件。本地判定不变，平台运行及官方评分待确认。方法及完整比较见 [v2 方案](../solutions/v2/README.md) 和 [结果摘要](../experiments/v2-tcn.json)。
 
 ## 文档索引
 
@@ -20,6 +20,7 @@
 | [v2 数据预处理结果](../experiments/v2-preprocessing.json) | 已生成 2020—2023 年四频全部时段的 551,954,507 行数据；192 个分区及独立抽样核验通过 |
 | [v2 验证与测试数据结果](../experiments/v2-holdout-preprocessing.json) | 2024 年四频复用冻结训练参数，已生成 146,928,874 行、48 个分区；包含动态历史回退的独立核验通过 |
 | [v2 模型结果与比较](../experiments/v2-tcn.json) | 第 4 轮权重最优，整体未改善；按用户要求导出平台测试材料，保留本地判定 |
+| [v2 提交清单与验证](../experiments/v2-20261011-s42-submission.json) | 两个文本附件的哈希、权重数值一致性、训练源码恢复和本地入口验证 |
 | [平台提交目录](../submissions/README.md) | 随 Git 推送的 Notebook、训练/推理脚本、配置和冻结模型权重 |
 | [v1 结果摘要](../experiments/v1-baseline.json) | 本地指标、源代码/模型哈希和导出验证证据 |
 | [运行索引](../experiments/runs.csv)、[提交索引](../experiments/submissions.csv) | 方案运行与待上传提交包的对应关系 |

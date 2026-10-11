@@ -72,15 +72,15 @@
 
 `last.pt` 保存检查与后续开发所需状态。v1 不提供断点续训入口；v2 每完成一个训练月份保存状态，可用原命令加 `--resume` 续跑，要求源码、配置和输入指纹一致。重新开始独立实验应使用新的运行目录。跨平台/硬件不承诺逐位一致。
 
-导出器从运行源码快照取文件，不混用当前工作区代码。提交目录包含唯一推理 Notebook、训练/推理脚本、完整模型参数、配置、协议、随机种子和依赖声明，不包含行情、预测答案或本地 DAI。默认导出到根目录 `submissions/<run_id>/`，不生成压缩包。
+导出器从运行源码快照取文件，不混用当前工作区代码。每版提交尽量少文件，全部采用 UTF-8 文本，合并保存唯一推理 Notebook、训练/推理源码、完整数值权重、配置、协议、随机种子和依赖声明；不包含行情、预测答案或本地 DAI。默认导出到根目录 `submissions/<run_id>/`，不生成压缩包。本地二进制 checkpoint 留在 `outputs/`。
 
 ```powershell
 .venv/Scripts/python.exe scripts/export.py --run-dir outputs/runs/v1-20261010-s42
 .venv/Scripts/python.exe scripts/verify-submission.py --run-dir outputs/runs/v1-20261010-s42 --package submissions/v1-20261010-s42
 ```
 
-现有目录已冻结，导出器拒绝覆盖；后续运行使用新的运行标识。推送 `submissions/` 后，可从远程仓库拉取 [v1 提交目录](../submissions/v1-20261010-s42/README.md)，将其中材料直接上传平台。`.gitattributes` 对该目录禁用换行转换，保持模型和文件清单中的 SHA-256 在不同操作系统上一致。[提交索引](../experiments/submissions.csv) 记录目录路径及清单哈希。
+现有目录已冻结，导出器默认拒绝覆盖；用户要求重新打包时，保留 Git 历史或本地备份并重新验证。后续训练使用新的运行标识。推送 `submissions/` 后即可从远程仓库拉取材料并上传平台。`.gitattributes` 对该目录禁用换行转换，保持模型和文件清单中的 SHA-256 在不同操作系统上一致。[提交索引](../experiments/submissions.csv) 记录目录路径、`manifest_path` 及清单哈希。v1 历史清单仍在提交目录内，v2 清单与验证报告合并放在 `experiments/`，无需上传。
 
 提交目录的本地验证与平台运行、正式提交分开记录。平台的附件识别方式和依赖环境仍需实际上传验证，用户负责提交。
 
-v2 使用 [export-v2.py](../scripts/export-v2.py) 和 [verify-v2-submission.py](../scripts/verify-v2-submission.py)，默认仅导出本地改善候选。用户明确要求对未改善版本进行平台测试时，可指定 `--platform-test-reason "用户要求及测试目的"`；导出清单记录用途、理由和原本地判定，不绕过完整性检查。现有 [v2 平台测试目录](../submissions/v2-20261011-s42/README.md) 属于这一情形，不能据此将 v2 标为本地最优。
+v2 使用 [export-v2.py](../scripts/export-v2.py) 和 [verify-v2-submission.py](../scripts/verify-v2-submission.py)，默认仅导出本地改善候选。用户明确要求对未改善版本进行平台测试时，可指定 `--platform-test-reason "用户要求及测试目的"`；导出清单记录用途、理由和原本地判定，不绕过完整性检查。现有 [v2 平台 Notebook](../submissions/v2-20261011-s42/v2-submission.ipynb) 属于这一情形，不能据此将 v2 标为本地最优。

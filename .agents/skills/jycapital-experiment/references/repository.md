@@ -55,13 +55,15 @@ Windows 的当前训练实现已对 PyTorch/NumPy 导入顺序作处理；复用
 
 ## 提交材料
 
-只导出改善候选。直接使用 `submissions/<run_id>/`，不放进 `outputs/`，不生成 ZIP，不覆盖此前目录。
+默认只导出改善候选；用户明确要求的平台测试保留原本地判定。直接使用 `submissions/<run_id>/`，不生成 ZIP。用户要求重新打包时保留旧材料的 Git 历史或本地备份，再更新目录、清单与索引。
 
 提交目录应包含唯一推理 Notebook、完整推理依赖、训练复现代码、完整模型权重/必要预处理状态、配置、随机种子和依赖声明。Notebook 的 `main(datasources, start_date, end_date)` 返回三列 DataFrame：`date` 保留完整分钟，`instrument` 为平台股票代码，`factor` 为有限 `float64`，键 `(date, instrument)` 唯一。
 
 推理使用平台 `dai`；根目录本地 `dai.py` 不上传。通过 `datasources` 获取实际行情表；调试单元格可以显式传入开发表，但应有 `if __name__ == "__main__":` 保护且无保存输出。
 
-当前 v1 的必要材料共 12 个：Notebook、`v1_predict.py`、`v1_data.py`、`v1_model.py`、`v1-model.json`、`v1_train.py`、`artifacts.py`、`baseline_evaluation.py`、`config.json`、`protocol.json` 和两份 requirements。`README.md`、`selection.json`、`submission-manifest.json` 是说明/追溯文件，保留在 Git 中，平台推理不读取它们。以后按实际方案重新识别依赖，不固定文件数量。
+平台附件全部采用 UTF-8 文本，尽量合并为唯一 Notebook 与一个参数 JSON。JSON 可同时保存数值权重、归一化统计、配置及完整训练／推理源码；Notebook 内提供使用说明、依赖和显式训练复现入口。权重保留原始 dtype 与数值精度，导出后逐张量及逐预测核验。不提交 `.pt` 等二进制附件，也不在推理时还原二进制权重文件。
+
+清单及验证记录放在 `experiments/<run_id>-submission.json`，提交索引中的 `manifest_path` 记录位置，减少平台目录文件数。历史 v1 材料仍可使用目录内清单；读取工具按索引定位，不硬编码位置。用户未要求重做的历史提交不自动重新打包。
 
 验证导入路径、真实入口、短区间调试、时间边界、完整评估区间输出和实际使用的推理后端；后端转换时比较预测一致性。对未改动且已验证的部分，复用证据，不无理由重复训练或扩展检查。
 

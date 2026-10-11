@@ -27,6 +27,8 @@
 
 当前 `mock-submission.ipynb` 已在本地和平台正常运行，测试 submission 已通过；有效返回列为 `date`、`instrument`、`factor`。
 
+每版平台提交尽量减少文件数量，全部附件使用 UTF-8 文本。优先合并为一个 Notebook 与一个参数 JSON，权重按完整精度数值保存，不提交 `.pt` 等二进制文件；使用说明、依赖及训练复现入口可内嵌。清单与验证报告可放在 `experiments/`，由提交索引的 `manifest_path` 指向。
+
 ## 构建、检查与开发命令
 
 目前没有应用服务或构建系统。在仓库根目录使用 PowerShell 和项目 Python 环境检查文件及本地兼容层：

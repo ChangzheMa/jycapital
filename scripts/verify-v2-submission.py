@@ -1,10 +1,11 @@
 """核验 v2 冻结提交包，并将原始行情入口与本地评测预测逐键比较。"""
 
 import argparse
-import importlib
 from pathlib import Path
 import re
+import shutil
 import sys
+import tempfile
 import time
 
 import torch
@@ -14,7 +15,13 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "common"))
+sys.path.insert(0, str(ROOT / "solutions/v2"))
 from artifacts import now, read_json, sha256, write_json
+from v2_text_artifact import decode_state
+
+
+def manifest_path(package):
+    return ROOT / "experiments" / (Path(package).name + "-submission.json")
 
 
 class RecordingDai:
@@ -32,30 +39,48 @@ class RecordingDai:
 
 def verify(run, package, start, end, split="test"):
     run, package = Path(run).resolve(), Path(package).resolve()
-    manifest = read_json(package / "submission-manifest.json")
+    manifest = read_json(manifest_path(package))
+    if set(p.name for p in package.iterdir()) != {"v2-submission.ipynb", "v2-model.json"}:
+        raise ValueError("提交目录必须只含 Notebook 和 JSON 两个文本文件")
     for name, digest in manifest["files"].items():
+        (package / name).read_text(encoding="utf-8")
         if sha256(package / name) != digest:
             raise ValueError("提交文件已改变: " + name)
-    if manifest["run_id"] != run.name or sha256(package / "best.pt") != read_json(run / "selection.json")["model_sha256"]:
+    if manifest["run_id"] != run.name or manifest["model_sha256"] != read_json(run / "selection.json")["model_sha256"]:
         raise ValueError("提交包与运行／所选权重不匹配")
+    bundle = read_json(package / "v2-model.json")
+    if sha256(run / "best.pt") != manifest["model_sha256"]:
+        raise ValueError("原始 checkpoint 已改变")
+    original = torch.load(run / "best.pt", map_location="cpu", weights_only=True)
+    restored = decode_state(bundle)
+    if original["config"] != bundle["config"] or original["state_dict"].keys() != restored.keys():
+        raise ValueError("文本权重配置或张量集合不同")
+    for name, tensor in original["state_dict"].items():
+        if tensor.dtype != restored[name].dtype or not torch.equal(tensor, restored[name]):
+            raise ValueError("文本权重与原 checkpoint 不同: " + name)
+    if bundle["preprocessing"] != read_json(run / "source/solutions/v2/config.json"):
+        raise ValueError("预处理配置不同")
+    for frequency, statistics in bundle["normalization"].items():
+        if statistics != read_json(run / "normalization" / (frequency + ".json")):
+            raise ValueError("冻结归一化统计量不同")
     notebooks = list(package.glob("*.ipynb"))
     if len(notebooks) != 1:
         raise ValueError("必须恰好包含一个推理 Notebook")
     notebook = read_json(notebooks[0])
-    cells = notebook["cells"]
+    cells = [c for c in notebook["cells"] if c["cell_type"] == "code"]
     if len(cells) != 2 or any(c.get("outputs") or c.get("execution_count") is not None for c in cells):
         raise ValueError("Notebook 单元格或输出不符合提交约定")
     if 'if __name__ == "__main__":' not in "".join(cells[-1]["source"]):
         raise ValueError("调试单元格缺少主程序保护")
     import dai
     recorder = RecordingDai(dai)
-    sys.path.insert(0, str(package))
-    # 独立命令中也显式清理同名模块，防止误用工作区实现。
-    for name in ("v2_predict", "v2_data", "v2_model", "v2_preprocessing"):
-        sys.modules.pop(name, None)
     previous_dai = sys.modules.get("dai")
     sys.modules["dai"] = recorder
-    namespace = {"__name__": "submission_import_check"}
+    isolated = tempfile.TemporaryDirectory()
+    isolated_path = Path(isolated.name)
+    for name in manifest["files"]:
+        shutil.copyfile(package / name, isolated_path / name)
+    namespace = {"__name__": "submission_import_check", "__file__": str(isolated_path / notebooks[0].name)}
     try:
         for cell in cells:
             exec(compile("".join(cell["source"]), str(notebooks[0]), "exec"), namespace)
@@ -71,10 +96,19 @@ def verify(run, package, start, end, split="test"):
         else:
             result = namespace["main"](sources, start, end)
         seconds = time.perf_counter() - begin
-        predictor = importlib.import_module("v2_predict")
+        _, modules = namespace["_runtime"]()
+        predictor = modules["v2_predict"]
         lo, hi = predictor.platform_interval(start, end)
+        if set(p.name for p in isolated_path.iterdir()) != set(manifest["files"]):
+            raise AssertionError("推理生成了额外附件")
+        helpers = namespace["_load_modules"](bundle, ["solutions/v2/v2_reproduce.py"])
+        reproduced = helpers["v2_reproduce"].restore_sources(bundle, isolated_path / "reproduced")
+        for relative in bundle["training_sources"]:
+            if sha256(reproduced / relative) != bundle["sources"][relative]["sha256"]:
+                raise AssertionError("训练源码恢复不一致: " + relative)
     finally:
         sys.modules["dai"] = previous_dai
+        isolated.cleanup()
     if list(result.columns) != ["date", "instrument", "factor"] or result.factor.dtype != np.dtype("float64"):
         raise AssertionError("输出列或 factor 类型错误")
     if result.empty or result.duplicated(["date", "instrument"]).any() or result[["date", "instrument"]].isna().any().any():
@@ -96,13 +130,15 @@ def verify(run, package, start, end, split="test"):
               "seconds": round(seconds, 3), "device": "cuda" if torch.cuda.is_available() else "cpu",
               "torch": torch.__version__, "queried_tables": sorted(recorder.tables),
               "notebook_import_queried_data": False, "debug_cell_executed": debug_executed,
-              "model_sha256": sha256(package / "best.pt"), "passed": True,
+              "model_sha256": manifest["model_sha256"], "text_tensor_sha256": bundle["tensor_sha256"],
+              "exact_weight_roundtrip": True, "weight_tensors": len(restored),
+              "training_sources_restored": len(bundle["training_sources"]),
+              "isolated_two_file_inference": True, "utf8_text_only": True, "passed": True,
               "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"}
-    write_json(package / "submission-validation.json", report)
     write_json(run / "submission-validation.json", report)
-    manifest.update(validation_status="local_passed", verification_script_sha256=sha256(__file__),
-                    files={p.name: sha256(p) for p in sorted(package.iterdir()) if p.is_file() and p.name != "submission-manifest.json"})
-    write_json(package / "submission-manifest.json", manifest)
+    manifest.update(validation_status="local_passed", verification_script_sha256=sha256(__file__), validation=report)
+    write_json(manifest_path(package), manifest)
+    write_json(run / "text-submission-manifest.json", manifest)
     return report
 
 
@@ -110,18 +146,23 @@ def record(run, package, report):
     index_path = ROOT / "experiments/submissions.csv"
     index = pd.read_csv(index_path, dtype=str, keep_default_na=False)
     row = {"submission_id": run.name, "run_id": run.name, "status": "local_verified_not_submitted",
-           "directory": package.relative_to(ROOT).as_posix(), "manifest_sha256": sha256(package / "submission-manifest.json"),
-           "platform_submission_id": None, "platform_score": None}
+           "directory": package.relative_to(ROOT).as_posix(), "manifest_sha256": sha256(manifest_path(package)),
+           "platform_submission_id": None, "platform_score": None,
+           "manifest_path": manifest_path(package).relative_to(ROOT).as_posix()}
     index = pd.concat([index.loc[index.submission_id != run.name], pd.DataFrame([row])], ignore_index=True)
+    index["manifest_path"] = index["manifest_path"].fillna("")
+    missing = index.manifest_path == ""
+    index.loc[missing, "manifest_path"] = index.loc[missing, "directory"] + "/submission-manifest.json"
     index.to_csv(index_path, index=False, encoding="utf-8-sig")
     summary_path = ROOT / "experiments/v2-tcn.json"
     result = read_json(summary_path) if summary_path.is_file() else read_json(run / "comparison.json")
     if result["run_id"] != run.name:
         result = read_json(run / "comparison.json")
-    manifest = read_json(package / "submission-manifest.json")
+    manifest = read_json(manifest_path(package))
     result.update(exported=True, submission_directory=row["directory"], submission_validation=report,
                   submission_manifest_sha256=row["manifest_sha256"],
-                  export_purpose=manifest["export_purpose"], export_reason=manifest["export_reason"])
+                  export_purpose=manifest["export_purpose"], export_reason=manifest["export_reason"],
+                  submission_manifest_path=row["manifest_path"])
     write_json(summary_path, result)
 
 

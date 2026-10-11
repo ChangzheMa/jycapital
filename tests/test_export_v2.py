@@ -6,6 +6,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+import torch
+
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("export_v2", ROOT / "scripts/export-v2.py")
 exporter = importlib.util.module_from_spec(spec)
@@ -21,8 +23,9 @@ class ExportV2Test(unittest.TestCase):
         self.run.mkdir(parents=True)
         self.destination = self.root / "submissions/v2-test"
         write, digest = exporter.write_json, exporter.sha256
-        for name in ("best.pt", "config.json", "protocol.json"):
+        for name in ("config.json", "protocol.json"):
             write(self.run / name, {})
+        torch.save({"config": {}, "state_dict": {"weight": torch.tensor([0.125, -0.5])}}, self.run / "best.pt")
         selection = {"model_sha256": digest(self.run / "best.pt"), "best_epoch": 4}
         write(self.run / "selection.json", selection)
         training = self.root / "preprocessing"
@@ -36,14 +39,15 @@ class ExportV2Test(unittest.TestCase):
         write(self.run / "data-manifest.json", {"preprocessing": {"train": {
             "path": str(training), "manifest_sha256": digest(training / "manifest.json")}}})
         core = ["v2_preprocessing.py", "v2_prepare.py", "v2_apply.py", "v2_data.py", "v2_model.py", "v2_train.py",
-                "config.json", "requirements.txt"]
+                "config.json", "requirements.txt", "requirements-training.txt"]
         files = {}
         for relative in ["solutions/v2/" + name for name in core] + ["common/artifacts.py", "evaluation/baseline_evaluation.py"]:
             write(self.run / "source" / relative, {})
             write(self.root / relative, {})
             files[relative] = digest(self.run / "source" / relative)
-        for name in ("v2_predict.py", "v2_reproduce.py", "requirements-inference.txt"):
+        for name in ("v2_predict.py", "v2_reproduce.py", "v2_text_artifact.py", "requirements-inference.txt"):
             write(self.root / "solutions/v2" / name, {})
+        (self.root / "solutions/v2/v2_notebook.py").write_bytes((ROOT / "solutions/v2/v2_notebook.py").read_bytes())
         self.manifest = {"status": "complete", "solution_id": "v2", "selection": selection,
                          "source": {"files": files, "git_commit": "source-commit", "git_dirty": True}}
         write(self.run / "manifest.json", self.manifest)
@@ -64,13 +68,14 @@ class ExportV2Test(unittest.TestCase):
         original = (self.run / "comparison.json").read_bytes()
         reason = "用户要求验证平台运行及评分"
         package = exporter.export(self.run, platform_test_reason=reason)
-        manifest = exporter.read_json(package / "submission-manifest.json")
+        manifest = exporter.read_json(exporter.manifest_path(package))
         self.assertEqual(manifest["export_purpose"], "user_requested_platform_test")
         self.assertEqual(manifest["export_reason"], reason)
         self.assertFalse(manifest["local_candidate"])
         self.assertEqual((self.run / "comparison.json").read_bytes(), original)
-        self.assertFalse(exporter.read_json(package / "local-evaluation.json")["candidate"])
-        self.assertIn("未达到本地改善条件", (package / "README.md").read_text(encoding="utf-8"))
+        self.assertFalse(exporter.read_json(package / "v2-model.json")["metadata"]["candidate"])
+        self.assertEqual({p.name for p in package.iterdir()}, {"v2-submission.ipynb", "v2-model.json"})
+        self.assertIn("未达到本地改善条件", (package / "v2-submission.ipynb").read_text(encoding="utf-8"))
         for name, digest in manifest["files"].items():
             self.assertEqual(exporter.sha256(package / name), digest)
 
