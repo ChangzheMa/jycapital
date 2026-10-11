@@ -6,17 +6,20 @@
 
 **v1 基线已完成本地训练、评估与提交目录导出，用户已确认可在平台运行。** 采用 2020—2023 年训练、2024 年上半年验证、下半年测试；测试集本地 IC 为 0.083549、Rank IC 为 0.068316，预测覆盖率 100%。平台运行结论依据用户于 2026-10-10（UTC+08:00）的确认；正式模型提交结果尚未确认。详细方法与结论见 [v1 基线](baseline-v1.md)。
 
+**v2 四频 TCN 已完成本地训练与评估，未超过 v1。** 验证／测试 Rank IC 分别为 0.030664／0.033902，覆盖率均为 100%；按用户明确要求导出 [v2 平台测试材料](../submissions/v2-20261011-s42/README.md)，本地判定不变，平台运行及官方评分待确认。方法及完整比较见 [v2 方案](../solutions/v2/README.md) 和 [结果摘要](../experiments/v2-tcn.json)。
+
 ## 文档索引
 
 | 文档 | 内容 |
 | --- | --- |
-| [实验工作流技能](../.agents/skills/jycapital-experiment/SKILL.md) | 本仓库中按实验、训练、评估、比较和提交请求自动使用，无需重复项目名或技能名 |
+| [实验工作流技能](../.agents/skills/jycapital-experiment/SKILL.md) | 实验、评估、比较与提交工作流；持续任务由后台监控，仅按小时、询问、结束或异常唤醒检查 |
 | [平台查分技能](../.agents/skills/jycapital-scores/SKILL.md) | 查询 BigQuant 提交的公榜/私榜总分及分项，按请求绑定本地版本并回填；认证仅从本地读取 |
 | [方案版本与评估协议](development.md) | 通用训练/验证/测试划分、统一指标、运行追溯和提交导出 |
 | [v1 深度学习基线](baseline-v1.md) | 版本绑定的数据处理、小型 MLP、训练与提交使用说明 |
-| [v2 四频单股方案](../solutions/v2/README.md) | 四频量价与五档盘口、训练期个股归一化及截面归一化双输入；先处理数据，窗口与模型另议 |
+| [v2 四频单股方案](../solutions/v2/README.md) | 四频量价与五档盘口的 z/c 双输入，常规交易窗口、缺失掩码、时间编码与四分支因果 TCN |
 | [v2 数据预处理结果](../experiments/v2-preprocessing.json) | 已生成 2020—2023 年四频全部时段的 551,954,507 行数据；192 个分区及独立抽样核验通过 |
 | [v2 验证与测试数据结果](../experiments/v2-holdout-preprocessing.json) | 2024 年四频复用冻结训练参数，已生成 146,928,874 行、48 个分区；包含动态历史回退的独立核验通过 |
+| [v2 模型结果与比较](../experiments/v2-tcn.json) | 第 4 轮权重最优，整体未改善；按用户要求导出平台测试材料，保留本地判定 |
 | [平台提交目录](../submissions/README.md) | 随 Git 推送的 Notebook、训练/推理脚本、配置和冻结模型权重 |
 | [v1 结果摘要](../experiments/v1-baseline.json) | 本地指标、源代码/模型哈希和导出验证证据 |
 | [运行索引](../experiments/runs.csv)、[提交索引](../experiments/submissions.csv) | 方案运行与待上传提交包的对应关系 |

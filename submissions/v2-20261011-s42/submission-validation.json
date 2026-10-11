@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-10-11T20:46:25+08:00",
+  "run_id": "v2-20261011-s42",
+  "package": "submissions/v2-20261011-s42",
+  "environment": "local_dai_shim",
+  "start": "2024-12-30 00:00:00",
+  "stop_exclusive": "2025-01-01 00:00:00",
+  "reference_split": "test",
+  "rows": 16000,
+  "coverage_vs_reference": 1.0,
+  "max_abs_difference": 0.0,
+  "p99_abs_difference": 0.0,
+  "atol": 2e-07,
+  "rtol": 0.0001,
+  "seconds": 33.341,
+  "device": "cuda",
+  "torch": "2.11.0+cu130",
+  "queried_tables": [
+    "cpt_jyc_2026_instruments",
+    "cpt_jyc_2026_stock_bar15m",
+    "cpt_jyc_2026_stock_bar1m",
+    "cpt_jyc_2026_stock_bar30m",
+    "cpt_jyc_2026_stock_bar5m"
+  ],
+  "notebook_import_queried_data": false,
+  "debug_cell_executed": true,
+  "model_sha256": "6ba5a3ee10db5db267639071925acab14027eb28995f634285deabb5497604a8",
+  "passed": true,
+  "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
+}
