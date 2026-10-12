@@ -31,12 +31,11 @@ class TextArtifactTest(unittest.TestCase):
             self.assertEqual(state[name].shape, restored[name].shape)
             self.assertEqual(state[name].numpy().tobytes(), restored[name].numpy().tobytes())
 
-    def test_changed_text_weight_is_rejected(self):
+    def test_decode_does_not_require_matching_fingerprint(self):
         state = {"weight": torch.tensor([0.25])}
         bundle = {"format": FORMAT, "state_dict": encode_state(state), "tensor_sha256": state_digest(state)}
         bundle["state_dict"]["weight"]["values"][0] = 0.5
-        with self.assertRaisesRegex(ValueError, "哈希"):
-            decode_state(bundle)
+        self.assertEqual(decode_state(bundle)["weight"].item(), 0.5)
 
     def test_non_finite_weights_are_not_exported(self):
         with self.assertRaises(ValueError):

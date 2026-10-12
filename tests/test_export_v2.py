@@ -78,6 +78,17 @@ class ExportV2Test(unittest.TestCase):
         self.assertIn("未达到本地改善条件", (package / "v2-submission.ipynb").read_text(encoding="utf-8"))
         for name, digest in manifest["files"].items():
             self.assertEqual(exporter.sha256(package / name), digest)
+        notebook = exporter.read_json(package / "v2-submission.ipynb")
+        namespace = {"__name__": "submission_import", "__file__": str(package / "v2-submission.ipynb")}
+        for cell in notebook["cells"]:
+            if cell["cell_type"] == "code":
+                exec("".join(cell["source"]), namespace)
+        model_path = package / "v2-model.json"
+        raw = model_path.read_bytes()
+        expected = exporter.read_json(model_path)
+        for variant in (raw.replace(b"\n", b"\r\n"), raw.rstrip(b"\n"), b"\xef\xbb\xbf" + raw):
+            model_path.write_bytes(variant)
+            self.assertEqual(namespace["_read_bundle"](), expected)
 
     def test_platform_test_still_rejects_changed_weights(self):
         (self.run / "best.pt").write_bytes(b"changed weights")

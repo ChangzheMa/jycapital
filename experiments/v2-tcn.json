@@ -425,13 +425,13 @@
       "scripts/assess.py": "9febff8e355d97836bff0def331c3ef32701e9ff3cf8fbefbae99d96b97a7e92",
       "tests/test_experiment_monitor.py": "582fe0f37c0ecc6edca49ab2b1ed52db82617a8f1999508f1e8e6535b565d590",
       ".agents/skills/jycapital-experiment/scripts/monitor-run.py": "edaaccfb7afa2a56eae42c3e9d8f73afaacbb000b453232d5e3ae8a63b052663",
-      "scripts/export-v2.py": "3d3c7706f16087f0c863fb7ab8414ac3ef9f6f4e8ca758d2b6dc415544e376ba",
+      "scripts/export-v2.py": "3a993153cf6b2c581ca61b075242824bdd1d5adfe5a05fc44a8c4d3f90a1eb7f",
       "scripts/verify-v2-submission.py": "c7505313c2b6e8343b3bd71ccc3765bfe44585a9c83c93e5fcbe74f91129c5bc",
-      "tests/test_export_v2.py": "3db8463d74af486b2f95f386ebd334bb2cdddec48a92eee0e7fc511377e5f6e0",
-      "solutions/v2/v2_reproduce.py": "7935aa1a31f85b99c4929c7201d1437af1b1ac5b6876fd50a4b86842a3ae218b",
-      "solutions/v2/v2_notebook.py": "d181af187d919c7283e3ef545bc2895b7cb93c6f2986e07ba1354044d2f80d28",
-      "solutions/v2/v2_text_artifact.py": "5588f781f86770f897d299b419a69a84d86f5b44dd4345b384ee9b9a42ad5cdc",
-      "tests/test_v2_text_artifact.py": "c60ed912c38ea44b176c6d56c59fd24a8e69e4014e3062b3c604773c45d29a0f"
+      "tests/test_export_v2.py": "83deab4505a6c5510d640a08e5966880e65ed26555181f9c5454966e24394857",
+      "solutions/v2/v2_reproduce.py": "7e882a7a9fdb9fcc740a0eff796f3bfa0146586c8c145c531165275f80fbef46",
+      "solutions/v2/v2_notebook.py": "5dc292c0e55d681c5cbacec8b5d25a42d67bac605246c8a479e1cd9292698b3f",
+      "solutions/v2/v2_text_artifact.py": "5a9be8686ae1d79306865c9e60b5e950208e93afb9776a045682635d0351d676",
+      "tests/test_v2_text_artifact.py": "8acd6fd8f35a4f3d9771a953f302886e40f14db6071406a1b9951f3dc918df75"
     },
     "evaluation_key_counts_match_parent": {
       "train": 7760000,
@@ -486,7 +486,7 @@
   },
   "submission_directory": "submissions/v2-20261011-s42",
   "submission_validation": {
-    "checked_at": "2026-10-11T21:46:47+08:00",
+    "checked_at": "2026-10-12T22:28:06+08:00",
     "run_id": "v2-20261011-s42",
     "package": "submissions/v2-20261011-s42",
     "environment": "local_dai_shim",
@@ -499,7 +499,7 @@
     "p99_abs_difference": 0.0,
     "atol": 2e-07,
     "rtol": 0.0001,
-    "seconds": 32.844,
+    "seconds": 23.394,
     "device": "cuda",
     "torch": "2.11.0+cu130",
     "queried_tables": [
@@ -521,7 +521,7 @@
     "passed": true,
     "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
   },
-  "submission_manifest_sha256": "6f7fb013f83c25c2d0326353e43fe311a2d4eac1670e4d5297bd785a3d9b2d8c",
+  "submission_manifest_sha256": "2befea88e356fc2b7451e591c5b0719829c8a8afb9ccc797b791e027dff19e24",
   "export_purpose": "user_requested_platform_test",
   "export_reason": "用户要求将 v2 重新打包为尽量少的纯文本附件，用于平台测试；保留本地未超过 v1 的判定。",
   "submission_manifest_path": "experiments/v2-20261011-s42-submission.json"

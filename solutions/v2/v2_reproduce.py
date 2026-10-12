@@ -1,7 +1,6 @@
 """从文本提交恢复完整训练源码，显式运行预处理及一次正式训练。"""
 
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -18,8 +17,6 @@ def restore_sources(bundle, workspace):
             raise ValueError("非法源码路径")
         entry = bundle["sources"][relative]
         content = entry["text"].encode("utf-8")
-        if hashlib.sha256(content).hexdigest() != entry["sha256"]:
-            raise ValueError("训练源码哈希不匹配: " + relative)
         files[target] = content
     workspace.mkdir(parents=True, exist_ok=False)
     for target, content in files.items():

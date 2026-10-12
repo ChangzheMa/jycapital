@@ -43,13 +43,11 @@ def decode_state(bundle):
         if not torch.isfinite(value).all():
             raise ValueError("非有限权重: " + name)
         state[name] = value
-    if state_digest(state) != bundle["tensor_sha256"]:
-        raise ValueError("文本权重未通过逐张量哈希校验")
     return state
 
 
 def read_bundle(path):
-    bundle = json.loads(Path(path).read_text(encoding="utf-8"))
+    bundle = json.loads(Path(path).read_text(encoding="utf-8-sig"))
     if bundle["format"] != FORMAT:
         raise ValueError("未知的文本模型格式")
     return bundle

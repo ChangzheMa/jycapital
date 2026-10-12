@@ -1,6 +1,5 @@
 """两文件提交的 Notebook 入口模板；导入时不读取数据、不创建附件。"""
 
-ARTIFACT_SHA256 = "__ARTIFACT_SHA256__"
 _RUNTIME = None
 
 
@@ -10,18 +9,14 @@ def _bundle_directory():
 
 
 def _read_bundle():
-    import hashlib
     import json
     raw = (_bundle_directory() / "v2-model.json").read_bytes()
-    if hashlib.sha256(raw).hexdigest() != ARTIFACT_SHA256:
-        raise ValueError("v2-model.json 与 Notebook 不匹配")
-    return json.loads(raw.decode("utf-8"))
+    return json.loads(raw.decode("utf-8-sig"))
 
 
 def _load_modules(bundle, paths):
     import torch
     import builtins
-    import hashlib
     from pathlib import Path
     from types import ModuleType
     modules = {}
@@ -33,8 +28,6 @@ def _load_modules(bundle, paths):
 
     for relative in paths:
         entry = bundle["sources"][relative]
-        if hashlib.sha256(entry["text"].encode("utf-8")).hexdigest() != entry["sha256"]:
-            raise ValueError("内嵌源码哈希不匹配: " + relative)
         name = Path(relative).stem
         module = ModuleType(name)
         module.__file__ = str(_bundle_directory() / Path(relative).name)

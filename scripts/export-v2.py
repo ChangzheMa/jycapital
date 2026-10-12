@@ -23,9 +23,8 @@ def source_entry(path):
     return {"text": Path(path).read_bytes().decode("utf-8"), "sha256": sha256(path)}
 
 
-def notebook(artifact_sha256, description):
+def notebook(description):
     entry = (ROOT / "solutions/v2/v2_notebook.py").read_text(encoding="utf-8")
-    entry = entry.replace("__ARTIFACT_SHA256__", artifact_sha256)
     debug = '''if __name__ == "__main__":
     result = main(
         {f: "cpt_jyc_2026_stock_" + f for f in ["bar1m", "bar5m", "bar15m", "bar30m"]},
@@ -134,8 +133,7 @@ JSON 包含完整数值权重、四频统计量、配置、依赖及训练／推
 """
     destination.mkdir(parents=True)
     write_json(destination / "v2-model.json", bundle)
-    artifact_sha = sha256(destination / "v2-model.json")
-    write_json(destination / "v2-submission.ipynb", notebook(artifact_sha, description))
+    write_json(destination / "v2-submission.ipynb", notebook(description))
     report = {
         "solution_id": "v2", "run_id": run.name, "exported_at": now(), "layout": "two-text-files",
         "source_git_commit": manifest["source"]["git_commit"], "source_git_dirty": manifest["source"]["git_dirty"],
