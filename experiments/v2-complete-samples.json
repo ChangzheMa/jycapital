@@ -1,0 +1,2302 @@
+{
+  "source_run_id": "v2-20261011-s42",
+  "scope": "full_windows_all_36_raw_fields_and_all_72_normalized_values",
+  "rules": {
+    "window_bars": {
+      "bar1m": 60,
+      "bar5m": 24,
+      "bar15m": 16,
+      "bar30m": 16
+    },
+    "history_days": 20,
+    "price_valid": "finite_and_strictly_positive",
+    "quantity_valid": "finite_and_nonnegative",
+    "missing_bar": "discard_sample_preserve_regular_grid",
+    "denominators": "all_universe_keys_and_finite_admissible_label_keys",
+    "normalization": "original_frozen_v2_parameters_and_stock_pool_not_refitted"
+  },
+  "splits": {
+    "train": {
+      "total": {
+        "all_keys": 7760000,
+        "finite_label": 7742958
+      },
+      "raw_kept": {
+        "all_keys": 5507043,
+        "finite_label": 5507040
+      },
+      "raw_discarded": {
+        "all_keys": 2252957,
+        "finite_label": 2235918
+      },
+      "normalized_kept": {
+        "all_keys": 5507043,
+        "finite_label": 5507040
+      },
+      "normalized_discarded": {
+        "all_keys": 2252957,
+        "finite_label": 2235918
+      },
+      "raw_kept_but_normalized_discarded": {
+        "all_keys": 0,
+        "finite_label": 0
+      },
+      "reasons_overlapping": {
+        "insufficient_history": {
+          "all_keys": 16000,
+          "finite_label": 15976
+        },
+        "missing_bar": {
+          "all_keys": 37087,
+          "finite_label": 29391
+        },
+        "invalid_fields": {
+          "all_keys": 2211884,
+          "finite_label": 2202492
+        },
+        "normalization_extra": {
+          "all_keys": 0,
+          "finite_label": 0
+        }
+      },
+      "reasons_exclusive": {
+        "insufficient_history": {
+          "all_keys": 16000,
+          "finite_label": 15976
+        },
+        "missing_bar_after_history": {
+          "all_keys": 37072,
+          "finite_label": 29391
+        },
+        "invalid_fields_after_history_and_presence": {
+          "all_keys": 2199885,
+          "finite_label": 2190551
+        }
+      },
+      "per_frequency_discarded": {
+        "bar1m": {
+          "all_keys": 2051857,
+          "finite_label": 2034818
+        },
+        "bar5m": {
+          "all_keys": 191107,
+          "finite_label": 174284
+        },
+        "bar15m": {
+          "all_keys": 248676,
+          "finite_label": 231852
+        },
+        "bar30m": {
+          "all_keys": 363308,
+          "finite_label": 346478
+        }
+      },
+      "per_field_affected": {
+        "open": {
+          "all_keys": 13358,
+          "finite_label": 4238
+        },
+        "high": {
+          "all_keys": 13358,
+          "finite_label": 4238
+        },
+        "low": {
+          "all_keys": 13358,
+          "finite_label": 4238
+        },
+        "close": {
+          "all_keys": 13358,
+          "finite_label": 4238
+        },
+        "volume": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "amount": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_price1": {
+          "all_keys": 238635,
+          "finite_label": 229485
+        },
+        "ask_price2": {
+          "all_keys": 2137335,
+          "finite_label": 2127947
+        },
+        "ask_price3": {
+          "all_keys": 2140647,
+          "finite_label": 2131265
+        },
+        "ask_price4": {
+          "all_keys": 2144319,
+          "finite_label": 2134937
+        },
+        "ask_price5": {
+          "all_keys": 2147709,
+          "finite_label": 2138321
+        },
+        "bid_price1": {
+          "all_keys": 90376,
+          "finite_label": 81224
+        },
+        "bid_price2": {
+          "all_keys": 2017460,
+          "finite_label": 2008068
+        },
+        "bid_price3": {
+          "all_keys": 2021752,
+          "finite_label": 2012366
+        },
+        "bid_price4": {
+          "all_keys": 2025067,
+          "finite_label": 2015675
+        },
+        "bid_price5": {
+          "all_keys": 2028034,
+          "finite_label": 2018642
+        },
+        "ask_volume1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders5": {
+          "all_keys": 0,
+          "finite_label": 0
+        }
+      },
+      "cross_sections": {
+        "total": 7760,
+        "min_coverage": 0.0,
+        "missing_over_40_percent": 2012,
+        "zero_coverage": 1957
+      },
+      "discard_fraction": {
+        "all_keys": 0.29032951030927834,
+        "finite_label": 0.2887679359748561
+      },
+      "remaining_coverage": 0.7096704896907217,
+      "months": 48
+    },
+    "validation": {
+      "total": {
+        "all_keys": 936000,
+        "finite_label": 935224
+      },
+      "raw_kept": {
+        "all_keys": 676209,
+        "finite_label": 676209
+      },
+      "raw_discarded": {
+        "all_keys": 259791,
+        "finite_label": 259015
+      },
+      "normalized_kept": {
+        "all_keys": 676209,
+        "finite_label": 676209
+      },
+      "normalized_discarded": {
+        "all_keys": 259791,
+        "finite_label": 259015
+      },
+      "raw_kept_but_normalized_discarded": {
+        "all_keys": 0,
+        "finite_label": 0
+      },
+      "reasons_overlapping": {
+        "insufficient_history": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "missing_bar": {
+          "all_keys": 795,
+          "finite_label": 795
+        },
+        "invalid_fields": {
+          "all_keys": 259121,
+          "finite_label": 258345
+        },
+        "normalization_extra": {
+          "all_keys": 0,
+          "finite_label": 0
+        }
+      },
+      "reasons_exclusive": {
+        "insufficient_history": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "missing_bar_after_history": {
+          "all_keys": 795,
+          "finite_label": 795
+        },
+        "invalid_fields_after_history_and_presence": {
+          "all_keys": 258996,
+          "finite_label": 258220
+        }
+      },
+      "per_frequency_discarded": {
+        "bar1m": {
+          "all_keys": 243747,
+          "finite_label": 242971
+        },
+        "bar5m": {
+          "all_keys": 16184,
+          "finite_label": 15426
+        },
+        "bar15m": {
+          "all_keys": 21406,
+          "finite_label": 20649
+        },
+        "bar30m": {
+          "all_keys": 30494,
+          "finite_label": 29737
+        }
+      },
+      "per_field_affected": {
+        "open": {
+          "all_keys": 1100,
+          "finite_label": 344
+        },
+        "high": {
+          "all_keys": 1100,
+          "finite_label": 344
+        },
+        "low": {
+          "all_keys": 1100,
+          "finite_label": 344
+        },
+        "close": {
+          "all_keys": 1100,
+          "finite_label": 344
+        },
+        "volume": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "amount": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_price1": {
+          "all_keys": 18473,
+          "finite_label": 17717
+        },
+        "ask_price2": {
+          "all_keys": 249622,
+          "finite_label": 248846
+        },
+        "ask_price3": {
+          "all_keys": 250166,
+          "finite_label": 249390
+        },
+        "ask_price4": {
+          "all_keys": 250731,
+          "finite_label": 249955
+        },
+        "ask_price5": {
+          "all_keys": 251223,
+          "finite_label": 250447
+        },
+        "bid_price1": {
+          "all_keys": 8067,
+          "finite_label": 7310
+        },
+        "bid_price2": {
+          "all_keys": 242025,
+          "finite_label": 241249
+        },
+        "bid_price3": {
+          "all_keys": 242904,
+          "finite_label": 242128
+        },
+        "bid_price4": {
+          "all_keys": 243443,
+          "finite_label": 242667
+        },
+        "bid_price5": {
+          "all_keys": 244031,
+          "finite_label": 243255
+        },
+        "ask_volume1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders5": {
+          "all_keys": 0,
+          "finite_label": 0
+        }
+      },
+      "cross_sections": {
+        "total": 936,
+        "min_coverage": 0.0,
+        "missing_over_40_percent": 234,
+        "zero_coverage": 234
+      },
+      "discard_fraction": {
+        "all_keys": 0.27755448717948716,
+        "finite_label": 0.2769550396482554
+      },
+      "remaining_coverage": 0.7224455128205128,
+      "months": 6
+    },
+    "test": {
+      "total": {
+        "all_keys": 1000000,
+        "finite_label": 998539
+      },
+      "raw_kept": {
+        "all_keys": 710747,
+        "finite_label": 710524
+      },
+      "raw_discarded": {
+        "all_keys": 289253,
+        "finite_label": 288015
+      },
+      "normalized_kept": {
+        "all_keys": 710747,
+        "finite_label": 710524
+      },
+      "normalized_discarded": {
+        "all_keys": 289253,
+        "finite_label": 288015
+      },
+      "raw_kept_but_normalized_discarded": {
+        "all_keys": 0,
+        "finite_label": 0
+      },
+      "reasons_overlapping": {
+        "insufficient_history": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "missing_bar": {
+          "all_keys": 4352,
+          "finite_label": 4190
+        },
+        "invalid_fields": {
+          "all_keys": 286163,
+          "finite_label": 285081
+        },
+        "normalization_extra": {
+          "all_keys": 0,
+          "finite_label": 0
+        }
+      },
+      "reasons_exclusive": {
+        "insufficient_history": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "missing_bar_after_history": {
+          "all_keys": 4352,
+          "finite_label": 4190
+        },
+        "invalid_fields_after_history_and_presence": {
+          "all_keys": 284901,
+          "finite_label": 283825
+        }
+      },
+      "per_frequency_discarded": {
+        "bar1m": {
+          "all_keys": 264554,
+          "finite_label": 263326
+        },
+        "bar5m": {
+          "all_keys": 24414,
+          "finite_label": 23189
+        },
+        "bar15m": {
+          "all_keys": 32741,
+          "finite_label": 31674
+        },
+        "bar30m": {
+          "all_keys": 47038,
+          "finite_label": 45966
+        }
+      },
+      "per_field_affected": {
+        "open": {
+          "all_keys": 1216,
+          "finite_label": 166
+        },
+        "high": {
+          "all_keys": 1216,
+          "finite_label": 166
+        },
+        "low": {
+          "all_keys": 1216,
+          "finite_label": 166
+        },
+        "close": {
+          "all_keys": 1216,
+          "finite_label": 166
+        },
+        "volume": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "amount": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_price1": {
+          "all_keys": 31497,
+          "finite_label": 30428
+        },
+        "ask_price2": {
+          "all_keys": 278253,
+          "finite_label": 277172
+        },
+        "ask_price3": {
+          "all_keys": 279291,
+          "finite_label": 278210
+        },
+        "ask_price4": {
+          "all_keys": 279982,
+          "finite_label": 278901
+        },
+        "ask_price5": {
+          "all_keys": 280664,
+          "finite_label": 279583
+        },
+        "bid_price1": {
+          "all_keys": 6432,
+          "finite_label": 5381
+        },
+        "bid_price2": {
+          "all_keys": 256953,
+          "finite_label": 255888
+        },
+        "bid_price3": {
+          "all_keys": 257523,
+          "finite_label": 256458
+        },
+        "bid_price4": {
+          "all_keys": 258027,
+          "finite_label": 256962
+        },
+        "bid_price5": {
+          "all_keys": 258415,
+          "finite_label": 257350
+        },
+        "ask_volume1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_volume5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_volume5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "ask_num_orders5": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders1": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders2": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders3": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders4": {
+          "all_keys": 0,
+          "finite_label": 0
+        },
+        "bid_num_orders5": {
+          "all_keys": 0,
+          "finite_label": 0
+        }
+      },
+      "cross_sections": {
+        "total": 1000,
+        "min_coverage": 0.0,
+        "missing_over_40_percent": 269,
+        "zero_coverage": 250
+      },
+      "discard_fraction": {
+        "all_keys": 0.289253,
+        "finite_label": 0.28843640558856487
+      },
+      "remaining_coverage": 0.710747,
+      "months": 6
+    }
+  },
+  "combined": {
+    "total": {
+      "all_keys": 9696000,
+      "finite_label": 9676721
+    },
+    "raw_kept": {
+      "all_keys": 6893999,
+      "finite_label": 6893773
+    },
+    "raw_discarded": {
+      "all_keys": 2802001,
+      "finite_label": 2782948
+    },
+    "normalized_kept": {
+      "all_keys": 6893999,
+      "finite_label": 6893773
+    },
+    "normalized_discarded": {
+      "all_keys": 2802001,
+      "finite_label": 2782948
+    },
+    "discard_fraction": {
+      "all_keys": 0.28898525165016503,
+      "finite_label": 0.28759204693408025
+    }
+  },
+  "prediction_clock_coverage": {
+    "test": {
+      "09:30": {
+        "total": 125000,
+        "kept": 0,
+        "discarded": 125000,
+        "coverage": 0.0
+      },
+      "10:00": {
+        "total": 125000,
+        "kept": 0,
+        "discarded": 125000,
+        "coverage": 0.0
+      },
+      "10:30": {
+        "total": 125000,
+        "kept": 118914,
+        "discarded": 6086,
+        "coverage": 0.951312
+      },
+      "11:00": {
+        "total": 125000,
+        "kept": 118803,
+        "discarded": 6197,
+        "coverage": 0.950424
+      },
+      "11:30": {
+        "total": 125000,
+        "kept": 118486,
+        "discarded": 6514,
+        "coverage": 0.947888
+      },
+      "13:30": {
+        "total": 125000,
+        "kept": 118221,
+        "discarded": 6779,
+        "coverage": 0.945768
+      },
+      "14:00": {
+        "total": 125000,
+        "kept": 118180,
+        "discarded": 6820,
+        "coverage": 0.94544
+      },
+      "14:30": {
+        "total": 125000,
+        "kept": 118143,
+        "discarded": 6857,
+        "coverage": 0.945144
+      }
+    },
+    "train": {
+      "09:30": {
+        "total": 970000,
+        "kept": 0,
+        "discarded": 970000,
+        "coverage": 0.0
+      },
+      "10:00": {
+        "total": 970000,
+        "kept": 0,
+        "discarded": 970000,
+        "coverage": 0.0
+      },
+      "10:30": {
+        "total": 970000,
+        "kept": 917165,
+        "discarded": 52835,
+        "coverage": 0.9455309278350515
+      },
+      "11:00": {
+        "total": 970000,
+        "kept": 919133,
+        "discarded": 50867,
+        "coverage": 0.947559793814433
+      },
+      "11:30": {
+        "total": 970000,
+        "kept": 918274,
+        "discarded": 51726,
+        "coverage": 0.9466742268041237
+      },
+      "13:30": {
+        "total": 970000,
+        "kept": 917867,
+        "discarded": 52133,
+        "coverage": 0.9462546391752578
+      },
+      "14:00": {
+        "total": 970000,
+        "kept": 917526,
+        "discarded": 52474,
+        "coverage": 0.9459030927835052
+      },
+      "14:30": {
+        "total": 970000,
+        "kept": 917078,
+        "discarded": 52922,
+        "coverage": 0.9454412371134021
+      }
+    },
+    "validation": {
+      "09:30": {
+        "total": 117000,
+        "kept": 0,
+        "discarded": 117000,
+        "coverage": 0.0
+      },
+      "10:00": {
+        "total": 117000,
+        "kept": 0,
+        "discarded": 117000,
+        "coverage": 0.0
+      },
+      "10:30": {
+        "total": 117000,
+        "kept": 112996,
+        "discarded": 4004,
+        "coverage": 0.9657777777777777
+      },
+      "11:00": {
+        "total": 117000,
+        "kept": 112838,
+        "discarded": 4162,
+        "coverage": 0.9644273504273504
+      },
+      "11:30": {
+        "total": 117000,
+        "kept": 112694,
+        "discarded": 4306,
+        "coverage": 0.9631965811965812
+      },
+      "13:30": {
+        "total": 117000,
+        "kept": 112572,
+        "discarded": 4428,
+        "coverage": 0.9621538461538461
+      },
+      "14:00": {
+        "total": 117000,
+        "kept": 112557,
+        "discarded": 4443,
+        "coverage": 0.962025641025641
+      },
+      "14:30": {
+        "total": 117000,
+        "kept": 112552,
+        "discarded": 4448,
+        "coverage": 0.961982905982906
+      }
+    }
+  },
+  "monthly": [
+    {
+      "split": "train",
+      "month": "2020-01",
+      "total": {
+        "all_keys": 128000,
+        "finite_label": 127756
+      },
+      "discarded": {
+        "all_keys": 48629,
+        "finite_label": 48386
+      },
+      "kept": {
+        "all_keys": 79371,
+        "finite_label": 79370
+      },
+      "cross_sections": {
+        "total": 128,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6200859375000001,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-02",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159733
+      },
+      "discarded": {
+        "all_keys": 67366,
+        "finite_label": 67099
+      },
+      "kept": {
+        "all_keys": 92634,
+        "finite_label": 92634
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.5789625,
+        "missing_over_40_percent": 58,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-03",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175504
+      },
+      "discarded": {
+        "all_keys": 56284,
+        "finite_label": 55788
+      },
+      "kept": {
+        "all_keys": 119716,
+        "finite_label": 119716
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6802045454545455,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-04",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167432
+      },
+      "discarded": {
+        "all_keys": 50108,
+        "finite_label": 49540
+      },
+      "kept": {
+        "all_keys": 117892,
+        "finite_label": 117892
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7017380952380953,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-05",
+      "total": {
+        "all_keys": 144000,
+        "finite_label": 143488
+      },
+      "discarded": {
+        "all_keys": 42686,
+        "finite_label": 42174
+      },
+      "kept": {
+        "all_keys": 101314,
+        "finite_label": 101314
+      },
+      "cross_sections": {
+        "total": 144,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7035694444444444,
+        "missing_over_40_percent": 36,
+        "zero_coverage": 36
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-06",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159103
+      },
+      "discarded": {
+        "all_keys": 47162,
+        "finite_label": 46265
+      },
+      "kept": {
+        "all_keys": 112838,
+        "finite_label": 112838
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7052375000000001,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-07",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183564
+      },
+      "discarded": {
+        "all_keys": 60200,
+        "finite_label": 59765
+      },
+      "kept": {
+        "all_keys": 123800,
+        "finite_label": 123799
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6728260869565217,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-08",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167480
+      },
+      "discarded": {
+        "all_keys": 51132,
+        "finite_label": 50612
+      },
+      "kept": {
+        "all_keys": 116868,
+        "finite_label": 116868
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6956428571428571,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-09",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175424
+      },
+      "discarded": {
+        "all_keys": 47432,
+        "finite_label": 46856
+      },
+      "kept": {
+        "all_keys": 128568,
+        "finite_label": 128568
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7304999999999999,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-10",
+      "total": {
+        "all_keys": 128000,
+        "finite_label": 127680
+      },
+      "discarded": {
+        "all_keys": 34374,
+        "finite_label": 34054
+      },
+      "kept": {
+        "all_keys": 93626,
+        "finite_label": 93626
+      },
+      "cross_sections": {
+        "total": 128,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7314531249999999,
+        "missing_over_40_percent": 32,
+        "zero_coverage": 32
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-11",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167792
+      },
+      "discarded": {
+        "all_keys": 45563,
+        "finite_label": 45355
+      },
+      "kept": {
+        "all_keys": 122437,
+        "finite_label": 122437
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7287916666666667,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2020-12",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183424
+      },
+      "discarded": {
+        "all_keys": 52253,
+        "finite_label": 51677
+      },
+      "kept": {
+        "all_keys": 131747,
+        "finite_label": 131747
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7160163043478261,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-01",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159632
+      },
+      "discarded": {
+        "all_keys": 47075,
+        "finite_label": 46707
+      },
+      "kept": {
+        "all_keys": 112925,
+        "finite_label": 112925
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.70578125,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-02",
+      "total": {
+        "all_keys": 120000,
+        "finite_label": 119696
+      },
+      "discarded": {
+        "all_keys": 35731,
+        "finite_label": 35427
+      },
+      "kept": {
+        "all_keys": 84269,
+        "finite_label": 84269
+      },
+      "cross_sections": {
+        "total": 120,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7022416666666668,
+        "missing_over_40_percent": 30,
+        "zero_coverage": 30
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-03",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183368
+      },
+      "discarded": {
+        "all_keys": 51918,
+        "finite_label": 51286
+      },
+      "kept": {
+        "all_keys": 132082,
+        "finite_label": 132082
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7178369565217391,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-04",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167520
+      },
+      "discarded": {
+        "all_keys": 47319,
+        "finite_label": 46839
+      },
+      "kept": {
+        "all_keys": 120681,
+        "finite_label": 120681
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7183392857142856,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-05",
+      "total": {
+        "all_keys": 144000,
+        "finite_label": 143656
+      },
+      "discarded": {
+        "all_keys": 41277,
+        "finite_label": 40933
+      },
+      "kept": {
+        "all_keys": 102723,
+        "finite_label": 102723
+      },
+      "cross_sections": {
+        "total": 144,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7133541666666666,
+        "missing_over_40_percent": 36,
+        "zero_coverage": 36
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-06",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167448
+      },
+      "discarded": {
+        "all_keys": 48639,
+        "finite_label": 48087
+      },
+      "kept": {
+        "all_keys": 119361,
+        "finite_label": 119361
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7104821428571428,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-07",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175471
+      },
+      "discarded": {
+        "all_keys": 55793,
+        "finite_label": 55264
+      },
+      "kept": {
+        "all_keys": 120207,
+        "finite_label": 120207
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6829943181818181,
+        "missing_over_40_percent": 49,
+        "zero_coverage": 49
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-08",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175740
+      },
+      "discarded": {
+        "all_keys": 51809,
+        "finite_label": 51550
+      },
+      "kept": {
+        "all_keys": 124191,
+        "finite_label": 124190
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7056306818181818,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-09",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159576
+      },
+      "discarded": {
+        "all_keys": 48053,
+        "finite_label": 47629
+      },
+      "kept": {
+        "all_keys": 111947,
+        "finite_label": 111947
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6996687500000001,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-10",
+      "total": {
+        "all_keys": 128000,
+        "finite_label": 127816
+      },
+      "discarded": {
+        "all_keys": 36630,
+        "finite_label": 36446
+      },
+      "kept": {
+        "all_keys": 91370,
+        "finite_label": 91370
+      },
+      "cross_sections": {
+        "total": 128,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.713828125,
+        "missing_over_40_percent": 32,
+        "zero_coverage": 32
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-11",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175656
+      },
+      "discarded": {
+        "all_keys": 52293,
+        "finite_label": 51949
+      },
+      "kept": {
+        "all_keys": 123707,
+        "finite_label": 123707
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7028806818181818,
+        "missing_over_40_percent": 47,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2021-12",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183792
+      },
+      "discarded": {
+        "all_keys": 64844,
+        "finite_label": 64636
+      },
+      "kept": {
+        "all_keys": 119156,
+        "finite_label": 119156
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.647586956521739,
+        "missing_over_40_percent": 70,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-01",
+      "total": {
+        "all_keys": 152000,
+        "finite_label": 151616
+      },
+      "discarded": {
+        "all_keys": 43060,
+        "finite_label": 42676
+      },
+      "kept": {
+        "all_keys": 108940,
+        "finite_label": 108940
+      },
+      "cross_sections": {
+        "total": 152,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7167105263157895,
+        "missing_over_40_percent": 38,
+        "zero_coverage": 38
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-02",
+      "total": {
+        "all_keys": 128000,
+        "finite_label": 127768
+      },
+      "discarded": {
+        "all_keys": 35974,
+        "finite_label": 35742
+      },
+      "kept": {
+        "all_keys": 92026,
+        "finite_label": 92026
+      },
+      "cross_sections": {
+        "total": 128,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7189531249999999,
+        "missing_over_40_percent": 32,
+        "zero_coverage": 32
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-03",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183808
+      },
+      "discarded": {
+        "all_keys": 51367,
+        "finite_label": 51175
+      },
+      "kept": {
+        "all_keys": 132633,
+        "finite_label": 132633
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7208315217391305,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-04",
+      "total": {
+        "all_keys": 152000,
+        "finite_label": 151440
+      },
+      "discarded": {
+        "all_keys": 47716,
+        "finite_label": 47156
+      },
+      "kept": {
+        "all_keys": 104284,
+        "finite_label": 104284
+      },
+      "cross_sections": {
+        "total": 152,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.686078947368421,
+        "missing_over_40_percent": 38,
+        "zero_coverage": 38
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-05",
+      "total": {
+        "all_keys": 152000,
+        "finite_label": 151559
+      },
+      "discarded": {
+        "all_keys": 45303,
+        "finite_label": 44862
+      },
+      "kept": {
+        "all_keys": 106697,
+        "finite_label": 106697
+      },
+      "cross_sections": {
+        "total": 152,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7019539473684211,
+        "missing_over_40_percent": 38,
+        "zero_coverage": 38
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-06",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167664
+      },
+      "discarded": {
+        "all_keys": 47935,
+        "finite_label": 47599
+      },
+      "kept": {
+        "all_keys": 120065,
+        "finite_label": 120065
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.714672619047619,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-07",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167648
+      },
+      "discarded": {
+        "all_keys": 47660,
+        "finite_label": 47308
+      },
+      "kept": {
+        "all_keys": 120340,
+        "finite_label": 120340
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7163095238095238,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-08",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183784
+      },
+      "discarded": {
+        "all_keys": 50843,
+        "finite_label": 50627
+      },
+      "kept": {
+        "all_keys": 133157,
+        "finite_label": 133157
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7236793478260869,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-09",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167720
+      },
+      "discarded": {
+        "all_keys": 44956,
+        "finite_label": 44676
+      },
+      "kept": {
+        "all_keys": 123044,
+        "finite_label": 123044
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7324047619047619,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-10",
+      "total": {
+        "all_keys": 128000,
+        "finite_label": 127704
+      },
+      "discarded": {
+        "all_keys": 35649,
+        "finite_label": 35353
+      },
+      "kept": {
+        "all_keys": 92351,
+        "finite_label": 92351
+      },
+      "cross_sections": {
+        "total": 128,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7214921875,
+        "missing_over_40_percent": 32,
+        "zero_coverage": 32
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-11",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175720
+      },
+      "discarded": {
+        "all_keys": 51750,
+        "finite_label": 51470
+      },
+      "kept": {
+        "all_keys": 124250,
+        "finite_label": 124250
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7059659090909091,
+        "missing_over_40_percent": 52,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2022-12",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175648
+      },
+      "discarded": {
+        "all_keys": 48806,
+        "finite_label": 48454
+      },
+      "kept": {
+        "all_keys": 127194,
+        "finite_label": 127194
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7226931818181818,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-01",
+      "total": {
+        "all_keys": 128000,
+        "finite_label": 127800
+      },
+      "discarded": {
+        "all_keys": 34522,
+        "finite_label": 34322
+      },
+      "kept": {
+        "all_keys": 93478,
+        "finite_label": 93478
+      },
+      "cross_sections": {
+        "total": 128,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.730296875,
+        "missing_over_40_percent": 32,
+        "zero_coverage": 32
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-02",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159832
+      },
+      "discarded": {
+        "all_keys": 42016,
+        "finite_label": 41848
+      },
+      "kept": {
+        "all_keys": 117984,
+        "finite_label": 117984
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7373999999999998,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-03",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183776
+      },
+      "discarded": {
+        "all_keys": 48152,
+        "finite_label": 47928
+      },
+      "kept": {
+        "all_keys": 135848,
+        "finite_label": 135848
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7383043478260869,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-04",
+      "total": {
+        "all_keys": 152000,
+        "finite_label": 151840
+      },
+      "discarded": {
+        "all_keys": 41914,
+        "finite_label": 41754
+      },
+      "kept": {
+        "all_keys": 110086,
+        "finite_label": 110086
+      },
+      "cross_sections": {
+        "total": 152,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.72425,
+        "missing_over_40_percent": 38,
+        "zero_coverage": 38
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-05",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159616
+      },
+      "discarded": {
+        "all_keys": 44044,
+        "finite_label": 43660
+      },
+      "kept": {
+        "all_keys": 115956,
+        "finite_label": 115956
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7247250000000001,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-06",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159520
+      },
+      "discarded": {
+        "all_keys": 43737,
+        "finite_label": 43257
+      },
+      "kept": {
+        "all_keys": 116263,
+        "finite_label": 116263
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.72664375,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-07",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167784
+      },
+      "discarded": {
+        "all_keys": 44627,
+        "finite_label": 44411
+      },
+      "kept": {
+        "all_keys": 123373,
+        "finite_label": 123373
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7343630952380952,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-08",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183776
+      },
+      "discarded": {
+        "all_keys": 48745,
+        "finite_label": 48521
+      },
+      "kept": {
+        "all_keys": 135255,
+        "finite_label": 135255
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7350815217391304,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-09",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159800
+      },
+      "discarded": {
+        "all_keys": 42073,
+        "finite_label": 41873
+      },
+      "kept": {
+        "all_keys": 117927,
+        "finite_label": 117927
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.73704375,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-10",
+      "total": {
+        "all_keys": 136000,
+        "finite_label": 135856
+      },
+      "discarded": {
+        "all_keys": 36923,
+        "finite_label": 36779
+      },
+      "kept": {
+        "all_keys": 99077,
+        "finite_label": 99077
+      },
+      "cross_sections": {
+        "total": 136,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7285073529411764,
+        "missing_over_40_percent": 34,
+        "zero_coverage": 34
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-11",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175784
+      },
+      "discarded": {
+        "all_keys": 46661,
+        "finite_label": 46445
+      },
+      "kept": {
+        "all_keys": 129339,
+        "finite_label": 129339
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7348806818181818,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "train",
+      "month": "2023-12",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167744
+      },
+      "discarded": {
+        "all_keys": 43954,
+        "finite_label": 43698
+      },
+      "kept": {
+        "all_keys": 124046,
+        "finite_label": 124046
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7383690476190475,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "validation",
+      "month": "2024-01",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175808
+      },
+      "discarded": {
+        "all_keys": 46881,
+        "finite_label": 46689
+      },
+      "kept": {
+        "all_keys": 129119,
+        "finite_label": 129119
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7336306818181818,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "validation",
+      "month": "2024-02",
+      "total": {
+        "all_keys": 120000,
+        "finite_label": 119984
+      },
+      "discarded": {
+        "all_keys": 39796,
+        "finite_label": 39780
+      },
+      "kept": {
+        "all_keys": 80204,
+        "finite_label": 80204
+      },
+      "cross_sections": {
+        "total": 120,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6683666666666667,
+        "missing_over_40_percent": 30,
+        "zero_coverage": 30
+      }
+    },
+    {
+      "split": "validation",
+      "month": "2024-03",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167888
+      },
+      "discarded": {
+        "all_keys": 44927,
+        "finite_label": 44815
+      },
+      "kept": {
+        "all_keys": 123073,
+        "finite_label": 123073
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.732577380952381,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "validation",
+      "month": "2024-04",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159912
+      },
+      "discarded": {
+        "all_keys": 44446,
+        "finite_label": 44358
+      },
+      "kept": {
+        "all_keys": 115554,
+        "finite_label": 115554
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7222125,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "validation",
+      "month": "2024-05",
+      "total": {
+        "all_keys": 160000,
+        "finite_label": 159800
+      },
+      "discarded": {
+        "all_keys": 43725,
+        "finite_label": 43525
+      },
+      "kept": {
+        "all_keys": 116275,
+        "finite_label": 116275
+      },
+      "cross_sections": {
+        "total": 160,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.72671875,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 40
+      }
+    },
+    {
+      "split": "validation",
+      "month": "2024-06",
+      "total": {
+        "all_keys": 152000,
+        "finite_label": 151832
+      },
+      "discarded": {
+        "all_keys": 40016,
+        "finite_label": 39848
+      },
+      "kept": {
+        "all_keys": 111984,
+        "finite_label": 111984
+      },
+      "cross_sections": {
+        "total": 152,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7367368421052632,
+        "missing_over_40_percent": 38,
+        "zero_coverage": 38
+      }
+    },
+    {
+      "split": "test",
+      "month": "2024-07",
+      "total": {
+        "all_keys": 184000,
+        "finite_label": 183728
+      },
+      "discarded": {
+        "all_keys": 49045,
+        "finite_label": 48773
+      },
+      "kept": {
+        "all_keys": 134955,
+        "finite_label": 134955
+      },
+      "cross_sections": {
+        "total": 184,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7334510869565216,
+        "missing_over_40_percent": 46,
+        "zero_coverage": 46
+      }
+    },
+    {
+      "split": "test",
+      "month": "2024-08",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175752
+      },
+      "discarded": {
+        "all_keys": 47163,
+        "finite_label": 46915
+      },
+      "kept": {
+        "all_keys": 128837,
+        "finite_label": 128837
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.732028409090909,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    },
+    {
+      "split": "test",
+      "month": "2024-09",
+      "total": {
+        "all_keys": 152000,
+        "finite_label": 151603
+      },
+      "discarded": {
+        "all_keys": 44356,
+        "finite_label": 44182
+      },
+      "kept": {
+        "all_keys": 107644,
+        "finite_label": 107421
+      },
+      "cross_sections": {
+        "total": 152,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7081842105263157,
+        "missing_over_40_percent": 40,
+        "zero_coverage": 38
+      }
+    },
+    {
+      "split": "test",
+      "month": "2024-10",
+      "total": {
+        "all_keys": 144000,
+        "finite_label": 143864
+      },
+      "discarded": {
+        "all_keys": 49845,
+        "finite_label": 49709
+      },
+      "kept": {
+        "all_keys": 94155,
+        "finite_label": 94155
+      },
+      "cross_sections": {
+        "total": 144,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.6538541666666666,
+        "missing_over_40_percent": 53,
+        "zero_coverage": 36
+      }
+    },
+    {
+      "split": "test",
+      "month": "2024-11",
+      "total": {
+        "all_keys": 168000,
+        "finite_label": 167824
+      },
+      "discarded": {
+        "all_keys": 49628,
+        "finite_label": 49452
+      },
+      "kept": {
+        "all_keys": 118372,
+        "finite_label": 118372
+      },
+      "cross_sections": {
+        "total": 168,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.704595238095238,
+        "missing_over_40_percent": 42,
+        "zero_coverage": 42
+      }
+    },
+    {
+      "split": "test",
+      "month": "2024-12",
+      "total": {
+        "all_keys": 176000,
+        "finite_label": 175768
+      },
+      "discarded": {
+        "all_keys": 49216,
+        "finite_label": 48984
+      },
+      "kept": {
+        "all_keys": 126784,
+        "finite_label": 126784
+      },
+      "cross_sections": {
+        "total": 176,
+        "min_coverage": 0.0,
+        "mean_coverage": 0.7203636363636363,
+        "missing_over_40_percent": 44,
+        "zero_coverage": 44
+      }
+    }
+  ],
+  "normalization_equivalence": "当 unavailable_values=0 且 missing_output_values=2*missing_input_values 时，z/c 缺失与原始非法位置一致；额外缺失分区直接扫描原 72 个通道。",
+  "source": {
+    "model_config_sha256": "06f5b07c374c079586d4ec2eb36cb7216276ad7572e7a91e1e68136f6bb2cb66",
+    "protocol_sha256": "8290ee005de9fb8d18af41460b6294976f7d6a03015da8d7dd88c6c5c18eb708",
+    "data_manifest_sha256": "dded3bf89180d7ca39f5088f9a9b61800f6454c1660140a4ae3672210e681bb2"
+  },
+  "reproduction_script": "scripts/count-v2-complete-samples.py",
+  "conclusion": "现有四频完整窗口严格筛选会丢弃约 29% 的样本；所有划分的 09:30 与 10:00 预测键均被排除。原始字段完整与实际 72 个 z/c 输入完整得到相同的保留集合。",
+  "limitations": [
+    "仅统计现有 v2 数据与窗口的筛选代价，没有无掩码模型的效果结论。",
+    "沿用原股票池与冻结归一化，不在筛选后重新拟合或重算截面股票池。",
+    "比例以完整样本窗口计，不是单根 Bar 的缺失率。",
+    "零盘口价格可能是正常空档或集合竞价编码；该统计不能解释为数据损坏比例。"
+  ],
+  "checked_date": "2026-10-13",
+  "timezone": "UTC+08:00",
+  "validation": {
+    "sample_denominators_match_source_run": true,
+    "normalized_and_raw_complete_sets_equal": true
+  }
+}

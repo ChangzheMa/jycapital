@@ -1,0 +1,1046 @@
+{
+  "scope": "raw_field_layer_one_only",
+  "rules": {
+    "price_fields": [
+      "ask_price1",
+      "ask_price2",
+      "ask_price3",
+      "ask_price4",
+      "ask_price5",
+      "bid_price1",
+      "bid_price2",
+      "bid_price3",
+      "bid_price4",
+      "bid_price5",
+      "close",
+      "high",
+      "low",
+      "open"
+    ],
+    "price_valid": "finite_and_strictly_positive",
+    "quantity_valid": "finite_and_nonnegative",
+    "causes": [
+      "null",
+      "nonfinite_nonnull",
+      "zero_price",
+      "negative"
+    ],
+    "counting_unit": "one_field_value_in_one_existing_original_bar_counted_once",
+    "stock_scope": "all_original_stocks_not_restricted_to_prediction_pool",
+    "all_sessions": "all_original_bar_times",
+    "regular_sessions": "(09:30,11:30] and (13:00,15:00]",
+    "absent_bars": "not_counted_as_field_values"
+  },
+  "scopes": {
+    "all_sessions": {
+      "combined": {
+        "rows": 698883381,
+        "field_values": 25159801716,
+        "invalid_values": 297380363,
+        "invalid_value_fraction": 0.011819662426468385,
+        "field_names_with_invalid_values": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "ask_price1",
+          "ask_price2",
+          "ask_price3",
+          "ask_price4",
+          "ask_price5",
+          "bid_price1",
+          "bid_price2",
+          "bid_price3",
+          "bid_price4",
+          "bid_price5",
+          "bid_volume2"
+        ],
+        "bar_rows_with_any_invalid": 39936693,
+        "bar_rows_with_non_book_invalid": 2971796,
+        "bar_rows_with_book_invalid": 39934955,
+        "fields": {
+          "open": {
+            "invalid": 2971796,
+            "fraction": 0.004252205848345963,
+            "null": 2971796,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "high": {
+            "invalid": 2971796,
+            "fraction": 0.004252205848345963,
+            "null": 2971796,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "low": {
+            "invalid": 2971796,
+            "fraction": 0.004252205848345963,
+            "null": 2971796,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "close": {
+            "invalid": 2971796,
+            "fraction": 0.004252205848345963,
+            "null": 2971796,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "volume": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "amount": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_price1": {
+            "invalid": 9506276,
+            "fraction": 0.01360209193470577,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 9506276,
+            "negative": 0
+          },
+          "ask_price2": {
+            "invalid": 35881575,
+            "fraction": 0.05134129094421835,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 35881575,
+            "negative": 0
+          },
+          "ask_price3": {
+            "invalid": 35837506,
+            "fraction": 0.051278234644414875,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 35837506,
+            "negative": 0
+          },
+          "ask_price4": {
+            "invalid": 36100641,
+            "fraction": 0.051654742381118376,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 36100641,
+            "negative": 0
+          },
+          "ask_price5": {
+            "invalid": 36379585,
+            "fraction": 0.052053870486870255,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 36379585,
+            "negative": 0
+          },
+          "bid_price1": {
+            "invalid": 5086960,
+            "fraction": 0.007278696472537812,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 5086960,
+            "negative": 0
+          },
+          "bid_price2": {
+            "invalid": 31464324,
+            "fraction": 0.04502085019532036,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 31464324,
+            "negative": 0
+          },
+          "bid_price3": {
+            "invalid": 31444988,
+            "fraction": 0.04499318320462395,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 31444988,
+            "negative": 0
+          },
+          "bid_price4": {
+            "invalid": 31743416,
+            "fraction": 0.04542019006744703,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 31743416,
+            "negative": 0
+          },
+          "bid_price5": {
+            "invalid": 32047903,
+            "fraction": 0.045855866473951824,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 32047903,
+            "negative": 0
+          },
+          "ask_volume1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume2": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume2": {
+            "invalid": 5,
+            "fraction": 7.154269418805939e-09,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 5
+          },
+          "bid_volume3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders2": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders2": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          }
+        }
+      },
+      "by_frequency": {
+        "bar1m": {
+          "rows": 537515095,
+          "field_values": 19350543420,
+          "invalid_values": 254758596,
+          "invalid_value_fraction": 0.013165449179927992,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5",
+            "bid_volume2"
+          ],
+          "bar_rows_with_any_invalid": 33796244,
+          "bar_rows_with_non_book_invalid": 2534356,
+          "bar_rows_with_book_invalid": 33794572
+        },
+        "bar5m": {
+          "rows": 105426013,
+          "field_values": 3795336468,
+          "invalid_values": 19526320,
+          "invalid_value_fraction": 0.005144819218173202,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 2990805,
+          "bar_rows_with_non_book_invalid": 258269,
+          "bar_rows_with_book_invalid": 2990740
+        },
+        "bar15m": {
+          "rows": 36577634,
+          "field_values": 1316794824,
+          "invalid_values": 12435927,
+          "invalid_value_fraction": 0.009444088610724977,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 1732667,
+          "bar_rows_with_non_book_invalid": 108322,
+          "bar_rows_with_book_invalid": 1732666
+        },
+        "bar30m": {
+          "rows": 19364639,
+          "field_values": 697127004,
+          "invalid_values": 10659520,
+          "invalid_value_fraction": 0.015290642793691004,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 1416977,
+          "bar_rows_with_non_book_invalid": 70849,
+          "bar_rows_with_book_invalid": 1416977
+        }
+      },
+      "by_split": {
+        "train": {
+          "rows": 551954507,
+          "field_values": 19870362252,
+          "invalid_values": 233720046,
+          "invalid_value_fraction": 0.011762243840143152,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 31249144,
+          "bar_rows_with_non_book_invalid": 2326587,
+          "bar_rows_with_book_invalid": 31247675
+        },
+        "validation": {
+          "rows": 71253965,
+          "field_values": 2565142740,
+          "invalid_values": 30122646,
+          "invalid_value_fraction": 0.011743068145985514,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 4094967,
+          "bar_rows_with_non_book_invalid": 296276,
+          "bar_rows_with_book_invalid": 4094912
+        },
+        "test": {
+          "rows": 75674909,
+          "field_values": 2724296724,
+          "invalid_values": 33537671,
+          "invalid_value_fraction": 0.012310579352295252,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5",
+            "bid_volume2"
+          ],
+          "bar_rows_with_any_invalid": 4592582,
+          "bar_rows_with_non_book_invalid": 348933,
+          "bar_rows_with_book_invalid": 4592368
+        }
+      }
+    },
+    "regular_sessions": {
+      "combined": {
+        "rows": 671196247,
+        "field_values": 24163064892,
+        "invalid_values": 100999268,
+        "invalid_value_fraction": 0.0041799030235373505,
+        "field_names_with_invalid_values": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "ask_price1",
+          "ask_price2",
+          "ask_price3",
+          "ask_price4",
+          "ask_price5",
+          "bid_price1",
+          "bid_price2",
+          "bid_price3",
+          "bid_price4",
+          "bid_price5"
+        ],
+        "bar_rows_with_any_invalid": 16517767,
+        "bar_rows_with_non_book_invalid": 1463029,
+        "bar_rows_with_book_invalid": 16516029,
+        "fields": {
+          "open": {
+            "invalid": 1463029,
+            "fraction": 0.0021797335824495453,
+            "null": 1463029,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "high": {
+            "invalid": 1463029,
+            "fraction": 0.0021797335824495453,
+            "null": 1463029,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "low": {
+            "invalid": 1463029,
+            "fraction": 0.0021797335824495453,
+            "null": 1463029,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "close": {
+            "invalid": 1463029,
+            "fraction": 0.0021797335824495453,
+            "null": 1463029,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "volume": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "amount": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_price1": {
+            "invalid": 7929607,
+            "fraction": 0.011814140849926415,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 7929607,
+            "negative": 0
+          },
+          "ask_price2": {
+            "invalid": 12481105,
+            "fraction": 0.01859531404680217,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 12481105,
+            "negative": 0
+          },
+          "ask_price3": {
+            "invalid": 12435692,
+            "fraction": 0.01852765425251253,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 12435692,
+            "negative": 0
+          },
+          "ask_price4": {
+            "invalid": 12697447,
+            "fraction": 0.018917637064797235,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 12697447,
+            "negative": 0
+          },
+          "ask_price5": {
+            "invalid": 12975167,
+            "fraction": 0.019331405766933617,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 12975167,
+            "negative": 0
+          },
+          "bid_price1": {
+            "invalid": 3510327,
+            "fraction": 0.005229956239609307,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 3510327,
+            "negative": 0
+          },
+          "bid_price2": {
+            "invalid": 8070990,
+            "fraction": 0.012024784161226099,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 8070990,
+            "negative": 0
+          },
+          "bid_price3": {
+            "invalid": 8050378,
+            "fraction": 0.011994074811923076,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 8050378,
+            "negative": 0
+          },
+          "bid_price4": {
+            "invalid": 8347118,
+            "fraction": 0.012436180978824811,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 8347118,
+            "negative": 0
+          },
+          "bid_price5": {
+            "invalid": 8649321,
+            "fraction": 0.012886426344991169,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 8649321,
+            "negative": 0
+          },
+          "ask_volume1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume2": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_volume5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume2": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_volume5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders2": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "ask_num_orders5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders1": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders2": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders3": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders4": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          },
+          "bid_num_orders5": {
+            "invalid": 0,
+            "fraction": 0.0,
+            "null": 0,
+            "nonfinite_nonnull": 0,
+            "zero_price": 0,
+            "negative": 0
+          }
+        }
+      },
+      "by_frequency": {
+        "bar1m": {
+          "rows": 516279593,
+          "field_values": 18586065348,
+          "invalid_values": 84870114,
+          "invalid_value_fraction": 0.004566330334630652,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 13627794,
+          "bar_rows_with_non_book_invalid": 1125720,
+          "bar_rows_with_book_invalid": 13626122
+        },
+        "bar5m": {
+          "rows": 103275469,
+          "field_values": 3717916884,
+          "invalid_values": 10695449,
+          "invalid_value_fraction": 0.0028767316036643277,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 1907313,
+          "bar_rows_with_non_book_invalid": 224892,
+          "bar_rows_with_book_invalid": 1907248
+        },
+        "bar15m": {
+          "rows": 34427090,
+          "field_values": 1239375240,
+          "invalid_values": 3605056,
+          "invalid_value_fraction": 0.0029087687761133584,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 649175,
+          "bar_rows_with_non_book_invalid": 74945,
+          "bar_rows_with_book_invalid": 649174
+        },
+        "bar30m": {
+          "rows": 17214095,
+          "field_values": 619707420,
+          "invalid_values": 1828649,
+          "invalid_value_fraction": 0.002950826375453113,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 333485,
+          "bar_rows_with_non_book_invalid": 37472,
+          "bar_rows_with_book_invalid": 333485
+        }
+      },
+      "by_split": {
+        "train": {
+          "rows": 530052524,
+          "field_values": 19081890864,
+          "invalid_values": 76856244,
+          "invalid_value_fraction": 0.004027705878194567,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 12588161,
+          "bar_rows_with_non_book_invalid": 1065262,
+          "bar_rows_with_book_invalid": 12586692
+        },
+        "validation": {
+          "rows": 68453628,
+          "field_values": 2464330608,
+          "invalid_values": 11017146,
+          "invalid_value_fraction": 0.004470644468008815,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 1795918,
+          "bar_rows_with_non_book_invalid": 175399,
+          "bar_rows_with_book_invalid": 1795863
+        },
+        "test": {
+          "rows": 72690095,
+          "field_values": 2616843420,
+          "invalid_values": 13125878,
+          "invalid_value_fraction": 0.005015920287657104,
+          "field_names_with_invalid_values": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "ask_price1",
+            "ask_price2",
+            "ask_price3",
+            "ask_price4",
+            "ask_price5",
+            "bid_price1",
+            "bid_price2",
+            "bid_price3",
+            "bid_price4",
+            "bid_price5"
+          ],
+          "bar_rows_with_any_invalid": 2133688,
+          "bar_rows_with_non_book_invalid": 222368,
+          "bar_rows_with_book_invalid": 2133474
+        }
+      }
+    }
+  },
+  "reproduction_script": "scripts/count-raw-field-invalid-values.py",
+  "limitations": [
+    "仅统计已有原始 Bar 的字段值，不包括整根缺失 Bar。",
+    "每个原始字段值只统计一次，未按模型滑动窗口重复累计。",
+    "覆盖原始表全部股票，未按预测股票池筛选。",
+    "无效是现有正价格定义域的判定，零价格可以具有正常业务含义，不能等同数据漏采。",
+    "不包含归一化失效和历史窗口不足，不能直接推出样本删除率或模型效果。"
+  ],
+  "checked_date": "2026-10-14",
+  "timezone": "UTC+08:00",
+  "field_details_csv": "experiments/raw-field-validity.csv",
+  "validation": {
+    "all_partition_totals_match_frozen_v2_preprocessing": true,
+    "row_totals_match_frozen_v2_preprocessing": true
+  }
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从一次单股预测出发，通过交互窗口、归一化实例和分层图解理解 v2 四频因果 TCN。">
+  <meta name="theme-color" content="#f5f4ef">
+  <title>v2 模型，一步步看懂 · 进益资本</title>
+  <style>
+    :root{--paper:#f5f4ef;--white:#fff;--ink:#172d36;--muted:#657277;--line:#dfe3df;--teal:#18796d;--teal-light:#e1f0e9;--orange:#ba683e;--blue:#426ea1;--purple:#84679e;--mono:Consolas,"SFMono-Regular",monospace;--sans:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:92px}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.8}a{color:inherit}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:4px}button{color:var(--ink)}button:disabled{cursor:default}.wrap{max-width:1180px;margin:auto;padding:0 40px}.top{background:rgba(245,244,239,.97);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}.top-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}.brand{display:flex;gap:11px;align-items:center;text-decoration:none;font-weight:700;white-space:nowrap}.brand-mark{background:var(--ink);color:#fff;width:32px;height:32px;display:grid;place-items:center;font:700 13px var(--mono);border-radius:7px}.brand small{font:11px var(--mono);color:var(--muted);display:block;letter-spacing:1px;line-height:1.5}.nav{display:flex;gap:24px;font-size:13px}.nav a{text-decoration:none;color:var(--muted)}.nav a:hover,.nav a[aria-current=true]{color:var(--teal)}.print{border:1px solid var(--line);background:transparent;border-radius:7px;padding:6px 12px;font-size:12px}
+    .hero{padding:70px 0 55px;display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center}.eyebrow{font-size:11px;letter-spacing:1.7px;color:var(--teal);font-weight:700;text-transform:uppercase}.eyebrow .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--teal);margin-right:8px}h1{font-size:clamp(38px,4.6vw,60px);line-height:1.2;letter-spacing:-2px;margin:18px 0 24px;font-weight:750}h1 em{font-style:normal;color:var(--teal)}.hero-lead{color:var(--muted);font-size:17px;max-width:475px;margin:0 0 25px}.hero-lead strong{color:var(--ink);font-weight:600}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:10px 17px;font-size:13px;background:var(--white)}.btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}.hero-note{font-size:11px;color:var(--muted);margin-top:18px}.hero-art{background:var(--ink);border-radius:17px;padding:27px 24px 20px;color:#fff;position:relative;overflow:hidden}.art-title{display:flex;justify-content:space-between;font-size:12px;color:#c7d7d7}.art-title span:last-child{font-family:var(--mono);font-size:11px;color:#92b8b0}.hero-art svg{display:block;width:100%;height:auto;margin:10px auto 0}.art-caption{font-size:12px;color:#aec4c3;text-align:center;margin:6px 0 0}.overview{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:#fbfbf8;border-radius:10px;margin-bottom:65px}.overview-item{padding:20px 25px;border-right:1px solid var(--line)}.overview-item:last-child{border:0}.overview-label{font:11px var(--mono);color:var(--muted);margin-bottom:4px}.overview strong{font-size:20px;display:block}.overview p{font-size:12px;color:var(--muted);margin:5px 0 0}
+    .section{padding:0 0 65px;scroll-margin-top:24px}.section-head{display:flex;align-items:flex-start;gap:19px;margin-bottom:26px}.section-num{font:14px var(--mono);color:var(--teal);padding-top:8px;min-width:25px}.section h2{font-size:28px;line-height:1.4;margin:0 0 9px;letter-spacing:-.5px}.section-intro{color:var(--muted);margin:0;max-width:780px;font-size:14px}.panel{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:26px}.panel-top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:20px}.small-title{font-size:13px;font-weight:650}.hint{font-size:11px;color:var(--muted)}.tabs{display:flex;gap:5px;flex-wrap:wrap;padding:4px;background:#edf0ec;border-radius:8px;width:fit-content}.tabs button{border:0;background:transparent;border-radius:5px;padding:7px 14px;font-size:12px;min-height:34px}.tabs button[aria-pressed=true]{background:var(--white);box-shadow:0 1px 5px #10251e12;color:var(--teal);font-weight:700}.freq-tabs button[aria-pressed=true]{color:var(--freq-color,var(--teal))}.window-layout{display:grid;grid-template-columns:1fr 255px;gap:32px}.window-metrics{display:flex;align-items:baseline;gap:10px;margin:14px 0 20px}.window-metrics strong{font-size:34px;font-weight:650;line-height:1}.window-metrics span{color:var(--muted);font-size:13px}.window-slots{display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:5px;min-height:88px;align-content:start}.bar-slot{border:0;background:var(--freq-color);height:28px;border-radius:3px;opacity:.45;min-width:0;position:relative;transition:opacity .15s,transform .15s}.bar-slot:hover{opacity:.8;transform:translateY(-2px)}.bar-slot[aria-pressed=true]{opacity:1;outline:2px solid var(--ink);outline-offset:2px}.bar-slot.missing{background:repeating-linear-gradient(135deg,#fff 0,#fff 3px,#d6ddda 3px,#d6ddda 5px);opacity:1;border:1px solid #b7c3bd}.window-axis{display:flex;justify-content:space-between;gap:10px;font:11px var(--mono);color:var(--muted);margin-top:12px}.window-legend{font-size:11px;color:var(--muted);margin:12px 0 0}.window-focus{background:#f5f7f3;border-radius:8px;padding:18px;font-size:12px;display:flex;flex-direction:column;justify-content:space-between}.focus-time{font:22px var(--mono);font-weight:700;margin:5px 0}.focus-status{color:var(--teal);font-size:12px;margin:0 0 14px}.switch{display:flex;gap:8px;align-items:flex-start;font-size:12px;cursor:pointer}.switch input{accent-color:var(--teal);width:16px;height:16px;margin-top:4px;flex-shrink:0}.note{font-size:12px;color:var(--muted);margin-top:18px;border-left:3px solid #b7cfc3;padding-left:12px}.note strong{color:var(--ink)}.story-row{display:grid;grid-template-columns:1fr 35px 1fr 35px 1fr;gap:10px;align-items:center;margin-bottom:20px}.story-step{background:#f7f8f5;border-radius:8px;padding:16px}.story-step b{display:block;font-size:14px}.story-step p{font-size:12px;color:var(--muted);margin:5px 0 0}.arrow{color:#93a59c;text-align:center;font-family:var(--mono);font-size:22px}.field-tags{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0 0}.field-tags span{font-size:11px;padding:4px 10px;background:#edf2ee;border:1px solid #e0e6e0;border-radius:5px}.norm-panel{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:24px}.demo-control{padding-right:26px;border-right:1px solid var(--line)}.demo-control label{font-size:13px;display:block;margin:22px 0 10px}.demo-control input[type=range]{width:100%;accent-color:var(--teal);margin:4px 0 12px}.demo-range{display:flex;justify-content:space-between;gap:10px;font:11px var(--mono);color:var(--muted)}.demo-value{font:38px var(--mono);letter-spacing:-1px;line-height:1.3}.demo-unit{font-size:12px;color:var(--muted);margin-left:8px}.formula{font:11px var(--mono);color:var(--muted);background:#f5f7f4;padding:11px;border-radius:6px;margin-top:16px;overflow-wrap:anywhere}.norm-result{display:grid;grid-template-columns:1fr 1fr;gap:12px}.norm-result article{padding:17px;border-radius:8px;background:#e7f2ed}.norm-result article:last-child{background:#ecf0fa}.norm-result h3{font-size:13px;margin:0}.norm-result p{font-size:11px;color:var(--muted);line-height:1.7;margin:5px 0 10px;min-height:38px}.norm-number{font:30px var(--mono);font-weight:700;color:var(--teal)}.norm-result article:last-child .norm-number{color:var(--blue)}.peer-title{font-size:12px;margin:21px 0 9px}.peer-row{display:grid;grid-template-columns:50px 1fr 44px;gap:10px;align-items:center;font-size:11px;margin:8px 0}.peer-track{position:relative;height:6px;border-radius:3px;background:#e4e9e3}.peer-track::before{content:"";position:absolute;left:50%;top:-3px;height:12px;border-left:1px solid #afbbb3}.peer-dot{position:absolute;width:10px;height:10px;border-radius:50%;background:#96a89c;top:-2px;left:50%;transform:translateX(-50%)}.peer-row.self{font-weight:700;color:var(--teal)}.peer-row.self .peer-dot{background:var(--teal)}.peer-row output{font-family:var(--mono);text-align:right}.demo-label{font-size:10px;color:var(--muted);letter-spacing:.3px}
+    .channels{margin-top:24px;display:grid;grid-template-columns:1.2fr .8fr;gap:28px}.channel-strip{display:flex;height:43px;gap:3px;margin:14px 0}.channel-strip button{border:0;color:#fff;border-radius:4px;font:12px var(--mono);padding:0;min-width:25px}.channel-strip button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:2px}.channel-z{background:var(--teal)}.channel-c{background:var(--blue)}.channel-mask{background:var(--orange)}.channel-time{background:var(--purple)}.channel-grid{display:grid;grid-template-columns:repeat(21,1fr);gap:4px}.channel-cell{height:12px;border-radius:2px;opacity:.25}.channel-cell.active{opacity:1}.channel-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;margin-top:13px;color:var(--muted)}.legend-dot{width:7px;height:7px;display:inline-block;border-radius:2px;margin-right:5px}.channel-detail{background:#f5f7f4;border-radius:8px;padding:20px}.channel-detail h3{font-size:16px;margin:0 0 9px}.channel-detail p{font-size:12px;color:var(--muted);margin:6px 0}.channel-detail code{font:11px var(--mono);display:block;margin-top:15px;color:var(--teal)}.tensor-box{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}.tensor-dim{font:20px var(--mono);letter-spacing:-.6px}.tensor-dim .dim-color{color:var(--teal)}.tensor-note{font-size:11px;color:var(--muted);max-width:380px}.network{background:var(--ink);color:#fff;border:0;padding:25px}.network .hint{color:#a6b8bb}.network .switch{color:#dbe6e3}.network-grid{display:grid;grid-template-columns:minmax(0,1fr) 238px;gap:28px}.network-lanes{display:flex;flex-direction:column;gap:10px}.lane{display:grid;grid-template-columns:68px 1fr 15px 1.05fr 15px 1fr;gap:8px;align-items:center;padding:13px;background:#ffffff07;border:1px solid #ffffff12;border-radius:8px;position:relative}.lane.active{border-color:var(--freq-color);background:#ffffff0d}.lane-label{color:var(--freq-color);font-weight:700;font-size:14px}.lane-label span{font:10px var(--mono);color:#afbec0;display:block;margin-top:3px}.lane-node{background:#ffffff09;border:1px solid #ffffff0d;border-radius:6px;padding:11px 7px;text-align:center;font-size:12px;line-height:1.6}.lane-node small{display:block;font-size:10px;color:#adbfbe;margin-top:3px}.lane-node.final{border-color:var(--freq-color);color:var(--freq-color);font:18px var(--mono)}.lane .arrow{font-size:16px;color:#859c9d}.tech{font:10px var(--mono);color:#bcd6cd;display:none;margin-top:5px}.show-tech .tech{display:block}.fusion{border-left:1px solid #ffffff25;padding-left:25px;display:flex;flex-direction:column;justify-content:center}.fusion h3{font-size:12px;font-weight:500;color:#b8c9c7;margin:0 0 11px}.fusion-parts{display:flex;gap:4px;height:32px}.fusion-parts span{flex:64;display:grid;place-items:center;font:11px var(--mono);color:#fff;border-radius:3px}.fusion-parts .clock-part{flex:2;min-width:15px;background:#9caeac;color:var(--ink)}.fusion-clock{font-size:10px;color:#a9bbb9;margin:6px 0}.fusion-total{font:25px var(--mono);margin:10px 0}.fusion-total small{font-size:11px;color:#a9bbb9}.head-box{background:#ffffff08;border:1px solid #ffffff22;border-radius:7px;padding:12px;text-align:center}.head-box b{font:18px var(--mono)}.head-box small{display:block;color:#9fb7b0;font-size:10px;margin-top:4px}.fusion .arrow{font-size:18px;margin:3px 0}.factor-box{border:1px solid #6cba9c;border-radius:7px;text-align:center;padding:10px;color:#a5d8bc}.factor-box b{font-size:13px}.factor-box small{font:10px var(--mono);display:block}.network-bottom{font-size:11px;color:#afc4bd;margin:20px 0 0;padding-top:15px;border-top:1px solid #ffffff15}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.caption-box{padding:18px 20px;border-left:2px solid var(--teal);background:#ecefe8}.caption-box b{font-size:13px}.caption-box p{font-size:12px;color:var(--muted);margin:5px 0 0}
+    .tcn-layout{display:grid;grid-template-columns:1fr 245px;gap:28px}.tcn-slots{display:grid;grid-template-columns:repeat(17,minmax(0,1fr));gap:5px;margin:25px 0 12px}.tcn-slot{height:50px;min-width:0;border:1px solid #dce5de;border-radius:5px;background:#f1f5ef;color:#758078;font:11px var(--mono);padding:0}.tcn-slot.selected{background:var(--teal);border-color:var(--teal);color:#fff}.tcn-slot.target{box-shadow:0 0 0 2px var(--ink);font-weight:700}.tcn-slot.future{background:#f7f7f4;color:#c3c9c4;border-style:dashed}.tcn-axis{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.tcn-readout{margin-top:16px;font-size:12px;color:var(--muted)}.tcn-readout strong{font-family:var(--mono);color:var(--teal)}.tcn-summary{background:#eaf3ed;border-radius:8px;padding:19px}.tcn-summary h3{font-size:14px;margin:0 0 8px}.tcn-summary p{font-size:12px;color:var(--muted);margin:8px 0}.block-diagram{position:relative;margin-top:28px;padding-top:24px}.residual-path{position:absolute;top:0;left:7%;width:86%;height:20px;border:1px solid #a8b8ad;border-bottom:0;border-radius:8px 8px 0 0;text-align:center}.residual-path span{position:relative;top:-12px;background:#fff;padding:0 9px;font-size:10px;color:var(--muted)}.block-nodes{display:grid;grid-template-columns:.7fr 15px 1.4fr 15px 1.4fr 15px 1fr;gap:6px;align-items:center}.block-node{padding:12px 8px;border:1px solid var(--line);border-radius:7px;text-align:center;font-size:12px;background:#f8faf7}.block-node b{display:block;font-size:12px}.block-node small{display:block;font-size:10px;color:var(--muted)}.pooling{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px;border-top:1px solid var(--line);padding-top:22px}.pooling-copy h3{font-size:15px;margin:0 0 6px}.pooling-copy p{font-size:12px;color:var(--muted);margin:0}.pooling-visual{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr;align-items:center;gap:5px}.pooling-node{text-align:center;background:#edf4ef;border-radius:6px;padding:10px 5px;font-size:11px}.pooling-node b{font:18px var(--mono);display:block;color:var(--teal)}.output-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}.output-equation{display:flex;gap:17px;align-items:center;margin:21px 0}.output-number{font:30px var(--mono);line-height:1.5;color:var(--teal)}.output-number small{display:block;font:11px var(--sans);color:var(--muted)}.output-description{font-size:12px;color:var(--muted);margin:0}.code-result{font:11px var(--mono);line-height:1.8;background:var(--ink);color:#dceae5;padding:14px;border-radius:7px;margin-top:18px;overflow:auto}.learning h3{font-size:16px;margin:0 0 14px}.learning-list{list-style:none;margin:0;padding:0;counter-reset:learning}.learning-list li{counter-increment:learning;position:relative;padding:0 0 16px 29px;font-size:12px;color:var(--muted)}.learning-list li::before{content:counter(learning);position:absolute;left:0;top:1px;background:#e3eee6;color:var(--teal);font:11px var(--mono);border-radius:50%;width:19px;height:19px;display:grid;place-items:center}.learning-list b{color:var(--ink)}.splits{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4px;margin-top:24px}.splits div{padding:12px;border-radius:5px;background:#e4eee6;font-size:11px}.splits div:nth-child(2){background:#e9edf7}.splits div:nth-child(3){background:#f2e9e0}.splits b{display:block;font-size:12px}.faq{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}.faq details{border-bottom:1px solid var(--line);padding:15px 0}.faq summary{font-size:13px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px}.faq summary::after{content:"+";color:var(--teal);font:20px var(--mono)}.faq details[open] summary::after{content:"−"}.faq details p{color:var(--muted);font-size:12px;margin:12px 0 2px}.spec{margin-top:25px}.spec summary{font-size:12px;color:var(--muted);cursor:pointer}.spec table{border-collapse:collapse;width:100%;font-size:11px;margin-top:16px}.spec th,.spec td{padding:9px;text-align:left;border-bottom:1px solid var(--line)}.spec th{background:#eaf0e8;font-weight:600}.spec code{font:11px var(--mono)}.table-scroll{overflow:auto}.sources{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}.sources a{color:var(--teal);margin-right:14px;text-underline-offset:3px}.sources p{margin:8px 0}.footer{border-top:1px solid var(--line);padding:23px 0 35px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:20px}.back-top{text-decoration:none;color:var(--teal)}
+    @media(min-width:901px){.window-slots[data-length="24"]{grid-template-columns:repeat(12,minmax(0,1fr))}.window-slots[data-length="16"]{grid-template-columns:repeat(8,minmax(0,1fr))}}
+    @media(max-width:1100px){.wrap{padding:0 28px}.hero{gap:28px}.network-grid{grid-template-columns:1fr 190px;gap:18px}.fusion{padding-left:17px}.lane{grid-template-columns:60px 1fr 10px 1fr 10px .8fr;gap:5px;padding:10px}.lane-node{font-size:11px;padding:9px 4px}}
+    @media(max-width:900px){.nav{gap:15px}.hero{gap:28px;grid-template-columns:1fr 1fr}.hero h1{font-size:40px}.hero-lead{font-size:15px}.hero-art{padding:20px 14px}.window-layout,.tcn-layout{grid-template-columns:1fr 210px;gap:20px}.network-grid{grid-template-columns:1fr}.fusion{border-left:0;border-top:1px solid #ffffff25;padding:20px 0 0;margin-top:2px;display:grid;grid-template-columns:1fr 25px 1fr 25px 1fr;align-items:center;gap:10px}.fusion-start{grid-row:1}.fusion>h3{grid-column:1/-1}.fusion-total{margin:5px 0}.fusion>.arrow{margin:0}.network-lanes{gap:8px}.lane{grid-template-columns:68px 1fr 15px 1fr 15px 1fr}.norm-panel{gap:20px}.channels{grid-template-columns:1fr 1fr;gap:20px}.output-number{font-size:25px}}
+    @media(max-width:650px){.wrap{padding:0 20px}.top-inner{height:62px;gap:12px}.brand{font-size:12px}.brand small{font-size:9px}.brand-mark{width:29px;height:29px;font-size:11px}.nav{display:none}.print{font-size:11px;padding:5px 9px}.hero{grid-template-columns:1fr;gap:30px;padding:42px 0 30px}.hero h1{font-size:44px;letter-spacing:-1.5px;margin:15px 0 18px}.hero-lead{max-width:none}.hero-art{padding:22px}.hero-note{margin-top:13px}.overview{margin-bottom:42px}.overview-item{padding:13px 9px}.overview strong{font-size:15px}.overview p{font-size:10px;line-height:1.6}.overview-label{font-size:9px}.section{padding-bottom:43px}.section-head{gap:10px;margin-bottom:19px}.section-num{font-size:12px;min-width:22px;padding-top:5px}.section h2{font-size:23px}.section-intro{font-size:12px}.panel{padding:19px}.panel-top{align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:16px}.tabs button{padding:6px 12px}.window-layout,.norm-panel,.channels,.tcn-layout,.pooling,.output-layout{grid-template-columns:1fr;gap:20px}.window-slots{grid-template-columns:repeat(12,minmax(0,1fr));gap:5px}.window-slots[data-length="24"]{grid-template-columns:repeat(12,minmax(0,1fr))}.window-slots[data-length="16"]{grid-template-columns:repeat(8,minmax(0,1fr))}.window-focus{padding:16px}.focus-time{font-size:19px}.window-legend{font-size:10px}.story-row{grid-template-columns:1fr;gap:7px}.story-row>.arrow{font-size:18px;line-height:1;transform:rotate(90deg)}.story-step{padding:12px}.demo-control{border:0;border-bottom:1px solid var(--line);padding:0 0 20px}.norm-result article{padding:14px}.channel-grid{gap:3px}.channel-cell{height:10px}.tensor-box{display:block}.tensor-note{margin-top:9px}.network{padding:18px 12px}.lane{grid-template-columns:47px 1fr 10px 1fr 10px .7fr;gap:4px;padding:8px 6px}.lane-label{font-size:11px}.lane-label span{font-size:8px}.lane-node{font-size:10px;padding:8px 3px}.lane-node small{font-size:8px}.lane-node.final{font-size:16px}.tech{font-size:8px}.lane .arrow{font-size:11px}.fusion{grid-template-columns:1fr 12px 1fr 12px 1fr;gap:5px;padding:18px 5px 0}.fusion-parts{height:26px}.fusion-parts span{font-size:9px}.fusion-total{font-size:20px}.fusion-total small,.fusion-clock{font-size:9px}.head-box{padding:9px 4px}.head-box b{font-size:14px}.head-box small{font-size:8px}.factor-box{padding:9px 5px}.factor-box b{font-size:11px}.factor-box small{font-size:8px}.network-bottom{font-size:10px}.two-col{grid-template-columns:1fr;gap:10px}.caption-box{padding:14px}.tcn-slots{gap:3px}.tcn-slot{height:42px;font-size:9px}.block-nodes{gap:3px;grid-template-columns:.6fr 8px 1.2fr 8px 1.2fr 8px .8fr}.block-node{padding:10px 3px;font-size:10px}.block-node b{font-size:10px}.block-node small{font-size:8px}.block-nodes .arrow{font-size:12px}.pooling-visual{gap:3px}.output-number{font-size:30px}.faq{grid-template-columns:1fr}.footer{font-size:10px}.splits div{padding:9px}.spec th,.spec td{padding:7px}.sources a{display:inline-block;margin-bottom:6px}.tcn-readout{font-size:11px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+    @media print{body{background:#fff;font-size:11px}.top,.hero-actions,.print,.back-top{display:none}.wrap{max-width:none;padding:0}.hero{padding:20px 0;gap:25px}.hero h1{font-size:34px}.hero-art,.network{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section{padding-bottom:25px}.panel{break-inside:avoid;padding:17px}.overview{margin-bottom:25px}.section h2{font-size:21px}.tech{display:block}.faq{display:block}.spec{display:block}.footer{padding:15px 0}.channel-cell,.bar-slot,.tcn-slot,.norm-result article,.splits div{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap top-inner">
+    <a class="brand" href="#top"><span class="brand-mark">JY</span><span>v2 模型图解<small>MODEL NOTES / 02</small></span></a>
+    <nav class="nav" aria-label="章节导航"><a href="#input">历史输入</a><a href="#data">数据变化</a><a href="#model">完整模型</a><a href="#tcn">卷积内部</a><a href="#output">预测输出</a></nav>
+    <button class="print" id="print-button" type="button">打印 / 存为 PDF</button>
+  </div></header>
+  <main class="wrap" id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>进益资本 · 四频单股 TCN</div>
+        <h1 id="hero-title">四段历史，<br>汇成<em>一次预测。</em></h1>
+        <p class="hero-lead">先想象：现在是 <strong>14:00</strong>，要预测<strong>股票 A</strong>未来 30 分钟的 VWAP 收益。v2 会怎样读取过去、理解变化，再给出一个数？</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#input">从一次预测开始 <span aria-hidden="true">↓</span></a><a class="btn" href="#model">直接看完整模型 <span aria-hidden="true">↗</span></a></div>
+        <p class="hero-note">交互图解 · 数值案例为示意 · 对应 v2-20261011-s42</p>
+      </div>
+      <div class="hero-art">
+        <div class="art-title"><span>同一只股票，四种观察尺度</span><span>PAST → FUTURE</span></div>
+        <svg viewBox="0 0 450 265" role="img" aria-label="四种频率的历史分别编码，再合成一个收益预测">
+          <defs><linearGradient id="hero-fade"><stop stop-color="#18343d"/><stop offset="1" stop-color="#18343d" stop-opacity="0"/></linearGradient></defs>
+          <g stroke="#ffffff12" stroke-width="1"><path d="M55 45H250M55 100H250M55 155H250M55 210H250"/><path d="M88 26V227M127 26V227M166 26V227M205 26V227M244 26V227"/></g>
+          <g font-family="Consolas,monospace" font-size="12"><text x="8" y="48" fill="#63b49d">1m</text><text x="8" y="103" fill="#83a9d7">5m</text><text x="8" y="158" fill="#dba481">15m</text><text x="8" y="213" fill="#b59acb">30m</text></g>
+          <path d="M55 56L64 41L73 48L82 33L91 39L100 27L109 49L118 36L127 51L136 44L145 60L154 44L163 38L172 48L181 31L190 37L199 29L208 38L217 22L226 35L235 29L245 32" fill="none" stroke="#63b49d" stroke-width="2"/>
+          <path d="M55 114L71 110L87 116L103 96L119 106L135 98L151 104L167 93L183 100L199 88L215 95L231 82L245 89" fill="none" stroke="#83a9d7" stroke-width="2"/>
+          <path d="M55 172L79 172L79 164L103 164L103 168L127 168L127 149L151 149L151 154L175 154L175 140L199 140L199 146L223 146L223 132L245 132" fill="none" stroke="#dba481" stroke-width="2"/>
+          <path d="M55 222L93 222L93 210L131 210L131 214L169 214L169 201L207 201L207 192L245 192" fill="none" stroke="#b59acb" stroke-width="2"/>
+          <g fill="none" stroke="#64837f" stroke-width="1.3"><path d="M257 43H280Q296 43 296 59V119H322"/><path d="M257 99H285Q296 99 296 111V119"/><path d="M257 154H285Q296 154 296 142V130H322"/><path d="M257 209H280Q296 209 296 193V130"/></g>
+          <rect x="323" y="100" width="103" height="51" rx="9" fill="#2b5349" stroke="#81b59e"/>
+          <text x="375" y="123" text-anchor="middle" fill="#e5f4eb" font-size="13">一个预测</text><text x="375" y="140" text-anchor="middle" fill="#a8c5b7" font-size="10">未来 30 分钟</text>
+          <path d="M245 17V232" stroke="#d3dfd9" stroke-dasharray="3 4"/><text x="245" y="251" text-anchor="middle" fill="#d3dfd9" font-size="11" font-family="Consolas,monospace">14:00</text>
+        </svg>
+        <p class="art-caption">每条线都来自股票 A；线形为示意。</p>
+      </div>
+    </section>
+    <div class="overview" aria-label="一次预测的三个要素">
+      <div class="overview-item"><div class="overview-label">WHO / 样本对象</div><strong>一只股票</strong><p>每个样本有自己的历史窗口</p></div>
+      <div class="overview-item"><div class="overview-label">WHEN / 信息边界</div><strong>14:00 及以前</strong><p>只读取已经结束的 Bar</p></div>
+      <div class="overview-item"><div class="overview-label">WHAT / 输出目标</div><strong>未来 30 分钟收益</strong><p>目标为 VWAP 收益，输出 factor</p></div>
+    </div>
+
+    <section class="section" id="input" aria-labelledby="input-title">
+      <div class="section-head"><span class="section-num">01</span><div><h2 id="input-title">先拿到四段过去的历史</h2><p class="section-intro">Bar 是一段时间的行情记录。例如，一根 5 分钟 Bar 记录这 5 分钟的开高低收、成交量和盘口。四种频率直接读取各自的数据表。</p></div></div>
+      <div class="panel">
+        <div class="panel-top"><div class="tabs freq-tabs" role="group" aria-label="选择输入频率">
+          <button type="button" data-frequency="bar1m" aria-pressed="true">1 分钟</button><button type="button" data-frequency="bar5m" aria-pressed="false">5 分钟</button><button type="button" data-frequency="bar15m" aria-pressed="false">15 分钟</button><button type="button" data-frequency="bar30m" aria-pressed="false">30 分钟</button>
+        </div><span class="hint">切换频率，再点击一个时间槽</span></div>
+        <div class="window-layout">
+          <div><div class="window-metrics"><strong id="window-count">60</strong><span>根 Bar</span><span aria-hidden="true">×</span><strong id="window-interval">1</strong><span>分钟 / 根</span></div>
+            <div id="window-slots" class="window-slots" role="group" aria-label="历史窗口中的 Bar" data-length="60"></div>
+            <div class="window-axis"><span id="window-start"></span><span>预测时点 14:00</span></div>
+            <p class="window-legend">每个小格是一根 Bar，按时间从旧到新排列。午休和隔夜之间不另设 Bar 槽。</p>
+          </div>
+          <aside class="window-focus"><div><span class="hint">当前选中的 Bar 结束于</span><div id="focus-time" class="focus-time">当日 14:00</div><p id="focus-status" class="focus-status" aria-live="polite">已有行情 · 允许进入窗口</p></div><label class="switch"><input type="checkbox" id="missing-switch"><span>模拟这一根 Bar 缺失<br><span class="hint">观察时间槽是否还在</span></span></label></aside>
+        </div>
+        <div class="note" id="window-note" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section" id="data" aria-labelledby="data-title">
+      <div class="section-head"><span class="section-num">02</span><div><h2 id="data-title">一根 Bar，怎样变成 147 个数？</h2><p class="section-intro">先将 36 个行情字段变成两种参照下的数值，再告诉模型哪些值存在、它们发生在什么时候。这里的“通道”就是同一根 Bar 上并排放的一组数。</p></div></div>
+      <div class="panel">
+        <div class="story-row">
+          <div class="story-step"><b>① 读取 36 个原始字段</b><p>4 个 OHLC + 成交量与金额 + 30 个五档盘口字段。</p></div><div class="arrow" aria-hidden="true">→</div>
+          <div class="story-step"><b>② 换成统一的数值尺度</b><p>价格取 log；数量、金额和笔数取 log1p。非法值保留为缺失。</p></div><div class="arrow" aria-hidden="true">→</div>
+          <div class="story-step"><b>③ 保留 z 和 c 两种位置</b><p>每个字段有两个数：相对于自身历史，以及相对于同刻股票池。</p></div>
+        </div>
+        <div class="field-tags" aria-label="36个原始字段分组"><span>OHLC · 4</span><span>成交量 / 金额 · 2</span><span>买卖五档价格 · 10</span><span>买卖五档委托量 · 10</span><span>买卖五档委托笔数 · 10</span></div>
+        <div class="norm-panel">
+          <div class="demo-control"><div class="small-title">拖一拖，看看 z 和 c 怎样变化</div><p class="demo-label">以下原始值与统计量均为教学示例。</p>
+            <div class="tabs" role="group" aria-label="归一化演示字段"><button type="button" data-field="close" aria-pressed="true">收盘价</button><button type="button" data-field="volume" aria-pressed="false">成交量</button><button type="button" data-field="orders" aria-pressed="false">委托笔数</button></div>
+            <label for="raw-slider" id="raw-label">股票 A 的当前收盘价</label><div><output class="demo-value" id="raw-value" for="raw-slider">130</output><span class="demo-unit" id="raw-unit">元</span></div>
+            <input id="raw-slider" type="range" min="60" max="180" value="130" step="1" aria-describedby="norm-formula"><div class="demo-range"><span id="raw-min">60</span><span id="raw-max">180</span></div>
+            <div class="formula" id="norm-formula"></div>
+          </div>
+          <div><div class="norm-result" aria-live="polite"><article><h3>z · 和自己比</h3><p>相对于该股票训练期的均值，偏离了多少个标准差。</p><output class="norm-number" id="z-value">1.31</output></article><article><h3>c · 和同刻其他股票比</h3><p>把同频、同一 Bar 时点池内各股票的 z 再标准化。</p><output class="norm-number" id="c-value">1.26</output></article></div>
+            <p class="peer-title">同一时刻的股票池：每只股票已经得到自己的 z</p><div id="peer-rows"></div><p class="demo-label" id="cross-stats"></p>
+          </div>
+        </div>
+        <div class="note">验证、测试和推理复用训练期统计量。自身参数不足时，按<strong>已结束 Bar 的扩展历史 → 训练期全体股票统计</strong>回退；仍不足则保持缺失。截面统计只使用当时已知的股票池。</div>
+        <div class="channels">
+          <div><div class="small-title">147 个通道的排列顺序</div><div class="channel-strip" role="group" aria-label="选择通道分组"><button type="button" class="channel-z" data-channel="z" style="flex:36" aria-pressed="true">36</button><button type="button" class="channel-c" data-channel="c" style="flex:36" aria-pressed="false">36</button><button type="button" class="channel-mask" data-channel="mask" style="flex:72" aria-pressed="false">72</button><button type="button" class="channel-time" data-channel="time" style="flex:3" aria-pressed="false">3</button></div><div class="channel-grid" id="channel-grid" aria-hidden="true"></div><div class="channel-legend"><span><i class="legend-dot channel-z"></i>z</span><span><i class="legend-dot channel-c"></i>c</span><span><i class="legend-dot channel-mask"></i>有效掩码</span><span><i class="legend-dot channel-time"></i>Bar 时间编码</span></div></div>
+          <div class="channel-detail" aria-live="polite"><h3 id="channel-title"></h3><p id="channel-description"></p><p id="channel-example"></p><code id="channel-index"></code></div>
+        </div>
+        <div class="tensor-box"><div><div class="hint">例如：一个样本的 1 分钟输入</div><div class="tensor-dim">1 × <span class="dim-color">147</span> × 60</div></div><div class="tensor-note">依次是：样本数 × 每根 Bar 的通道数 × 历史 Bar 数。一次训练会把 512 个样本放成一批，首维就变成 512。</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="model" aria-labelledby="model-title">
+      <div class="section-head"><span class="section-num">03</span><div><h2 id="model-title">四条分支，各自读懂自己的历史</h2><p class="section-intro">每个分支都做三件事：整理每根 Bar、沿时间寻找变化形态、把整段历史提炼成 64 个数。然后才把四份表示汇到一起。</p></div></div>
+      <div class="panel network" id="network-panel">
+        <div class="panel-top"><span class="small-title">从历史窗口到收益预测</span><label class="switch"><input type="checkbox" id="technical-switch"><span>显示层名与张量维度</span></label></div>
+        <div class="network-grid"><div class="network-lanes" id="network-lanes"></div>
+          <div class="fusion"><div class="fusion-start"><h3>合并四份历史表示</h3><div class="fusion-parts"><span style="background:#18796d">64</span><span style="background:#426ea1">64</span><span style="background:#ba683e">64</span><span style="background:#84679e">64</span><span class="clock-part">2</span></div><div class="fusion-clock">再加预测时点的 sin / cos 两个数</div><div class="fusion-total">258 <small>个数</small></div></div><div class="arrow" aria-hidden="true">→</div><div class="head-box"><b>258 → 128 → 1</b><small>MLP 融合头</small><span class="tech">Linear → GELU → Dropout<br>→ Linear，无 sigmoid</span></div><div class="arrow" aria-hidden="true">→</div><div class="factor-box"><b>一个收益预测</b><small>factor = 网络输出 ÷ 100</small></div></div>
+        </div>
+        <p class="network-bottom">四个分支参数各自独立；所有股票共用同一套模型。每个样本输入单只股票的四段历史，c 通道携带它在当时股票池中的相对位置。</p>
+      </div>
+      <div class="two-col"><div class="caption-box"><b>“64 个数”是学出来的历史表示</b><p>训练让模型找到有用的组合。这里的 64 是隐藏维度，并不对应 64 个预先指定的行情字段。</p></div><div class="caption-box"><b>四种频率提供四种时间尺度</b><p>1 分钟窗口有 60 根 Bar；5 分钟有 24 根；15 与 30 分钟各有 16 根。每个分支都只读取自己的频率。</p></div></div>
+    </section>
+
+    <section class="section" id="tcn" aria-labelledby="tcn-title">
+      <div class="section-head"><span class="section-num">04</span><div><h2 id="tcn-title">TCN 怎么沿着时间“看”过去？</h2><p class="section-intro">一个卷积核会组合三个时间点的隐藏数值。膨胀系数 d 决定这三个点隔多远：d 越大，能看到的过去越远。</p></div></div>
+      <div class="panel">
+        <div class="tcn-layout"><div><div class="panel-top"><div class="tabs" role="group" aria-label="选择卷积膨胀系数"><button type="button" data-dilation="1" aria-pressed="true">d = 1</button><button type="button" data-dilation="2" aria-pressed="false">d = 2</button><button type="button" data-dilation="4" aria-pressed="false">d = 4</button><button type="button" data-dilation="8" aria-pressed="false">d = 8</button></div><span class="hint">点击格子可移动当前时点 t</span></div><div class="tcn-slots" id="tcn-slots" role="group" aria-label="卷积访问的时间位置"></div><div class="tcn-axis"><span>更早的 Bar</span><span>较新的 Bar →</span></div><div class="tcn-readout" id="tcn-readout" aria-live="polite"></div></div>
+          <aside class="tcn-summary"><h3>亮起的三个格子，就是这次读取的位置</h3><p>读取 <b>t−2d、t−d、t</b>，组合成 t 时点的新隐藏状态。位于 t 之后的格子保持灰色。</p><p>每次只在左边补零，序列开头历史不足时用补零位。这样隐藏状态沿时间传播时，始终只访问当前和更早的 Bar。</p></aside></div>
+        <div class="block-diagram"><div class="residual-path"><span>原输入直接保留，最后加回来：残差连接</span></div><div class="block-nodes"><div class="block-node"><b>输入 h</b><small>64 × L</small></div><div class="arrow" aria-hidden="true">→</div><div class="block-node"><b>第一个因果卷积</b><small>左补零 → 卷积 → LayerNorm<br>→ GELU → Dropout → 掩码</small></div><div class="arrow" aria-hidden="true">→</div><div class="block-node"><b>第二个因果卷积</b><small>左补零 → 卷积 → LayerNorm<br>→ GELU → Dropout → 掩码</small></div><div class="arrow" aria-hidden="true">→</div><div class="block-node"><b>加回 h</b><small>再乘有效掩码<br>仍为 64 × L</small></div></div></div>
+        <div class="note">上面的交互只展示<strong>一个卷积</strong>的取样位置。一个残差块有两个同 d 的卷积；1 分钟分支有 4 个块（d 为 1、2、4、8），其余分支有 3 个块（d 为 1、2、4）。每个块保持 64 个通道和原序列长度。</div>
+        <div class="pooling"><div class="pooling-copy"><h3>看完整段历史后，保留“最近状态”和“总体状态”</h3><p>取最后一个有效时点的 64 维隐藏状态，再对所有有效时点求 64 维均值。二者拼接成 128 维，再用可学习的线性层和 GELU 压到 64 维，交给融合头。</p></div><div class="pooling-visual"><div class="pooling-node">最后有效状态<b>64</b>＋ 有效时点均值<b>64</b></div><div class="arrow" aria-hidden="true">→</div><div class="pooling-node">拼接<b>128</b></div><div class="arrow" aria-hidden="true">→</div><div class="pooling-node">学习后提炼<b>64</b></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="output" aria-labelledby="output-title">
+      <div class="section-head"><span class="section-num">05</span><div><h2 id="output-title">最后的一个数，是什么？</h2><p class="section-intro">四段历史的表示，加上预测时点编码，经过融合头得到一个标量。将这个数除以 100，就得到提交的 factor。</p></div></div>
+      <div class="panel output-layout"><div><div class="small-title">看一个输出的尺度示例</div><div class="output-equation"><div class="output-number">0.35<small>网络输出，示意值</small></div><div class="arrow" aria-hidden="true">÷100 →</div><div class="output-number">0.0035<small>factor，收益尺度</small></div></div><p class="output-description">0.0035 对应 0.35% 的收益数值。模型每次返回的就是一个连续收益预测。</p><div class="code-result">date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instrument&nbsp;&nbsp;factor<br>示例交易日 14:00&nbsp;&nbsp;股票 A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.0035</div><p class="demo-label">示例仅说明数据格式与缩放关系，未运行真实行情预测。</p></div><div class="learning"><h3>这些转换规则，怎样学到？</h3><ol class="learning-list"><li><b>输入过去的四段历史。</b>对应股票与预测时点，构造四频窗口。</li><li><b>对照官方未来收益标签。</b>标签来自 <code>vwap_return</code>；训练时先裁剪到 [−0.1, 0.1]，再乘 100。</li><li><b>用 Huber 损失更新参数。</b>调整投影、卷积和融合头，共 428,673 个可训练参数。</li><li><b>按验证 Rank IC 冻结权重。</b>当前运行选中第 4 轮；评估标签使用原始收益值。</li></ol></div></div>
+      <div class="splits" aria-label="训练验证测试时间划分"><div><b>训练 · 学参数</b>2020—2023 年</div><div><b>验证 · 选权重</b>2024 年上半年</div><div><b>测试 · 评估冻结模型</b>2024 年下半年</div></div>
+    </section>
+
+    <section class="section" id="questions" aria-labelledby="questions-title">
+      <div class="section-head"><span class="section-num">06</span><div><h2 id="questions-title">几个容易卡住的地方</h2><p class="section-intro">点开一个问题，把前面几个概念再对齐一次。</p></div></div>
+      <div class="faq">
+        <details><summary>147、60、64，分别在数什么？</summary><p>147 是每根 Bar 输入的数值个数；60 是 1 分钟分支的历史 Bar 数；64 是网络内部每个时点的隐藏数值个数。比如 147 × 60 输入经过投影后变成 64 × 60，时间长度仍是 60。</p></details>
+        <details><summary>36 个字段为什么先变成 72 个数？</summary><p>每个字段保留 z 和 c 两个结果，所以是 36 × 2 = 72。四种频率分别做这件事。再加 72 个有效掩码和 3 个时间编码，才得到单根 Bar 的 147 个通道。</p></details>
+        <details><summary>一个样本里有没有其他股票的数据？</summary><p>网络收到的是目标股票自己的四段窗口。预处理计算 c 时，会使用同频、同时点股票池内各股票的 z 分布。因此目标股票的 c 包含截面相对位置。所有股票共享同一套网络参数，自身归一化统计量则按股票分别保存。</p></details>
+        <details><summary>缺失的 Bar 会怎样？真实的 0 怎么办？</summary><p>缺失 Bar 保留时间槽；切窗时缺失数值补 0，对应掩码也为 0。真实且有效的零值，其掩码为 1。若整根 Bar 的 72 个值都缺失，时间编码和隐藏状态也置零；若整个分支没有有效历史，该分支给融合头的 64 维表示为零向量。</p></details>
+        <details><summary>“20 天历史”为什么和“60 根 Bar”不同？</summary><p>窗口始终按各频率的固定 Bar 数构造：60、24、16、16。20 个日历天是历史允许的最大跨度。午休、隔夜和休市会增加日历跨度，缺失时间槽也占据固定窗口中的位置。</p></details>
+        <details><summary>Bar 时间编码和预测时点编码有什么区别？</summary><p>每根 Bar 有自己的结束时刻 sin、cos，以及到预测时点的归一化对数分钟差，共 3 个通道。预测时点另外有 sin、cos 两个数，它们与四个 64 维分支表示一起进入融合头：4 × 64 + 2 = 258。</p></details>
+      </div>
+      <details class="spec"><summary>展开核对：完整配置与数据结构</summary><div class="table-scroll"><table><thead><tr><th>频率</th><th>输入 / 单样本</th><th>投影后</th><th>残差块</th><th>分支输出</th></tr></thead><tbody><tr><td>1 分钟</td><td><code>147 × 60</code></td><td><code>64 × 60</code></td><td>4；d=1,2,4,8</td><td>64</td></tr><tr><td>5 分钟</td><td><code>147 × 24</code></td><td><code>64 × 24</code></td><td>3；d=1,2,4</td><td>64</td></tr><tr><td>15 分钟</td><td><code>147 × 16</code></td><td><code>64 × 16</code></td><td>3；d=1,2,4</td><td>64</td></tr><tr><td>30 分钟</td><td><code>147 × 16</code></td><td><code>64 × 16</code></td><td>3；d=1,2,4</td><td>64</td></tr></tbody></table></div><p class="hint">投影：Conv1d(147,64,1) → GELU → 掩码。残差块：两个 kernel=3 的因果卷积，逐时点 LayerNorm、GELU、Dropout(0.1) 与掩码。分支汇总：Linear(128,64) → GELU。融合头：Linear(258,128) → GELU → Dropout(0.1) → Linear(128,1)。</p><p class="hint">预处理文件每行：date + instrument + 36 个 z + 36 个 c，共 74 列；数值通道为 float32，缺失保留 null。模型窗口在切窗时才补零并添加掩码与时间通道。训练 batch=512；推理 batch=1024。训练采用支持时的 CUDA BF16 autocast，验证 / 测试 / 推理为 FP32。</p><p class="hint">常规交易时段：上午 (09:30,11:30]、下午 (13:00,15:00]。价格非正、数量为负及非有限值视为缺失，正常零数量有效。个股统计至少需 30 个有效 Bar；截面统计至少需 2 个有效池内股票。样本键按官方股票池生成；标签按同一 (date,instrument) 对齐，标签未来窗口不能跨日期或划分边界。</p></details>
+      <div class="sources"><span>图解依据：仓库实际实现与冻结运行配置</span><p><a href="https://github.com/ChangzheMa/jycapital/blob/master/solutions/v2/v2_model.py" target="_blank" rel="noopener">模型实现 ↗</a><a href="https://github.com/ChangzheMa/jycapital/blob/master/solutions/v2/v2_data.py" target="_blank" rel="noopener">切窗实现 ↗</a><a href="https://github.com/ChangzheMa/jycapital/blob/master/solutions/v2/v2_preprocessing.py" target="_blank" rel="noopener">归一化实现 ↗</a><a href="https://github.com/ChangzheMa/jycapital/blob/master/solutions/v2/model-config.json" target="_blank" rel="noopener">模型配置 ↗</a><a href="https://github.com/ChangzheMa/jycapital/blob/master/solutions/v2/README.md" target="_blank" rel="noopener">方案说明 ↗</a></p><p>来源文件核对日期：2026-10-13（UTC+08:00）。本页的行情线、示例股票、归一化案例及输出数值用于解释结构。</p></div>
+    </section>
+    <footer class="footer"><span>JYCAPITAL / MODEL NOTES<br>v2-20261011-s42 · 428,673 parameters</span><a href="#top" class="back-top">回到开头 ↑</a></footer>
+  </main>
+  <noscript><div class="wrap note">本页的结构说明可直接阅读。开启 JavaScript 后可以切换窗口、拖动归一化案例并观察卷积位置。</div></noscript>
+  <!-- Self-contained interactive diagrams; illustrative data only. -->
+  <script>
+  'use strict';
+  const frequencySpecs = {
+    bar1m: {name:'1 分钟', short:'1m', step:1, length:60, blocks:4, dilations:'1,2,4,8', color:'#18796d', light:'#63b49d'},
+    bar5m: {name:'5 分钟', short:'5m', step:5, length:24, blocks:3, dilations:'1,2,4', color:'#426ea1', light:'#83a9d7'},
+    bar15m: {name:'15 分钟', short:'15m', step:15, length:16, blocks:3, dilations:'1,2,4', color:'#ba683e', light:'#dba481'},
+    bar30m: {name:'30 分钟', short:'30m', step:30, length:16, blocks:3, dilations:'1,2,4', color:'#84679e', light:'#b59acb'}
+  };
+  const fieldSpecs = {
+    close:{name:'收盘价', unit:'元', min:60,max:180,step:1,value:130, transform:Math.log, transformName:'log',mean:Math.log(100),scale:.2},
+    volume:{name:'成交量',unit:'示例数量单位',min:0,max:3000,step:10,value:1500,transform:Math.log1p,transformName:'log1p',mean:Math.log1p(1000),scale:.5},
+    orders:{name:'委托笔数',unit:'笔',min:0,max:60,step:1,value:30,transform:Math.log1p,transformName:'log1p',mean:Math.log1p(20),scale:.4}
+  };
+  const channelSpecs = {
+    z:{title:'36 个 z：个股自身的位置',description:'每个原始字段先取对数，再以该股票、该频率、该字段的训练期统计量标准化。',example:'例如 z_close 表示这一根 Bar 的收盘价，在该股票自身训练分布中的位置。',index:'通道 0–35 / z_<field>'},
+    c:{title:'36 个 c：同时点截面的位置',description:'在同一频率、同一 Bar 结束时刻，对已知股票池内的 z 再计算截面均值与标准差。',example:'例如 c_close 表示这只股票的 z_close，在同时点股票池中的相对位置。',index:'通道 36–71 / c_<field>'},
+    mask:{title:'72 个掩码：这个值是否存在',description:'每个 z/c 数值都配一个掩码。有效值为 1，缺失或超出允许历史范围的值为 0。',example:'缺失值在切窗后补 0；真实零值的掩码仍为 1。这样模型可以区分它们。',index:'通道 72–143 / 0 或 1'},
+    time:{title:'3 个时间数：何时发生、距现在多久',description:'两个数是 Bar 结束时刻的日内 sin/cos 编码；第三个数是距预测时点的归一化对数日历分钟差。',example:'age = log1p(分钟差) / log1p(20×1440)。整根 Bar 无有效字段时，三个时间数也置 0。',index:'通道 144–146 / sin、cos、log_age'}
+  };
+  const state = {frequency:'bar1m', selected:null, missing:false, field:'close',channel:'z', dilation:1,target:16};
+  const $ = id => document.getElementById(id);
+  const formatTime = minute => String(Math.floor(minute/60)).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
+  function barLabel(bar) {return (bar.day===0?'当日':bar.day===-1?'上一交易日':'前两交易日')+' '+formatTime(bar.minute);}
+  function windowBars(spec) {
+    const bars=[];
+    for(let day=-2;day<=0;day++) {
+      for(const [start,end] of [[570,690],[780,900]]) {
+        for(let minute=start+spec.step;minute<=end;minute+=spec.step) {
+          if(day<0||minute<=840) bars.push({day,minute});
+        }
+      }
+    }
+    return bars.slice(-spec.length);
+  }
+  function renderWindow(restoreFocus=false) {
+    const spec=frequencySpecs[state.frequency],bars=windowBars(spec);
+    if(state.selected===null||state.selected>=bars.length) state.selected=bars.length-1;
+    const slots=$('window-slots');slots.replaceChildren();slots.style.setProperty('--freq-color',spec.color);slots.dataset.length=String(spec.length);
+    bars.forEach((bar,index)=>{
+      const button=document.createElement('button');button.type='button';button.className='bar-slot';
+      button.setAttribute('aria-label',barLabel(bar)+(state.missing&&index===state.selected?'，模拟缺失':''));
+      button.setAttribute('aria-pressed',String(index===state.selected));button.title=barLabel(bar);
+      if(state.missing&&index===state.selected) button.classList.add('missing');
+      button.addEventListener('click',()=>{state.selected=index;renderWindow(true);});slots.append(button);
+    });
+    $('window-count').textContent=spec.length;$('window-interval').textContent=spec.step;$('window-start').textContent=barLabel(bars[0]);$('focus-time').textContent=barLabel(bars[state.selected]);
+    $('focus-status').textContent=state.missing?'模拟缺失 · 时间槽保留，输入和掩码为 0':'已有行情 · 允许进入窗口';
+    $('focus-status').style.color=state.missing?'#ba683e':'#18796d';
+    const days=new Set(bars.map(b=>b.day)).size;
+    $('window-note').textContent=spec.length+' 根 × '+spec.step+' 分钟 = '+(spec.length*spec.step)+' 个交易分钟槽。本示例窗口'+(days>1?'跨 '+days+' 个交易日':'在当日内')+'；午休、隔夜与休市会让日历跨度更长。最多回看 20 个日历天。'+(state.missing?'模拟缺失后仍是 '+spec.length+' 个时间槽，不向更早处多取一根。':'');
+    document.querySelectorAll('[data-frequency]').forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.frequency===state.frequency));button.style.setProperty('--freq-color',frequencySpecs[button.dataset.frequency].color);});
+    document.querySelectorAll('.lane').forEach(lane=>lane.classList.toggle('active',lane.dataset.lane===state.frequency));
+    if(restoreFocus) slots.children[state.selected].focus({preventScroll:true});
+  }
+  function renderNetwork(){
+    const lanes=$('network-lanes');
+    Object.entries(frequencySpecs).forEach(([key,spec])=>{
+      const lane=document.createElement('div');lane.className='lane';lane.dataset.lane=key;lane.style.setProperty('--freq-color',spec.light);
+      lane.innerHTML='<div class="lane-label">'+spec.name+'<span>'+spec.length+' 根 Bar</span></div>'+
+        '<div class="lane-node">整理每根 Bar<small>147 个数 → 64 个数</small><span class="tech">Conv1d(147,64,1)<br>GELU + 掩码<br>64 × '+spec.length+'</span></div><div class="arrow" aria-hidden="true">→</div>'+
+        '<div class="lane-node">沿历史找形态<small>'+spec.blocks+' 个因果残差块</small><span class="tech">d = '+spec.dilations+'<br>kernel = 3<br>64 × '+spec.length+'</span></div><div class="arrow" aria-hidden="true">→</div>'+
+        '<div class="lane-node final">64<small>整段历史的表示</small><span class="tech">last + mean → 128<br>Linear + GELU → 64</span></div>';
+      lanes.append(lane);
+    });
+  }
+  function renderNormalization(){
+    const spec=fieldSpecs[state.field],raw=Number($('raw-slider').value),u=spec.transform(raw),z=(u-spec.mean)/spec.scale;
+    const peers=[-1,-.3,.6,z],mean=peers.reduce((a,b)=>a+b,0)/peers.length,std=Math.sqrt(peers.reduce((a,b)=>a+(b-mean)**2,0)/peers.length),c=(z-mean)/std;
+    $('raw-value').textContent=String(raw);$('z-value').textContent=z.toFixed(2);$('c-value').textContent=c.toFixed(2);
+    $('norm-formula').textContent='z = ('+spec.transformName+'('+raw+') − '+spec.mean.toFixed(3)+') / '+spec.scale.toFixed(1)+' = '+z.toFixed(2);
+    $('cross-stats').textContent='这 4 只股票 z 的截面均值 = '+mean.toFixed(2)+'，总体标准差 = '+std.toFixed(2)+'；c = (z − 均值) / 标准差。';
+    const rows=$('peer-rows');rows.replaceChildren();
+    peers.forEach((value,index)=>{
+      const row=document.createElement('div');row.className='peer-row'+(index===3?' self':'');
+      row.innerHTML='<span>'+(['股票 B','股票 C','股票 D','股票 A'][index])+'</span><span class="peer-track"><i class="peer-dot"></i></span><output>'+value.toFixed(2)+'</output>';
+      row.querySelector('.peer-dot').style.left=Math.min(98,Math.max(2,50+value*11))+'%';rows.append(row);
+    });
+  }
+  function setField(key){
+    state.field=key;const spec=fieldSpecs[key],slider=$('raw-slider');slider.min=spec.min;slider.max=spec.max;slider.step=spec.step;slider.value=spec.value;
+    $('raw-label').textContent='股票 A 的当前'+spec.name;$('raw-unit').textContent=spec.unit;$('raw-min').textContent=spec.min;$('raw-max').textContent=spec.max;
+    document.querySelectorAll('[data-field]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.field===key)));renderNormalization();
+  }
+  function renderChannels(){
+    const spec=channelSpecs[state.channel];$('channel-title').textContent=spec.title;$('channel-description').textContent=spec.description;$('channel-example').textContent=spec.example;$('channel-index').textContent=spec.index;
+    document.querySelectorAll('[data-channel]').forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.channel===state.channel));button.setAttribute('aria-label',channelSpecs[button.dataset.channel].title);});
+    document.querySelectorAll('.channel-cell').forEach(cell=>cell.classList.toggle('active',cell.dataset.group===state.channel));
+  }
+  function initializeChannels(){
+    for(let index=0;index<147;index++) {
+      const group=index<36?'z':index<72?'c':index<144?'mask':'time',cell=document.createElement('span');
+      cell.className='channel-cell channel-'+group;cell.dataset.group=group;$('channel-grid').append(cell);
+    }renderChannels();
+  }
+  function renderConvolution(restoreFocus=false){
+    const indices=[state.target-2*state.dilation,state.target-state.dilation,state.target],slots=$('tcn-slots');slots.replaceChildren();
+    for(let index=0;index<17;index++){
+      const button=document.createElement('button');button.type='button';button.className='tcn-slot';
+      button.textContent=index===state.target?'t':String(index-state.target);button.setAttribute('aria-label','相对当前时点 '+(index-state.target)+'，点击将其设为当前时点');button.setAttribute('aria-pressed',String(index===state.target));
+      if(indices.includes(index))button.classList.add('selected');if(index===state.target)button.classList.add('target');if(index>state.target)button.classList.add('future');
+      button.addEventListener('click',()=>{state.target=index;renderConvolution(true);});slots.append(button);
+    }
+    const padded=indices.filter(index=>index<0).length;
+    $('tcn-readout').innerHTML='当前 d = <strong>'+state.dilation+'</strong>，读取 <strong>t−'+(2*state.dilation)+'、t−'+state.dilation+'、t</strong>。'+(padded?'其中 '+padded+' 个位置位于序列起点之前，使用左侧补零。':'三个位置都在当前时点及以前。');
+    document.querySelectorAll('[data-dilation]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.dilation)===state.dilation)));
+    if(restoreFocus)slots.children[state.target].focus({preventScroll:true});
+  }
+  document.querySelectorAll('[data-frequency]').forEach(button=>button.addEventListener('click',()=>{state.frequency=button.dataset.frequency;state.selected=null;renderWindow();}));
+  $('missing-switch').addEventListener('change',event=>{state.missing=event.target.checked;renderWindow();});
+  document.querySelectorAll('[data-field]').forEach(button=>button.addEventListener('click',()=>setField(button.dataset.field)));
+  $('raw-slider').addEventListener('input',renderNormalization);
+  document.querySelectorAll('[data-channel]').forEach(button=>button.addEventListener('click',()=>{state.channel=button.dataset.channel;renderChannels();}));
+  $('technical-switch').addEventListener('change',event=>$('network-panel').classList.toggle('show-tech',event.target.checked));
+  document.querySelectorAll('[data-dilation]').forEach(button=>button.addEventListener('click',()=>{state.dilation=Number(button.dataset.dilation);renderConvolution();}));
+  $('print-button').addEventListener('click',()=>window.print());
+  let printDetails=[];
+  window.addEventListener('beforeprint',()=>{printDetails=[...document.querySelectorAll('details')].filter(detail=>!detail.open);printDetails.forEach(detail=>detail.open=true);});
+  window.addEventListener('afterprint',()=>{printDetails.forEach(detail=>detail.open=false);printDetails=[];});
+  if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting)document.querySelectorAll('.nav a').forEach(link=>link.setAttribute('aria-current',String(link.hash==='#'+entry.target.id)));},{rootMargin:'-15% 0px -65% 0px'});
+    document.querySelectorAll('section[id]').forEach(section=>observer.observe(section));
+  }
+  renderNetwork();renderWindow();initializeChannels();setField('close');renderConvolution();
+  </script>
+</body>
+</html>

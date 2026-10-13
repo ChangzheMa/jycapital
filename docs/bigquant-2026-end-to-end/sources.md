@@ -1,6 +1,6 @@
 # 来源与结论范围
 
-整理日期：**2026-10-10（UTC+08:00）**。[返回目录](../README.md)
+整理日期：**2026-10-14（UTC+08:00）**。[返回目录](../README.md)
 
 ## 已确认结论
 
@@ -26,6 +26,9 @@ Mock 的运行与提交通过结论不代表模型训练、权重复现或预测
 | [比赛规则](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=rule) | 2026-09-29／10-09 | 通用研究、数据与提交要求 |
 | [新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0) | 2026-10-09 | 唯一 Notebook、`main` 入口、资源及本地训练授权 |
 | [端到端模型数据下载指南](https://bigquant.com/wiki/doc/cay6LBmvc1) | 2026-10-09 | `e2e` 与 `stock` 的字段对应、单位缩放和缺失值 |
+| [深交所 STEP 行情数据接口规范 Ver1.10](https://investor.szse.cn/marketServices/technicalservice/interface/P020210719617049997420.pdf) | 2026-10-14 | 2021-07 版，PDF 第 29 页的集合竞价档位复用与价格为零的数量条目；第 24 页的委托笔数不揭示编码 |
+| [深交所数据接口规范 Ver4.72](https://www.szse.cn/marketServices/technicalservice/history/P020180328468171229352.pdf) | 2026-10-14 | 2015-05 版，PDF 第 35 页的开盘／收盘集合竞价字段复用与置零说明；仅用于解释编码，不假定供应商快照映射 |
+| [深交所主板股票交易问答](https://investor.szse.cn/column/qa/t20230306_599093.html) | 2026-10-14 | 2023 年规则下的普通主板涨跌幅比例及例外，用于核对典型盘口形态，不代替官方逐股票限价字段 |
 | [比赛配置接口](https://bigquant.com/bigapis/alphathon/v1/competitions) | 2026-10-09 | [配置摘录](competition-config.json)，以比赛 ID 限定查询 |
 | [股票列表元数据](https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_instruments) | 2026-09-22 | 股票列表字段定义 |
 | [风险暴露元数据](https://jinyicapital.bigquant.com/bigapis/data/v1/spacedatasources/spaces/db3bf8c9-0b87-4b89-a17a-d42cb0b7567b/datasources/cpt_jyc_2026_exposure) | 2026-09-22 | 风险暴露字段定义 |
