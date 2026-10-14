@@ -123,6 +123,12 @@ class ExportV4Test(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "所选权重已改变"):
             exporter.export(self.run, platform_test_reason="用户要求平台比较")
 
+    def test_attachment_limit_rejects_export_before_creating_package(self):
+        with patch.object(exporter, "MAX_ATTACHMENT_BYTES", 10):
+            with self.assertRaisesRegex(ValueError, "超过"):
+                exporter.export(self.run, platform_test_reason="用户要求平台比较")
+        self.assertFalse((self.root / "submissions/v4-test").exists())
+
     def test_changed_frozen_loss_dependency_rejected(self):
         (self.run / "source/solutions/v4/v4_loss.py").write_text("changed loss\n")
         with self.assertRaisesRegex(ValueError, "冻结源码已改变"):

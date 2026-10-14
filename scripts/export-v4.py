@@ -10,9 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "common"))
 sys.path.insert(0, str(ROOT / "solutions/v4"))
 from artifacts import now, read_json, sha256, write_json
+from text_json import write_compact_numeric_json
 from v4_text_artifact import FORMAT, encode_state, decode_state, state_digest
 
 FREQUENCIES = ("bar1m", "bar5m", "bar15m", "bar30m")
+MAX_ATTACHMENT_BYTES = 50_000_000
 
 
 def manifest_path(package):
@@ -136,12 +138,14 @@ JSON 包含完整数值权重、四频统计量、配置、依赖及训练／推
 复现工作目录必须不存在；该调用会生成预处理数据并运行正式训练。仅执行下方调试单元格不会训练。
 本地评估摘要与原权重 SHA-256 见 JSON 的 `metadata`；逐文件哈希及本地入口验证记录位于仓库 `experiments/{destination.name}-submission.json`，无需上传。
 """
-    destination.mkdir(parents=True)
-    write_json(destination / "v4-model.json", bundle)
+    write_compact_numeric_json(destination / "v4-model.json", bundle,
+                               max_bytes=MAX_ATTACHMENT_BYTES)
     write_json(destination / "v4-submission.ipynb", notebook(
         description, sources["solutions/v4/v4_notebook.py"]["text"]))
     report = {
         "solution_id": "v4", "run_id": run.name, "exported_at": now(), "layout": "two-text-files",
+        "json_layout": "two_space_objects_inline_numeric_arrays",
+        "max_attachment_bytes": MAX_ATTACHMENT_BYTES,
         "source_git_commit": manifest["source"]["git_commit"], "source_git_dirty": manifest["source"]["git_dirty"],
         "source_snapshot_hashes": frozen, "embedded_source_hashes": {p: v["sha256"] for p, v in sources.items()},
         "model_sha256": manifest["selection"]["model_sha256"], "tensor_sha256": bundle["tensor_sha256"],
@@ -150,6 +154,7 @@ JSON 包含完整数值权重、四频统计量、配置、依赖及训练／推
         "export_script_sha256": sha256(__file__),
         "notebook_template_sha256": sources["solutions/v4/v4_notebook.py"]["sha256"],
         "platform_status": "not_submitted", "validation_status": "pending",
+        "attachment_bytes": {p.name: p.stat().st_size for p in sorted(destination.iterdir()) if p.is_file()},
         "files": {p.name: sha256(p) for p in sorted(destination.iterdir()) if p.is_file()},
     }
     write_json(manifest_path(destination), report)

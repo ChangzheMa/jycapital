@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "common"))
 sys.path.insert(0, str(ROOT / "solutions/v4"))
 from artifacts import now, read_json, sha256, write_json
-from v4_text_artifact import decode_state
+from v4_text_artifact import decode_state, state_digest
 
 
 def manifest_path(package):
@@ -45,6 +45,9 @@ def verify(run, package, start, end, split="test"):
     manifest = read_json(manifest_path(package))
     if set(p.name for p in package.iterdir()) != {"v4-submission.ipynb", "v4-model.json"}:
         raise ValueError("提交目录必须只含 Notebook 和 JSON 两个文本文件")
+    attachment_bytes = {path.name: path.stat().st_size for path in package.iterdir()}
+    if any(size > 50_000_000 for size in attachment_bytes.values()):
+        raise ValueError("平台附件超过 50,000,000 字节上限")
     for name, digest in manifest["files"].items():
         (package / name).read_text(encoding="utf-8")
         if sha256(package / name) != digest:
@@ -65,6 +68,8 @@ def verify(run, package, start, end, split="test"):
     for name, tensor in original["state_dict"].items():
         if tensor.dtype != restored[name].dtype or not torch.equal(tensor, restored[name]):
             raise ValueError("文本权重与原 checkpoint 不同: " + name)
+    if state_digest(restored) != bundle["tensor_sha256"] or state_digest(restored) != state_digest(original["state_dict"]):
+        raise ValueError("文本权重与原 checkpoint 的张量字节不同")
     if bundle["preprocessing"] != read_json(run / "source/solutions/v4/config.json"):
         raise ValueError("预处理配置不同")
     for frequency, statistics in bundle["normalization"].items():
@@ -165,6 +170,7 @@ def verify(run, package, start, end, split="test"):
               "restored_ic_trainer_import_passed": True,
               "restored_preprocessing_config_validated": True,
               "isolated_two_file_inference": True, "repository_code_on_import_path": False,
+              "attachment_bytes": attachment_bytes, "max_attachment_bytes": 50_000_000,
               "utf8_text_only": True, "passed": True,
               "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"}
     write_json(run / "submission-validation.json", report)

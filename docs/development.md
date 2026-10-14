@@ -89,6 +89,8 @@ v4 使用 [export-v4.py](../scripts/export-v4.py) 和 [verify-v4-submission.py](
 
 v4 的 [local-v2-ic](../evaluation/protocols/local-v2-ic.json) 仅改变协议标识和选择指标。与旧运行比较时须显式传入 `--allow-selection-metric-change`；默认检查仍严格要求原协议相同，日期、标签、股票池、聚合规则和评估器的其他差异均拒绝。
 
+v4 参数 JSON 通过 [text_json.py](../common/text_json.py) 保留两空格对象缩进、紧凑写入数值数组；不缩短浮点有效数字。导出和验证均按单文件 50,000,000 字节上限检查，超限不生成附件。文字、完整数值与标准 JSON 解析结果保持一致。
+
 ## 后台通知入口
 
 [run_notifications.py](../common/run_notifications.py) 通过本地 Codex daemon 的 WebSocket RPC 将独立监控通知送回指定的已有任务。调用时提供 `--codex-binary`、`--thread-id`、`--run-dir` 和已有训练进程的 `--pid`；不固化本机路径或任务标识。脚本接入 [监控程序](../.agents/skills/jycapital-experiment/scripts/monitor-run.py)，普通进度只更新本地状态，每小时、冻结、完成或异常时发送通知。

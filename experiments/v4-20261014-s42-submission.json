@@ -1,7 +1,7 @@
 {
   "solution_id": "v4",
   "run_id": "v4-20261014-s42",
-  "exported_at": "2026-10-15T01:01:02+08:00",
+  "exported_at": "2026-10-15T01:39:11+08:00",
   "layout": "two-text-files",
   "source_git_commit": "f192143e7e540e39c17a3b40dfbc42ba0e2727b3",
   "source_git_dirty": true,
@@ -89,17 +89,17 @@
   "local_decision": "no_local_improvement",
   "export_purpose": "user_requested_platform_test",
   "export_reason": "用户要求将 v4 冻结模型整理为平台提交材料，用于平台运行及评分比较；保留未超过历史最佳验证 IC 的本地判定",
-  "export_script_sha256": "e3f775ebf77040d6458d578fbf927924849bb11f3218253598d386189ce1a955",
+  "export_script_sha256": "d36d126da3c6258ac15bf9cffa813e8a4b3549a94d74cb30e62f9096ab88c9d5",
   "notebook_template_sha256": "85476e88fa18f4809f9f769bba75e040965d15119da5fe7cec844ed05d21500f",
   "platform_status": "not_submitted",
   "validation_status": "local_passed",
   "files": {
-    "v4-model.json": "73946c21d43169c28abefe084151f18a483587d03099d56f94a92e9677e77cf6",
+    "v4-model.json": "874b1bc6f88d159f65eabbd994c366a2ece5a2a45ab8c67869c8708661b874be",
     "v4-submission.ipynb": "25f5b0edd09ef72cddd6f55f7bd70f479c29c6a7c774c579de9e498d95b53d24"
   },
-  "verification_script_sha256": "b98e58f10ac093419fbf7fd7faeb275de9b68f6e6f6d2f8deee98a93834a396a",
+  "verification_script_sha256": "94286a510dd7c2590fa2f6324ceb2f373934c88608f357f7c0ee82f8c0772634",
   "validation": {
-    "checked_at": "2026-10-15T01:01:30+08:00",
+    "checked_at": "2026-10-15T01:39:40+08:00",
     "run_id": "v4-20261014-s42",
     "package": "submissions/v4-20261014-s42",
     "environment": "local_dai_shim",
@@ -112,7 +112,7 @@
     "p99_abs_difference": 1.6069971024990183e-08,
     "atol": 2e-07,
     "rtol": 0.0001,
-    "seconds": 22.832,
+    "seconds": 24.86,
     "device": "cuda",
     "torch": "2.11.0+cu130",
     "queried_tables": [
@@ -133,8 +133,19 @@
     "restored_preprocessing_config_validated": true,
     "isolated_two_file_inference": true,
     "repository_code_on_import_path": false,
+    "attachment_bytes": {
+      "v4-model.json": 45745236,
+      "v4-submission.ipynb": 6453
+    },
+    "max_attachment_bytes": 50000000,
     "utf8_text_only": true,
     "passed": true,
     "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
+  },
+  "json_layout": "two_space_objects_inline_numeric_arrays",
+  "max_attachment_bytes": 50000000,
+  "attachment_bytes": {
+    "v4-model.json": 45745236,
+    "v4-submission.ipynb": 6453
   }
 }

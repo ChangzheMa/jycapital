@@ -862,7 +862,7 @@
   },
   "submission_directory": "submissions/v4-20261014-s42",
   "submission_validation": {
-    "checked_at": "2026-10-15T01:01:30+08:00",
+    "checked_at": "2026-10-15T01:39:40+08:00",
     "run_id": "v4-20261014-s42",
     "package": "submissions/v4-20261014-s42",
     "environment": "local_dai_shim",
@@ -875,7 +875,7 @@
     "p99_abs_difference": 1.6069971024990183e-08,
     "atol": 2e-07,
     "rtol": 0.0001,
-    "seconds": 22.832,
+    "seconds": 24.86,
     "device": "cuda",
     "torch": "2.11.0+cu130",
     "queried_tables": [
@@ -896,11 +896,16 @@
     "restored_preprocessing_config_validated": true,
     "isolated_two_file_inference": true,
     "repository_code_on_import_path": false,
+    "attachment_bytes": {
+      "v4-model.json": 45745236,
+      "v4-submission.ipynb": 6453
+    },
+    "max_attachment_bytes": 50000000,
     "utf8_text_only": true,
     "passed": true,
     "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
   },
-  "submission_manifest_sha256": "1f3f7a87def05be3d9c016a437482174ca0b9d8750f66ded4c0fcb2b9f05f168",
+  "submission_manifest_sha256": "470ad8930ef1d166e5c3fdc975deab0c2ac49c5c85a8f530c8c41177475882bc",
   "export_purpose": "user_requested_platform_test",
   "export_reason": "用户要求将 v4 冻结模型整理为平台提交材料，用于平台运行及评分比较；保留未超过历史最佳验证 IC 的本地判定",
   "submission_manifest_path": "experiments/v4-20261014-s42-submission.json"
