@@ -43,7 +43,7 @@
 | `page` | 从 1 开始逐页递增 |
 | `size` | 默认 100，可用 `--page-size` 调整，最多 1,000 |
 
-原请求的 `size=99999` 不作为查全保证。已验证结构为 `{code, reason, message, data: {page, size, total, count, items}}`，其中 **`total` 是总页数，`count` 是当前页条数**。脚本逐页取到 `total`，核对 `count == len(items)` 并去重校验，完成后再计算提交总数；遇到重复页、总页数变化、缺页、页数上限或未知响应结构会明确失败，不将截断列表报告为全部记录。默认最多 100 页，可用 `--max-pages` 调整；单次网络请求超时默认 30 秒。
+响应结构为 `{code, reason, message, data: {page, size, total, count, items}}`，其中 **`total` 是总页数，`count` 是当前页条数**。脚本逐页取到 `total`，核对 `count == len(items)` 并去重校验，完成后再计算提交总数；遇到重复页、总页数变化、缺页、页数上限或未知响应结构会明确失败，不将截断列表报告为全部记录。默认最多 100 页，可用 `--max-pages` 调整；单次网络请求超时默认 30 秒。
 
 每条记录的已验证字段：
 

@@ -1,8 +1,8 @@
 # 比赛数据与字段说明
 
-整理日期：**2026-10-10（UTC+08:00）**。页面与元数据来源日期见 [sources.md](sources.md)。[返回目录](../README.md) · [规则](rules.md) · [待确认事项](open-questions.md)
+页面与元数据的获取日期见 [sources.md](sources.md)。[返回目录](../README.md) · [规则](rules.md) · [待确认事项](open-questions.md)
 
-本地已有四张五档分钟表和三张辅助表；当前 Mock 已在本地和平台正常运行，测试 submission 已通过。运行方式和文件路径见 [local-download.md](local-download.md)。[data-dictionary.csv](data-dictionary.csv) 与 [data-schemas.json](data-schemas.json) 保存 104 条页面／元数据字段定义，实际文件类型以 [data-validation-summary.json](data-validation-summary.json) 为准。
+本地已有四张五档分钟表和三张辅助表；运行方式和文件路径见 [local-download.md](local-download.md)。[data-dictionary.csv](data-dictionary.csv) 与 [data-schemas.json](data-schemas.json) 保存 104 条页面／元数据字段定义，实际文件类型以 [data-validation-summary.json](data-validation-summary.json) 为准。
 
 七张表共 243 个文件、723,258,293 行，与 2026-09-30 平台基准的全量逻辑内容一致。该结论包含原始缺失值和异常值，不能据此将所有数值视为有效。日期覆盖、字段类型及异常统计见 [数据一致性结论](data-validation.md)。
 
@@ -23,7 +23,7 @@
 
 来源：[比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)、[介绍中的数据要求](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)。
 
-训练集、公榜验证集与私榜的评测数据区间互不重叠，但未公布精确分界，不能把 2020—2024 年自行拆成训练/验证/测试，也不能假定这些年份全部属于本地训练数据。《新手入门》说明验证集在正式评测区间前额外提供一年历史上下文，供滚动窗口、滞后项和序列模型使用；最终输出必须限制在 `start_date` 至 `end_date` 内，公榜仍只加载已训练权重推理。
+官方训练、公榜验证和私榜评测区间互不重叠，精确分界未公布；项目的本地研究划分见 [评估约定](../development.md)，不代表官方分界。《新手入门》说明验证集在正式评测区间前额外提供一年历史上下文，供滚动窗口、滞后项和序列模型使用；最终输出必须限制在 `start_date` 至 `end_date` 内，公榜仍只加载已训练权重推理。
 
 ## 2. 数据表、逻辑名与本地下载
 
@@ -60,7 +60,7 @@
 | [`cpt_jyc_2026_e2e_bar15m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar15m) | 端到端本地下载，15 分钟 |
 | [`cpt_jyc_2026_e2e_bar30m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar30m) | 端到端本地下载，30 分钟 |
 
-本地训练数据下载须完成身份核验并签署限制协议，审核通过后领取链接。官方安排为 **2026-10-08 起继续处理申请**。下载数据只限本人或本队参赛使用，不得外传或用于其他用途。
+本地训练数据下载须完成身份核验并签署限制协议，审核通过后领取链接。数据只限本人或本队参赛使用，不得外传或用于其他用途。
 
 申请流程和小助手二维码见 [新手入门“六、端到端模型数据下载”](https://bigquant.com/wiki/doc/oSGtQiGtq0)；表清单见 [比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。下载版数据与公榜训练集的关系仍待官方材料确认。
 
@@ -214,38 +214,14 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 
 ## 8. 读取方式与开发资源
 
-本地四张 `cpt_jyc_2026_stock_bar*` 按自然月存储，三张辅助表各保存一个文件。路径与本地 DAI 支持范围见 [local-download.md](local-download.md)，一致性结论见 [data-validation.md](data-validation.md)。当前 Mock 已在本地和平台正常运行，测试 submission 已通过。
+本地四张 `cpt_jyc_2026_stock_bar*` 按自然月存储，三张辅助表各保存一个文件。路径与本地 DAI 支持范围见 [local-download.md](local-download.md)，一致性结论见 [data-validation.md](data-validation.md)。
 
 按月读取应同时设置 SQL 和 `filters`，两者使用相同的下月 1 日上界。例如 2020 年 11 月采用 `date >= '2020-11-01' AND date < '2020-12-01'`，并传入 `filters={"date": ["2020-11-01", "2020-12-01"]}`。不要把 `filters` 上界减一天：日期字符串可能按当天零点解释，从而漏掉月末日内行情。严格的 SQL `<` 条件负责排除下月起点。该边界同时适用于本地兼容层的查询。
 
-数据页使用 `dai.query(SQL, filters={"date": [start, end]})`，通过 `.df()` 得到 Pandas DataFrame。以下是开发环境的少量行查询示例；正式推理须通过 `datasources` 取得行情表名，并返回完整评测区间结果。
+平台通过 `dai.query(SQL, filters={"date": [start, end]}).df()` 读取数据，也支持 Arrow／Polars 和绑定 DataFrame。正式推理的行情表名来自 `datasources`，返回完整评测区间的结果；本地兼容层的支持范围见本地环境文档。
 
-```python
-import dai
-
-preview = dai.query(
-    """
-    SELECT date, instrument, close, volume
-    FROM cpt_jyc_2026_stock_bar1m
-    ORDER BY date, instrument
-    LIMIT 10
-    """,
-    filters={"date": ["2020-01-02 09:31:00", "2020-01-02 09:35:00"]},
-    compression=True,
-).df()
-```
-
-页面还说明：
-
-- 可通过 `.pl()`、`.arrow()` 转为 Polars 或 Arrow；Polars 并非默认内置依赖。
-- `compression=True` 可压缩内存，页面特别提到 `instrument` 转为 category；绑定回 DAI SQL 时可能需转回 string。
-- 可以用 `bind_relations` 绑定本地 DataFrame；DAI 支持 UDF。
-- `m_` 前缀时序算子及 `c_` 前缀截面算子在页面有示例，但 `c_` 的文字解释存在疑似复制错误，使用前应查函数文档。
-- 数据页建议 4C/16G 或更高开发规格；《新手入门》列出免费 4 核/16 GiB、8 核/32 GiB CPU，以及每小时 600 宽币的 A100 80G × 1、32 VCPU、256 GiB GPU。每队组长开赛时获 5,000 宽币。开发资源与最终评测配额应区分，详见 [运行环境](rules.md)。
-- 原文的按日聚合因子、UDF 因子案例仅说明数据引擎能力，不能据此认定可把这些因子作为本赛道输入。
-
-来源：[比赛数据页“读取示例”“因子计算示例”“Tips”“计算资源”](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。扩展阅读：[官方 DAI 使用文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)、[官方 DAI 函数文档](https://bigquant.com/wiki/doc/Rceb2JQBdS)。本地兼容层只支持文档中明确列出的功能，不替代平台专有算子。
+开发计算资源与最终评测配额分别管理，见 [运行环境](rules.md#52-线上运行与资源)。来源：[比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)、[DAI 使用文档](https://bigquant.com/wiki/doc/PLSbc1SbZX)、[DAI 函数文档](https://bigquant.com/wiki/doc/Rceb2JQBdS)。
 
 ## 9. 待明确事项
 
-训练／验证／私榜的精确日期边界、压缩版与训练样本的日期对应、复权与成交量单位、盘口聚合、股票池变更及覆盖豁免、异常值业务含义、标签生成程序、完整评测算法和正式模型附件协议仍需明确。当前 Mock 的运行、返回类型和测试提交已确认通过，见 [open-questions.md](open-questions.md) 中仍需解决的问题。
+官方数据边界、标签公式、信息可获得时间、供应商聚合、覆盖豁免及完整评分口径见 [未决事项](open-questions.md)。

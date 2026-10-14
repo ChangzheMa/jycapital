@@ -1,6 +1,6 @@
 # 来源与结论范围
 
-整理日期：**2026-10-14（UTC+08:00）**。[返回目录](../README.md)
+来源日期均为 UTC+08:00。[返回目录](../README.md)
 
 ## 已确认结论
 
@@ -41,6 +41,4 @@ Mock 的运行与提交通过结论不代表模型训练、权重复现或预测
 - 正文规则、接口配置、用户提供的模板与实际提交结论分别标注；差异保留在 [open-questions.md](open-questions.md)。
 - 实际接口采用已通过测试提交的 `factor`；页面字段名差异不改变这一结论。
 - [data-schemas.json](data-schemas.json) 和 [data-dictionary.csv](data-dictionary.csv) 保留页面／元数据口径；实际文件类型以 [data-validation-summary.json](data-validation-summary.json) 为准。
-- 用户提供的 Transformer 推理模板说明了完整时间连接、三列输出及训练／推理分离；实际正式模型的附件、导入名与权重协议仍须以提交包为准。
-- 配置中的[代码分享](https://bigquant.com/codesharev3/7c55a1c9-7591-43d1-b934-1ae943513ce5)的内容依据日期为 2026-09-22，属于旧日频评估代码，不能作为当前赛道评测算法。
-- [通用模型本地化训练指南](https://bigquant.com/wiki/doc/MvWIurzUct)包含 BigAlpha 表名和未来一日收益示例，不适用于确定本赛事的标签或训练边界。
+- 正式模型的文件布局和导入协议以已导出的冻结材料及平台验证为准，见 [提交目录](../../submissions/README.md)。

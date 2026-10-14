@@ -53,16 +53,12 @@
 
 按全部时段划分：训练 551,954,507 根 Bar 中有 233,720,046 个无效字段值；验证 71,253,965 根中有 30,122,646 个；测试 75,674,909 根中有 33,537,671 个。每个划分、频率和字段的完整计数与比例见 CSV，共 864 条唯一统计记录。
 
-## 核验与复现
+## 来源与复现
 
-统计程序为 [count-raw-field-invalid-values.py](../scripts/count-raw-field-invalid-values.py)。浮点列直接检查空值、有限性与符号，避免因 Parquet 最小／最大值统计忽略 NaN；整数数量列只有在元数据证明无空值且最小值非负时才跳过解码。
-
-全部 240 个分区的行数及无效字段值总数，均与冻结 v2 预处理记录的 `rows`、`missing_input_values` 一致。逐分区细节保存在忽略的 `outputs/analysis/` 中；仓库仅保存汇总、字段明细和复现方法。
+统计程序为 [count-raw-field-invalid-values.py](../scripts/count-raw-field-invalid-values.py)。全部 240 个分区的行数及无效值总数与冻结预处理摘要一致；[字段 CSV](../experiments/raw-field-validity.csv)保留完整频率、划分和字段计数。
 
 ```powershell
 .venv-training/Scripts/python.exe scripts/count-raw-field-invalid-values.py --run-dir outputs/analysis/raw-field-validity-new
 ```
 
-运行目录中的 `field-counts.csv` 与仓库字段明细采用相同列顺序和统计单位，可直接用于复核。
-
-这些结果不包含归一化参数不足、截面样本不足、超龄历史或整根 Bar 缺失，也不能直接推出 v3 组完整标志的分布或模型效果。
+该结果不包含归一化不足、超龄历史或整根 Bar 缺失，不能直接推导组掩码分布或模型效果。

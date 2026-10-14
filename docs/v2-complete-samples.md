@@ -63,18 +63,12 @@
 
 字段层面主要由五档盘口价格触发，尤其第二至第五档。36 个字段中，数量、金额、委托量与委托笔数没有触发非法值排除；OHLC 缺失影响的有效标签样本为 4,748 个。字段影响数也存在重叠，不能简单相加。
 
-## 核验与复现
+## 来源与复现
 
-统计程序为 [count-v2-complete-samples.py](../scripts/count-v2-complete-samples.py)。原始字段的合法性检查覆盖全部窗口涉及的分区；整数列仅在 Parquet 元数据能够证明无缺失且非负时跳过数值解码，浮点列直接检查有限性与定义域。
-
-冻结预处理记录证明：无不可用归一化回退、且输出缺失数等于原始非法数两倍时，z/c 缺失位置与原始非法位置一致。存在额外归一化缺失的分区直接读取原 72 个通道核对。额外缺失没有改变本次完整样本筛选结果。
-
-所用 v2 切窗和预处理源文件与训练冻结版本一致。统计判定通过实际 `WindowBlock.batch()` 的 72 个有效掩码核对，覆盖训练期与验证／测试边界。全区间样本分母与原运行记录一致。
+统计程序为 [count-v2-complete-samples.py](../scripts/count-v2-complete-samples.py)，完整结果见 [v2-complete-samples.json](../experiments/v2-complete-samples.json)。股票池、窗口和有效标签分母与冻结运行一致；原始合法性与实际 z/c 完整性的保留集合已核对一致。
 
 ```powershell
 .venv-training/Scripts/python.exe scripts/count-v2-complete-samples.py --run-dir outputs/analysis/v2-complete-samples-new
 ```
 
-逐样本保留标记、逐截面覆盖率与完整统计保存在被忽略的 `outputs/analysis/v2-complete-samples-20261013/`。可入库的结果为 [v2-complete-samples.json](../experiments/v2-complete-samples.json)，不含原始行情数值。
-
-本结果只描述现有数据和完整窗口的筛选代价，不代表去掉掩码后的模型效果，也没有在过滤后的股票池上重新拟合归一化或训练。
+本结果仅描述现有数据和窗口的覆盖代价，不代表过滤后的模型效果。
