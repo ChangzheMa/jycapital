@@ -8,19 +8,22 @@
 | --- | --- | --- |
 | [v1-20261010-s42](v1-20261010-s42/README.md) | 6,785 参数的量价序列 MLP | 本地检查通过；用户于 2026-10-10（UTC+08:00）确认平台可运行，正式提交结果待确认 |
 | [v2-20261011-s42](v2-20261011-s42/v2-submission.ipynb) | 428,673 参数的四频 TCN，第 4 轮权重；Notebook + JSON 两个文本文件 | 本地未超过 v1，按用户要求导出；检查结果见 [提交记录](../experiments/v2-20261011-s42-submission.json)，平台运行及官方评分待确认 |
+| [v4-20261014-s42](v4-20261014-s42/v4-submission.ipynb) | 1,591,553 参数的四频 TCN，纯 IC 训练，第 6 轮权重；Notebook + JSON 两个文本文件 | 验证 IC 未超过 v1，按用户要求导出；16,000 行隔离推理及权重无损恢复通过，见 [提交记录](../experiments/v4-20261014-s42-submission.json)，平台运行及评分待确认 |
 
 ## 上传方式
 
 1. 拉取远程仓库，进入选定运行的子目录。
 2. 将该子目录内文件放在平台同一目录，保留原文件名。
-3. 选择该目录唯一的推理 Notebook（v1 为 `v1-submission.ipynb`，v2 为 `v2-submission.ipynb`），并附目录中的脚本、模型、配置和依赖文件。
+3. 选择该目录唯一的推理 Notebook（如 `v4-submission.ipynb`），并附目录中的脚本、模型、配置和依赖文件。
 
 v2 只需上传 `v2-submission.ipynb` 与 `v2-model.json`。使用说明和依赖已经写入 Notebook，权重与四频参数均在 JSON 中，无需 `.pt` 或其他附件。
+
+v4 只需上传 `v4-submission.ipynb` 与 `v4-model.json`。JSON 内含完整精度数值权重、归一化统计量、配置及冻结训练／推理源码；Notebook 提供入口、调试单元格、依赖和显式训练复现说明。输出是因子分数，未校准为收益预测。
 
 只选择一个运行的子目录，不将仓库其他 Notebook 一并提交。平台附件选择方式以实际界面为准。
 
 ## 文件完整性
 
-来源运行和逐文件 SHA-256 由 [提交索引](../experiments/submissions.csv) 的 `manifest_path` 指向。v2 清单及验证记录放在 `experiments/`，历史 v1 仍使用目录内的 `submission-manifest.json`。根目录 `.gitattributes` 保持 `submissions/` 文件的原始字节，避免 Git 换行转换导致哈希变化。重新打包须核验权重数值及推理一致性，新模型从对应运行另行导出。
+来源运行和逐文件 SHA-256 由 [提交索引](../experiments/submissions.csv) 的 `manifest_path` 指向。v2／v4 清单及验证记录放在 `experiments/`，历史 v1 仍使用目录内的 `submission-manifest.json`。根目录 `.gitattributes` 保持 `submissions/` 文件的原始字节，避免 Git 换行转换导致哈希变化。重新打包须核验权重数值及推理一致性，新模型从对应运行另行导出。
 
 训练过程记录与缓存保留在本地 `outputs/runs/`。提交目录不包含行情、预测答案、凭据或本地 `dai.py`。

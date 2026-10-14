@@ -4,7 +4,7 @@
 
 ## 1. 交付范围与版本边界
 
-本文件是供后续开发模型执行的技术方案，当前状态为**待实现、未训练**。实施目标是在独立的 `solutions/v4/` 中完成“完整截面 batch + 纯 Pearson IC loss + 验证 IC 选模和早停”，进行一次种子为 42 的正式训练，冻结最佳权重后完成验证／测试评估，并生成 v4 方案说明和历史比较。
+本文件定义 v4 的实现与验收契约，独立实现位于 [solutions/v4](../solutions/v4/README.md)，实际训练状态和结果以该方案说明及运行记录为准。实施目标是完成“完整截面 batch + 纯 Pearson IC loss + 验证 IC 选模和早停”，进行一次种子为 42 的正式训练，冻结最佳权重后完成验证／测试评估，并生成 v4 方案说明和历史比较。
 
 研究假设：将反向传播目标、验证主指标和早停指标统一为截面 Pearson IC，消除同一组预测上回归损失与 IC 的目标差异。该设计不保证 IC 一定超过历史版本，也不保证优化器每一步都改善指标。
 
@@ -234,7 +234,7 @@ def pearson_ic_loss(scores, labels):
 
 ## 9. 正式运行、监控与比较
 
-使用项目已有 Python 和 CUDA 环境，先核实依赖、GPU 和显存，再运行一个正式 v4 实验。以下是**实现完成后的预期命令接口**，不是当前已经存在的入口：
+使用项目已有 Python 和 CUDA 环境，先核实依赖、GPU 和显存，再运行一个正式 v4 实验。以下接口已在独立 v4 实现中提供；每次新实验必须使用新的运行目录：
 
 ```powershell
 .venv-training/Scripts/python.exe -u solutions/v4/v4_train.py --config solutions/v4/model-config.json --protocol evaluation/protocols/local-v2-ic.json --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v4-YYYYMMDD-s42 --training-confirmed
@@ -266,11 +266,7 @@ def pearson_ic_loss(scores, labels):
 
 如果后续执行任务还要求整理平台候选，仅在改善判定通过后按实验工作流适配 v4 文本导出与验证；v2 导出脚本不能直接套用。是否推送该阶段实现遵从执行任务的 Git 授权，比赛平台提交不自动进行。
 
-可向后续开发模型直接提供以下任务：
-
-> 按 `docs/v4-ic-loss-plan.md` 实现独立 v4，保留 v3 的全部冻结结果。完成验收后，从随机初始化执行一次 seed=42 的正式训练；使用完整截面、纯 Pearson IC loss、验证 IC 选模和 12 轮早停耐心。权重冻结后完成验证／测试比较，记录结果并生成最终 v4 方案说明。不得覆盖历史结果或自动扩展为多个模型实验。
-
-本方案编写阶段不创建 v4 权重、不登记虚构运行，也不把待实现的入口记为已可执行。
+本文件保留实现和验收契约；已完成的单次正式运行、冻结结果、比较与输出尺度限制见 [最终 v4 方案](../solutions/v4/README.md) 和 [结果摘要](../experiments/v4-tcn.json)。后续开发不得覆盖该运行或 v3 冻结结果。
 
 ## 参考依据
 

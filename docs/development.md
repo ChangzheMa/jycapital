@@ -84,3 +84,13 @@
 提交目录的本地验证与平台运行、正式提交分开记录。平台的附件识别方式和依赖环境仍需实际上传验证，用户负责提交。
 
 v2 使用 [export-v2.py](../scripts/export-v2.py) 和 [verify-v2-submission.py](../scripts/verify-v2-submission.py)，默认仅导出本地改善候选。用户明确要求对未改善版本进行平台测试时，可指定 `--platform-test-reason "用户要求及测试目的"`；导出清单记录用途、理由和原本地判定，不绕过完整性检查。现有 [v2 平台 Notebook](../submissions/v2-20261011-s42/v2-submission.ipynb) 属于这一情形，不能据此将 v2 标为本地最优。
+
+v4 使用 [export-v4.py](../scripts/export-v4.py) 和 [verify-v4-submission.py](../scripts/verify-v4-submission.py)，从运行快照取全部模型与推理源码。其纯 IC 训练依赖 `v4_schema.py`、`v4_loss.py`、`common/protocol_compatibility.py` 和新协议；导出恢复这些依赖，并验证隔离推理、完整精度权重和训练入口导入。现有 [v4 平台 Notebook](../submissions/v4-20261014-s42/v4-submission.ipynb) 为用户明确要求的未晋级版本导出，不改变本地验证 IC 判定。
+
+v4 的 [local-v2-ic](../evaluation/protocols/local-v2-ic.json) 仅改变协议标识和选择指标。与旧运行比较时须显式传入 `--allow-selection-metric-change`；默认检查仍严格要求原协议相同，日期、标签、股票池、聚合规则和评估器的其他差异均拒绝。
+
+## 后台通知入口
+
+[run_notifications.py](../common/run_notifications.py) 通过本地 Codex daemon 的 WebSocket RPC 将独立监控通知送回指定的已有任务。调用时提供 `--codex-binary`、`--thread-id`、`--run-dir` 和已有训练进程的 `--pid`；不固化本机路径或任务标识。脚本接入 [监控程序](../.agents/skills/jycapital-experiment/scripts/monitor-run.py)，普通进度只更新本地状态，每小时、冻结、完成或异常时发送通知。
+
+使用 `--probe-dir` 代替运行参数可验收空闲唤醒与执行权限：接收回合须实际执行命令并写确认，只有事件／任务标识匹配且命令退出码为 0 才标记通过。探测不启动训练；接口接受消息不等于执行成功。路径和权限设置变化后，应按 [后台监控约定](../.agents/skills/jycapital-experiment/references/monitoring.md) 验收。后台进程在 Windows 下隐藏启动，通知、确认和日志保留在忽略目录中。

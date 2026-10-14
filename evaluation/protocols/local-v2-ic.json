@@ -1,0 +1,42 @@
+{
+  "protocol_id": "local-v2-ic",
+  "timezone": "Asia/Shanghai",
+  "scope": "本地研究协议，非平台官方评分复刻",
+  "splits": {
+    "train": {
+      "start": "2020-01-01",
+      "stop": "2024-01-01"
+    },
+    "validation": {
+      "start": "2024-01-01",
+      "stop": "2024-07-01"
+    },
+    "test": {
+      "start": "2024-07-01",
+      "stop": "2025-01-01"
+    }
+  },
+  "interval": "start_inclusive_stop_exclusive",
+  "universe_table": "cpt_jyc_2026_instruments",
+  "label_table": "cpt_jyc_2026_vwap",
+  "label_column": "vwap_return",
+  "label_policy": "直接使用有限的官方表字段，不重算、不裁剪评估标签；仅保留窗口不跨日期/划分边界的样本",
+  "label_horizon_minutes": 30,
+  "sampling": "股票池原始完整分钟键，不硬编码采样时刻",
+  "min_cross_section_size": 30,
+  "max_missing_fraction_per_cross_section": 0.4,
+  "selection_metric": "ic_mean",
+  "aggregation": "每个完整分钟截面等权；常数截面相关系数记为空并报告数量",
+  "ic": "Pearson correlation(factor, vwap_return)",
+  "rank_ic": "Pearson correlation(average_rank(factor), average_rank(vwap_return))",
+  "ic_ir": "有效截面 IC 均值 / 样本标准差(ddof=1)，不年化",
+  "coverage": "有限预测键数 / 原始股票池键数，逐截面统计",
+  "error_metrics": "在有限标签且有预测的样本上计算原始收益尺度 MSE/MAE",
+  "test_policy": "按验证集选择权重并冻结；测试集只在选择后评估，不用于改参数或选择模型",
+  "platform_neutralization": false,
+  "sources": [
+    "https://bigquant.com/wiki/doc/oSGtQiGtq0",
+    "https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca"
+  ],
+  "source_checked_at": "2026-10-10T03:15:00+08:00"
+}

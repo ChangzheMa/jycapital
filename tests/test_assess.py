@@ -77,6 +77,53 @@ class AssessmentTest(unittest.TestCase):
     def test_equal_validation_does_not_qualify(self):
         self.check_case(0.06, 0.07, 1.0, False)
 
+    def test_ic_protocol_can_improve_while_rank_ic_declines(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            run, experiments = self.fixture(root, .04, .03)
+            protocol = json.loads((run / "protocol.json").read_text())
+            protocol.update(protocol_id="ic-selection", selection_metric="ic_mean")
+            write(run / "protocol.json", protocol)
+            for name, value in (("parent", .07), ("new", .08)):
+                for split in ("validation", "test"):
+                    directory = root / "outputs/runs" / name / "evaluation" / split
+                    metrics = json.loads((directory / "metrics.json").read_text())
+                    metrics["ic_mean"] = value
+                    write(directory / "metrics.json", metrics)
+                    monthly = pd.read_csv(directory / "monthly.csv")
+                    monthly["ic_mean"] = value
+                    monthly.to_csv(directory / "monthly.csv", index=False)
+            with patch.object(assessor, "ROOT", root):
+                with self.assertRaises(ValueError):
+                    assessor.assess(run, experiments)
+                result = assessor.assess(run, experiments, allow_selection_metric_change=True)
+            self.assertTrue(result["candidate"])
+            self.assertEqual(result["criterion"]["metric"], "validation.ic_mean")
+            self.assertEqual(result["references"][0]["splits"]["validation"]["ic_improved_months"], 1)
+            self.assertEqual(result["references"][0]["splits"]["validation"]["rank_ic_improved_months"], 0)
+            self.assertEqual(set(result["references"][0]["protocol_differences"]),
+                             {"protocol_id", "selection_metric"})
+
+    def test_ic_candidate_cannot_gain_by_undefined_sections(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            run, experiments = self.fixture(root, .08, .09)
+            for name, value in (("parent", .06), ("new", .08)):
+                path = root / "outputs/runs" / name
+                protocol = json.loads((path / "protocol.json").read_text())
+                protocol["selection_metric"] = "ic_mean"
+                write(path / "protocol.json", protocol)
+                for split in ("validation", "test"):
+                    target = path / "evaluation" / split / "metrics.json"
+                    metrics = json.loads(target.read_text())
+                    metrics["ic_mean"] = value
+                    metrics["ic_undefined_cross_sections"] = int(name == "new")
+                    write(target, metrics)
+            with patch.object(assessor, "ROOT", root):
+                result = assessor.assess(run, experiments)
+            self.assertFalse(result["candidate"])
+            self.assertFalse(result["criterion"]["undefined_ic_sections_not_increased"])
+
     def test_record_preserves_existing_metric_precision_and_column_order(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()

@@ -8,6 +8,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "common"))
 from artifacts import read_json, write_json, sha256
+from protocol_compatibility import validate_protocol_compatibility
 from compare import compare
 import pandas as pd
 
@@ -34,7 +35,7 @@ def resources(run):
             "timing_note": "耗时包含的数据读取与精度路径不同，不能将时间比解释为纯网络计算比"}
 
 
-def assess(run, experiments=ROOT / "experiments"):
+def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_change=False):
     run, experiments = Path(run).resolve(), Path(experiments)
     manifest = read_json(run / "manifest.json")
     protocol = read_json(run / "protocol.json")
@@ -47,8 +48,8 @@ def assess(run, experiments=ROOT / "experiments"):
             continue
         path = ROOT / row["run_path"]
         try:
-            compare([run, path], "validation")
-            compare([run, path], "test")
+            compare([run, path], "validation", allow_selection_metric_change=allow_selection_metric_change)
+            compare([run, path], "test", allow_selection_metric_change=allow_selection_metric_change)
             comparable.append(path)
         except (ValueError, FileNotFoundError) as error:
             excluded.append({"run_id": row["run_id"], "reason": str(error)})
@@ -69,9 +70,13 @@ def assess(run, experiments=ROOT / "experiments"):
         raise ValueError("已有平台分：请先按评分口径确定平台最优参照，再扩展比较记录")
     current = {s: read_json(run / "evaluation" / s / "metrics.json") for s in ("validation", "test")}
     comparisons = []
-    coverage_ok = True
+    coverage_ok, defined_sections_ok = True, True
     for name, reference in roles.items():
-        entry = {"run_id": name, "roles": reference["roles"], "resources": resources(reference["path"]), "splits": {}}
+        entry = {"run_id": name, "roles": reference["roles"], "resources": resources(reference["path"]),
+                 "protocol_sha256": sha256(reference["path"] / "protocol.json"),
+                 "protocol_differences": validate_protocol_compatibility(
+                     protocol, read_json(reference["path"] / "protocol.json"),
+                     allow_selection_metric_change=allow_selection_metric_change), "splits": {}}
         for split in ("validation", "test"):
             before = read_json(reference["path"] / "evaluation" / split / "metrics.json")
             after = current[split]
@@ -88,17 +93,21 @@ def assess(run, experiments=ROOT / "experiments"):
             reduced = int((sections.coverage_new < sections.coverage_reference).sum())
             if name == best.name:
                 coverage_ok &= reduced == 0
+                defined_sections_ok &= after["ic_undefined_cross_sections"] <= before["ic_undefined_cross_sections"]
             entry["splits"][split] = {
                 "reference": {k: before[k] for k in METRICS},
                 "new_minus_reference": {k: after[k] - before[k] if after[k] is not None and before[k] is not None else None for k in METRICS},
                 "coverage_reduced_cross_sections": reduced,
                 "rank_ic_improved_months": int((monthly.rank_ic_mean_delta > 0).sum()),
+                "ic_improved_months": int((monthly.ic_mean_delta > 0).sum()),
+                "selection_metric_improved_months": int((monthly[metric + "_delta"] > 0).sum()),
                 "months": len(monthly), "monthly": monthly.to_dict("records"),
             }
         comparisons.append(entry)
     best_metric = read_json(best / "evaluation/validation/metrics.json")[metric]
     coverage_ok &= all(v["coverage_violations"] == 0 for v in current.values())
-    candidate = bool(current["validation"][metric] > best_metric and coverage_ok)
+    candidate = bool(current["validation"][metric] > best_metric and coverage_ok and
+                     (defined_sections_ok or metric != "ic_mean"))
     result = {
         "solution_id": manifest["solution_id"], "run_id": run.name, "status": "complete",
         "protocol_id": protocol["protocol_id"], "protocol_sha256": sha256(run / "protocol.json"),
@@ -110,7 +119,8 @@ def assess(run, experiments=ROOT / "experiments"):
         "platform_status": "暂无可信平台成绩", "candidate": candidate,
         "decision": "local_improvement_candidate" if candidate else "no_local_improvement",
         "criterion": {"metric": "validation." + metric, "new": current["validation"][metric],
-                      "local_best": best_metric, "coverage_not_reduced": coverage_ok},
+                      "local_best": best_metric, "coverage_not_reduced": coverage_ok,
+                      "undefined_ic_sections_not_increased": defined_sections_ok},
         "resources": resources(run),
         "exported": False, "run_path": run.relative_to(ROOT).as_posix(),
         "limitations": ["仅一个种子，未进行统计显著性或消融验证", "研究变量以各运行的冻结配置为准，多项改动的效果只针对整体方案，不能分别归因", "测试期为持续研究中已观察区间，未用于本次 checkpoint 选择", "本地指标不包含平台 BARRA 处理及官方评分"],
@@ -121,6 +131,10 @@ def assess(run, experiments=ROOT / "experiments"):
         result["implementation_checks"] = {k: saved[k] for k in (
             "tests", "checked_source_sha256", "evaluation_key_counts_match_parent",
             "finite_label_counts_match_parent", "raw_inference_parity") if k in saved}
+    for filename, key in (("final-checks.json", "final_checks"),
+                          ("loss-consistency.json", "loss_consistency")):
+        if (run / filename).exists():
+            result[key] = read_json(run / filename)
     diagnostic = run / "precision-diagnostic.json"
     if diagnostic.exists():
         saved = read_json(diagnostic)
@@ -150,8 +164,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run", type=Path)
     parser.add_argument("--record", action="store_true")
+    parser.add_argument("--allow-selection-metric-change", action="store_true")
     args = parser.parse_args()
-    result = assess(args.run)
+    result = assess(args.run, allow_selection_metric_change=args.allow_selection_metric_change)
     if args.record:
         record(result)
     print(result["decision"], result["criterion"])
