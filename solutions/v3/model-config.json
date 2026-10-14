@@ -64,7 +64,7 @@
     }
   },
   "model": {
-    "hidden_dim": 64,
+    "hidden_dim": 128,
     "blocks": {
       "bar1m": 4,
       "bar5m": 3,
@@ -73,11 +73,11 @@
     },
     "kernel_size": 3,
     "dropout": 0.1,
-    "fusion_hidden_dim": 128,
+    "fusion_hidden_dim": 256,
     "input_channels": 77
   },
   "training": {
-    "epochs": 12,
+    "epochs": 100,
     "batch_size": 512,
     "learning_rate": 0.0003,
     "weight_decay": 0.0001,
@@ -85,7 +85,7 @@
     "target_scale": 100.0,
     "target_clip": 0.1,
     "gradient_clip": 1.0,
-    "patience": 3,
+    "patience": 12,
     "min_delta": 1e-05,
     "cpu_threads": 4,
     "precision": "bfloat16_autocast_on_supported_cuda",

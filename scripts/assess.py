@@ -113,7 +113,7 @@ def assess(run, experiments=ROOT / "experiments"):
                       "local_best": best_metric, "coverage_not_reduced": coverage_ok},
         "resources": resources(run),
         "exported": False, "run_path": run.relative_to(ROOT).as_posix(),
-        "limitations": ["仅一个种子，未进行统计显著性或消融验证", "归一化、字段、窗口、模型与训练方式同时改变，结论只针对整体方案", "测试期为持续研究中已观察区间，未用于本次 checkpoint 选择", "本地指标不包含平台 BARRA 处理及官方评分"],
+        "limitations": ["仅一个种子，未进行统计显著性或消融验证", "研究变量以各运行的冻结配置为准，多项改动的效果只针对整体方案，不能分别归因", "测试期为持续研究中已观察区间，未用于本次 checkpoint 选择", "本地指标不包含平台 BARRA 处理及官方评分"],
     }
     checks = run / "implementation-checks.json"
     if checks.exists():

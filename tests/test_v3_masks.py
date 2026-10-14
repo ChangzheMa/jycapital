@@ -147,7 +147,7 @@ class GroupMaskTests(unittest.TestCase):
         windows, clock = WindowBlock(keys, grids, stocks, CONFIG).batch([0, 1])
         torch.manual_seed(42)
         model = MultiFrequencyTCN(CONFIG).eval()
-        self.assertEqual(sum(p.numel() for p in model.parameters()), 410753)
+        self.assertEqual(sum(p.numel() for p in model.parameters()), 1591553)
         with torch.inference_mode():
             tensors = {frequency: torch.from_numpy(x) for frequency, x in windows.items()}
             for frequency in FREQUENCIES:
