@@ -51,10 +51,18 @@
 | v1 导出／验证 | [export.py](../scripts/export.py)、[verify-submission.py](../scripts/verify-submission.py) |
 | v2 导出／验证 | [export-v2.py](../scripts/export-v2.py)、[verify-v2-submission.py](../scripts/verify-v2-submission.py) |
 | v4 导出／验证 | [export-v4.py](../scripts/export-v4.py)、[verify-v4-submission.py](../scripts/verify-v4-submission.py) |
+| v5 导出／验证 | [export-v5.py](../scripts/export-v5.py)、[verify-v5-submission.py](../scripts/verify-v5-submission.py) |
 
-晋级按当前协议的验证主指标，要求覆盖不降低；v4 还要求未定义 IC 截面不增加。用户要求导出未晋级版本时，使用 `--platform-test-reason` 保留原判定与导出理由。平台最优须有可信分数及运行对应关系。
+晋级按当前协议的验证主指标，要求覆盖不降低；v4／v5 还要求未定义 IC 截面不增加。用户要求导出未晋级版本时，使用 `--platform-test-reason` 保留原判定与导出理由。平台最优须有可信分数及运行对应关系。
 
 导出取冻结源码、配置和权重，默认拒绝覆盖已有目录。附件为 UTF-8 文本，权重保留完整精度；JSON 可拆分，每个模型参数文件不超过 50,000,000 字节。v4 使用 [紧凑数值数组布局](../common/text_json.py)，不截断浮点值。所有分片须完整加载并通过推理一致性核验。
+
+v5 在该布局中显式标记 FP32 权重数组，以九位有效数字保存，包含负零处理；普通数值和归一化统计量沿用原精度。导出前经由实际 JSON 文本恢复并逐张量校验 dtype、形状和字节；验证程序进一步检查隔离推理、训练源码恢复及附件大小。多个验证区间保存在提交清单的 `validations` 中。
+
+```powershell
+.venv-training/Scripts/python.exe scripts/export-v5.py --run-dir outputs/runs/v5-20261015-s42
+.venv-training/Scripts/python.exe scripts/verify-v5-submission.py --run-dir outputs/runs/v5-20261015-s42 --package submissions/v5-20261015-s42 --record
+```
 
 [提交索引](../experiments/submissions.csv) 的 `manifest_path` 指向验证清单。`.gitattributes` 保持提交文件原始字节；校验工作区及 Git 中的附件哈希。行情、预测答案、凭据、本地 DAI 和训练环境不进入提交目录。平台上传由用户执行。
 
