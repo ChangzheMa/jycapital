@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="v6 四频因果 TCN 的离线交互图解：77 通道输入、13 个残差块、掩码池化与 642 维融合，逐层展示连接、张量形状和参数。">
+  <meta name="theme-color" content="#f4f3ed">
+  <title>v6 网络逐层图解 · 进益资本</title>
+  <style>
+    :root{--bg:#f4f3ed;--paper:#fffefa;--ink:#183235;--muted:#5c716f;--line:#d7dfd8;--green:#166e60;--green-bg:#e4eee5;--blue:#436c9d;--orange:#ac602f;--purple:#796298;--mono:Consolas,"SFMono-Regular",monospace;--sans:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:95px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.85 var(--sans)}a{color:var(--green);text-underline-offset:4px}button,select,input{font:inherit}button,select{cursor:pointer;color:inherit}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:4px}button{border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:8px 14px}button:hover{border-color:var(--green)}button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:white}button:disabled{opacity:.4;cursor:default}select{border:1px solid var(--line);border-radius:6px;padding:6px 9px;background:var(--paper)}h1,h2,h3,h4,p{margin-top:0}h2{font-size:30px;line-height:1.4;letter-spacing:-.7px;margin-bottom:12px}h3{font-size:19px;line-height:1.5;margin-bottom:12px}h4{font-size:15px;margin-bottom:8px}p{margin-bottom:16px}code,pre,.mono{font-family:var(--mono)}code{font-size:.91em;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:19px 21px;background:#183235;color:#e3eee7;border-radius:8px;font-size:13px;line-height:1.8;margin:17px 0}small,.small{font-size:12px}.muted{color:var(--muted)}.wrap{max-width:1280px;margin:auto;padding:0 42px}.top{position:sticky;top:0;z-index:20;background:#f4f3edf5;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.top .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:700;color:var(--ink);line-height:1.4}.mark{display:grid;place-items:center;width:35px;height:35px;border-radius:8px;background:var(--ink);color:white;font:700 14px var(--mono)}.brand small{display:block;font:10px var(--mono);letter-spacing:1.5px;color:var(--muted);margin-top:4px}.nav{display:flex;gap:23px;font-size:13px}.nav a{color:var(--muted);text-decoration:none}.nav a:hover{color:var(--green)}.top button{font-size:12px;padding:6px 11px}.hero{display:grid;grid-template-columns:1.13fr 1fr;gap:50px;align-items:center;padding:60px 0 35px}.eyebrow{font:12px var(--mono);color:var(--green);letter-spacing:1.2px;display:flex;align-items:center;gap:8px}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}h1{font-size:clamp(36px,4.2vw,56px);line-height:1.23;letter-spacing:-2px;margin:21px 0}h1 em{font-style:normal;color:var(--green)}.lead{font-size:17px;line-height:1.9;color:var(--muted)}.lead strong{color:var(--ink)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 17px}.btn{padding:10px 18px;border:1px solid var(--line);border-radius:7px;text-decoration:none;background:var(--paper);font-size:13px}.btn.primary{background:var(--green);color:#fff;border-color:var(--green)}.hero-diagram{background:var(--ink);color:#e6f0e7;border-radius:14px;padding:25px}.hero-diagram svg{width:100%;height:auto;display:block}.hero-diagram p{color:#b7cdc5;font-size:12px;margin:14px 0 0}.hero-diagram .label{display:flex;justify-content:space-between;color:#bdd4c9;font:11px var(--mono)}.summary{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:9px;background:var(--paper);margin:0 0 56px}.summary>div{padding:20px 24px;border-right:1px solid var(--line)}.summary>div:last-child{border:0}.summary strong{display:block;font:30px var(--mono);margin:7px 0}.summary span{font-size:12px;color:var(--muted)}.summary .label{font-size:11px;letter-spacing:1px}.section{padding:0 0 62px;scroll-margin-top:15px}.section-head{display:flex;gap:15px;margin-bottom:23px}.section-num{font:13px var(--mono);color:var(--green);padding-top:10px}.section-head p{color:var(--muted);max-width:880px;margin:0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:26px}.panel+.panel{margin-top:18px}.panel-top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px}.panel-top h3{margin:0}.pill{border:1px solid var(--line);border-radius:20px;padding:3px 11px;font:11px/1.7 var(--mono);white-space:nowrap}.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}.note{background:var(--green-bg);border-left:3px solid var(--green);padding:14px 18px;font-size:13px;margin:18px 0 0}.note p:last-child{margin-bottom:0}.chips{display:flex;gap:7px;flex-wrap:wrap}.chips span{padding:4px 9px;background:#edf0e9;border-radius:4px;font-size:12px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:11px 13px;vertical-align:top}th{background:#edf1e9;font-size:12px;font-weight:600}td.num,th.num{text-align:right;font-family:var(--mono);white-space:nowrap}.selected-row{background:#e8f0e8}.table-wrap caption{text-align:left;font-size:12px;color:var(--muted);padding:0 0 12px}.channel-bar{display:flex;gap:4px;min-height:58px;margin:20px 0 12px}.channel-bar>span{display:flex;flex-direction:column;justify-content:center;align-items:center;border-radius:5px;padding:7px;font:13px var(--mono)}.channel-bar small{font:11px var(--sans)}.z-channel{background:#d5e9de;flex:36}.c-channel{background:#dce5f1;flex:36}.flag-channel{background:#efdfcf;min-width:68px;flex:2}.time-channel{background:#e5dfef;min-width:88px;flex:3}.mask-box{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}.tabs{display:flex;gap:6px;flex-wrap:wrap}.tabs button{font-size:12px;padding:7px 12px}.mask-result{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;margin:17px 0 0}.mask-result p{margin:0;font-size:13px}.mask-bits{display:flex;gap:9px}.mask-bits>div{background:#edf1e9;padding:9px 12px;border-radius:6px;text-align:center;min-width:70px}.mask-bits strong{display:block;font:22px var(--mono)}.mask-bits span{font-size:10px;color:var(--muted)}.network{background:var(--ink);color:#e2eee7;border-radius:12px;padding:25px;overflow:auto}.network svg{width:100%;min-width:850px;display:block}.network-note{color:#b7cdc5;font-size:12px;margin:12px 0 0}.controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:17px 20px;background:#e8ede5;border:1px solid var(--line);border-radius:8px;margin:20px 0}.controls label{font-size:12px;display:flex;align-items:center;gap:8px}.controls .tabs{margin-right:auto}.inspector{display:grid;grid-template-columns:340px 1fr;gap:22px}.layer-list{height:475px;overflow-y:auto;scrollbar-width:thin;border:1px solid var(--line);border-radius:8px;background:#edf0e9;padding:10px}.layer-list button{width:100%;text-align:left;display:grid;grid-template-columns:30px 1fr;gap:7px;margin-bottom:5px;padding:10px;border-radius:5px;background:#fffefa;font-size:12px}.layer-list button[aria-pressed=true]{background:var(--ink)}.layer-list .index{font:12px var(--mono);opacity:.7;padding-top:2px}.layer-list small{display:block;font:10px/1.6 var(--mono);opacity:.7;margin-top:3px}.detail{min-width:0;border:1px solid var(--line);border-radius:8px;padding:24px;background:var(--paper)}.detail .overline{font:11px var(--mono);color:var(--green);margin-bottom:8px}.detail h3{font-size:23px}.shape-row{display:flex;align-items:center;gap:13px;flex-wrap:wrap;padding:15px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:14px 0}.shape-row span{font:14px var(--mono)}.shape-row small{display:block;font:11px var(--sans);color:var(--muted);margin-bottom:4px}.detail p{font-size:14px}.detail-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;margin-top:18px}.detail-footer button{font-size:12px}.detail-footer div{display:flex;gap:6px}.detail .source-hint{font-size:11px;color:var(--muted);margin:12px 0 0}.flow-scroll{overflow-x:auto}.block-svg{width:100%;min-width:810px;display:block}.operation-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-top:18px}.operation-grid>article{border-top:1px solid var(--line);padding:17px 0 0;margin-top:15px}.operation-grid p{font-size:13px;color:var(--muted)}.rf-controls{display:flex;align-items:center;gap:15px;flex-wrap:wrap}.rf-controls label{display:flex;gap:9px;align-items:center;font-size:12px}.rf-grid{display:grid;grid-template-columns:repeat(16,1fr);gap:5px;margin:19px 0 9px}.rf-cell{border:1px solid var(--line);border-radius:4px;background:#edf0e9;min-width:0;height:36px;display:grid;place-items:center;font:10px var(--mono);color:var(--muted)}.rf-cell.active{background:var(--green);border-color:var(--green);color:white}.rf-cell.padding{background:repeating-linear-gradient(135deg,#e3e6e0,#e3e6e0 4px,#f5f5ef 4px,#f5f5ef 8px);color:#67716d;border-style:dashed}.rf-cell.future{background:white;border-style:dashed;color:#8d9892}.rf-cell.target{outline:2px solid var(--orange);outline-offset:1px}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted)}.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;background:var(--green)}.legend .empty{background:#e3e6e0}.legend .future{background:#fff;border:1px solid #bac6bc}.rf-readout{margin:18px 0 0;font-size:13px}.pool-flow{display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr;gap:6px;align-items:center;text-align:center;margin:20px 0}.pool-flow>div{background:#e8efe7;border:1px solid #d2ded4;border-radius:7px;padding:13px 5px;font-size:12px}.pool-flow strong{display:block;font:20px var(--mono);margin-top:4px}.pool-demo{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:20px 0}.pool-slot{text-align:center;background:#e6eee5;border:1px solid var(--line);border-radius:6px;padding:9px 2px}.pool-slot strong{display:block;font:20px var(--mono)}.pool-slot small{font:10px var(--mono);color:var(--muted)}.pool-slot.missing{background:#f5f3ed;border-style:dashed;color:#89978d}.pool-slot.last{border:2px solid var(--green);padding:8px 1px}.pool-results{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.pool-results>div{padding:12px;background:#edf1e9;border-radius:7px;font-size:12px}.pool-results strong{display:block;font:22px var(--mono)}.head-flow{display:flex;align-items:stretch;gap:10px;margin:22px 0}.head-flow>div{flex:1;border:1px solid var(--line);background:#eef1e9;text-align:center;border-radius:7px;padding:16px 6px;font-size:12px}.head-flow strong{display:block;font:25px var(--mono);margin-bottom:5px}.head-flow>span{align-self:center}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:25px}.comparison .big{font:36px var(--mono);color:var(--green)}details{border-top:1px solid var(--line);padding:16px 0}summary{cursor:pointer;font-weight:600;font-size:14px}details p{font-size:13px;color:var(--muted);margin:12px 0 0}.sources{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px}.sources a{display:block;font-size:13px}.sources small{display:block;color:var(--muted)}footer{padding:24px 0 35px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:25px;font-size:12px;color:var(--muted)}.no-js{background:#fff1d5;padding:18px}.print-only{display:none}
+    [hidden]{display:none!important}
+    @media(max-width:1050px){.wrap{padding:0 26px}.nav{gap:15px}.hero{gap:30px}.inspector{grid-template-columns:290px 1fr}.summary>div{padding:17px}.summary strong{font-size:25px}}
+    @media(max-width:780px){.nav{display:none}.hero{grid-template-columns:1fr;gap:20px;padding-top:35px}.hero-diagram{max-width:600px;width:100%;margin:auto}.summary{grid-template-columns:1fr 1fr;margin-bottom:38px}.summary>div:nth-child(2){border-right:0}.summary>div:nth-child(-n+2){border-bottom:1px solid var(--line)}.two,.comparison{grid-template-columns:1fr}.inspector{grid-template-columns:1fr}.layer-list{height:210px}.detail{padding:20px}.operation-grid{grid-template-columns:1fr}.panel{padding:20px}.section{padding-bottom:43px}h2{font-size:26px}.mask-result{grid-template-columns:1fr}.controls{gap:12px}.rf-grid{grid-template-columns:repeat(8,1fr)}.sources{grid-template-columns:1fr}.head-flow{flex-wrap:wrap}.head-flow>div{min-width:100px}.channel-bar>span{font-size:12px}.flag-channel{min-width:54px}.time-channel{min-width:65px}}
+    @media(max-width:460px){.wrap{padding:0 17px}.top .wrap{height:65px}.brand{font-size:13px}.top button{font-size:10px;padding:6px 8px}h1{font-size:39px}.lead{font-size:15px}.panel{padding:16px}.hero-diagram{padding:18px}.summary strong{font-size:23px}.summary>div{padding:15px}.section-head{gap:10px}.section-num{font-size:11px}.network{padding:14px}.detail h3{font-size:20px}.channel-bar small{font-size:9px}.channel-bar{gap:3px}.pool-demo{gap:4px}.pool-slot strong{font-size:16px}.pool-slot small{font-size:9px}.pool-results{gap:5px}.pool-results>div{padding:9px}.pool-results strong{font-size:19px}.pool-flow{gap:3px;grid-template-columns:1fr 15px 1fr 15px 1fr}.pool-flow>div{font-size:10px}.pool-flow strong{font-size:16px}.shape-row span{font-size:12px}.mask-bits>div{flex:1;min-width:0}footer{flex-direction:column;gap:9px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{html{scroll-padding-top:0}body{background:white;font-size:11px}.wrap{max-width:none;padding:0}.top,.actions,.controls,.inspector,.interactive,.back-top{display:none}.hero{padding:15px 0;grid-template-columns:1.1fr 1fr;gap:20px}h1{font-size:33px}.lead{font-size:12px}.summary{margin-bottom:25px}.summary strong{font-size:22px}.section{padding-bottom:28px}h2{font-size:22px}.panel{padding:17px}.network,.hero-diagram,.rf-cell,.pool-slot,th,.selected-row,.channel-bar>span{-webkit-print-color-adjust:exact;print-color-adjust:exact}.network svg{min-width:0}.block-svg{min-width:0}.print-only{display:block}.table-wrap{overflow:visible}table{font-size:10px}th,td{padding:7px}.operation-grid article,.pool-flow,.sources{break-inside:avoid}details{break-inside:avoid}.two{gap:16px}.hero-diagram p{font-size:9px}footer{padding-bottom:0}}
+  </style>
+</head>
+<body id="top">
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top"><span class="mark">JY</span><span>v6 网络逐层图解<small>MODEL ATLAS / 06</small></span></a>
+  <nav class="nav" aria-label="章节导航"><a href="#input">输入</a><a href="#network">连接总图</a><a href="#block">残差块</a><a href="#pooling">池化与融合</a><a href="#inventory">全部层</a><a href="#results">版本结果</a></nav>
+  <button id="print" type="button">打印 / 存为 PDF</button>
+</div></header>
+<main class="wrap">
+  <noscript><p class="no-js">当前浏览器关闭了 JavaScript。模型说明与结构图仍可阅读；逐层选择器、感受野演示和完整层表需要启用 JavaScript。</p></noscript>
+  <section class="hero" aria-labelledby="title">
+    <div>
+      <div class="eyebrow">最新冻结版本 · V6 · 本地源码核对 2026-10-16</div>
+      <h1 id="title">四路时间序列，<br>逐层走到<em>一个因子。</em></h1>
+      <p class="lead">最新完成的模型是 <strong>v6 四频因果 TCN</strong>。同一只股票的 1、5、15、30 分钟历史各走一条独立分支，经残差卷积与池化，再拼接成一个预测分数。</p>
+      <div class="actions"><a class="btn primary" href="#network">沿着网络看连接 ↓</a><a class="btn" href="#inventory">查看全部层与参数 ↗</a></div>
+      <p class="small muted">冻结运行 <code>v6-20261015-s42</code> · 选中第 6 轮<br>相对 v5：TCN Dropout 由 0.10 调至 0.35，结构与参数量保持一致。</p>
+    </div>
+    <div class="hero-diagram">
+      <div class="label"><span>ONE STOCK · FOUR SCALES</span><span>CAUSAL TCN</span></div>
+      <svg viewBox="0 0 440 252" role="img" aria-label="四种频率分别编码成160维向量，再与2维时钟融合成642维，经256维隐藏层输出一个分数">
+        <defs><marker id="ha" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8" fill="#a8c5b6"/></marker></defs>
+        <g fill="none" stroke="#46605a"><path d="M20 38H258M20 87H258M20 136H258M20 185H258"/><path d="M47 24V202M86 24V202M125 24V202M164 24V202M203 24V202"/></g>
+        <g font-family="Consolas,monospace" font-size="12">
+          <g fill="#8dd8ad"><text x="7" y="20">1m × 60</text><path d="M10 48L25 34L40 42L55 27L70 39L85 24L100 38L115 30L130 46L145 28L160 35" stroke="#8dd8ad" fill="none" stroke-width="2"/><rect x="178" y="25" width="69" height="28" rx="5" fill="#284a40"/><text x="212" y="44" text-anchor="middle">160</text></g>
+          <g fill="#a5c8ec"><text x="7" y="70">5m × 24</text><path d="M10 101H35V84H60V91H85V79H110V86H135V72H160" stroke="#a5c8ec" fill="none" stroke-width="2"/><rect x="178" y="74" width="69" height="28" rx="5" fill="#284453"/><text x="212" y="93" text-anchor="middle">160</text></g>
+          <g fill="#f1c198"><text x="7" y="119">15m × 16</text><path d="M10 151H45V140H80V147H115V127H160" stroke="#f1c198" fill="none" stroke-width="2"/><rect x="178" y="123" width="69" height="28" rx="5" fill="#51463b"/><text x="212" y="142" text-anchor="middle">160</text></g>
+          <g fill="#d5bcec"><text x="7" y="168">30m × 16</text><path d="M10 196H60V184H110V171H160" stroke="#d5bcec" fill="none" stroke-width="2"/><rect x="178" y="172" width="69" height="28" rx="5" fill="#443d50"/><text x="212" y="191" text-anchor="middle">160</text></g>
+        </g>
+        <g stroke="#a8c5b6" fill="none" stroke-width="1.3"><path d="M249 39H270V113H299"/><path d="M249 88H270M249 137H270V113M249 186H270V137"/><path d="M210 228H281V137H299" marker-end="url(#ha)"/><path d="M333 144V170" marker-end="url(#ha)"/><path d="M333 205V223" marker-end="url(#ha)"/></g>
+        <rect x="298" y="96" width="70" height="47" rx="7" fill="#31584b" stroke="#9bd0ac"/><text x="333" y="117" text-anchor="middle" fill="#edf6eb" font-size="19" font-family="Consolas,monospace">642</text><text x="333" y="133" text-anchor="middle" fill="#c2dbca" font-size="10">拼接</text>
+        <rect x="298" y="171" width="70" height="33" rx="6" fill="#28473e" stroke="#6a9880"/><text x="333" y="193" text-anchor="middle" fill="#e4efe4" font-size="17" font-family="Consolas,monospace">256</text>
+        <text x="333" y="244" text-anchor="middle" fill="#bce0bd" font-size="14">1 个分数</text><text x="98" y="232" fill="#bdd4c9" font-size="11">预测时钟 · 2 维</text>
+      </svg>
+      <p>线形仅作示意。网络逐股计算；截面信息已通过输入归一化进入模型，训练损失也按完整截面计算。</p>
+    </div>
+  </section>
+  <div class="summary" aria-label="模型规格">
+    <div><span class="label">每根 BAR 的输入</span><strong>77</strong><span>72 个数值 + 2 个标志 + 3 个时间值</span></div>
+    <div><span class="label">分支隐藏通道</span><strong>160</strong><span>四路独立编码，股票之间共享权重</span></div>
+    <div><span class="label">残差块 / 时序卷积</span><strong>13 / 26</strong><span>1m 为 4 块，其余每路 3 块</span></div>
+    <div><span class="label">可训练参数</span><strong>2,429,505</strong><span>包含权重、偏置与 LayerNorm 参数</span></div>
+  </div>
+
+  <section class="section" id="input" aria-labelledby="input-title">
+    <div class="section-head"><span class="section-num">01</span><div><h2 id="input-title">网络入口：四个张量，加一份预测时钟</h2><p>一个样本对应一个预测时点的一只股票。下文的 B 表示样本数，C 表示通道数，T 表示历史 Bar 数；卷积接收的轴顺序是 <code>[B, C, T]</code>。</p></div></div>
+    <div class="panel">
+      <div class="panel-top"><h3>先认清每个入口的形状</h3><span class="pill">按时间从旧到新排列</span></div>
+      <div class="table-wrap"><table><thead><tr><th>入口</th><th>输入张量</th><th>历史长度</th><th>进入哪条路径</th></tr></thead><tbody>
+        <tr><td>1 分钟</td><td><code>[B, 77, 60]</code></td><td>60 根 × 1 分钟</td><td><code>encoders.bar1m</code></td></tr>
+        <tr><td>5 分钟</td><td><code>[B, 77, 24]</code></td><td>24 根 × 5 分钟</td><td><code>encoders.bar5m</code></td></tr>
+        <tr><td>15 分钟</td><td><code>[B, 77, 16]</code></td><td>16 根 × 15 分钟</td><td><code>encoders.bar15m</code></td></tr>
+        <tr><td>30 分钟</td><td><code>[B, 77, 16]</code></td><td>16 根 × 30 分钟</td><td><code>encoders.bar30m</code></td></tr>
+        <tr><td>预测时刻 sin / cos</td><td><code>[B, 2]</code></td><td>预测时点的日内时钟</td><td>绕过卷积，直接接到融合拼接</td></tr>
+      </tbody></table></div>
+      <p class="note">只选择结束时间不晚于预测时刻的常规交易 Bar；四种频率来自各自的数据表。午休与隔夜不另设 Bar 槽，交易时段内缺失的槽位保留。历史可跨交易日，最多追溯 20 个自然日；“根数 × 分钟”是名义交易时长，并非连续的墙钟时间。</p>
+    </div>
+    <div class="panel">
+      <h3>一根 Bar 的 77 通道，顺序固定</h3>
+      <div class="channel-bar" aria-label="36个z通道，36个c通道，2个组完整标志，3个时间通道"><span class="z-channel">36<small>自身历史 z</small></span><span class="c-channel">36<small>同刻截面 c</small></span><span class="flag-channel">2<small>完整标志</small></span><span class="time-channel">3<small>时间编码</small></span></div>
+      <div class="table-wrap"><table><thead><tr><th>通道索引（从 0 起）</th><th>内容</th><th>如何得到</th></tr></thead><tbody>
+        <tr><td><code>0…35</code></td><td>36 个 z 值</td><td>原始价格取 log，量、金额、笔数取 log1p，再按股票／频率／字段的冻结训练统计量标准化；缺参时使用因果历史及池化统计回退。</td></tr>
+        <tr><td><code>36…71</code></td><td>36 个 c 值</td><td>对 z 做同一 Bar 时刻的股票池截面标准化；池内有效样本至少 2 个。c 基于 z 计算。</td></tr>
+        <tr><td><code>72</code></td><td>非盘口组完整标志</td><td>OHLC、volume、amount 的 12 个 z/c 值全部有效才置 1。</td></tr>
+        <tr><td><code>73</code></td><td>盘口组完整标志</td><td>30 个五档盘口字段的 60 个 z/c 值全部有效才置 1。</td></tr>
+        <tr><td><code>74、75</code></td><td>Bar 时刻的 sin / cos</td><td>用一天 1440 分钟编码 Bar 的结束时刻。整根 Bar 没有任何有效 z/c 时，两者置零。</td></tr>
+        <tr><td><code>76</code></td><td>归一化 log age</td><td><code>log1p(age_minutes) / log1p(20 * 1440)</code>；age 按真实经过的分钟计算，全无效时置零。</td></tr>
+      </tbody></table></div>
+      <p class="small muted" style="margin-top:14px">36 个字段：OHLC 4 个、成交量与金额 2 个、买卖五档价格 10 个、委托量 10 个、委托笔数 10 个。每组数值均遵循这一顺序。非法数值最终填 0，合法的标准化值也可能恰好等于 0。</p>
+      <div class="mask-box interactive">
+        <div class="panel-top"><h4>交互：组不完整，还能进入网络吗？</h4><div class="tabs" id="mask-tabs" role="group" aria-label="选择缺失情况"><button type="button" data-mask="full" aria-pressed="true">全部有效</button><button type="button" data-mask="partial" aria-pressed="false">两组均不完整</button><button type="button" data-mask="empty" aria-pressed="false">全部缺失</button></div></div>
+        <div class="mask-result" aria-live="polite"><p id="mask-text"></p><div class="mask-bits"><div><strong id="mask-nonbook">1</strong><span>非盘口完整</span></div><div><strong id="mask-book">1</strong><span>盘口完整</span></div><div><strong id="mask-valid">1</strong><span>整根 Bar 有效</span></div></div></div>
+      </div>
+      <p class="note"><strong>组完整标志作为输入特征；整根 Bar 的掩码另行计算。</strong>只要 72 个 z/c 中至少一个有效，就保留这一 Bar 的时间编码，模型用通道 74、75 是否同时为零重建 <code>valid [B, 1, T]</code>。部分缺失不会抹掉同组其他有效数值。</p>
+    </div>
+  </section>
+
+  <section class="section" id="network" aria-labelledby="network-title">
+    <div class="section-head"><span class="section-num">02</span><div><h2 id="network-title">完整连接：先在各频率内计算，再做一次融合</h2><p>箭头表示前向数据流。四路网络拓扑相近，各自持有权重；所有股票使用同一套四路编码器。各分支在池化前互不交换特征。</p></div></div>
+    <div class="network">
+      <svg viewBox="0 0 1120 345" role="img" aria-label="四路输入各经过77到160的1乘1投影、残差块、last和mean池化、320到160的线性层，再与预测时钟拼成642维，经过256维隐藏层输出">
+        <defs><marker id="na" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8" fill="#a9c6b8"/></marker></defs>
+        <g fill="#bed4cb" font-size="11"><text x="16" y="17">输入 [B, 77, T]</text><text x="185" y="17">逐时刻投影</text><text x="360" y="17">因果残差块（每块两次卷积）</text><text x="654" y="17">时间池化 + Linear</text><text x="870" y="17">跨频率融合</text></g>
+        <g font-size="12" font-family="Consolas,monospace" text-anchor="middle">
+          <g fill="#8dd8ad"><rect x="8" y="36" width="134" height="42" rx="6" fill="#26473e" stroke="#589f7c"/><text x="75" y="62">1m · 77 × 60</text><rect x="176" y="36" width="126" height="42" rx="6" fill="#26473e" stroke="#589f7c"/><text x="239" y="62">77 → 160</text><rect x="336" y="36" width="276" height="42" rx="6" fill="#26473e" stroke="#589f7c"/><text x="474" y="62">d=1 → 2 → 4 → 8 · T=60</text><rect x="646" y="36" width="156" height="42" rx="6" fill="#26473e" stroke="#589f7c"/><text x="724" y="62">160+160 → 160</text></g>
+          <g fill="#a5c8ec"><rect x="8" y="100" width="134" height="42" rx="6" fill="#284453" stroke="#6583a7"/><text x="75" y="126">5m · 77 × 24</text><rect x="176" y="100" width="126" height="42" rx="6" fill="#284453" stroke="#6583a7"/><text x="239" y="126">77 → 160</text><rect x="336" y="100" width="276" height="42" rx="6" fill="#284453" stroke="#6583a7"/><text x="474" y="126">d=1 → 2 → 4 · T=24</text><rect x="646" y="100" width="156" height="42" rx="6" fill="#284453" stroke="#6583a7"/><text x="724" y="126">160+160 → 160</text></g>
+          <g fill="#f1c198"><rect x="8" y="164" width="134" height="42" rx="6" fill="#51463b" stroke="#a68160"/><text x="75" y="190">15m · 77 × 16</text><rect x="176" y="164" width="126" height="42" rx="6" fill="#51463b" stroke="#a68160"/><text x="239" y="190">77 → 160</text><rect x="336" y="164" width="276" height="42" rx="6" fill="#51463b" stroke="#a68160"/><text x="474" y="190">d=1 → 2 → 4 · T=16</text><rect x="646" y="164" width="156" height="42" rx="6" fill="#51463b" stroke="#a68160"/><text x="724" y="190">160+160 → 160</text></g>
+          <g fill="#d5bcec"><rect x="8" y="228" width="134" height="42" rx="6" fill="#443d50" stroke="#8f7da2"/><text x="75" y="254">30m · 77 × 16</text><rect x="176" y="228" width="126" height="42" rx="6" fill="#443d50" stroke="#8f7da2"/><text x="239" y="254">77 → 160</text><rect x="336" y="228" width="276" height="42" rx="6" fill="#443d50" stroke="#8f7da2"/><text x="474" y="254">d=1 → 2 → 4 · T=16</text><rect x="646" y="228" width="156" height="42" rx="6" fill="#443d50" stroke="#8f7da2"/><text x="724" y="254">160+160 → 160</text></g>
+        </g>
+        <g fill="none" stroke="#a9c6b8" stroke-width="1.3" marker-end="url(#na)"><path d="M143 57H173M303 57H333M613 57H643M143 121H173M303 121H333M613 121H643M143 185H173M303 185H333M613 185H643M143 249H173M303 249H333M613 249H643"/><path d="M804 57H835V136H870"/><path d="M804 121H835V136H870"/><path d="M804 185H835V136H870"/><path d="M804 249H835V136H870"/><path d="M798 306H852V159H870"/><path d="M964 148H990"/><path d="M1036 178V218"/></g>
+        <rect x="870" y="115" width="94" height="63" rx="7" fill="#31584b" stroke="#99caad"/><text x="917" y="142" text-anchor="middle" fill="#e2eee7" font-family="Consolas,monospace" font-size="23">642</text><text x="917" y="164" text-anchor="middle" fill="#bcd1c5" font-size="11">concat</text>
+        <rect x="990" y="115" width="92" height="63" rx="7" fill="#28473e" stroke="#89ad97"/><text x="1036" y="141" text-anchor="middle" fill="#e2eee7" font-family="Consolas,monospace" font-size="23">256</text><text x="1036" y="163" text-anchor="middle" fill="#bcd1c5" font-size="10">GELU + Drop 0.1</text>
+        <rect x="990" y="221" width="92" height="51" rx="7" fill="#31584b" stroke="#99caad"/><text x="1036" y="243" text-anchor="middle" fill="#e2eee7" font-size="14">Linear → 1</text><text x="1036" y="261" text-anchor="middle" fill="#bcd1c5" font-size="10">score / 100 → factor</text>
+        <text x="562" y="310" fill="#bed4cb" font-size="12">预测时钟 [B, 2] · 直接连接融合层</text>
+      </svg>
+      <p class="network-note">所有卷积 stride=1，时序长度 T 始终不变。每条投影后有 GELU 与 valid 掩码；每路池化线性层后也有 GELU。图中的 d 为 dilation（膨胀率）。</p>
+    </div>
+    <div class="controls interactive"><div class="tabs" id="freq-tabs" role="group" aria-label="选择逐层查看的频率"><button type="button" data-freq="bar1m" aria-pressed="true">1 分钟</button><button type="button" data-freq="bar5m" aria-pressed="false">5 分钟</button><button type="button" data-freq="bar15m" aria-pressed="false">15 分钟</button><button type="button" data-freq="bar30m" aria-pressed="false">30 分钟</button></div><label>B <select id="batch" aria-label="示例批大小"><option value="B">符号 B</option><option value="1">1 个样本</option><option value="32">32 个样本</option><option value="1000">1000 个样本</option></select></label><label><input id="training" type="checkbox"> 显示训练时的 Dropout</label></div>
+    <div class="inspector"><div id="layer-list" class="layer-list" role="group" aria-label="按前向顺序选择网络步骤"></div><article class="detail" id="layer-detail" aria-live="polite"></article></div>
+    <p class="small muted interactive" style="margin-top:12px">选择步骤可查看输入／输出形状与对应代码；“下一层”依次走完当前分支及公共预测头。这里只演示结构，不加载模型权重，也不运行真实行情预测。</p>
+  </section>
+
+  <section class="section" id="block" aria-labelledby="block-title">
+    <div class="section-head"><span class="section-num">03</span><div><h2 id="block-title">展开一个残差块：主路算两次，旁路保留输入</h2><p>13 个残差块都使用下列连接。块内两个卷积的膨胀率相同，权重独立；块与块之间才将膨胀率翻倍。</p></div></div>
+    <div class="panel">
+      <div class="panel-top"><h3>CausalBlock · 输入与输出均为 [B, 160, T]</h3><span class="pill">每块 154,560 个参数</span></div>
+      <div class="flow-scroll"><svg class="block-svg" viewBox="0 0 1100 235" role="img" aria-label="输入h分出恒等旁路，主路先后经过两组左侧补零卷积LayerNorm GELU Dropout及掩码，再与原h相加，最后乘valid">
+        <defs><marker id="ba" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8" fill="#47796a"/></marker></defs>
+        <g stroke="#47796a" stroke-width="1.7" fill="none"><path d="M91 123H119M460 123H490M831 123H879M927 123H958" marker-end="url(#ba)"/><path d="M99 123V36H903V100" marker-end="url(#ba)"/></g>
+        <rect x="5" y="102" width="87" height="42" rx="6" fill="#e7eee5" stroke="#9bb7a3"/><text x="48" y="128" text-anchor="middle" fill="#183235" font-size="15">输入 h</text>
+        <rect x="121" y="73" width="339" height="111" rx="8" fill="#e7eee5" stroke="#9bb7a3"/><text x="290" y="98" text-anchor="middle" fill="#166e60" font-size="12">第一组 · convolutions[0] + norms[0]</text><text x="290" y="125" text-anchor="middle" fill="#183235" font-size="15">左补 2d → Conv1d → LayerNorm</text><text x="290" y="153" text-anchor="middle" fill="#183235" font-size="14">→ GELU → Dropout(0.35) → × valid</text>
+        <rect x="492" y="73" width="339" height="111" rx="8" fill="#e7eee5" stroke="#9bb7a3"/><text x="661" y="98" text-anchor="middle" fill="#166e60" font-size="12">第二组 · convolutions[1] + norms[1]</text><text x="661" y="125" text-anchor="middle" fill="#183235" font-size="15">左补 2d → Conv1d → LayerNorm</text><text x="661" y="153" text-anchor="middle" fill="#183235" font-size="14">→ GELU → Dropout(0.35) → × valid</text>
+        <circle cx="903" cy="123" r="23" fill="#fffefa" stroke="#47796a" stroke-width="2"/><text x="903" y="132" text-anchor="middle" fill="#166e60" font-size="27">+</text>
+        <rect x="960" y="98" width="133" height="51" rx="6" fill="#d5e8d8" stroke="#6f9b7c"/><text x="1026" y="129" text-anchor="middle" fill="#183235" font-size="15">× valid → 输出</text>
+        <text x="500" y="25" text-anchor="middle" fill="#47796a" font-size="13">恒等旁路 residual = h · 不经过卷积、归一化和 Dropout</text>
+        <text x="290" y="210" text-anchor="middle" fill="#5c716f" font-size="12">Conv: 160 → 160, kernel=3, dilation=d</text><text x="661" y="210" text-anchor="middle" fill="#5c716f" font-size="12">同一 d，另一套卷积与 LayerNorm 参数</text><text x="970" y="190" text-anchor="middle" fill="#5c716f" font-size="11">相加后没有额外 GELU</text>
+      </svg></div>
+      <div class="operation-grid">
+        <article><h4>① 左补零 + 膨胀卷积</h4><p>每次卷积前在时间轴左侧补 <code>2 * d</code> 个零，右侧不补。kernel=3、stride=1：位置 t 只读取上一层的 t、t−d、t−2d，同时混合全部 160 个输入通道。输出仍是 T 个时点。</p></article>
+        <article><h4>② LayerNorm 归一化哪个轴？</h4><p>先从 <code>[B,160,T]</code> 转成 <code>[B,T,160]</code>，对每个样本、每个时点的 160 通道归一化，再转回。不同时间点、不同股票不会在该层一起求均值；它不会因归一化读取未来时点。</p></article>
+        <article><h4>③ GELU → Dropout → valid</h4><p>GELU 加入非线性。训练时普通 <code>nn.Dropout</code> 逐元素以 0.35 概率置零，保留项除以 0.65；同一 Dropout 模块调用两次会各自采样。推理时原样通过。随后用 <code>[B,1,T]</code> 的 valid 广播到全部通道，将无效位置清零。</p></article>
+        <article><h4>④ 主路和原输入逐元素相加</h4><p>两路都是 <code>[B,160,T]</code>，因此可以直接相加，无需额外投影。相加后再乘 valid，随即交给下一块；没有拼接，也没有相加后的额外激活。旁路让输入直接传递，同时主路学习需要补充的变化。</p></article>
+      </div>
+      <pre aria-label="与源码一致的残差块伪代码">residual = h
+for conv, norm in zip(convolutions, norms):  # 共两次，d 相同
+    h = conv(left_pad(h, 2 * d))
+    h = norm(h.transpose(1, 2)).transpose(1, 2)
+    h = dropout(gelu(h)) * valid
+output = (h + residual) * valid</pre>
+    </div>
+    <div class="panel">
+      <div class="panel-top"><h3>膨胀率越大，一次能连接越远的历史</h3><span class="pill">卷积不改变时间长度</span></div>
+      <div class="rf-controls interactive"><label>观察连接 <select id="rf-kind"><option value="one">单次卷积</option><option value="block">一个残差块的两次卷积</option><option value="stack">完整分支堆叠</option></select></label><label id="dilation-label">d <select id="dilation"><option>1</option><option>2</option><option>4</option><option>8</option></select></label><span class="small muted" id="rf-branch">当前：1 分钟分支</span></div>
+      <div id="rf-grid" class="rf-grid interactive" aria-label="历史位置的连接示意"></div>
+      <div class="legend interactive"><span><i></i>潜在依赖位置</span><span><i class="empty"></i>窗口外补零</span><span><i class="future"></i>未来位置不使用</span><span>橙框为当前输出 t</span></div>
+      <p class="rf-readout interactive" id="rf-readout" aria-live="polite"></p>
+      <div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>分支</th><th>块的膨胀率</th><th>每块后的理论感受野（Bar）</th><th>实际窗口</th></tr></thead><tbody>
+        <tr><td>1m</td><td><code>1 → 2 → 4 → 8</code></td><td><code>5 → 13 → 29 → 61</code></td><td>60 根；超出窗口的部分是左侧零填充</td></tr>
+        <tr><td>5m</td><td><code>1 → 2 → 4</code></td><td><code>5 → 13 → 29</code></td><td>24 根</td></tr>
+        <tr><td>15m / 30m</td><td><code>1 → 2 → 4</code></td><td><code>5 → 13 → 29</code></td><td>各 16 根</td></tr>
+      </tbody></table></div>
+      <p class="note">每个块的两次 kernel=3 卷积共增加 <code>4 * d</code> 个 Bar 的理论感受野，起点为 1。上表描述<strong>某一个输出时点</strong>的潜在依赖；实际缺失槽会被逐层清零。后面的 mean 池化还会汇总窗口内所有有效输出，因此分支向量的覆盖范围需要连同池化一起理解。</p>
+    </div>
+  </section>
+
+  <section class="section" id="pooling" aria-labelledby="pool-title">
+    <div class="section-head"><span class="section-num">04</span><div><h2 id="pool-title">把一段序列，收成一个 160 维向量</h2><p>TCN 输出仍是 <code>[B,160,T]</code>。每路 FrequencyEncoder 用两种方式沿时间轴读取，再经过一个学习到的线性投影。</p></div></div>
+    <div class="panel">
+      <div class="two"><div><h3>last 与 mean 是并行读取</h3><p><strong>last：</strong>查找 valid=1 的最后一个位置，从 TCN 输出取出该位置的全部 160 通道。它可能早于窗口最后一格。</p><p><strong>mean：</strong>将所有时点的隐藏向量求和，再除以有效 Bar 个数。无效位置此前已经被清零；分母至少取 1。</p><p>先 last 后 mean，沿特征轴拼接成 320 维，再用 <code>Linear(320,160)</code> 和 GELU 压回 160 维。每个频率拥有自己的投影参数。</p></div><div><div class="pool-flow"><div>last 与 mean<strong>160 + 160</strong></div><span>→</span><div>concat<strong>320</strong></div><span>→</span><div>Linear + GELU<strong>160</strong></div></div><pre>mean = h.sum(time) / max(valid.sum(time), 1)
+last = h[最后一个有效时间位置]
+vector = gelu(pool(concat([last, mean])))
+vector *= (有效 Bar 数 > 0)</pre><p class="small muted">最后一次乘法用于处理全空窗口：即使池化 Linear 有偏置，该频率向量也被强制置零。</p></div></div>
+      <div class="mask-box interactive"><div class="panel-top"><h4>演示一个隐藏通道的时间池化</h4><div class="tabs" id="pool-tabs" role="group" aria-label="选择池化示例"><button type="button" data-pool="partial" aria-pressed="true">尾部缺失</button><button type="button" data-pool="full" aria-pressed="false">全部有效</button><button type="button" data-pool="empty" aria-pressed="false">全空窗口</button></div></div><p class="small muted">以下为 8 个示意时点的一维隐藏值；真实模型对 160 个通道同时执行。此处不模拟学习到的池化权重。</p><div id="pool-demo" class="pool-demo"></div><div class="pool-results" aria-live="polite"><div>有效 Bar 数<strong id="pool-count"></strong></div><div>last<strong id="pool-last"></strong></div><div>mean<strong id="pool-mean"></strong></div></div><p class="small" id="pool-text" aria-live="polite"></p></div>
+    </div>
+    <div class="panel" id="head"><h3>四路向量到预测头：642 → 256 → 1</h3>
+      <p>固定按 <code>bar1m、bar5m、bar15m、bar30m、clock</code> 拼接。四个 160 维分支向量，加预测时刻的 2 个数，得到 <code>[B,642]</code>。这里首次发生跨频率的可学习信息混合。</p>
+      <div class="head-flow"><div><strong>642</strong>拼接后的特征</div><span>→</span><div><strong>256</strong>Linear + GELU</div><span>→</span><div><strong>0.10</strong>融合 Dropout</div><span>→</span><div><strong>1</strong>Linear 输出分数</div></div>
+      <div class="two"><div><h4>预测头的精确顺序</h4><pre>joined = concat([v_1m, v_5m, v_15m, v_30m, clock])
+hidden = Linear(642, 256)(joined)
+hidden = GELU(hidden)
+hidden = Dropout(0.1)(hidden)
+score = Linear(256, 1)(hidden).squeeze(1)
+factor = score / 100.0  # 在推理代码中完成</pre></div><div><h4>这个输出代表什么？</h4><p>最终线性层后没有 sigmoid、tanh 或截面 softmax，因此分数可正可负。<code>squeeze(1)</code> 只移除末尾的单元素维度，输出变成 <code>[B]</code>。</p><p>训练目标是未来 30 分钟的官方 <code>vwap_return</code>，但纯 IC 损失不约束预测分数的均值与幅度。除以 100 是固定缩放，<strong>不能把 factor 直接解释成经过校准的收益率</strong>。</p><p class="small muted">最终返回 <code>date、instrument、factor</code>，factor 转为 float64。若四个分支全空，预测时钟及预测头偏置仍可产生非零分数；“空分支归零”不等于“最终输出归零”。</p></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="inventory" aria-labelledby="inventory-title">
+    <div class="section-head"><span class="section-num">05</span><div><h2 id="inventory-title">每一个可训练层，都能对上参数</h2><p>下表列出四路的全部投影、26 个时序卷积、26 个 LayerNorm、4 个池化线性层及公共预测头。无参数的激活、Dropout、padding、掩码、拼接和读取步骤在上面的前向路径中展开。</p></div></div>
+    <div class="panel"><div class="panel-top"><h3>总计 2,429,505 个参数 · 62 个带参数的模块</h3><button type="button" id="expand-inventory" class="interactive">展开全部分支</button></div>
+      <div class="table-wrap"><table><thead><tr><th>部分</th><th>构成</th><th class="num">参数量</th></tr></thead><tbody>
+        <tr><td>1m 编码器</td><td>投影 12,480 + 4 块 × 154,560 + 池化 51,360</td><td class="num">682,080</td></tr>
+        <tr><td>5m 编码器</td><td>投影 12,480 + 3 块 × 154,560 + 池化 51,360</td><td class="num">527,520</td></tr>
+        <tr><td>15m 编码器</td><td>投影 12,480 + 3 块 × 154,560 + 池化 51,360</td><td class="num">527,520</td></tr>
+        <tr><td>30m 编码器</td><td>投影 12,480 + 3 块 × 154,560 + 池化 51,360</td><td class="num">527,520</td></tr>
+        <tr><td>公共预测头</td><td>Linear 642→256：164,608；Linear 256→1：257</td><td class="num">164,865</td></tr>
+        <tr class="selected-row"><td><strong>合计</strong></td><td>4 路编码器 2,264,640 + 预测头 164,865</td><td class="num"><strong>2,429,505</strong></td></tr>
+      </tbody></table></div>
+      <p class="small muted" style="margin-top:16px">参数计算包含 bias：Conv1d 为 <code>out × in × kernel + out</code>；Linear 为 <code>out × in + out</code>；LayerNorm(160) 为缩放与平移各 160，即 320。每个时序卷积 76,960；一个残差块有两个卷积与两个 LayerNorm，共 154,560。同一 Dropout 模块虽调用两次，但无可训练参数。</p>
+      <div id="inventory-tables"></div>
+    </div>
+  </section>
+
+  <section class="section" id="results" aria-labelledby="results-title">
+    <div class="section-head"><span class="section-num">06</span><div><h2 id="results-title">v6 更新了什么，效果如何？</h2><p>这里汇总仓库内已冻结的记录。最新版本由完成的运行及配置确定；以下平台状态也仅代表本地索引记载，未在本页生成时查询平台。</p></div></div>
+    <div class="panel"><div class="comparison"><div><h3>变化集中在残差主路的 Dropout</h3><div class="big">0.10 → 0.35</div><p>只提高 13 个 TCN 残差块内的丢弃概率。四路窗口、77 通道、隐藏维度 160、预测头 256 维、连接关系以及参数总数都沿用 v5；预测头 Dropout 仍是 0.10。</p><p class="small muted">v6 使用 seed=42 从头初始化，未继承 v5 权重。推理模式下两类 Dropout 都关闭；训练差异体现在最后得到的权重中。</p></div><div><h3>学习方法与选模</h3><p>2020—2023 年训练，2024 年上半年验证，下半年测试。对每个完整分钟截面的股票分数与官方标签计算 Pearson IC，损失代码为 <code>loss = 1 - IC</code>；截面等权。</p><p class="small muted">AdamW，学习率 0.0003，weight decay 0.0001，梯度范数上限 1。训练使用 CUDA BF16，损失统计 FP64，评估 FP32。最多 100 轮，耐心 12，min_delta=0.00001；实际 18 轮，第 6 轮权重入选。</p></div></div>
+      <div class="table-wrap"><table><caption>本地冻结结果；v5 与 v6 均按验证 IC 选模。</caption><thead><tr><th>版本</th><th class="num">验证 IC</th><th class="num">验证 Rank IC</th><th class="num">测试 IC</th><th class="num">测试 Rank IC</th></tr></thead><tbody>
+        <tr><td>v5 · 父版本</td><td class="num">0.070462</td><td class="num">0.069256</td><td class="num">0.073423</td><td class="num">0.071142</td></tr>
+        <tr class="selected-row"><td><strong>v6 · 最新冻结</strong></td><td class="num">0.071842</td><td class="num">0.067675</td><td class="num">0.074766</td><td class="num">0.069818</td></tr>
+        <tr><td>v6 − v5（未舍入值计算）</td><td class="num">+0.001379</td><td class="num">−0.001581</td><td class="num">+0.001342</td><td class="num">−0.001324</td></tr>
+      </tbody></table></div>
+      <p class="note">v6 在当前验证 IC 口径下是本地改善候选，验证／测试覆盖率均为 100%，两种 IC 的未定义截面均为 0。Rank IC 同时下降；单种子结果不能说明统计显著。历史 v1 测试 IC 为 0.083549，仍高于 v6，但 v1 采用不同的选模指标。持续研究已经观察测试期；本地指标不等同于平台官方成绩。</p>
+      <p class="small muted" style="margin-top:15px">v6 已导出为 Notebook 与参数 JSON 两个文本附件，并通过本地验证。仓库提交索引状态为 <code>local_verified_not_submitted</code>，平台运行与官方分数尚未确认。</p>
+    </div>
+    <div class="panel"><h3>读图时最容易混淆的几个地方</h3>
+      <details><summary>这是 Transformer 或跨股票注意力模型吗？</summary><p>模型由 Conv1d、LayerNorm、GELU、Dropout 和 Linear 组成，没有 attention。神经网络的前向计算逐股进行，batch 维不参与卷积或 LayerNorm 混合。不过输入 c 使用股票池截面统计，训练 IC 损失也联系同一时点各股票的预测。</p></details>
+      <details><summary>投影 77→160 会压缩时间吗？</summary><p>不会。1×1 Conv1d 在每个时间位置把 77 通道变成 160 通道，只混合该时点的输入特征；时间长度不变。接下来的 kernel=3 卷积才混合不同时间位置。序列长度直到 last／mean 池化时才被消去。</p></details>
+      <details><summary>残差相加和拼接有什么区别？</summary><p>残差相加要求形状相同，160 通道加完仍是 160 通道。last 与 mean 的拼接把两份 160 维并排放成 320 维；四路融合再把四份 160 维和时钟 2 维并排放成 642 维。拼接本身没有参数。</p></details>
+      <details><summary>为什么 Dropout 增加，参数量没有增加？</summary><p>Dropout 不保存可训练的权重或偏置，只在训练时随机置零部分元素，并调整保留项尺度。概率从 0.10 改为 0.35 不改变网络的层宽与连接。LayerNorm 在推理时仍按当前时点的通道计算；Dropout 在 eval 模式关闭。</p></details>
+    </div>
+  </section>
+
+  <section class="section" id="sources" aria-labelledby="sources-title">
+    <div class="section-head"><span class="section-num">07</span><div><h2 id="sources-title">从图回到源码</h2><p>本页是截至 2026-10-16（UTC+08:00）的静态说明，对应运行 v6-20261015-s42。关键源码与该运行保存的冻结快照一致；后续新实验不会自动更新本页。</p></div></div>
+    <div class="panel"><div class="sources">
+      <div><a href="../solutions/v6/v6_model.py">v6_model.py · 完整网络连接</a><small>CausalBlock、FrequencyEncoder、MultiFrequencyTCN</small></div>
+      <div><a href="../solutions/v6/model-config.json">model-config.json · 全部生效设置</a><small>窗口、层数、宽度、两类 Dropout 与训练配置</small></div>
+      <div><a href="../solutions/v6/v6_schema.py">v6_schema.py · 77 通道布局</a><small>字段分组、索引与配置校验</small></div>
+      <div><a href="../solutions/v6/v6_data.py">v6_data.py · 切窗与掩码</a><small>WindowBlock.batch、regular_times、clock_values</small></div>
+      <div><a href="../solutions/v6/v6_preprocessing.py">v6_preprocessing.py · z 与 c</a><small>原始字段变换、冻结及回退统计、截面归一化</small></div>
+      <div><a href="../solutions/v6/v6_predict.py">v6_predict.py · 最终 factor</a><small>eval 模式、score / 100、输出列与类型</small></div>
+      <div><a href="../solutions/v6/v6_loss.py">v6_loss.py · Pearson IC 损失</a><small>完整截面、FP64 统计与退化情况处理</small></div>
+      <div><a href="../solutions/v6/README.md">v6 方案说明</a><small>研究假设、父版本比较及提交材料</small></div>
+      <div><a href="../experiments/v6-tcn.json">v6-tcn.json · 冻结实验结果</a><small>选模、验证／测试与逐月比较</small></div>
+      <div><a href="../experiments/runs.csv">runs.csv · 历史运行索引</a><small>v1 至 v6 的运行 ID 与冻结指标</small></div>
+      <div><a href="../experiments/submissions.csv">submissions.csv · 本地提交状态记录</a><small>本地验证状态与平台证据</small></div>
+      <div><a href="../evaluation/protocols/local-v2-ic.json">local-v2-ic.json · 本地评估口径</a><small>数据区间、官方标签与验证 IC 选模</small></div>
+    </div><p class="small muted" style="margin:21px 0 0">本页的说明、样式和交互脚本全部内嵌，可离线打开。源文件链接需保留仓库的相对目录；单独复制 HTML 仍可阅读全部图解。</p></div>
+  </section>
+</main>
+<div class="wrap"><footer><span>进益资本 · 模型说明 / v6-20261015-s42 · 本地静态网页</span><a class="back-top" href="#top">回到顶部 ↑</a></footer></div>
+<script>
+'use strict';
+(() => {
+  const specs = {
+    bar1m: {label:'1 分钟', length:60, blocks:4, params:682080},
+    bar5m: {label:'5 分钟', length:24, blocks:3, params:527520},
+    bar15m: {label:'15 分钟', length:16, blocks:3, params:527520},
+    bar30m: {label:'30 分钟', length:16, blocks:3, params:527520}
+  };
+  const $ = id => document.getElementById(id);
+  const fmt = n => n.toLocaleString('en-US');
+  const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let frequency = 'bar1m', activeLayer = 2, layers = [];
+  const shape = (...axes) => '[' + [$('batch').value, ...axes].join(', ') + ']';
+  const press = (container, attribute, value) => {
+    $(container).querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset[attribute] === value)));
+  };
+  function makeLayers() {
+    const spec = specs[frequency], T = spec.length, root = 'encoders.' + frequency;
+    const X = shape(77,T), H = shape(160,T), V = shape(1,T), vector = shape(160);
+    const training = $('training').checked;
+    const rows = [];
+    const add = (name, input, output, params, explanation, code, source, route) => rows.push({name,input,output,params,explanation,code,source,route});
+    add('窗口输入', '36 个原始字段 / Bar', X, 0,
+      '本分支使用 '+T+' 根已结束 Bar，通道顺序为 36 个 z、36 个 c、两个组完整标志和三个时间值。时间从左到右由旧到新；不完整的交易槽保留，缺值填零。',
+      'x = windows["'+frequency+'"]  # '+X, 'v6_data.py · WindowBlock.batch', '数据预处理 → 本分支入口');
+    add('提取 valid · 独立控制路径', X, V, 0,
+      '由通道 74、75 的 Bar 时钟重建整根 Bar 的有效性。只要任一个 z/c 有效，时钟就不同时为零。此掩码旁路传给输入投影、每个残差块以及池化；原始 x 继续流向投影。',
+      'valid = (x[:, 74:76].abs().sum(dim=1, keepdim=True) > 0).to(x.dtype)', 'v6_model.py · FrequencyEncoder.forward', '输入时钟通道 → 所有时间掩码与池化');
+    add('输入投影 · Conv1d(77, 160, 1)', X, H, 12480,
+      '在每个时间位置对 77 通道做一次独立的线性投影，生成 160 个隐藏通道。kernel=1，只混合当前 Bar 的特征，时间长度不变。权重形状 [160,77,1]，bias 为 [160]。',
+      'h = project(x)  # stride=1, bias=True', root + '.project', '原始窗口 x → 投影');
+    add('投影激活与掩码', H + ' + ' + V, H, 0,
+      '先 GELU，再将 valid 广播到 160 通道。投影有 bias，全空位置即使被投影出非零值，也在这里归零。GELU 逐元素产生非线性。',
+      'h = gelu(h) * valid', 'v6_model.py · FrequencyEncoder.forward', '投影 → 第一个残差块');
+    for (let i = 0; i < spec.blocks; i++) {
+      const d = 2 ** i, name = '残差块 '+(i+1), base = root + '.blocks.'+i;
+      add(name + ' · 保存旁路', H, H, 0,
+        '进入第 '+(i+1)+' 个块时，保存尚未经过本块运算的 h。它绕过该块的两个卷积、两个 LayerNorm 和两次 Dropout，最后与主路相加。此块两次卷积的 d 都是 '+d+'。',
+        'residual = h', base, '同一输入同时接主路与恒等旁路');
+      for (let j = 0; j < 2; j++) {
+        const prefix = name+' / '+(j+1);
+        add(prefix + ' · 左侧补 '+(2*d)+' 个零', H, shape(160,T+2*d), 0,
+          '仅在时间轴左侧补 '+(2*d)+' 个零，等于 (kernel−1)×d。右侧不补零，因此当前位置不会因卷积访问未来。第二次卷积也重新补零。',
+          'h = F.pad(h, ('+(2*d)+', 0))', base + '.forward', '当前主路 → 因果卷积的输入');
+        add(prefix + ' · Conv1d，d='+d, shape(160,T+2*d), H, 76960,
+          '160 输入通道到 160 输出通道，kernel=3，dilation='+d+'，stride=1，无内置 padding。每个输出时点访问上一层 t、t−'+d+'、t−'+(2*d)+' 三个位置的全部通道。权重 [160,160,3]，bias [160]。卷积后回到长度 '+T+'。',
+          'h = convolutions['+j+'](h)', base + '.convolutions.'+j, '左补零 → 本次卷积');
+        add(prefix + ' · LayerNorm(160)', H, H, 320,
+          '先交换通道轴和时间轴，再在最后的 160 通道上归一化，然后换回。每个样本、每个时点独立计算，不混合 batch 或时间。可训练 scale/bias 各 160；默认 eps=1e-5。',
+          'h = norms['+j+'](h.transpose(1, 2)).transpose(1, 2)\n# [B,160,T] → [B,T,160] → norm → [B,160,T]', base + '.norms.'+j, '卷积 → 通道归一化');
+        add(prefix + ' · GELU', H, H, 0,
+          '逐元素激活，维度不变。GELU 对正负输入平滑调节，使多层网络能表达非线性关系。这一激活位于 LayerNorm 后、Dropout 前。',
+          'h = F.gelu(h)', base + '.forward', 'LayerNorm → GELU');
+        add(prefix + ' · Dropout 0.35'+(training?'（训练）':'（推理关闭）'), H, H, 0,
+          training
+            ? '训练时每次调用独立随机将 35% 元素置零，保留项除以 0.65。这里是普通逐元素 nn.Dropout；不是删除整根 Bar 或整个通道。块内两次调用复用同一模块对象但不复用随机掩码。'
+            : '当前显示 eval 推理模式：Dropout 是恒等映射，不随机置零，也不额外缩放。训练时的概率是 0.35，可在上方勾选“显示训练时的 Dropout”查看。',
+          training ? 'h = dropout(h)  # p=0.35, keep / 0.65' : 'h = dropout(h)  # eval(): 原样通过', base + '.dropout', 'GELU → Dropout');
+        add(prefix + ' · 乘 valid', H + ' + ' + V, H, 0,
+          '将无效 Bar 的全部 160 个隐藏值清零。卷积邻居、bias、LayerNorm 的偏移都可能使无效位置出现数值，所以每次卷积子层末尾都要重新施加掩码。',
+          'h = h * valid', base + '.forward', j===0 ? '第一组结束 → 第二组左补零' : '第二组结束 → 残差相加');
+      }
+      add(name + ' · 旁路相加，再掩码', H + ' + ' + H, H, 0,
+        '将本块入口保存的 residual 与主路逐元素相加，然后乘 valid。相加不增加通道数，也没有额外的 GELU 或 Dropout。完整块的参数为 2×76,960 + 2×320 = 154,560。',
+        'h = (h + residual) * valid', base + '.forward', i+1 < spec.blocks ? '本块输出 → 下一残差块' : '最后一个残差块 → 并行 last / mean 读取');
+    }
+    add('mean · 有效时间均值', H + ' + ' + V, vector, 0,
+      '对隐藏序列时间轴求和，除以有效 Bar 数。之前的掩码保证无效位置是零；不能简单除以固定 T。分母下限为 1。mean 和 last 读取同一份最后 TCN 输出，彼此并非串联。',
+      'mean = h.sum(dim=2) / valid.sum(dim=2).clamp_min(1)', root + '.forward', 'TCN 输出 → mean 池化（与 last 并行）');
+    add('last · 最后一个有效时点', H + ' + ' + V, vector, 0,
+      '先求每个样本最后一个 valid=1 的索引，再 gather 该时点的 160 维向量。若窗口末尾缺失，往前找最后有效位置。全空时索引为 −1，临时按索引 0 读取，池化投影后再强制清零。',
+      'last_index = where(valid[:, 0], positions, -1).amax(dim=1)\nlast = h.gather(2, clamped_index_expanded).squeeze(2)', root + '.forward', '同一份 TCN 输出 → last 池化');
+    add('拼接 last 与 mean', vector + ' + ' + vector, shape(320), 0,
+      '按 last 在前、mean 在后的顺序沿特征维拼接。两份 160 维合成 320 维，时间轴已经消去。这里做拼接，不做相加。',
+      'pooled_input = torch.cat([last, mean], dim=1)', root + '.forward', 'last + mean → 池化线性层');
+    add('池化投影 · Linear(320, 160)', shape(320), vector, 51360,
+      '用学习到的权重整合最近状态与窗口平均状态。权重 [160,320]，bias [160]；各频率有独立的 pool 参数。它是普通全连接层，而非注意力池化。',
+      'pooled = pool(pooled_input)', root + '.pool', '320 维池化特征 → 160 维');
+    add('GELU + 全空分支清零', vector, vector, 0,
+      '先对池化线性层输出做 GELU，再检查是否有任何有效 Bar。全空窗口即使被线性层 bias 变成非零，也会在这个位置清零；其他情况完整保留。',
+      'vector = F.gelu(pooled) * (last_index >= 0)[:, None]', root + '.forward', '本频率 160 维向量 → 公共拼接');
+    add('四路 + 预测时钟 · concat', '4 × ' + vector + ' + ' + shape(2), shape(642), 0,
+      '其余三条分支并行完成相同类型的编码，然后按 1m、5m、15m、30m 顺序拼接，最后加预测时刻 sin/cos。四份 160 维加 2 维，共 642 维。预测时钟没有走 TCN。',
+      'joined = torch.cat([v_1m, v_5m, v_15m, v_30m, clock], dim=1)', 'MultiFrequencyTCN.forward', '四路独立编码器 + clock → 公共预测头');
+    add('融合 · Linear(642, 256)', shape(642), shape(256), 164608,
+      '首次通过可训练层混合四个频率的信息以及预测时钟。每个输出神经元可连接全部 642 维输入。权重 [256,642]，bias [256]。',
+      'hidden = head[0](joined)', 'head.0', '四路拼接 → 融合隐藏层');
+    add('融合 GELU', shape(256), shape(256), 0,
+      '对 256 维融合结果做逐元素非线性变换。这个预测头没有 LayerNorm。',
+      'hidden = head[1](hidden)', 'head.1', '融合 Linear → GELU');
+    add('融合 Dropout 0.10'+(training?'（训练）':'（推理关闭）'), shape(256), shape(256), 0,
+      training ? '预测头仍使用 0.10 的丢弃概率，保留项除以 0.90，与 TCN 内部的 0.35 独立配置。随机丢弃只发生于训练。' : 'eval 模式原样通过。预测头的训练概率保留为 0.10；v6 仅更改 TCN 残差块内的概率。',
+      training ? 'hidden = head[2](hidden)  # p=0.1, keep / 0.9' : 'hidden = head[2](hidden)  # eval(): 原样通过', 'head.2', 'GELU → 融合 Dropout');
+    add('输出 · Linear(256, 1)', shape(256), shape(1), 257,
+      '将 256 维融合表示投影成一个实数分数。权重 [1,256]，bias [1]。没有 sigmoid、tanh 或 softmax，所以取值不限于固定区间。',
+      'score = head[3](hidden)', 'head.3', '融合隐藏表示 → 单值分数');
+    add('squeeze · 去掉单元素维度', shape(1), shape(), 0,
+      '只删除第 1 维，不改变预测数值。B=1 时仍保留一维 batch 轴，输出形状 [1]，不会变成标量。',
+      'score = score.squeeze(1)', 'MultiFrequencyTCN.forward', '模型输出 → 推理后处理');
+    add('固定缩放与返回 factor', shape(), 'date / instrument / factor', 0,
+      '网络外部用 score 除以 100，按样本键装入 DataFrame；factor 为 float64。固定正比例缩放不改变 Pearson IC 与 Rank IC，也不构成收益幅度校准。',
+      'factor = score / config["inference"]["factor_scale"]  # 100.0\nreturn result[["date", "instrument", "factor"]]', 'v6_predict.py · predict', '模型分数 → 评估／平台接口');
+    return rows;
+  }
+  function renderDetail() {
+    const row = layers[activeLayer];
+    $('layer-detail').innerHTML =
+      '<div class="overline">STEP '+String(activeLayer+1).padStart(2,'0')+' / '+layers.length+' · '+specs[frequency].label+'</div>'+
+      '<h3>'+escape(row.name)+'</h3>'+
+      '<div class="shape-row"><div><small>输入</small><span>'+escape(row.input)+'</span></div><span aria-hidden="true">→</span><div><small>输出</small><span>'+escape(row.output)+'</span></div></div>'+
+      '<p>'+escape(row.explanation)+'</p><pre>'+escape(row.code)+'</pre>'+
+      '<p class="small"><strong>连接去向：</strong>'+escape(row.route)+'</p>'+
+      '<p class="source-hint">源码位置：'+escape(row.source)+'</p>'+
+      '<div class="detail-footer"><span>本步参数 <strong class="mono">'+fmt(row.params)+'</strong></span><div>'+
+      '<button type="button" id="layer-prev" '+(activeLayer===0?'disabled':'')+'>← 上一层</button>'+
+      '<button type="button" id="layer-next" '+(activeLayer===layers.length-1?'disabled':'')+'>下一层 →</button></div></div>';
+    $('layer-list').querySelectorAll('button').forEach((button,i) => button.setAttribute('aria-pressed', String(i===activeLayer)));
+    $('layer-prev').addEventListener('click', () => selectLayer(activeLayer-1, true));
+    $('layer-next').addEventListener('click', () => selectLayer(activeLayer+1, true));
+  }
+  function selectLayer(index, focusNext=false) {
+    activeLayer = Math.max(0,Math.min(index,layers.length-1));
+    renderDetail();
+    const button = $('layer-list').querySelector('[data-layer="'+activeLayer+'"]');
+    const list = $('layer-list');
+    const relativeTop = button.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop;
+    if (relativeTop < list.scrollTop || relativeTop + button.offsetHeight > list.scrollTop + list.clientHeight)
+      list.scrollTop = Math.max(0, relativeTop - list.clientHeight/3);
+    if (focusNext) {
+      const target = activeLayer === layers.length-1 ? $('layer-prev') : $('layer-next');
+      target.focus({preventScroll:true});
+    }
+  }
+  function renderLayers() {
+    layers = makeLayers();
+    activeLayer = Math.min(activeLayer,layers.length-1);
+    $('layer-list').innerHTML = layers.map((row,i) => '<button type="button" data-layer="'+i+'" aria-pressed="'+(i===activeLayer)+'"><span class="index">'+String(i+1).padStart(2,'0')+'</span><span>'+escape(row.name)+'<small>'+escape(row.output)+'</small></span></button>').join('');
+    renderDetail();
+  }
+  $('layer-list').addEventListener('click', event => {
+    const button = event.target.closest('[data-layer]');
+    if (button) selectLayer(Number(button.dataset.layer));
+  });
+  $('freq-tabs').addEventListener('click', event => {
+    const button = event.target.closest('[data-freq]');
+    if (!button) return;
+    frequency = button.dataset.freq;
+    activeLayer = 2;
+    press('freq-tabs','freq',frequency);
+    $('layer-list').scrollTop=0;
+    renderLayers(); renderReceptiveField();
+  });
+  $('batch').addEventListener('change', renderLayers);
+  $('training').addEventListener('change', renderLayers);
+  function renderMask(kind) {
+    press('mask-tabs','mask',kind);
+    const states = {
+      full:['72 个 z/c 全部有效：两组标志都为 1，时间 sin/cos 保留，整根 Bar 的 valid=1。有效值即使恰好为 0，也不会被误判为缺失。',1,1,1],
+      partial:['示例：非盘口和盘口各缺一个 z/c，余下 70 个值仍保留，两个组完整标志均为 0。由于仍有有效数值，sin/cos 保留，valid=1，这根 Bar 继续进入网络。',0,0,1],
+      empty:['72 个 z/c 均无效或不在允许的历史范围内：数值填零，组标志、Bar 时钟和 log age 全为零；valid=0。槽位不删除，但每层输出和池化计数都排除它。',0,0,0]
+    };
+    const state=states[kind];
+    $('mask-text').textContent=state[0]; $('mask-nonbook').textContent=state[1]; $('mask-book').textContent=state[2]; $('mask-valid').textContent=state[3];
+  }
+  $('mask-tabs').addEventListener('click',event=>{const button=event.target.closest('[data-mask]');if(button)renderMask(button.dataset.mask)});
+  function renderReceptiveField() {
+    const spec=specs[frequency], kind=$('rf-kind').value;
+    [...$('dilation').options].forEach(option=>option.disabled=Number(option.value)>2**(spec.blocks-1));
+    if(Number($('dilation').value)>2**(spec.blocks-1))$('dilation').value=String(2**(spec.blocks-1));
+    const d=Number($('dilation').value), rf=1+4*(2**spec.blocks-1);
+    $('dilation-label').hidden=kind==='stack';
+    $('rf-branch').textContent='当前：'+spec.label+'分支 · T='+spec.length;
+    const offsets=kind==='one'?[0,d,2*d]:kind==='block'?[0,d,2*d,3*d,4*d]:Array.from({length:rf},(_,i)=>i);
+    const seen=new Set(offsets);
+    $('rf-grid').innerHTML=Array.from({length:64},(_,i)=>{
+      const offset=60-i, future=offset<0, padded=offset>=spec.length, active=seen.has(offset);
+      const classes=['rf-cell',future?'future':active?(padded?'padding':'active'):'',offset===0?'target':''].filter(Boolean).join(' ');
+      const label=offset===0?'t':offset>0?'−'+offset:'+'+(-offset);
+      const description=future?'未来，不使用':active?(padded?'潜在依赖，窗口外补零':'潜在依赖，窗口内位置'):'本次未连接';
+      return '<span class="'+classes+'" title="'+label+'：'+description+'" aria-label="'+label+'，'+description+'">'+label+'</span>';
+    }).join('');
+    const width=kind==='one'?2*d+1:kind==='block'?4*d+1:rf;
+    const inside=offsets.filter(offset=>offset<spec.length).length;
+    let text=kind==='one'?'单次 d='+d+' 的卷积连接 3 个上一层时点：t、t−'+d+'、t−'+(2*d)+'，跨度 '+width+' 根 Bar。'
+      :kind==='block'?'本块两次 d='+d+' 的卷积串联后，潜在依赖是 5 个块输入位置，间隔 '+d+'，跨度 '+width+' 根 Bar。恒等旁路也连接 t。'
+      :'完整 '+spec.blocks+' 块堆叠的理论感受野为连续 '+rf+' 根 Bar：从 t−'+(rf-1)+' 到 t；受输入窗口限制，最多读取 '+spec.length+' 个真实槽。';
+    text+=' 当前示意针对窗口最后位置，'+inside+' 个依赖位置在窗口内。图示假设这些槽均有效；实际缺失会改变有效传播路径。';
+    $('rf-readout').textContent=text;
+  }
+  $('rf-kind').addEventListener('change',renderReceptiveField);
+  $('dilation').addEventListener('change',renderReceptiveField);
+  function renderPool(kind) {
+    press('pool-tabs','pool',kind);
+    const original=[2,-1,3,5,4,1,-2,6];
+    const valid=kind==='full'?original.map(()=>true):kind==='empty'?original.map(()=>false):[true,true,false,true,true,true,false,false];
+    const values=original.map((x,i)=>valid[i]?x:0), count=valid.filter(Boolean).length, lastIndex=valid.lastIndexOf(true);
+    const mean=values.reduce((a,b)=>a+b,0)/Math.max(count,1),last=lastIndex<0?0:values[lastIndex];
+    $('pool-demo').innerHTML=values.map((value,i)=>'<div class="pool-slot '+(valid[i]?'':'missing')+' '+(i===lastIndex?'last':'')+'"><small>t'+(i===7?'':i-7)+'</small><strong>'+value+'</strong><small>'+(valid[i]?'有效':'缺失')+'</small></div>').join('');
+    $('pool-count').textContent=count; $('pool-last').textContent=last; $('pool-mean').textContent=Number(mean.toFixed(3));
+    $('pool-text').textContent=kind==='empty'?'所有隐藏值已经被掩码归零。mean 的分母取 1；last 临时从第 0 格读取零。池化线性层与 GELU 之后，还会把整条频率分支的 160 维向量强制置零。'
+      :'绿色边框是 last 读取位置。有效值总和为 '+values.reduce((a,b)=>a+b,0)+'，除以 '+count+' 得到 mean='+Number(mean.toFixed(3))+'；last='+last+'。二者随后与其他 159 个通道的结果一起拼接，进入 320→160 的线性层。';
+  }
+  $('pool-tabs').addEventListener('click',event=>{const button=event.target.closest('[data-pool]');if(button)renderPool(button.dataset.pool)});
+  function renderInventory() {
+    let moduleCount=0,paramCount=0;
+    const table = rows => {
+      moduleCount+=rows.length; paramCount+=rows.reduce((sum,row)=>sum+row[4],0);
+      return '<div class="table-wrap"><table><thead><tr><th>模块名（执行顺序）</th><th>连接／权重形状</th><th>输出</th><th>配置</th><th class="num">参数</th></tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map((cell,index)=>index===4?'<td class="num">'+fmt(cell)+'</td>':'<td>'+(index===0?'<code>':'')+escape(cell)+(index===0?'</code>':'')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+    };
+    const html=Object.entries(specs).map(([frequency,spec])=>{
+      const rows=[['project','77 → 160 / [160,77,1]','[B,160,'+spec.length+']','kernel=1, stride=1',12480]];
+      for(let i=0;i<spec.blocks;i++)for(let j=0;j<2;j++){
+        rows.push(['blocks.'+i+'.convolutions.'+j,'160 → 160 / [160,160,3]','[B,160,'+spec.length+']','k=3, d='+(2**i)+', 左补 '+(2*2**i),76960]);
+        rows.push(['blocks.'+i+'.norms.'+j,'scale [160] + bias [160]','[B,160,'+spec.length+']','先转 [B,T,160] 再 LN',320]);
+      }
+      rows.push(['pool','320 → 160 / [160,320]','[B,160]','last + mean 后',51360]);
+      return '<details class="inventory-detail" '+(frequency==='bar1m'?'open':'')+'><summary>'+spec.label+'分支 · encoders.'+frequency+' · '+fmt(spec.params)+' 参数</summary><p class="small">每个块按 conv0 → norm0 → GELU → Dropout → mask → conv1 → norm1 → GELU → Dropout → mask → 残差相加 → mask 执行。表中仅列带参数模块；模块编号从 0 起。</p>'+table(rows)+'</details>';
+    }).join('');
+    const head=table([['head.0','642 → 256 / [256,642]','[B,256]','之后 GELU、Dropout 0.10',164608],['head.3','256 → 1 / [1,256]','[B,1]','之后 squeeze(1)',257]]);
+    $('inventory-tables').innerHTML=html+'<details class="inventory-detail" open><summary>公共预测头 · '+fmt(164865)+' 参数</summary>'+head+'</details>';
+    if(moduleCount!==62||paramCount!==2429505)throw new Error('参数表与冻结模型不一致');
+    $('inventory-tables').dataset.moduleCount=moduleCount;
+    $('inventory-tables').dataset.paramCount=paramCount;
+  }
+  $('expand-inventory').addEventListener('click',()=>{
+    const all=[...document.querySelectorAll('.inventory-detail')], shouldOpen=all.some(detail=>!detail.open);
+    all.forEach(detail=>detail.open=shouldOpen);
+    $('expand-inventory').textContent=shouldOpen?'收起全部分支':'展开全部分支';
+  });
+  let printState=[];
+  window.addEventListener('beforeprint',()=>{
+    printState=[...document.querySelectorAll('details')].map(detail=>detail.open);
+    document.querySelectorAll('details').forEach(detail=>detail.open=true);
+  });
+  window.addEventListener('afterprint',()=>document.querySelectorAll('details').forEach((detail,i)=>detail.open=printState[i]));
+  $('print').addEventListener('click',()=>window.print());
+  renderLayers();renderMask('full');renderReceptiveField();renderPool('partial');renderInventory();
+})();
+</script>
+</body>
+</html>
