@@ -2,7 +2,7 @@
 
 [文档目录](README.md) · [v3 字段可用性逻辑](v3-field-validity.md) · [汇总 JSON](../experiments/raw-field-validity.json) · [字段明细 CSV](../experiments/raw-field-validity.csv)
 
-核对日期：2026-10-14（UTC+08:00）。使用现有 2020—2024 年四种频率原始表，按 [v2 的原始定义域条件](../solutions/v2/v2_preprocessing.py)统计。该口径固定为价格有限且正、数量有限且非负，独立于后续 v3 清洗方案的变化，仅检查第一层。
+核对日期：2026-10-14（UTC+08:00）。使用 2020—2024 年四种频率原始表，按 [v2 的原始定义域条件](../solutions/v2/v2_preprocessing.py)统计，仅检查原始字段，不混入归一化或切窗后的有效性。
 
 ## 统计单位与范围
 

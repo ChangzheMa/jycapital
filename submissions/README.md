@@ -1,37 +1,21 @@
 # 平台提交材料
 
-[返回文档目录](../docs/README.md) · [导出与验证说明](../docs/development.md#运行和提交追溯)
+[文档目录](../docs/README.md) · [导出与验证](../docs/development.md#比较与导出工具) · [提交状态索引](../experiments/submissions.csv)
 
-每个运行的完整提交材料保存在独立子目录中。每版尽量减少文件数量，全部附件使用 UTF-8 文本；完整数值权重、配置、统计量、训练／推理源码和依赖可以合并内嵌。材料随 Git 推送，可从远程仓库拉取后直接上传平台，不生成 ZIP。
+每个子目录对应一份冻结材料。只上传选定目录内的文件，保留文件名，选择其中唯一的推理 Notebook；不混入其他运行或本地 `dai.py`，不生成 ZIP。平台提交由用户执行。
 
-| 目录 | 模型 | 验证状态 |
+| 运行 | 上传材料 | 本地判定与验证清单 |
 | --- | --- | --- |
-| [v1-20261010-s42](v1-20261010-s42/README.md) | 6,785 参数的量价序列 MLP | 本地检查通过；用户于 2026-10-10（UTC+08:00）确认平台可运行，正式提交结果待确认 |
-| [v2-20261011-s42](v2-20261011-s42/v2-submission.ipynb) | 428,673 参数的四频 TCN，第 4 轮权重；Notebook + JSON 两个文本文件 | 本地未超过 v1，按用户要求导出；检查结果见 [提交记录](../experiments/v2-20261011-s42-submission.json)，平台运行及官方评分待确认 |
-| [v4-20261014-s42](v4-20261014-s42/v4-submission.ipynb) | 1,591,553 参数的四频 TCN，纯 IC 训练，第 6 轮权重；Notebook + JSON 两个文本文件 | 验证 IC 未超过 v1，按用户要求导出；16,000 行隔离推理及权重无损恢复通过，见 [提交记录](../experiments/v4-20261014-s42-submission.json)，平台运行及评分待确认 |
-| [v5-20261015-s42](v5-20261015-s42/v5-submission.ipynb) | 2,429,505 参数、隐藏通道 160 的四频 TCN，第 6 轮权重；Notebook + JSON 两个文本文件 | 本地改善候选；验证／测试两段共 32,000 行隔离推理及权重逐字节恢复通过，见 [提交记录](../experiments/v5-20261015-s42-submission.json)，平台运行及评分待确认 |
-| [v6-20261015-s42](v6-20261015-s42/v6-submission.ipynb) | 2,429,505 参数的四频 TCN，残差块 Dropout 0.35、融合层 0.1，第 6 轮权重；Notebook + JSON 两个文本文件 | 本地改善候选；验证／测试两段共 32,000 行隔离推理及权重逐字节恢复通过，见 [提交记录](../experiments/v6-20261015-s42-submission.json)，平台运行及评分待确认 |
+| [v1-20261010-s42](v1-20261010-s42/README.md) | 目录中的 Notebook 及配套脚本、权重和配置，见目录说明 | 历史基线；[清单](v1-20261010-s42/submission-manifest.json) |
+| [v2-20261011-s42](v2-20261011-s42/v2-submission.ipynb) | `v2-submission.ipynb`、`v2-model.json` | 未晋级，按用户要求导出；[清单](../experiments/v2-20261011-s42-submission.json) |
+| [v4-20261014-s42](v4-20261014-s42/v4-submission.ipynb) | `v4-submission.ipynb`、`v4-model.json` | 未晋级，按用户要求导出；[清单](../experiments/v4-20261014-s42-submission.json) |
+| [v5-20261015-s42](v5-20261015-s42/v5-submission.ipynb) | `v5-submission.ipynb`、`v5-model.json` | 本地改善候选；[清单](../experiments/v5-20261015-s42-submission.json) |
+| [v6-20261015-s42](v6-20261015-s42/v6-submission.ipynb) | `v6-submission.ipynb`、`v6-model.json` | 本地改善候选；[清单](../experiments/v6-20261015-s42-submission.json) |
 
-## 上传方式
+v2／v4／v5／v6 的两个文本文件需置于同一平台目录。JSON 内嵌冻结权重、归一化统计量、配置和训练／推理源码；Notebook 提供评测入口、依赖及复现说明。附件大小、数值精度及独立推理的验证范围以各清单为准。
 
-1. 拉取远程仓库，进入选定运行的子目录。
-2. 将该子目录内文件放在平台同一目录，保留原文件名。
-3. 选择该目录唯一的推理 Notebook（如 `v4-submission.ipynb`），并附目录中的脚本、模型、配置和依赖文件。
+## 平台状态与完整性
 
-v2 只需上传 `v2-submission.ipynb` 与 `v2-model.json`。使用说明和依赖已经写入 Notebook，权重与四频参数均在 JSON 中，无需 `.pt` 或其他附件。
+v1 平台可运行由用户于 2026-10-10（UTC+08:00）确认，正式提交与评分未确认。v2／v4／v5／v6 已通过本地验证，仓库尚无可信的平台运行或评分记录。本地验证、平台可运行和官方成绩分别记录；更新以提交状态索引及清单为准。
 
-v4 只需上传 `v4-submission.ipynb` 与 `v4-model.json`。JSON 内含完整精度数值权重、归一化统计量、配置及冻结训练／推理源码；Notebook 提供入口、调试单元格、依赖和显式训练复现说明。输出是因子分数，未校准为收益预测。
-
-v4 参数 JSON 使用紧凑数值数组布局，约 45.7 MB；每个附件按 50,000,000 字节上限检查。该布局只改变 JSON 排版，完整数值、源码及读取方式保持一致。
-
-v5 只需上传 `v5-submission.ipynb` 与 `v5-model.json`。JSON 为 45,161,652 字节，Notebook 为 6,432 字节；FP32 权重以九位有效数字保存，恢复后与冻结权重逐字节一致，归一化统计量保留原精度。JSON 同样包含训练／推理源码、配置及依赖；选择唯一 Notebook 作为入口，输出为未校准收益幅度的因子分数。
-
-v6 只需上传 `v6-submission.ipynb` 与 `v6-model.json`。JSON 为 45,132,066 字节，Notebook 为 6,544 字节，均低于 50,000,000 字节；权重无损恢复、源码和依赖布局沿用 v5。两个文件放在同一平台目录，选择 `v6-submission.ipynb` 作为评测入口。
-
-只选择一个运行的子目录，不将仓库其他 Notebook 一并提交。平台附件选择方式以实际界面为准。
-
-## 文件完整性
-
-来源运行和逐文件 SHA-256 由 [提交索引](../experiments/submissions.csv) 的 `manifest_path` 指向。v2／v4／v5／v6 清单及验证记录放在 `experiments/`，历史 v1 仍使用目录内的 `submission-manifest.json`。根目录 `.gitattributes` 保持 `submissions/` 文件的原始字节，避免 Git 换行转换导致哈希变化。重新打包须核验权重数值及推理一致性，新模型从对应运行另行导出。
-
-训练过程记录与缓存保留在本地 `outputs/runs/`。提交目录不包含行情、预测答案、凭据或本地 `dai.py`。
+材料随 Git 分发；`.gitattributes` 保持提交文件原始字节。重新打包时须更新清单并核验冻结权重和推理一致性，具体格式与验证要求见开发约定。行情、离线预测答案、缓存和凭据不进入提交材料。

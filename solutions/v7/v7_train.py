@@ -22,6 +22,7 @@ ROOT = HERE.parents[1]
 for directory in (ROOT / "common", ROOT / "evaluation"):
     sys.path.insert(0, str(directory))
 from artifacts import environment, log_event, now, read_json, sha256, snapshot_sources, write_json
+from early_stopping import patience_epochs, select_epoch, should_stop, validate_early_stopping
 from baseline_evaluation import evaluate
 from v7_data import ProcessedStore, KEYS, FREQUENCIES
 from v7_model import MultiFrequencyTCN
@@ -165,7 +166,8 @@ def validate_training(config, protocol):
         raise ValueError("v7 不接受旧收益回归配置")
     if protocol["selection_metric"] != "ic_mean" or config["inference"]["factor_scale"] <= 0:
         raise ValueError("v7 必须按验证 IC 选择，因子缩放必须为正")
-    if spec["checkpoint_sections"] < 1 or spec["patience"] < 1 or spec["epochs"] < 1:
+    validate_early_stopping(spec)
+    if spec["checkpoint_sections"] < 1 or spec["epochs"] < 1:
         raise ValueError("训练次数与 checkpoint 间隔必须为正")
 
 
@@ -210,7 +212,7 @@ def structural_catalog(store, run):
 
 def initial_progress():
     return {"epoch": 1, "month_cursor": 0, "section_cursor": 0, "best": -float("inf"),
-            "best_epoch": 0, "patience_best": -float("inf"), "stale": 0, "history": [],
+            "best_epoch": 0, "stale": 0, "history": [],
             "loss_sum": 0.0, "ic_sum": 0.0, "sections": 0, "rows": 0,
             "optimizer_steps": 0, "epoch_steps": 0, "fp32_retries": 0, "skipped": {},
             "epoch_seconds": 0.0}
@@ -266,19 +268,6 @@ def ic_loss_check(predictions, keys, protocol):
     if not losses:
         raise ValueError("没有有效评估 IC 截面")
     return float(np.mean(losses)), model_undefined
-
-
-def select_epoch(state, metric, epoch, spec, eligible=True):
-    if metric is None or not np.isfinite(metric):
-        raise ValueError("验证主指标无有效值")
-    improved = eligible and metric > state["best"]
-    if improved:
-        state.update(best=metric, best_epoch=epoch)
-    if eligible and metric > state["patience_best"] + spec["min_delta"]:
-        state.update(patience_best=metric, stale=0)
-    else:
-        state["stale"] += 1
-    return improved
 
 
 def verify_parent(root, saved):
@@ -346,7 +335,7 @@ def train(store, run, config, manifest, resume=False):
                            "catalog_sha256": catalog_digest}, run / "last.pt")
 
     for epoch in range(state["epoch"], spec["epochs"] + 1):
-        if state["stale"] >= spec["patience"]:
+        if should_stop(state):
             break
         months = np.random.default_rng(config["seed"] + epoch).permutation(store.months("train")).tolist()
         remaining = months[state["month_cursor"]:]
@@ -394,7 +383,7 @@ def train(store, run, config, manifest, resume=False):
         if metric is None or abs(validation_loss - (1.0 - metric)) > 1e-8:
             raise ValueError("验证损失与评估 IC 不一致")
         eligible = model_undefined == 0 and result[0]["coverage_violations"] == 0
-        improved = select_epoch(state, metric, epoch, spec, eligible)
+        improved = select_epoch(state, metric, epoch, eligible=eligible)
         if improved:
             atomic_torch_save({"state_dict": {k: v.cpu() for k, v in model.state_dict().items()},
                                "config": config, "protocol": store.protocol, "epoch": epoch}, run / "best.pt")
@@ -412,7 +401,8 @@ def train(store, run, config, manifest, resume=False):
                "ic_mean": metric, "rank_ic_mean": result[0]["rank_ic_mean"],
                "best_epoch": state["best_epoch"], "improved": bool(improved),
                "selection_eligible": bool(eligible), "model_undefined_sections": model_undefined,
-               "stale_epochs": state["stale"], "train_rows": state["rows"],
+               "stale_epochs": state["stale"], "patience_epochs": patience_epochs(state["best_epoch"]),
+               "train_rows": state["rows"],
                "train_sections": state["sections"], "optimizer_steps": state["epoch_steps"],
                "fp32_retries": state["fp32_retries"], "skipped_sections": sum(state["skipped"].values()),
                "seconds": round(state["epoch_seconds"] + time.perf_counter() - checkpoint_clock, 3)}
@@ -427,11 +417,12 @@ def train(store, run, config, manifest, resume=False):
         raise ValueError("没有通过完整验证检查的 checkpoint")
     selection = {"best_epoch": state["best_epoch"], "best_validation_metric": state["best"],
                  "best_validation_ic": state["best"], "epochs_completed": len(state["history"]),
-                 "selection_metric": "ic_mean", "patience_epochs": spec["patience"],
-                 "min_delta": spec["min_delta"], "model_sha256": sha256(run / "best.pt"),
+                 "selection_metric": "ic_mean", "patience_epochs": patience_epochs(state["best_epoch"]),
+                 "early_stopping": dict(spec["early_stopping"]), "stale_epochs": state["stale"],
+                 "model_sha256": sha256(run / "best.pt"),
                  "selected_at": now(), "optimizer_steps": state["optimizer_steps"],
                  "training_seconds_this_session": round(time.perf_counter() - started, 3),
-                 "stop_reason": "early_stopping" if state["stale"] >= spec["patience"] else "max_epochs"}
+                 "stop_reason": "early_stopping" if should_stop(state) else "max_epochs"}
     write_json(run / "selection.json", selection)
     manifest.update(stage="test_evaluation", selection=selection)
     write_json(run / "manifest.json", manifest)

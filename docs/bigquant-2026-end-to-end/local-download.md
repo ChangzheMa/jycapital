@@ -38,6 +38,4 @@ Notebook 内核须安装对应依赖。根目录 dai.py 被 Git 忽略，重新�
 
 ## 平台与授权
 
-推理入口及上传材料见 [平台目录](../../submissions/README.md)，官方接口见 [规则](rules.md)。Mock 已通过本地及平台接口验证，证据统一在来源页。
-
-本地训练数据须完成身份核验、签署限制协议并经审核取得。数据仅限本人或本队参赛使用，凭据和受限材料存放于忽略目录。申请及下载格式来源：[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)、[数据下载指南](https://bigquant.com/wiki/doc/cay6LBmvc1)，获取日期见来源页。
+上传材料见 [平台目录](../../submissions/README.md)，推理接口及数据授权要求见[比赛规则](rules.md)。

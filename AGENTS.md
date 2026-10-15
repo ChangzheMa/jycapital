@@ -1,61 +1,40 @@
 # 仓库贡献指南
 
-## 项目语境与技能选择
+## 项目语境与技能
 
-本仓库及其子目录中的对话默认属于进益资本比赛项目。用户无需在提示词中重复“进益资本”“jycapital”或技能名称。
+本仓库及子目录默认属于 BigQuant 2026 进益资本杯端到端项目，无需用户重复项目名。
 
-当请求涉及实验设计、模型或数据处理方案迭代、训练、验证/测试、版本比较、平台成绩回填、整理模型提交材料时，必须先读取并应用仓库内的 [jycapital-experiment 技能](.agents/skills/jycapital-experiment/SKILL.md)。例如“训练、评估、比较最新版本”“试一个新模型”“和最优版本比较一下”“有提升就整理提交并推送”均应触发该技能。
+实验设计、模型或数据处理迭代、训练、评估、版本比较、成绩回填和模型提交材料整理，必须读取并应用仓库内的 [jycapital-experiment](.agents/skills/jycapital-experiment/SKILL.md)。只执行当前请求涉及的阶段；加载技能不自动授权额外训练、Git 推送或平台提交。普通文档、无关代码修改及纯 Git 操作按实际任务处理。
 
-只执行当前请求涉及的阶段，不因加载技能而自动扩展为新实验、额外训练、Git 推送或平台提交。普通文档排版、与实验流程无关的代码修改或纯 Git 操作按实际任务处理，不机械套用完整实验流程。用户明确切换到其他项目时遵从其指定。
+查询平台成绩时读取 [jycapital-scores](.agents/skills/jycapital-scores/SKILL.md)，沿用已接入接口和认证配置；只查看则报告结果，回填须确认 submission、run 和权重对应关系。技能以仓库文件为准，优先于全局副本；用户切换项目时遵从指定。
 
-技能以仓库内文件为准；即使技能选择列表尚未刷新，也应通过上面的相对路径读取，不要求用户改写提示词或重复安装全局技能。
+## 目录与入口
 
-用户说“查平台分数”“查看提交成绩”“刷新成绩”或请求查询后回填时，读取 [jycapital-scores 技能](.agents/skills/jycapital-scores/SKILL.md)，使用已接入的 BigQuant 登录和提交列表接口。只查看时报告结果；回填前确认平台提交与本地 run/权重的对应关系。认证信息不进入技能文件或 Git。
+先读 [文档目录](docs/README.md)。通用开发、训练、评估及导出规则集中在 [development.md](docs/development.md)，官方材料在 `docs/bigquant-2026-end-to-end/`，新增文档同步更新索引。
 
-## 项目结构与文件组织
+- `solutions/`：版本化模型、数据处理、训练与推理。
+- `evaluation/`、`common/`、`scripts/`：公共评估、运行及工具。
+- `experiments/`：冻结结论、运行／提交索引和验证清单。
+- `submissions/<run_id>/`：随 Git 分发的冻结平台材料；上传与状态见 [提交索引](submissions/README.md)。
+- `examples/`：Notebook 示例；本地环境见[使用说明](docs/bigquant-2026-end-to-end/local-download.md)。
+- `data/`、`outputs/` 及根目录 `dai.py`：被忽略的行情、运行产物和本地兼容层，不分发。
 
-本仓库整理 BigQuant 2026 年进益资本杯端到端赛道资料。先阅读 `docs/README.md`，比赛材料位于 `docs/bigquant-2026-end-to-end/`：
+## 编写与验证
 
-- `rules.md`、`data.md`：比赛要求与数据说明。
-- `open-questions.md`、`sources.md`：待确认差异与来源记录。
-- `competition-config.json`：官方比赛配置的相关字段摘录。
-- `data-schemas.json`、`data-dictionary.csv`：结构化字段字典。
+说明使用中文，官方标识符保持原样。Markdown 使用含义明确的标题、相对链接和围栏代码块；文档文件名采用小写连字符。Markdown／JSON 为 UTF-8，JSON 两空格缩进；CSV 保留 UTF-8 BOM 和列顺序。Python 使用四空格缩进及 `snake_case`。
 
-示例 Notebook 位于 `examples/`，依赖清单位于 `requirements-local.txt`。根目录 `dai.py` 为仅限本地使用且被 Git 忽略的兼容层，不随仓库分发；实际行情只存于被忽略的 `data/`。相关资料应集中存放，新增文件时同步更新文档索引。
+数学公式行内用 `\(...\)`，块级用 `\[...\]`；分段条件用正文说明，避免 `cases` 环境。
 
-模型方案位于 `solutions/`，通用评估位于 `evaluation/`。平台提交材料保存在根目录 `submissions/<run_id>/`，训练/推理脚本、Notebook、配置与冻结模型权重一并由 Git 管理，直接从远程仓库获取后提交，不生成 ZIP。`outputs/` 保存被忽略的训练记录、缓存和中间产物；行情、凭据和本地 `dai.py` 不进入提交目录。`submissions/` 使用 `.gitattributes` 保持文件原始字节，以便跨平台校验 SHA-256。
+文档只保留有效结论、必要使用说明、来源和未决事项，不保留排错过程、堆栈、执行时间线、临时检查次数或中间记录。重复规则链接到统一说明；历史结果注明版本，不能冒充当前行为。
 
-当前 `mock-submission.ipynb` 已在本地和平台正常运行，测试 submission 已通过；有效返回列为 `date`、`instrument`、`factor`。
+修改文档后检查相对链接、代码围栏及 JSON 解析。字段字典的每个 `(table, field)` 唯一且 CSV／JSON 一致，基线为 **104 条**；只有官方来源变化才更新字段及计数。修改 Notebook 后检查输出 `date、instrument、factor` 的类型、有限性及键唯一性；本地运行、平台运行和正式模型验证分别标注。
 
-每版平台提交尽量减少文件数量，全部附件使用 UTF-8 文本。优先合并为一个 Notebook 与一个参数 JSON，权重按完整精度数值保存，不提交 `.pt` 等二进制文件；使用说明、依赖及训练复现入口可内嵌。清单与验证报告可放在 `experiments/`，由提交索引的 `manifest_path` 指向。
+## 来源与安全
 
-## 构建、检查与开发命令
+记录官方来源、获取日期及时区，区分正文、接口配置和整理者判断；冲突保留在 [open-questions.md](docs/bigquant-2026-end-to-end/open-questions.md)。用户确认的结果注明依据，不扩展为未经验证的能力。
 
-目前没有应用服务或构建系统。在仓库根目录使用 PowerShell 和项目 Python 环境检查文件及本地兼容层：
+禁止提交密码、Cookie、令牌、账号资料、受限行情、本地兼容层和离线预测答案。提交材料的文本格式、精度与大小遵循开发约定，`.gitattributes` 保持附件原始字节以便校验。
 
-```powershell
-rg --files docs
-python -m json.tool docs/bigquant-2026-end-to-end/competition-config.json > $null
-python -m json.tool docs/bigquant-2026-end-to-end/data-schemas.json > $null
-.venv/Scripts/python.exe -m pip install -r requirements-local.txt
-```
+## Git 与拉取请求
 
-以上命令列出文档、检查 JSON 语法并安装本地依赖。应检查命令退出码，确认验证成功。本地运行使用 `examples/mock-submission.ipynb`；`dai.py` 不随 Notebook 上传云端。
-
-## 编写风格与命名约定
-
-说明文档使用中文，官方标识符保持原样。使用含义明确的 Markdown 标题、相对文件链接和围栏代码块；文件名采用小写字母，单词间用连字符分隔。Markdown 和 JSON 使用 UTF-8，JSON 使用两空格缩进；CSV 保留 UTF-8 BOM 和既有列顺序。Python 示例使用四空格缩进和 `snake_case` 命名。目前未配置格式化或静态检查工具。
-
-## 验证要求
-
-修改文档后，检查相对链接、代码围栏、JSON 解析及 CSV 与 JSON 字段字典的一致性。每个 `(table, field)` 组合必须唯一，并与 JSON 字典对应。现有基线为 104 条字段记录；确认官方来源变化后，再同步更新字段和计数。修改 Notebook 后检查输出列、类型、有限值及 `(date, instrument)` 唯一性；本地结果、平台运行与正式模型验证的结论应分别标注。
-
-## 来源记录与安全
-
-记录官方来源链接、获取日期和时区偏移，明确区分正文规则、接口配置与整理者判断。存在冲突时，保留在 `open-questions.md`，待官方证据明确后更新。禁止提交密码、Cookie、令牌、账号个人资料或受限行情数据。
-
-文档只保留有效结论、必要使用说明、来源和未决事项，不保存排错经过、堆栈、执行时间线、临时检查次数或中间版本记录。用户确认的运行和提交结果应注明依据，不扩展为模型效果或其他未验证能力。
-
-## 提交与拉取请求约定
-
-主分支使用 `master`，远程 `origin` 为 `git@github.com:ChangzheMa/jycapital.git`。提交说明应简短、明确，建议采用 `docs: 明确 VWAP 标签定义` 这样的格式。拉取请求应说明修改目的、更新来源、已执行的验证和待确认事项，并关联相关问题。仅在需要说明界面行为时附截图。
+主分支为 `master`，`origin` 为 `git@github.com:ChangzheMa/jycapital.git`。提交只保留有长期意义的修改，说明简短明确，如 `docs: 明确 VWAP 标签定义`。PR 说明目的、来源、验证和未决事项；仅解释界面行为时附截图。

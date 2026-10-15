@@ -4,7 +4,7 @@
 
 本地已有四张五档分钟表和三张辅助表；运行方式和文件路径见 [local-download.md](local-download.md)。[data-dictionary.csv](data-dictionary.csv) 与 [data-schemas.json](data-schemas.json) 保存 104 条页面／元数据字段定义，实际文件类型以 [data-validation-summary.json](data-validation-summary.json) 为准。
 
-七张表共 243 个文件、723,258,293 行，与 2026-09-30 平台基准的全量逻辑内容一致。该结论包含原始缺失值和异常值，不能据此将所有数值视为有效。日期覆盖、字段类型及异常统计见 [数据一致性结论](data-validation.md)。
+本地覆盖、实际字段类型及原始异常见 [数据一致性结论](data-validation.md)；内容一致不代表每个数值都可直接作为有效输入。
 
 ## 1. 范围与访问方式
 
@@ -43,7 +43,7 @@
 
 辅助表元数据中的 `__PARTITION__` 不在实际导出文件中，因此元数据字段数分别为 4／49／9，实际文件为 3／48／8。字段定义与查询口径分开保留。
 
-来源：[比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)及[实际数据摘要](data-validation-summary.json)。访问权限依赖所用环境，当前 Mock 的本地与平台运行已确认可用。
+来源：[比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)及[实际数据摘要](data-validation-summary.json)。
 
 ### 2.2 评测数据源映射
 
@@ -60,9 +60,7 @@
 | [`cpt_jyc_2026_e2e_bar15m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar15m) | 端到端本地下载，15 分钟 |
 | [`cpt_jyc_2026_e2e_bar30m`](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_e2e_bar30m) | 端到端本地下载，30 分钟 |
 
-本地训练数据下载须完成身份核验并签署限制协议，审核通过后领取链接。数据只限本人或本队参赛使用，不得外传或用于其他用途。
-
-申请流程和小助手二维码见 [新手入门“六、端到端模型数据下载”](https://bigquant.com/wiki/doc/oSGtQiGtq0)；表清单见 [比赛数据页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=data)。下载版数据与公榜训练集的关系仍待官方材料确认。
+申请与使用限制见[本地训练数据申请](rules.md#51-本地训练数据申请)。下载版数据与公榜训练集的关系仍待官方材料确认。
 
 [官方端到端数据下载指南](https://bigquant.com/wiki/doc/cay6LBmvc1)明确了压缩版与云端表的对应关系：
 
@@ -121,7 +119,7 @@
 | `name` | `string` | 证券简称 |
 | `__PARTITION__` | `int64` | 系统 schema 中存在，未提供业务说明 |
 
-当前提交按表中的完整 `date`、`instrument` 记录对齐股票池，该做法已随 Mock 通过测试提交。历史成分调整、停牌／ST／上市／退市的业务处理细则仍需明确；不得用未来成分列表回填历史。
+输出按完整 `date`、`instrument` 对齐股票池。历史成分调整、停牌／ST／上市／退市的业务处理仍需明确；不得用未来成分列表回填历史。
 
 来源：[股票列表官方详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_instruments)，元数据读取日期与接口见 [sources.md](sources.md)。
 
@@ -200,7 +198,7 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 | 股票列表 `date` | 含完整分钟的采样时刻 |
 | 风险暴露 `date` | 日频日期；实际可获得时间待确认 |
 
-本地股票池的日内时刻为 `09:30`、`10:00`、`10:30`、`11:00`、`11:30`、`13:30`、`14:00`、`14:30`。当前 Mock 直接采用云端股票池的实际记录并已通过测试提交，不把这份列表硬编码为所有评测区间的日历。
+本地股票池的日内时刻为 `09:30`、`10:00`、`10:30`、`11:00`、`11:30`、`13:30`、`14:00`、`14:30`；实际推理读取股票池记录，不将此列表硬编码为所有评测区间的日历。
 
 时间对齐要求：
 

@@ -2,9 +2,7 @@
 
 规则依据及获取日期见 [来源](sources.md)。[返回目录](../README.md) · [数据说明](data.md) · [冲突与待确认](open-questions.md)
 
-**当前 Mock 在本地和平台正常运行，测试 submission 已通过。有效输出为 `date`、`instrument`、`factor` 三列 Pandas DataFrame。** 页面使用 `score` 的文案差异见待确认事项；不影响当前已通过的接口约定。
-
-本文依据官方页面的“介绍”“数据”“规则”和数据页链接的《新手入门》。接口配置另行标注，不能自动替代正文。来源：[比赛主页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)、[规则标签页](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca?activeKey=rule)、[新手入门](https://bigquant.com/wiki/doc/oSGtQiGtq0)、[来源记录](sources.md)。
+本文整理官方正文及《新手入门》，接口配置另行标注，不自动替代正文。输出接口采用 Mock 已验证的 `factor`，页面使用 `score` 的差异及确认依据见[来源记录](sources.md)。
 
 ## 1. 比赛身份与任务
 

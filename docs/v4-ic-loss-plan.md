@@ -57,7 +57,7 @@ L_t=1-IC_t,\qquad L=\frac{1}{T}\sum_t L_t=1-\operatorname{MeanIC}
 
 v4 的 [local-v2-ic](../evaluation/protocols/local-v2-ic.json) 与 [local-v1](../evaluation/protocols/local-v1.json) 仅在协议标识和选择指标上不同。显式兼容检查只允许这两项差异；日期、标签、股票池、聚合、指标算法和数据指纹仍需一致。旧模型保持原先冻结的权重选择依据。
 
-每轮完整验证以 FP32 生成固定预测，独立核验 `validation_ic_loss + validation_ic_mean = 1`，容差为 `1e-8`。严格最高验证 IC 保存为最佳权重；超过 `min_delta=1e-5` 的改善重置早停计数，连续 12 轮无足够改善则停止。冻结权重后评估测试，测试分不参与选择。
+每轮完整验证以 FP32 生成固定预测，独立核验 `validation_ic_loss + validation_ic_mean = 1`，容差为 `1e-8`。严格最高验证 IC 保存为最佳权重；冻结后评估测试。历史 v4 早停按其[配置](../solutions/v4/model-config.json)复现，v7 及以后采用[统一早停策略](development.md#后续训练的统一早停策略)。
 
 在线训练 IC 取各截面更新前的预测，不等于轮末模型重评；训练与验证属于不同集合，仍可出现不同趋势。纯 IC 对正比例缩放和平移不敏感，不校准收益幅度，固定 `factor = raw_score / 100` 只能解释为因子打分。
 

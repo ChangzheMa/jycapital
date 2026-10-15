@@ -2,7 +2,7 @@
 
 [文档目录](README.md) · [配置](../solutions/v1/config.json) · [评估约定](development.md)
 
-冻结运行 `v1-20261010-s42`，seed=42，第 8 轮验证 Rank IC 最佳，第 11 轮按 3 轮耐心早停。模型源代码位于 [solutions/v1](../solutions/v1/)。
+冻结运行 `v1-20261010-s42`，seed=42，选中第 8 轮权重。模型源代码位于 [solutions/v1](../solutions/v1/)。
 
 ## 方法
 
@@ -31,13 +31,11 @@ OHLC 除以窗口最后有效 close 再减一，volume／amount 分别除以窗�
 
 训练／验证／测试分别有 7,760,000／936,000／1,000,000 个预测键，全部有有限输出。训练首截面无更早历史、预测恒定，IC 无定义；验证／测试没有未定义截面。测试 MSE 为 `2.2055884e-5`，零预测参照为 `2.2081764e-5`。
 
-冻结权重的 PyTorch／NumPy 一致性检查最大差异约 `6.985e-10`；原始行情完整测试半年 100 万行预测与冻结评估一致，本地 CPU 耗时 13.11 秒。来源及完整指标见 [结果摘要](../experiments/v1-baseline.json)，详细产物位于 `outputs/runs/v1-20261010-s42/`。
-
-权重 SHA-256：`06c374f22569cf902fc8a38d05db3859229c145eaea98dcbba01ef4be573220b`。用户于 2026-10-10（UTC+08:00）确认平台可运行；正式提交状态及官方评分未确认。单种子结果和本地指标不代表已验证交易收益。
+PyTorch／NumPy 推理及原始行情完整测试半年预测的一致性已核验。完整指标、验证范围和权重指纹见 [结果摘要](../experiments/v1-baseline.json)；平台状态见 [提交索引](../submissions/README.md)。
 
 ## 使用与提交
 
-使用已有训练环境；依赖及实际版本见方案清单和运行环境记录。训练须获得用户授权，运行目录须为新的独立目录。
+训练环境、独立运行及结果边界按[开发约定](development.md)。v1 使用不同的训练入口：
 
 ```powershell
 .venv-training/Scripts/python.exe -u solutions/v1/v1_train.py --run-dir outputs/runs/v1-new-run
@@ -45,4 +43,4 @@ OHLC 除以窗口最后有效 close 再减一，volume／amount 分别除以窗�
 
 `--prepare-only` 可先准备缓存，随后以相同目录开始训练；校验源码、配置和数据指纹，开始训练后不能复用目录重新训练。
 
-平台材料见 [提交目录](../submissions/v1-20261010-s42/README.md)。只加载权重推理，不需要 PyTorch、不联网；按目录说明上传唯一 Notebook 及其依赖，不上传行情或本地 dai.py。正式比赛要求见 [规则](bigquant-2026-end-to-end/rules.md)。
+平台材料及 NumPy 推理依赖见 [提交目录](../submissions/v1-20261010-s42/README.md)。
