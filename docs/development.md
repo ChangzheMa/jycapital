@@ -75,10 +75,11 @@ v3 及以后使用 `--training-confirmed`；v2 不接受该参数。中断运行
 | v4 导出／验证 | [export-v4.py](../scripts/export-v4.py)、[verify-v4-submission.py](../scripts/verify-v4-submission.py) |
 | v5 导出／验证 | [export-v5.py](../scripts/export-v5.py)、[verify-v5-submission.py](../scripts/verify-v5-submission.py) |
 | v6 导出／验证 | [export-v6.py](../scripts/export-v6.py)、[verify-v6-submission.py](../scripts/verify-v6-submission.py) |
+| v7 导出／验证 | [export-v7.py](../scripts/export-v7.py)、[verify-v7-submission.py](../scripts/verify-v7-submission.py) |
 
 晋级、历史参照及平台分回填统一按[比较规则](../.agents/skills/jycapital-experiment/references/comparison.md)。用户要求导出未晋级版本时，使用 `--platform-test-reason` 保留原判定和导出理由。
 
-导出取冻结源码、配置、统计量和所选权重，默认拒绝覆盖已有目录。全部附件为 UTF-8 文本，模型参数可分片，每个参数文件不超过 **50,000,000 字节**。v4 使用[紧凑数值数组布局](../common/text_json.py)；v5／v6 的 FP32 权重用九位有效数字保存，并校验 dtype、形状和字节精确恢复，其他数值保持原精度。
+导出取冻结源码、配置、统计量和所选权重，默认拒绝覆盖已有目录。全部附件为 UTF-8 文本，模型参数可分片，每个参数文件不超过 **50,000,000 字节**。v4 使用[紧凑数值数组布局](../common/text_json.py)；v5—v7 的 FP32 权重用九位有效数字保存，并校验 dtype、形状和字节精确恢复，其他数值保持原精度。
 
 验证须覆盖附件独立加载、全部权重分片、训练源码恢复及代表性完整区间推理，核对有限输出、唯一键、时间边界和股票池覆盖。Notebook 导入不查询行情，推理不读取标签、不生成额外权重附件；运行时不添加哈希／附件匹配检查，哈希仅用于本地追溯。
 

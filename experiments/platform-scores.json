@@ -1,0 +1,300 @@
+{
+  "source": "bigquant_submissions_api",
+  "endpoint": "https://bigquant.com/bigapis/alphathon/v1/submissions",
+  "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+  "queried_at": "2026-10-16T12:07:59+08:00",
+  "scope": "当前账号可见的完整提交列表，不代表全平台排行榜；平台未返回评估区间、榜单版本或名次。",
+  "ranking": {
+    "stage": "public",
+    "metric": "public_score",
+    "direction": "higher_is_better",
+    "source": "docs/bigquant-2026-end-to-end/rules.md#6-评分"
+  },
+  "submissions": [
+    {
+      "id": "10f68d9e-d4ff-412e-b0a6-7f0f05acb08e",
+      "created_at": "2026-10-15T18:33:33.959220+08:00",
+      "updated_at": "2026-10-16T12:03:14.955378+08:00",
+      "files": [
+        {
+          "name": "v6-model.json",
+          "size": 45132066
+        },
+        {
+          "name": "v6-submission.ipynb",
+          "size": 6511
+        }
+      ],
+      "public_score": {
+        "raw": "0.37414",
+        "value": 0.37414,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.149796326247802,
+        "ic_mean": 0.06120078548087402,
+        "turnover": 0.5700881834215168,
+        "sharpe_ratio": 34.84898503004809,
+        "stress_stability": 0.9722944088018692
+      },
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v6",
+        "run_id": null,
+        "model_sha256": null
+      }
+    },
+    {
+      "id": "4ef73a7f-ebd7-4741-96ab-150f68366a2d",
+      "created_at": "2026-10-15T11:40:17.692107+08:00",
+      "updated_at": "2026-10-16T12:03:14.676184+08:00",
+      "files": [
+        {
+          "name": "v5-model.json",
+          "size": 45161652
+        },
+        {
+          "name": "v5-submission.ipynb",
+          "size": 6400
+        }
+      ],
+      "public_score": {
+        "raw": "0.36426",
+        "value": 0.36426,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.165872178976218,
+        "ic_mean": 0.060543749726706855,
+        "turnover": 0.5810464432686655,
+        "sharpe_ratio": 33.726411629039625,
+        "stress_stability": 0.9861270388677992
+      },
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v5",
+        "run_id": null,
+        "model_sha256": null
+      }
+    },
+    {
+      "id": "93ca2fa9-cdb4-46da-9e31-41131a036dbc",
+      "created_at": "2026-10-15T02:00:30.751606+08:00",
+      "updated_at": "2026-10-16T12:03:14.338957+08:00",
+      "files": [
+        {
+          "name": "v4-model.json",
+          "size": 45745236
+        },
+        {
+          "name": "v4-submission.ipynb",
+          "size": 6421
+        }
+      ],
+      "public_score": {
+        "raw": "0.34297",
+        "value": 0.34297,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.1367561212508066,
+        "ic_mean": 0.05995444126311849,
+        "turnover": 0.5801058201058201,
+        "sharpe_ratio": 31.869809150814376,
+        "stress_stability": 0.9156311294410936
+      },
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v4",
+        "run_id": null,
+        "model_sha256": null
+      }
+    },
+    {
+      "id": "50590be6-c2c1-4d5a-bb0d-d3ec480956ec",
+      "created_at": "2026-10-12T22:14:17.732601+08:00",
+      "updated_at": "2026-10-16T12:03:13.486373+08:00",
+      "files": [
+        {
+          "name": "v2-submission.ipynb",
+          "size": 6234
+        },
+        {
+          "name": "v2-model.json",
+          "size": 37616184
+        }
+      ],
+      "public_score": {
+        "raw": "0.25171",
+        "value": 0.25171,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 0.6062349878537006,
+        "ic_mean": 0.035767368496122824,
+        "turnover": 0.5651087595532039,
+        "sharpe_ratio": 18.45889050798737,
+        "stress_stability": 0.5549764960695285
+      },
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v2",
+        "run_id": null,
+        "model_sha256": null
+      }
+    },
+    {
+      "id": "f84c5c6b-2e98-47ec-89d2-8280340ec150",
+      "created_at": "2026-10-10T10:43:41.014986+08:00",
+      "updated_at": "2026-10-16T12:03:12.847736+08:00",
+      "files": [
+        {
+          "name": "v1-submission.ipynb",
+          "size": 658
+        },
+        {
+          "name": "submission-manifest.json",
+          "size": 3518
+        },
+        {
+          "name": "requirements-training.txt",
+          "size": 65
+        },
+        {
+          "name": "selection.json",
+          "size": 307
+        },
+        {
+          "name": "v1-model.json",
+          "size": 222993
+        },
+        {
+          "name": "v1_model.py",
+          "size": 2694
+        },
+        {
+          "name": "v1_data.py",
+          "size": 7277
+        },
+        {
+          "name": "baseline_evaluation.py",
+          "size": 4190
+        },
+        {
+          "name": "config.json",
+          "size": 868
+        },
+        {
+          "name": "artifacts.py",
+          "size": 2950
+        },
+        {
+          "name": "v1_train.py",
+          "size": 16693
+        },
+        {
+          "name": "v1_predict.py",
+          "size": 1551
+        },
+        {
+          "name": "requirements.txt",
+          "size": 112
+        },
+        {
+          "name": "protocol.json",
+          "size": 1810
+        }
+      ],
+      "public_score": {
+        "raw": "0.26236",
+        "value": 0.26236,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 0.2961108540319508,
+        "ic_mean": 0.01091193677996877,
+        "turnover": 0.005879120879120879,
+        "sharpe_ratio": 5.230560039029173,
+        "stress_stability": 0.1908637599099925
+      },
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v1",
+        "run_id": null,
+        "model_sha256": null
+      }
+    },
+    {
+      "id": "d9108552-8ed9-4889-9c89-95800598952b",
+      "created_at": "2026-10-10T00:51:27.918171+08:00",
+      "updated_at": "2026-10-16T12:03:12.726328+08:00",
+      "files": [
+        {
+          "name": "mock-submission.ipynb",
+          "size": 5982
+        }
+      ],
+      "public_score": {
+        "raw": "0.03270",
+        "value": 0.0327,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": -0.057554320650896294,
+        "ic_mean": -0.0016647496553173571,
+        "turnover": 0.8995532039976484,
+        "sharpe_ratio": -0.7755368247257564,
+        "stress_stability": -0.10298046894013582
+      },
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "binding": {
+        "status": "not_a_model_run",
+        "candidate_solution_id": null,
+        "run_id": null,
+        "model_sha256": null
+      }
+    }
+  ],
+  "best_public": {
+    "platform_submission_id": "10f68d9e-d4ff-412e-b0a6-7f0f05acb08e",
+    "score": 0.37414,
+    "run_id": null,
+    "binding_status": "unconfirmed"
+  },
+  "best_private": null
+}

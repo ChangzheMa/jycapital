@@ -1,19 +1,36 @@
-# v7 待修改版本
+# v7 删除全部 LayerNorm
 
-[文档目录](../../docs/README.md) · [修改备忘录](../../docs/v7-discussion.md) · [父版本 v6](../v6/README.md) · [模型配置](model-config.json)
+[文档目录](../../docs/README.md) · [父版本 v6](../v6/README.md) · [模型配置](model-config.json) · [实验结果](../../experiments/v7-tcn.json) · [修改备忘录](../../docs/v7-discussion.md)
 
-v7 尚未训练，没有独立权重、评估成绩或提交材料。父运行是 `v6-20261015-s42`；当前模型、输入处理、损失和推理沿用 v6，共 **2,429,505** 个参数。已生效的训练变化是[统一动态早停](../../docs/development.md#后续训练的统一早停策略)，其余训练设置沿用 v6。
+运行 `v7-20261016-no-layernorm-s42`，父运行及训练前本地验证最优为 `v6-20261015-s42`。seed=42，从头训练一次，共 10 轮，按验证 IC 选中第 6 轮权重。
 
-隐藏层清零、有效时点池化和卷积左侧补零仍是当前实现；已确认的模型修改及 LayerNorm 等未决问题统一保留在备忘录，尚未实施。
+## 相对 v6 的变化
 
-## 代码入口
+删除四频分支、13 个残差块中的全部 26 个 LayerNorm；循环直接遍历 `self.convolutions`，保留全部 26 次时序卷积。参数量由 2,429,505 降至 **2,421,185**。隐藏层硬清零、有效位置均值与最后有效位置池化、全空分支归零及卷积左侧补零均沿用当前实现；备忘录中的另外两项修改仍待实施。
 
-| 用途 | 文件 |
-| --- | --- |
-| 输入布局与切窗 | [v7_schema.py](v7_schema.py)、[v7_data.py](v7_data.py) |
-| 网络与损失 | [v7_model.py](v7_model.py)、[v7_loss.py](v7_loss.py) |
-| 预处理 | [v7_prepare.py](v7_prepare.py)、[v7_apply.py](v7_apply.py)、[v7_preprocessing.py](v7_preprocessing.py) |
-| 训练与推理 | [v7_train.py](v7_train.py)、[v7_predict.py](v7_predict.py) |
-| 文本模型与复现 | [v7_text_artifact.py](v7_text_artifact.py)、[v7_notebook.py](v7_notebook.py)、[v7_reproduce.py](v7_reproduce.py) |
+输入、冻结预处理、纯 Pearson IC 损失、默认初始化方式及其他超参数沿用父版本。v7 使用[统一动态早停](../../docs/development.md#后续训练的统一早停策略)，v6 使用固定耐心 12 和 `min_delta=1e-5`；两者均选第 6 轮，但训练策略差异仍限制对 LayerNorm 的单独归因。
 
-版本标识为 `v7`，文本格式为 `jycapital-v7-text-v1`，模型附件名为 `v7-model.json`。训练复现材料须包含 [early_stopping.py](../../common/early_stopping.py)；运行和源码追溯见 [开发约定](../../docs/development.md)。
+## 冻结结果与结论
+
+| 指标 | v6 验证 | v7 验证 | v6 测试 | v7 测试 |
+| --- | ---: | ---: | ---: | ---: |
+| IC | 0.071842 | 0.073347 | 0.074766 | 0.079857 |
+| Rank IC | 0.067675 | 0.069186 | 0.069818 | 0.073054 |
+| IC IR，未年化 | 0.693312 | 0.722227 | 0.684363 | 0.752652 |
+| Rank IC IR，未年化 | 0.703079 | 0.756258 | 0.730468 | 0.775652 |
+| MSE | 0.108130 | 6.995690 | 0.129906 | 8.488038 |
+| MAE | 0.183332 | 1.539821 | 0.197695 | 1.700415 |
+
+v7 验证／测试 IC 增加 **0.001506／0.005091**，IC 改善月份为 4／6、6／6；Rank IC 改善月份为 5／6、6／6。协议、评估器、数据指纹、预测键及有效标签数可比；两套数据的全局／最低截面覆盖均为 100%，IC／Rank IC 未定义截面均为 0，达到本地改善条件。完整精度及逐月差值见实验结果。
+
+当前结构与 seed=42 下，无 LayerNorm 可以完成数值稳定的训练，相关性与排序表现改善；这支持保留 v7，不证明 LayerNorm 普遍有害，也未证实改善来自保留隐藏幅度信息。代价是分数的截面标准差中位数约扩大至 8 倍、MSE 约扩大至 65 倍。纯 IC 损失不约束偏移和绝对幅度，输出仍是未校准的因子分数。
+
+后期过拟合仍存在：v7 第 6→10 轮训练在线 IC 从 0.105758 升至 0.128373，验证 IC 从 0.073347 降至 0.063457；两种口径只用于观察各自趋势。单种子结果不构成统计显著性证据；测试期为持续研究中已观察区间，本次未参与选模。本地指标不包含平台 BARRA 与官方评分。
+
+同一 RTX 4080、1,000 行完整截面、FP32 前向中位延迟由 16.719 ms 降至 12.418 ms。训练及逐轮验证耗时由约 5.96 小时降至 2.72 小时，同时包含总轮数从 18 降至 10 的影响，不能全部解释为纯网络加速。
+
+## 使用与平台材料
+
+训练、推理入口为 [v7_train.py](v7_train.py)、[v7_predict.py](v7_predict.py)。协议、冻结预处理路径及训练命令见[开发约定](../../docs/development.md)。实际源码、配置、数据指纹、环境、最佳权重、完整预测及诊断保存在被忽略的 `outputs/runs/v7-20261016-no-layernorm-s42/`，独立实验必须使用新 run_id。
+
+平台材料为 [v7-submission.ipynb](../../submissions/v7-20261016-no-layernorm-s42/v7-submission.ipynb) 和 [v7-model.json](../../submissions/v7-20261016-no-layernorm-s42/v7-model.json)。文本权重逐张量字节一致；训练复现包含 `common/early_stopping.py`。提交包通过独立目录推理及验证／测试各两天完整区间的输出核验，范围与误差见[提交清单](../../experiments/v7-20261016-no-layernorm-s42-submission.json)。上传方式及平台成绩统一见[平台材料索引](../../submissions/README.md)。
