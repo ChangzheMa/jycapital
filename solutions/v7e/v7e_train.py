@@ -28,7 +28,7 @@ from baseline_evaluation import evaluate
 from v7e_data import ProcessedStore, KEYS, FREQUENCIES
 from v7e_model import MultiFrequencyTCN
 from v7e_data import section_indices
-from v7e_loss import standardized_huber_loss
+from v7e_loss import standardized_huber_loss, standardized_targets, sample_huber_loss
 from protocol_compatibility import validate_protocol_compatibility
 
 
@@ -157,22 +157,23 @@ def draw_history(run, history):
 
 def validate_training(config, protocol):
     spec = config["training"]
-    expected = {"batching": "full_cross_section", "sections_per_step": 1, "loss": "cross_section_zscore_huber",
-                "loss_reduction": "equal_cross_sections", "loss_precision": "float64",
+    expected = {"batching": "monthly_shuffled_samples", "loss": "cross_section_zscore_huber",
+                "loss_reduction": "mean_samples", "loss_precision": "float64",
                 "target_transform": "cross_section_zscore", "label_ddof": 0,
                 "structural_policy": "finite_nonconstant_labels",
                 "constant_prediction_policy": "allow_huber_gradient"}
     if any(spec.get(key) != value for key, value in expected.items()):
-        raise ValueError("v7e 必须采用完整截面的标准化标签 Huber 配置")
-    if any(key in spec for key in ("target_scale", "target_clip", "batch_size")):
-        raise ValueError("v7e 不裁剪标签、不固定缩放标签、不打散截面")
+        raise ValueError("v7e 必须先按完整截面标准化标签，再使用月内随机样本 Huber 配置")
+    if any(key in spec for key in ("target_scale", "target_clip", "sections_per_step", "checkpoint_sections")):
+        raise ValueError("v7e 不裁剪或固定缩放标签，不接受逐截面更新配置")
     if not math.isfinite(spec.get("huber_delta", float("nan"))) or spec["huber_delta"] <= 0:
         raise ValueError("Huber delta 必须为有限正数")
     if protocol["selection_metric"] != "ic_mean" or config["inference"]["factor_scale"] != 1:
         raise ValueError("v7e 按验证 IC 选择，输出保留标准化目标单位")
     validate_early_stopping(spec)
-    if spec["checkpoint_sections"] < 1 or spec["epochs"] < 1:
-        raise ValueError("训练次数与 checkpoint 间隔必须为正")
+    for key in ("batch_size", "checkpoint_batches", "epochs"):
+        if isinstance(spec[key], bool) or not isinstance(spec[key], int) or spec[key] < 1:
+            raise ValueError("batch 大小、训练次数与 checkpoint 间隔必须为正整数")
 
 
 def structural_catalog(store, run):
@@ -214,11 +215,33 @@ def structural_catalog(store, run):
 
 
 def initial_progress():
-    return {"epoch": 1, "month_cursor": 0, "section_cursor": 0, "best": -float("inf"),
+    return {"epoch": 1, "month_cursor": 0, "sample_cursor": 0, "best": -float("inf"),
             "best_epoch": 0, "stale": 0, "history": [],
-            "loss_sum": 0.0, "ic_sum": 0.0, "ic_sections": 0, "sections": 0, "rows": 0,
-            "optimizer_steps": 0, "epoch_steps": 0, "fp32_retries": 0, "skipped": {},
+            "loss_sum": 0.0, "sections": 0, "rows": 0,
+            "optimizer_steps": 0, "epoch_steps": 0, "skipped": {},
             "epoch_seconds": 0.0}
+
+
+def prepare_training_targets(keys, protocol):
+    """完整截面标准化先于样本打乱，目标始终与原始行位置对齐。"""
+    targets = np.full(len(keys), np.nan, dtype=np.float64)
+    skipped = {}
+    for indices in section_indices(keys):
+        labels = torch.from_numpy(keys.iloc[indices][protocol["label_column"]].to_numpy(dtype=np.float64))
+        values, reason = standardized_targets(labels, protocol["min_cross_section_size"])
+        if reason:
+            stamp = pd.Timestamp(keys.date.iloc[indices[0]]).isoformat()
+            skipped[stamp] = reason
+        else:
+            targets[indices] = values.numpy()
+    return targets, skipped
+
+
+def shuffled_sample_indices(targets, seed, epoch, month):
+    indices = np.flatnonzero(np.isfinite(targets))
+    generator = np.random.default_rng(np.random.SeedSequence([seed, epoch, int(month.replace("-", ""))]))
+    generator.shuffle(indices)
+    return indices
 
 
 def restore_rng(checkpoint, device):
@@ -227,21 +250,17 @@ def restore_rng(checkpoint, device):
         torch.cuda.set_rng_state_all(checkpoint["cuda_rng"])
 
 
-def training_step(model, optimizer, windows, clock, labels, config, minimum, amp):
+def training_step(model, optimizer, windows, clock, targets, config, amp):
     model.train()
     optimizer.zero_grad(set_to_none=True)
     with torch.autocast(clock.device.type, dtype=torch.bfloat16, enabled=amp):
         prediction = model(windows, clock)
-    result = standardized_huber_loss(prediction, labels, minimum, config["training"]["huber_delta"])
-    if result.loss is None:
-        return {"updated": False, "reason": result.reason, "rows": result.rows, "fp32_retry": False}
-    result.loss.backward()
+    loss = sample_huber_loss(prediction, targets, config["training"]["huber_delta"])
+    loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), config["training"]["gradient_clip"],
                                    error_if_nonfinite=True)
     optimizer.step()
-    return {"updated": True, "loss": float(result.loss.detach()),
-            "ic": float(result.ic) if result.ic is not None else None,
-            "rows": result.rows, "fp32_retry": False}
+    return {"loss": float(loss.detach()), "rows": len(targets)}
 
 
 def huber_loss_check(predictions, keys, protocol, config):
@@ -331,41 +350,33 @@ def train(store, run, config, manifest, resume=False):
         remaining = months[state["month_cursor"]:]
         if remaining:
             for month, block in blocks(store, "train", remaining):
-                month_start, month_sections = time.perf_counter(), 0
-                seed = np.random.SeedSequence([config["seed"], epoch, int(month.replace("-", ""))])
-                groups = section_indices(block.keys, seed)
+                month_start, month_batches = time.perf_counter(), 0
+                targets, actual_skipped = prepare_training_targets(block.keys, store.protocol)
                 skipped = catalog["months"][month]["skipped"]
-                for cursor in range(state["section_cursor"], len(groups)):
-                    indices = groups[cursor]
-                    stamp = pd.Timestamp(block.keys.date.iloc[indices[0]]).isoformat()
-                    if stamp in skipped:
-                        reason = skipped[stamp]["reason"]
-                        state["skipped"][reason] = state["skipped"].get(reason, 0) + 1
-                    else:
-                        windows, clock = tensor_batch(block, indices, device)
-                        labels = torch.from_numpy(block.keys.iloc[indices][store.protocol["label_column"]]
-                                                  .to_numpy(dtype=np.float64)).to(device)
-                        step = training_step(model, optimizer, windows, clock, labels, config,
-                                             store.protocol["min_cross_section_size"], amp)
-                        if not step["updated"]:
-                            raise ValueError("预检清单遗漏退化截面: " + stamp)
-                        state["loss_sum"] += step["loss"]
-                        if step["ic"] is not None:
-                            state["ic_sum"] += step["ic"]
-                            state["ic_sections"] += 1
-                        state["sections"] += 1
-                        state["rows"] += step["rows"]
-                        state["optimizer_steps"] += 1
-                        state["epoch_steps"] += 1
-                        state["fp32_retries"] += int(step["fp32_retry"])
-                        month_sections += 1
-                    state["section_cursor"] = cursor + 1
-                    if state["section_cursor"] % spec["checkpoint_sections"] == 0:
+                if actual_skipped != {stamp: record["reason"] for stamp, record in skipped.items()}:
+                    raise ValueError("标准化目标与预检退化截面清单不同")
+                order = shuffled_sample_indices(targets, config["seed"], epoch, month)
+                for offset in range(state["sample_cursor"], len(order), spec["batch_size"]):
+                    indices = order[offset:offset + spec["batch_size"]]
+                    windows, clock = tensor_batch(block, indices, device)
+                    target = torch.from_numpy(targets[indices]).to(device)
+                    step = training_step(model, optimizer, windows, clock, target, config, amp)
+                    state["loss_sum"] += step["loss"] * step["rows"]
+                    state["rows"] += step["rows"]
+                    state["optimizer_steps"] += 1
+                    state["epoch_steps"] += 1
+                    month_batches += 1
+                    state["sample_cursor"] = offset + len(indices)
+                    if state["epoch_steps"] % spec["checkpoint_batches"] == 0:
                         save_progress()
-                state.update(month_cursor=state["month_cursor"] + 1, section_cursor=0)
+                for record in skipped.values():
+                    reason = record["reason"]
+                    state["skipped"][reason] = state["skipped"].get(reason, 0) + 1
+                state["sections"] += catalog["months"][month]["sections"] - len(skipped)
+                state.update(month_cursor=state["month_cursor"] + 1, sample_cursor=0)
                 save_progress()
                 log_event(run, "trained_month", epoch=epoch, month=month, month_cursor=state["month_cursor"],
-                          rows=len(block.keys), sections_updated=month_sections,
+                          rows=len(order), batches_updated=month_batches,
                           optimizer_steps=state["optimizer_steps"],
                           seconds=round(time.perf_counter() - month_start, 3))
                 del block
@@ -380,14 +391,13 @@ def train(store, run, config, manifest, resume=False):
             atomic_torch_save({"state_dict": {k: v.cpu() for k, v in model.state_dict().items()},
                                "config": config, "protocol": store.protocol, "epoch": epoch}, run / "best.pt")
             save_evaluation(run, "validation", predictions, result)
-        if state["sections"] == 0:
-            raise ValueError("整轮没有可优化的截面")
-        train_loss = state["loss_sum"] / state["sections"]
-        train_ic = state["ic_sum"] / state["ic_sections"] if state["ic_sections"] else None
+        if state["rows"] == 0:
+            raise ValueError("整轮没有可优化的样本")
+        train_loss = state["loss_sum"] / state["rows"]
         row = {"epoch": epoch, "train_loss": train_loss, "validation_loss": validation_loss,
-               "train_huber_loss": train_loss, "train_online_ic": train_ic,
-               "train_ic_valid_sections": state["ic_sections"],
-               "train_ic_undefined_sections": state["sections"] - state["ic_sections"],
+               "train_huber_loss": train_loss,
+               "training_batching": spec["batching"], "batch_size": spec["batch_size"],
+               "train_loss_reduction": spec["loss_reduction"],
                "validation_huber_loss": validation_loss, "validation_ic_mean": metric,
                "validation_rank_ic_mean": result[0]["rank_ic_mean"],
                "ic_mean": metric, "rank_ic_mean": result[0]["rank_ic_mean"],
@@ -396,13 +406,13 @@ def train(store, run, config, manifest, resume=False):
                "stale_epochs": state["stale"], "patience_epochs": patience_epochs(state["best_epoch"]),
                "train_rows": state["rows"],
                "train_sections": state["sections"], "optimizer_steps": state["epoch_steps"],
-               "fp32_retries": state["fp32_retries"], "skipped_sections": sum(state["skipped"].values()),
+               "skipped_sections": sum(state["skipped"].values()),
                "seconds": round(state["epoch_seconds"] + time.perf_counter() - checkpoint_clock, 3)}
         state["history"].append(row)
         pd.DataFrame(state["history"]).to_csv(run / "history.csv", index=False, encoding="utf-8-sig")
         log_event(run, "epoch_finished", **row)
-        state.update(epoch=epoch + 1, month_cursor=0, section_cursor=0, loss_sum=0.0, ic_sum=0.0, ic_sections=0,
-                     sections=0, rows=0, epoch_steps=0, fp32_retries=0, skipped={}, epoch_seconds=0.0)
+        state.update(epoch=epoch + 1, month_cursor=0, sample_cursor=0, loss_sum=0.0,
+                     sections=0, rows=0, epoch_steps=0, skipped={}, epoch_seconds=0.0)
         checkpoint_clock = time.perf_counter()
         save_progress()
     if not (run / "best.pt").exists():
@@ -430,6 +440,8 @@ def train(store, run, config, manifest, resume=False):
     write_json(run / "loss-consistency.json", {
         "loss": "cross_section_zscore_huber", "delta": spec["huber_delta"],
         "label_ddof": 0, "prediction_normalized": False, "ic_loss_identity_applicable": False,
+        "training_batching": spec["batching"], "batch_size": spec["batch_size"],
+        "training_loss_reduction": spec["loss_reduction"], "evaluation_loss_reduction": "equal_cross_sections",
         "selection_metric": "ic_mean", "factor_scale": config["inference"]["factor_scale"],
         "best_validation_huber_loss": next(r["validation_huber_loss"] for r in state["history"]
                                            if r["epoch"] == state["best_epoch"]),

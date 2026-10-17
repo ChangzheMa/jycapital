@@ -18,31 +18,55 @@ class SectionResult:
     reason: str | None = None
 
 
-def standardized_huber_loss(scores, labels, min_count=30, delta=1.0):
+def standardized_targets(labels, min_count=30):
+    """用一个完整截面的有限标签构造目标；无效位置保留 NaN。"""
+    if labels.ndim != 1:
+        raise ValueError("标准化标签要求一维完整截面")
+    labels = labels.detach().to(torch.float64)
+    eligible = torch.isfinite(labels)
+    count = int(eligible.sum())
+    target = torch.full_like(labels, float("nan"))
+    if count < min_count:
+        return target, "insufficient_labels"
+    centered = labels[eligible] - labels[eligible].mean()
+    scale = centered.abs().amax()
+    if not torch.isfinite(scale):
+        raise FloatingPointError("非有限标签中心化尺度")
+    if scale == 0:
+        return target, "constant_labels"
+    # 等价于除以总体标准差；避免极小收益平方下溢，不加 epsilon。
+    unit = centered / scale
+    target[eligible] = unit / unit.square().mean().sqrt()
+    return target, None
+
+
+def sample_huber_loss(scores, targets, delta=1.0):
+    """目标已由完整截面构造；随机样本 batch 内只计算逐样本 Huber。"""
     if not math.isfinite(delta) or delta <= 0:
         raise ValueError("Huber delta 必须为有限正数")
+    if scores.ndim != 1 or targets.shape != scores.shape or not scores.numel():
+        raise ValueError("样本 Huber 要求等长的非空一维预测和目标")
+    if not torch.isfinite(scores).all() or not torch.isfinite(targets).all():
+        raise FloatingPointError("非有限预测或标准化目标")
+    with torch.autocast(device_type=scores.device.type, enabled=False):
+        loss = F.huber_loss(scores.to(torch.float64), targets.to(torch.float64), delta=delta)
+    if not torch.isfinite(loss):
+        raise FloatingPointError("非有限 Huber 损失")
+    return loss
+
+
+def standardized_huber_loss(scores, labels, min_count=30, delta=1.0):
     if scores.ndim != 1 or labels.ndim != 1 or scores.shape != labels.shape:
         raise ValueError("Huber 损失要求同一完整截面的等长一维分数和标签")
     if not torch.isfinite(scores).all():
         raise FloatingPointError("非有限预测")
     with torch.autocast(device_type=scores.device.type, enabled=False):
-        labels = labels.detach().to(torch.float64)
-        eligible = torch.isfinite(labels)
-        count = int(eligible.sum())
-        if count < min_count:
-            return SectionResult(None, None, count, "insufficient_labels")
-        centered = labels[eligible] - labels[eligible].mean()
-        scale = centered.abs().amax()
-        if not torch.isfinite(scale):
-            raise FloatingPointError("非有限标签中心化尺度")
-        if scale == 0:
-            return SectionResult(None, None, count, "constant_labels")
-        # 等价于除以总体标准差；先缩放，避免极小收益平方时下溢，不加 epsilon。
-        unit = centered / scale
-        target = unit / unit.square().mean().sqrt()
-        loss = F.huber_loss(scores[eligible].to(torch.float64), target, delta=delta)
-        if not torch.isfinite(loss):
-            raise FloatingPointError("非有限 Huber 损失")
+        target, reason = standardized_targets(labels, min_count)
+        eligible = torch.isfinite(target)
+        count = int(torch.isfinite(labels).sum())
+        if reason:
+            return SectionResult(None, None, count, reason)
+        loss = sample_huber_loss(scores[eligible], target[eligible], delta)
         try:
             ic = pearson_ic_loss(scores.detach(), labels, min_count).ic
         except ConstantPredictionError:

@@ -38,6 +38,9 @@ def small_config(version):
     if version == "v7d":
         config["model"]["kernel_sizes"] = {f: [3] for f in FREQUENCIES}
     config["training"].update(epochs=2, cpu_threads=1, checkpoint_sections=1)
+    if version == "v7e":
+        config["training"].pop("checkpoint_sections")
+        config["training"].update(batch_size=40, checkpoint_batches=1)
     return config
 
 
@@ -78,7 +81,8 @@ class VariantModelTests(unittest.TestCase):
                     baseline["model"].pop(key, None)
                 if version == "v7e":
                     for key in ("loss", "target_transform", "huber_delta", "label_ddof",
-                                "structural_policy", "constant_prediction_policy"):
+                                "structural_policy", "constant_prediction_policy", "batching", "batch_size",
+                                "sections_per_step", "loss_reduction", "checkpoint_sections", "checkpoint_batches"):
                         config["training"].pop(key, None)
                         baseline["training"].pop(key, None)
                     config["inference"]["factor_scale"] = baseline["inference"]["factor_scale"]
@@ -268,6 +272,45 @@ class HuberTests(unittest.TestCase):
         self.assertAlmostEqual(actual, sum(losses) / 2)
         self.assertEqual(undefined, 1)
 
+    def test_random_batches_keep_targets_from_their_original_full_sections(self):
+        trainer = TRAINERS["v7e"]
+        times = pd.to_datetime(["2020-01-02 10:00"] * 3 + ["2020-01-02 10:30"] * 4
+                               + ["2020-01-02 11:00"] * 2 + ["2020-01-02 13:30"] * 3)
+        keys = pd.DataFrame({"date": times, "instrument": [f"S{i}" for i in range(12)],
+                             "vwap_return": [-1., 0., 1., 100., 200., 300., np.nan, 7., 9., 5., 5., 5.]})
+        protocol = {**PROTOCOL, "min_cross_section_size": 3}
+        targets, skipped = trainer.prepare_training_targets(keys, protocol)
+        np.testing.assert_allclose(targets[:3], targets[3:6], rtol=0, atol=1e-15)
+        self.assertTrue(np.isnan(targets[6:]).all())
+        self.assertEqual(sorted(skipped.values()), ["constant_labels", "insufficient_labels"])
+        order = trainer.shuffled_sample_indices(targets, 42, 1, "2020-01")
+        np.testing.assert_array_equal(np.sort(order), np.arange(6))
+        np.testing.assert_array_equal(order, trainer.shuffled_sample_indices(targets, 42, 1, "2020-01"))
+        self.assertFalse(np.array_equal(order, trainer.shuffled_sample_indices(targets, 42, 2, "2020-01")))
+        selected = np.array([0, 3, 4, 2])
+        scores = torch.tensor([.3, -.7, 1.2, .5], dtype=torch.float64, requires_grad=True)
+        target = torch.from_numpy(targets[selected])
+        loss = self.loss.sample_huber_loss(scores, target)
+        torch.testing.assert_close(loss, F.huber_loss(scores, target, delta=1), rtol=0, atol=0)
+        wrong = self.loss.standardized_huber_loss(scores, torch.tensor(keys.vwap_return.to_numpy()[selected]), 3).loss
+        self.assertGreater(abs(loss.item() - wrong.item()), 1e-6)
+        torch.testing.assert_close(torch.autograd.grad(loss, scores)[0],
+                                   torch.clamp(scores.detach() - target, -1, 1) / len(scores))
+        self.assertTrue(torch.isfinite(self.loss.sample_huber_loss(scores[:1], target[:1])))
+        tiny, reason = self.loss.standardized_targets(torch.tensor([-1e-200, 0., 1e-200], dtype=torch.float64), 3)
+        self.assertIsNone(reason)
+        np.testing.assert_allclose(tiny.numpy(), targets[:3], rtol=0, atol=1e-15)
+
+    def test_v7e_rejects_old_batching_and_invalid_batch_sizes(self):
+        trainer = TRAINERS["v7e"]
+        for changes in ({"batching": "full_cross_section"}, {"sections_per_step": 1},
+                        {"checkpoint_sections": 64}, {"batch_size": 0}, {"batch_size": True},
+                        {"batch_size": 1.5}, {"checkpoint_batches": 0}):
+            config = copy.deepcopy(CONFIGS["v7e"])
+            config["training"].update(changes)
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                trainer.validate_training(config, PROTOCOL)
+
 
 class PredictionTests(unittest.TestCase):
     def test_each_namespace_predicts_from_checkpoint_and_text_weights(self):
@@ -393,10 +436,21 @@ class TrainerIntegrationTests(unittest.TestCase):
                     for split in ("validation", "test"):
                         self.assertEqual(manifest["metrics"][split]["coverage"], 1)
                 first, second = [pd.read_csv(run / "history.csv") for run in runs]
-                columns = ["train_loss", "validation_loss", "train_online_ic", "ic_mean", "rank_ic_mean",
+                columns = ["train_loss", "validation_loss", "ic_mean", "rank_ic_mean",
                            "best_epoch", "patience_epochs", "stale_epochs"]
+                if version != "v7e":
+                    columns.append("train_online_ic")
                 pd.testing.assert_frame_equal(first[columns], second[columns], check_exact=True)
                 if version == "v7e":
+                    self.assertNotIn("train_online_ic", first.columns)
+                    self.assertTrue((first.train_rows == 105).all())
+                    self.assertTrue((first.batch_size == 40).all())
+                    self.assertEqual(left["progress"]["sample_cursor"], 0)
+                    torch.testing.assert_close(left["torch_rng"], right["torch_rng"], rtol=0, atol=0)
+                    self.assertEqual(left["optimizer"]["param_groups"], right["optimizer"]["param_groups"])
+                    for parameter, values in left["optimizer"]["state"].items():
+                        for key, value in values.items():
+                            torch.testing.assert_close(value, right["optimizer"]["state"][parameter][key], rtol=0, atol=0)
                     self.assertNotIn("validation_ic_loss", first.columns)
                     self.assertIn("validation_huber_loss", first.columns)
                     report = trainer.read_json(runs[0] / "loss-consistency.json")
