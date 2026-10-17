@@ -1,0 +1,520 @@
+"""v7d 单次正式训练、验证选择、冻结后测试。行情缓存不进入提交包。"""
+
+from __future__ import annotations
+
+import argparse
+from concurrent.futures import ThreadPoolExecutor
+import os
+from pathlib import Path
+import random
+import shutil
+import sys
+import time
+
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+# Windows CUDA DLL 必须先于 NumPy/OpenMP 加载。
+import torch
+import numpy as np
+import pandas as pd
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+for directory in (ROOT / "common", ROOT / "evaluation"):
+    sys.path.insert(0, str(directory))
+from artifacts import environment, log_event, now, read_json, sha256, snapshot_sources, write_json
+from early_stopping import patience_epochs, select_epoch, should_stop, validate_early_stopping
+from baseline_evaluation import evaluate
+from v7d_data import ProcessedStore, KEYS, FREQUENCIES
+from v7d_model import MultiFrequencyTCN
+from v7d_data import section_indices, structural_reason
+from v7d_loss import pearson_ic_loss, ConstantPredictionError
+from protocol_compatibility import validate_protocol_compatibility
+
+
+def atomic_torch_save(value, path):
+    temporary = Path(str(path) + ".tmp")
+    torch.save(value, temporary)
+    os.replace(temporary, path)
+
+
+def configure(config):
+    random.seed(config["seed"])
+    np.random.seed(config["seed"])
+    torch.manual_seed(config["seed"])
+    torch.set_num_threads(config["training"]["cpu_threads"])
+    torch.use_deterministic_algorithms(config["training"]["deterministic"])
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+def tensor_batch(block, index, device):
+    windows, clock = block.batch(index)
+    return {f: torch.from_numpy(x).to(device) for f, x in windows.items()}, torch.from_numpy(clock).to(device)
+
+
+def blocks(store, split, months):
+    """单线程预取下一月份，避免 Windows 多进程复制大网格。"""
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        pending = pool.submit(store.load, split, months[0])
+        for i, month in enumerate(months):
+            block = pending.result()
+            if i + 1 < len(months):
+                pending = pool.submit(store.load, split, months[i + 1])
+            yield month, block
+            del block
+
+
+def predict_split(store, split, model, device, config, run=None):
+    model.eval()
+    frames, labels = [], []
+    batch = config["inference"]["batch_size"]
+    with torch.inference_mode():
+        for month, block in blocks(store, split, store.months(split)):
+            values = np.empty(len(block.keys), dtype=np.float64)
+            for offset in range(0, len(values), batch):
+                index = np.arange(offset, min(offset + batch, len(values)))
+                windows, clock = tensor_batch(block, index, device)
+                values[index] = (model(windows, clock) / config["inference"]["factor_scale"]).cpu().numpy()
+            frame = block.keys[KEYS].copy()
+            frame["factor"] = values
+            frames.append(frame)
+            labels.append(block.keys)
+            if run:
+                log_event(run, "predicted_month", split=split, month=month, rows=len(values))
+            del block
+    predictions, keys = pd.concat(frames, ignore_index=True), pd.concat(labels, ignore_index=True)
+    return predictions, keys, evaluate(predictions, keys, store.protocol)
+
+
+def save_evaluation(run, split, predictions, result):
+    stats, sections, monthly = result
+    directory = run / "evaluation" / split
+    directory.mkdir(parents=True, exist_ok=True)
+    write_json(directory / "metrics.json", stats)
+    predictions.to_parquet(directory / "predictions.parquet", index=False)
+    sections.to_parquet(directory / "cross-sections.parquet", index=False)
+    monthly.to_csv(directory / "monthly.csv", index=False, encoding="utf-8-sig")
+
+
+def data_manifest(store, run):
+    files = []
+    for table in (store.protocol["universe_table"], store.protocol["label_table"]):
+        path = store.data_root / (table + ".parquet")
+        files.append({"path": path.name, "bytes": path.stat().st_size, "sha256": sha256(path)})
+    references = {}
+    for name, source in (("train", store.training_run), ("holdout", store.holdout_run)):
+        manifest = read_json(source / "manifest.json")
+        if manifest["status"] != "complete":
+            raise ValueError(f"未完成的预处理来源: {source}")
+        changes = validate_protocol_compatibility(
+            read_json(source / "protocol.json"), read_json(run / "protocol.json"),
+            allow_selection_metric_change=True)
+        references[name] = {"path": str(source.resolve()), "manifest_sha256": sha256(source / "manifest.json"),
+                            "protocol_sha256": sha256(source / "protocol.json"), "protocol_differences": changes}
+        summary = read_json(source / "summary.json")
+        for frequency in FREQUENCIES:
+            normalization = source / "normalization" / f"{frequency}.json"
+            if name == "train" and sha256(normalization) != summary["frequencies"][frequency]["statistics_sha256"]:
+                raise ValueError("训练归一化参数与已完成预处理记录不同")
+            target = run / "normalization" / normalization.name
+            target.parent.mkdir(exist_ok=True)
+            if name == "train":
+                shutil.copyfile(normalization, target)
+            if sha256(normalization) != sha256(target):
+                raise ValueError("训练与留出集的归一化参数不同")
+        for path in sorted((source / "data").rglob("*.parquet")):
+            relative = path.relative_to(source / "data")
+            record = read_json(source / "records" / relative.with_suffix(".json"))
+            digest = sha256(path)
+            if path.stat().st_size != record["bytes"] or digest != record["sha256"]:
+                raise ValueError(f"预处理分区已改变: {path}")
+            files.append({"path": name + "/" + relative.as_posix(), "bytes": record["bytes"], "sha256": digest})
+        log_event(run, "verified_preprocessing", source=name)
+    result = {"mode": "local", "root": str(store.data_root.resolve()), "files": files, "preprocessing": references}
+    write_json(run / "data-manifest.json", result)
+
+
+def draw_history(run, history):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    frame = pd.DataFrame(history)
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+    for key in ("train_loss", "validation_loss"):
+        axes[0].plot(frame.epoch, frame[key], label=key)
+    for key in ("ic_mean", "rank_ic_mean"):
+        axes[1].plot(frame.epoch, frame[key], label="validation_" + key)
+    for axis in axes:
+        axis.set_xlabel("Epoch")
+        axis.legend()
+    fig.tight_layout()
+    fig.savefig(run / "learning-curves.png", dpi=160)
+    plt.close(fig)
+
+
+def validate_training(config, protocol):
+    spec = config["training"]
+    expected = {"batching": "full_cross_section", "sections_per_step": 1, "loss": "pearson_ic",
+                "loss_reduction": "equal_cross_sections", "loss_precision": "float64",
+                "target_transform": "identity", "structural_policy": "identical_finite_label_inputs",
+                "constant_prediction_policy": "retry_fp32_then_fail"}
+    if any(spec.get(key) != value for key, value in expected.items()):
+        raise ValueError("v7d 训练必须使用完整截面的纯 Pearson IC 配置")
+    if any(key in spec for key in ("target_scale", "target_clip", "huber_delta", "batch_size")):
+        raise ValueError("v7d 不接受旧收益回归配置")
+    if protocol["selection_metric"] != "ic_mean" or config["inference"]["factor_scale"] <= 0:
+        raise ValueError("v7d 必须按验证 IC 选择，因子缩放必须为正")
+    validate_early_stopping(spec)
+    if spec["checkpoint_sections"] < 1 or spec["epochs"] < 1:
+        raise ValueError("训练次数与 checkpoint 间隔必须为正")
+
+
+def structural_catalog(store, run):
+    path = run / "structural-sections.json"
+    if path.exists():
+        saved = read_json(path)
+        if saved["data_manifest_sha256"] != sha256(run / "data-manifest.json"):
+            raise ValueError("结构性退化清单的数据指纹不同")
+        return saved
+    result = {"policy": "identical_finite_label_inputs",
+              "data_manifest_sha256": sha256(run / "data-manifest.json"), "months": {}}
+    minimum = store.protocol["min_cross_section_size"]
+    for month, block in blocks(store, "train", store.months("train")):
+        groups = section_indices(block.keys)
+        skipped, counts = {}, {}
+        finite_rows = int(np.isfinite(block.keys[store.protocol["label_column"]]).sum())
+        for indices in groups:
+            keys = block.keys.iloc[indices]
+            labels = keys[store.protocol["label_column"]].to_numpy(dtype=np.float64)
+            eligible = np.isfinite(labels)
+            if int(eligible.sum()) < minimum:
+                reason = "insufficient_labels"
+            elif np.ptp(labels[eligible]) == 0:
+                reason = "constant_labels"
+            else:
+                windows, clock = block.batch(indices)
+                reason, _ = structural_reason(keys, windows, clock, store.protocol["label_column"], minimum)
+            if reason:
+                stamp = pd.Timestamp(keys.date.iloc[0]).isoformat()
+                skipped[stamp] = {"reason": reason, "rows": len(indices),
+                                  "finite_labels": int(eligible.sum())}
+                counts[reason] = counts.get(reason, 0) + 1
+        result["months"][month] = {"sections": len(groups), "rows": len(block.keys),
+                                    "finite_label_rows": finite_rows, "skipped": skipped}
+        log_event(run, "prepared_sections", month=month, sections=len(groups),
+                  finite_labels=finite_rows, skipped=counts)
+        del block
+    write_json(path, result)
+    return result
+
+
+def initial_progress():
+    return {"epoch": 1, "month_cursor": 0, "section_cursor": 0, "best": -float("inf"),
+            "best_epoch": 0, "stale": 0, "history": [],
+            "loss_sum": 0.0, "ic_sum": 0.0, "sections": 0, "rows": 0,
+            "optimizer_steps": 0, "epoch_steps": 0, "fp32_retries": 0, "skipped": {},
+            "epoch_seconds": 0.0}
+
+
+def restore_rng(checkpoint, device):
+    torch.set_rng_state(checkpoint["torch_rng"])
+    if device.type == "cuda":
+        torch.cuda.set_rng_state_all(checkpoint["cuda_rng"])
+
+
+def training_step(model, optimizer, windows, clock, labels, config, minimum, amp):
+    model.train()
+    optimizer.zero_grad(set_to_none=True)
+    cpu_rng = torch.get_rng_state()
+    cuda_rng = torch.cuda.get_rng_state_all() if clock.device.type == "cuda" else []
+    with torch.autocast(clock.device.type, dtype=torch.bfloat16, enabled=amp):
+        prediction = model(windows, clock)
+    retry = False
+    try:
+        result = pearson_ic_loss(prediction, labels, minimum)
+    except ConstantPredictionError:
+        if not amp:
+            raise
+        torch.set_rng_state(cpu_rng)
+        torch.cuda.set_rng_state_all(cuda_rng)
+        prediction = model(windows, clock)
+        result = pearson_ic_loss(prediction, labels, minimum)
+        retry = True
+    if result.loss is None:
+        return {"updated": False, "reason": result.reason, "rows": result.rows, "fp32_retry": retry}
+    result.loss.backward()
+    torch.nn.utils.clip_grad_norm_(model.parameters(), config["training"]["gradient_clip"],
+                                   error_if_nonfinite=True)
+    optimizer.step()
+    return {"updated": True, "loss": float(result.loss.detach()), "ic": float(result.ic.detach()),
+            "rows": result.rows, "fp32_retry": retry}
+
+
+def ic_loss_check(predictions, keys, protocol):
+    frame = keys.merge(predictions, on=KEYS, how="left", validate="one_to_one")
+    losses, model_undefined = [], 0
+    for _, group in frame.groupby("date", sort=True):
+        scores = torch.from_numpy(group.factor.to_numpy(dtype=np.float64))
+        labels = torch.from_numpy(group[protocol["label_column"]].to_numpy(dtype=np.float64))
+        try:
+            result = pearson_ic_loss(scores, labels, protocol["min_cross_section_size"])
+        except ConstantPredictionError:
+            model_undefined += 1
+            continue
+        if result.loss is not None:
+            losses.append(result.loss.item())
+    if not losses:
+        raise ValueError("没有有效评估 IC 截面")
+    return float(np.mean(losses)), model_undefined
+
+
+def verify_parent(root, saved):
+    for relative, expected in saved.items():
+        if sha256(root / relative) != expected:
+            raise ValueError("父版本冻结产物已改变: " + relative)
+
+
+def parent_snapshot(root, config):
+    parent = root / "outputs/runs" / config["parent_run_id"]
+    parent_manifest = read_json(parent / "manifest.json")
+    if parent_manifest["status"] != "complete" or sha256(parent / "best.pt") != parent_manifest["selection"]["model_sha256"]:
+        raise ValueError("父版本冻结权重或状态异常")
+    files = {}
+    for directory in (parent, root / "solutions" / parent_manifest["solution_id"]):
+        for path in sorted(directory.rglob("*")):
+            if path.is_file() and "__pycache__" not in path.parts and path.suffix not in (".pyc", ".tmp"):
+                files[path.relative_to(root).as_posix()] = sha256(path)
+    for path in (root / "experiments" / (parent_manifest["solution_id"] + "-tcn.json"),
+                 root / "evaluation/protocols/local-v1.json", root / "evaluation/baseline_evaluation.py"):
+        files[path.relative_to(root).as_posix()] = sha256(path)
+    return files
+
+
+def train(store, run, config, manifest, resume=False):
+    validate_training(config, store.protocol)
+    device = configure(config)
+    spec = config["training"]
+    catalog = structural_catalog(store, run)
+    amp = device.type == "cuda" and torch.cuda.is_bf16_supported()
+    model = MultiFrequencyTCN(config).to(device)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=spec["learning_rate"],
+                                 weight_decay=spec["weight_decay"])
+    env = environment()
+    env.update(device=str(device), device_name=torch.cuda.get_device_name(0) if device.type == "cuda" else "CPU",
+               torch=torch.__version__, cuda=torch.version.cuda, training_autocast_bfloat16=amp,
+               evaluation_precision="float32", loss_precision="float64",
+               parameters=sum(p.numel() for p in model.parameters()))
+    write_json(run / "environment.json", env)
+    (run / "requirements-lock.txt").write_text("\n".join(f"{k}=={v}" for k, v in env["packages"].items()) + "\n",
+                                               encoding="utf-8")
+    state = initial_progress()
+    if resume and (run / "last.pt").exists():
+        checkpoint = torch.load(run / "last.pt", map_location="cpu", weights_only=True)
+        if checkpoint["config"] != config or checkpoint["catalog_sha256"] != sha256(run / "structural-sections.json"):
+            raise ValueError("续跑配置或结构性清单不同")
+        model.load_state_dict(checkpoint["state_dict"])
+        optimizer.load_state_dict(checkpoint["optimizer"])
+        state = checkpoint["progress"]
+        restore_rng(checkpoint, device)
+    log_event(run, "training_started", parameters=env["parameters"], device=env["device_name"], resume=resume)
+    manifest.update(stage="training")
+    write_json(run / "manifest.json", manifest)
+    started = checkpoint_clock = time.perf_counter()
+    catalog_digest = sha256(run / "structural-sections.json")
+
+    def save_progress():
+        nonlocal checkpoint_clock
+        current = time.perf_counter()
+        state["epoch_seconds"] += current - checkpoint_clock
+        checkpoint_clock = current
+        atomic_torch_save({"state_dict": model.state_dict(), "optimizer": optimizer.state_dict(),
+                           "config": config, "progress": state, "torch_rng": torch.get_rng_state(),
+                           "cuda_rng": torch.cuda.get_rng_state_all() if device.type == "cuda" else [],
+                           "catalog_sha256": catalog_digest}, run / "last.pt")
+
+    for epoch in range(state["epoch"], spec["epochs"] + 1):
+        if should_stop(state):
+            break
+        months = np.random.default_rng(config["seed"] + epoch).permutation(store.months("train")).tolist()
+        remaining = months[state["month_cursor"]:]
+        if remaining:
+            for month, block in blocks(store, "train", remaining):
+                month_start, month_sections = time.perf_counter(), 0
+                seed = np.random.SeedSequence([config["seed"], epoch, int(month.replace("-", ""))])
+                groups = section_indices(block.keys, seed)
+                skipped = catalog["months"][month]["skipped"]
+                for cursor in range(state["section_cursor"], len(groups)):
+                    indices = groups[cursor]
+                    stamp = pd.Timestamp(block.keys.date.iloc[indices[0]]).isoformat()
+                    if stamp in skipped:
+                        reason = skipped[stamp]["reason"]
+                        state["skipped"][reason] = state["skipped"].get(reason, 0) + 1
+                    else:
+                        windows, clock = tensor_batch(block, indices, device)
+                        labels = torch.from_numpy(block.keys.iloc[indices][store.protocol["label_column"]]
+                                                  .to_numpy(dtype=np.float64)).to(device)
+                        step = training_step(model, optimizer, windows, clock, labels, config,
+                                             store.protocol["min_cross_section_size"], amp)
+                        if not step["updated"]:
+                            raise ValueError("预检清单遗漏退化截面: " + stamp)
+                        state["loss_sum"] += step["loss"]
+                        state["ic_sum"] += step["ic"]
+                        state["sections"] += 1
+                        state["rows"] += step["rows"]
+                        state["optimizer_steps"] += 1
+                        state["epoch_steps"] += 1
+                        state["fp32_retries"] += int(step["fp32_retry"])
+                        month_sections += 1
+                    state["section_cursor"] = cursor + 1
+                    if state["section_cursor"] % spec["checkpoint_sections"] == 0:
+                        save_progress()
+                state.update(month_cursor=state["month_cursor"] + 1, section_cursor=0)
+                save_progress()
+                log_event(run, "trained_month", epoch=epoch, month=month, month_cursor=state["month_cursor"],
+                          rows=len(block.keys), sections_updated=month_sections,
+                          optimizer_steps=state["optimizer_steps"],
+                          seconds=round(time.perf_counter() - month_start, 3))
+                del block
+        predictions, keys, result = predict_split(store, "validation", model, device, config, run)
+        metric = result[0]["ic_mean"]
+        validation_loss, model_undefined = ic_loss_check(predictions, keys, store.protocol)
+        if metric is None or abs(validation_loss - (1.0 - metric)) > 1e-8:
+            raise ValueError("验证损失与评估 IC 不一致")
+        eligible = model_undefined == 0 and result[0]["coverage_violations"] == 0
+        improved = select_epoch(state, metric, epoch, eligible=eligible)
+        if improved:
+            atomic_torch_save({"state_dict": {k: v.cpu() for k, v in model.state_dict().items()},
+                               "config": config, "protocol": store.protocol, "epoch": epoch}, run / "best.pt")
+            save_evaluation(run, "validation", predictions, result)
+        if state["sections"] == 0:
+            raise ValueError("整轮没有可优化的截面")
+        train_loss = state["loss_sum"] / state["sections"]
+        train_ic = state["ic_sum"] / state["sections"]
+        if abs(train_loss + train_ic - 1) > 1e-8:
+            raise ValueError("在线训练损失与 IC 不一致")
+        row = {"epoch": epoch, "train_loss": train_loss, "validation_loss": validation_loss,
+               "train_online_ic_loss": train_loss, "train_online_ic": train_ic,
+               "validation_ic_loss": validation_loss, "validation_ic_mean": metric,
+               "validation_rank_ic_mean": result[0]["rank_ic_mean"],
+               "ic_mean": metric, "rank_ic_mean": result[0]["rank_ic_mean"],
+               "best_epoch": state["best_epoch"], "improved": bool(improved),
+               "selection_eligible": bool(eligible), "model_undefined_sections": model_undefined,
+               "stale_epochs": state["stale"], "patience_epochs": patience_epochs(state["best_epoch"]),
+               "train_rows": state["rows"],
+               "train_sections": state["sections"], "optimizer_steps": state["epoch_steps"],
+               "fp32_retries": state["fp32_retries"], "skipped_sections": sum(state["skipped"].values()),
+               "seconds": round(state["epoch_seconds"] + time.perf_counter() - checkpoint_clock, 3)}
+        state["history"].append(row)
+        pd.DataFrame(state["history"]).to_csv(run / "history.csv", index=False, encoding="utf-8-sig")
+        log_event(run, "epoch_finished", **row)
+        state.update(epoch=epoch + 1, month_cursor=0, section_cursor=0, loss_sum=0.0, ic_sum=0.0,
+                     sections=0, rows=0, epoch_steps=0, fp32_retries=0, skipped={}, epoch_seconds=0.0)
+        checkpoint_clock = time.perf_counter()
+        save_progress()
+    if not (run / "best.pt").exists():
+        raise ValueError("没有通过完整验证检查的 checkpoint")
+    selection = {"best_epoch": state["best_epoch"], "best_validation_metric": state["best"],
+                 "best_validation_ic": state["best"], "epochs_completed": len(state["history"]),
+                 "selection_metric": "ic_mean", "patience_epochs": patience_epochs(state["best_epoch"]),
+                 "early_stopping": dict(spec["early_stopping"]), "stale_epochs": state["stale"],
+                 "model_sha256": sha256(run / "best.pt"),
+                 "selected_at": now(), "optimizer_steps": state["optimizer_steps"],
+                 "training_seconds_this_session": round(time.perf_counter() - started, 3),
+                 "stop_reason": "early_stopping" if should_stop(state) else "max_epochs"}
+    write_json(run / "selection.json", selection)
+    manifest.update(stage="test_evaluation", selection=selection)
+    write_json(run / "manifest.json", manifest)
+    log_event(run, "model_frozen", **selection)
+    draw_history(run, state["history"])
+    checkpoint = torch.load(run / "best.pt", map_location=device, weights_only=True)
+    model.load_state_dict(checkpoint["state_dict"])
+    predictions, keys, result = predict_split(store, "test", model, device, config, run)
+    test_loss, undefined = ic_loss_check(predictions, keys, store.protocol)
+    if result[0]["ic_mean"] is None or abs(test_loss + result[0]["ic_mean"] - 1) > 1e-8:
+        raise ValueError("测试损失与评估 IC 不一致")
+    save_evaluation(run, "test", predictions, result)
+    preservation = read_json(run / "baseline-preservation.json")
+    verify_parent(ROOT, preservation)
+    write_json(run / "loss-consistency.json", {
+        "selection_metric": "ic_mean", "tolerance": 1e-8,
+        "validation_max_error": max(abs(r["validation_ic_loss"] + r["validation_ic_mean"] - 1)
+                                    for r in state["history"]),
+        "train_max_error": max(abs(r["train_online_ic_loss"] + r["train_online_ic"] - 1)
+                               for r in state["history"]),
+        "test_ic_loss": test_loss, "test_error": abs(test_loss + result[0]["ic_mean"] - 1),
+        "test_model_undefined_sections": undefined, "parent_preserved": bool(preservation),
+    })
+    manifest.update(status="complete", stage="complete", completed_at=now(), selection=selection,
+                    metrics={s: read_json(run / "evaluation" / s / "metrics.json")
+                             for s in ("validation", "test")})
+    write_json(run / "manifest.json", manifest)
+    log_event(run, "completed", validation_ic=state["best"], test_ic=result[0]["ic_mean"],
+              validation_rank_ic=manifest["metrics"]["validation"]["rank_ic_mean"],
+              test_rank_ic=result[0]["rank_ic_mean"])
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=HERE / "model-config.json")
+    parser.add_argument("--protocol", type=Path, default=ROOT / "evaluation/protocols/local-v2-ic.json")
+    parser.add_argument("--training-run", type=Path, required=True)
+    parser.add_argument("--holdout-run", type=Path, required=True)
+    parser.add_argument("--data-root", type=Path, default=ROOT / "data")
+    parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--reproduction-only", action="store_true",
+                        help="仅供独立复现工作区使用，显式记录缺少历史比较产物")
+    parser.add_argument("--training-confirmed", action="store_true",
+                        help="仅在用户明确确认开始训练后使用")
+    args = parser.parse_args()
+    if not args.training_confirmed:
+        parser.error("v7d 训练尚待用户确认；确认后才可传入 --training-confirmed")
+    config, protocol, run = read_json(args.config), read_json(args.protocol), args.run_dir.resolve()
+    validate_training(config, protocol)
+    if run.exists() and not args.resume:
+        raise FileExistsError("运行目录已存在；续跑须显式指定 --resume")
+    run.mkdir(parents=True, exist_ok=True)
+    if args.resume:
+        manifest = read_json(run / "manifest.json")
+        if manifest["status"] == "complete":
+            raise ValueError("已完成的运行不能续跑")
+        if config != read_json(run / "config.json") or protocol != read_json(run / "protocol.json"):
+            raise ValueError("续跑配置或协议已改变")
+        for path, digest in manifest["source"]["files"].items():
+            if sha256(ROOT / path) != digest:
+                raise ValueError(f"续跑源码已改变: {path}")
+    else:
+        write_json(run / "config.json", config)
+        write_json(run / "protocol.json", protocol)
+        manifest = {"run_id": run.name, "solution_id": "v7d", "status": "running", "created_at": now(),
+                    "parent_run_id": config["parent_run_id"], "references": config["references"],
+                    "source": snapshot_sources(ROOT, run, solution_id="v7d")}
+        write_json(run / "manifest.json", manifest)
+    try:
+        if not args.resume:
+            preservation_path = ROOT / "outputs/run-control" / run.name / "v7-preservation.json"
+            if preservation_path.exists():
+                preservation = read_json(preservation_path)
+            elif args.reproduction_only:
+                preservation = {}
+            else:
+                preservation = parent_snapshot(ROOT, config)
+            verify_parent(ROOT, preservation)
+            write_json(run / "baseline-preservation.json", preservation)
+            manifest["baseline_verification"] = "protected" if preservation else "unavailable_reproduction"
+            write_json(run / "manifest.json", manifest)
+        else:
+            verify_parent(ROOT, read_json(run / "baseline-preservation.json"))
+        store = ProcessedStore(args.training_run, args.holdout_run, args.data_root, config, protocol)
+        data_manifest(store, run)
+        train(store, run, config, manifest, args.resume)
+    except BaseException as error:
+        manifest.update(status="interrupted" if isinstance(error, KeyboardInterrupt) else "failed", error=str(error), stopped_at=now())
+        write_json(run / "manifest.json", manifest)
+        raise
+
+
+if __name__ == "__main__":
+    main()
