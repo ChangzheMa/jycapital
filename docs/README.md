@@ -32,7 +32,7 @@ v1—v3 按验证 Rank IC 选模，v4—v7 按验证 IC 选模。测试期已在
 | 模型与损失 | [v6 冻结模型逐层图解](v6-model.html)、[v2 交互图解](v2-model.html)、[字段可用性及组掩码](v3-field-validity.md)、[Pearson IC 损失设计](v4-ic-loss-plan.md) |
 | 扩容方案 | [v5：四频 TCN 隐藏通道扩至 160](../solutions/v5/README.md) |
 | 正则化方案 | [v6：TCN 残差块 Dropout 提高至 0.35](../solutions/v6/README.md) |
-| 当前开发版本 | [v7：删除全部 LayerNorm](../solutions/v7/README.md)、[修改备忘录](v7-discussion.md)；动态早停已生效，全窗口平均及边界复制仍待实施 |
+| 当前开发版本 | [v7：删除全部 LayerNorm](../solutions/v7/README.md)、[修改备忘录](v7-discussion.md)；动态早停已生效，后续结构修改以备忘录为准 |
 | 缺失数据结论 | [完整样本过滤代价](v2-complete-samples.md)、[逐字段无效值统计](raw-field-validity.md)、[盘口零价格含义](book-price-zero.md) |
 | 冻结实验结果 | [v1](../experiments/v1-baseline.json)、[v2](../experiments/v2-tcn.json)、[v3](../experiments/v3-tcn.json)、[v4](../experiments/v4-tcn.json)、[v5](../experiments/v5-tcn.json)、[v6](../experiments/v6-tcn.json)、[v7](../experiments/v7-tcn.json)、[运行索引](../experiments/runs.csv) |
 | 平台成绩 | [已查询成绩与版本对应关系](../experiments/platform-scores.json)，公榜／私榜分列，保留来源与查询时间 |
