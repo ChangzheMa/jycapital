@@ -44,6 +44,17 @@ def environment():
             "packages": packages}
 
 
+def experiment_filename(solution_id, model_family=None):
+    """新家族使用对应结果名；历史卷积版本沿用已有路径。"""
+    if not re.fullmatch(r"[a-z][a-z0-9_-]*", solution_id):
+        raise ValueError("非法方案标识")
+    suffixes = {"patch_transformer": "patch-transformer", "factorized_mixer": "mixer",
+                "hierarchical_gru": "gru"}
+    if model_family is not None and model_family not in suffixes:
+        raise ValueError("未登记的模型家族: " + str(model_family))
+    return solution_id + "-" + suffixes.get(model_family, "tcn") + ".json"
+
+
 def snapshot_sources(project, run, solution_id="v1"):
     project, run = Path(project), Path(run)
     if not re.fullmatch(r"[a-z][a-z0-9_-]*", solution_id):

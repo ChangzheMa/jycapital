@@ -7,7 +7,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "common"))
-from artifacts import read_json, write_json, sha256
+from artifacts import read_json, write_json, sha256, experiment_filename
 from protocol_compatibility import validate_protocol_compatibility
 from compare import compare
 import pandas as pd
@@ -145,12 +145,13 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
 
 
 def record(result):
-    experiment = ROOT / "experiments" / (result["solution_id"] + "-tcn.json")
+    config = read_json(ROOT / result["run_path"] / "config.json")
+    experiment = ROOT / "experiments" / experiment_filename(
+        result["solution_id"], config.get("model", {}).get("family"))
     write_json(experiment, result)
     path = ROOT / "experiments/runs.csv"
     index = pd.read_csv(path, dtype=str, keep_default_na=False)
     selection, metrics = result["selection"], result["metrics"]
-    config = read_json(ROOT / result["run_path"] / "config.json")
     row = {"run_id": result["run_id"], "solution_id": result["solution_id"], "protocol_id": result["protocol_id"],
            "seed": config["seed"], "best_epoch": selection["best_epoch"],
            "validation_ic": metrics["validation"]["ic_mean"], "validation_rank_ic": metrics["validation"]["rank_ic_mean"],

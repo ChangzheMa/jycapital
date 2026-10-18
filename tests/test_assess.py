@@ -141,6 +141,24 @@ class AssessmentTest(unittest.TestCase):
             self.assertEqual(len(lines), 3)
             self.assertTrue(index.read_bytes().startswith(b"\xef\xbb\xbf"))
 
+    def test_new_families_compare_and_record_without_tcn_filename(self):
+        for version, family, suffix in (("v101", "patch_transformer", "patch-transformer"),
+                                         ("v201", "factorized_mixer", "mixer"),
+                                         ("v301", "hierarchical_gru", "gru")):
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary).resolve()
+                run, experiments = self.fixture(root, .08, .09)
+                manifest = json.loads((run / "manifest.json").read_text())
+                manifest["solution_id"] = version
+                write(run / "manifest.json", manifest)
+                write(run / "config.json", {"seed": 42, "model": {"family": family}})
+                with patch.object(assessor, "ROOT", root):
+                    result = assessor.assess(run, experiments)
+                    result["selection"]["model_sha256"] = "new-sha"
+                    assessor.record(result)
+                self.assertTrue((experiments / f"{version}-{suffix}.json").is_file())
+                self.assertFalse((experiments / f"{version}-tcn.json").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
