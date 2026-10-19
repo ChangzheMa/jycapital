@@ -1,2 +1,4 @@
 # 提交材料按原始字节保存，避免跨平台换行转换破坏清单中的 SHA-256。
 /submissions/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# v7e 提交清单参与索引哈希，跨平台检出时同样保持原始字节。
+/experiments/v7e*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
