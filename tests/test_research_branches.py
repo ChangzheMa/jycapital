@@ -31,8 +31,11 @@ FREQUENCIES = tuple(CONFIGS["v101"]["data"]["window_bars"])
 torch.set_num_threads(1)
 
 
-def small_config(version):
-    config = copy.deepcopy(CONFIGS[version])
+def small_config(version, resident=False):
+    config = copy.deepcopy(CONFIGS[version]) if resident else json.loads(
+        (ROOT / "solutions" / version / "model-config-monthly.json").read_text(encoding="utf-8"))
+    if resident:
+        config["training"]["resident_cache"].update(memory_reserve_gib=0, build_batch_rows=256, evaluation_days=1)
     spec = config["model"]
     spec.update(hidden_dim=8, fusion_hidden_dim=16)
     if version == "v101":
@@ -67,13 +70,16 @@ class ModelTests(unittest.TestCase):
         for version in VERSIONS:
             with self.subTest(version=version):
                 config = CONFIGS[version]
+                legacy = json.loads((ROOT / "solutions" / version / "model-config-monthly.json").read_text(encoding="utf-8"))
                 for key in ("data", "training", "inference", "seed"):
-                    self.assertEqual(config[key], parent[key])
+                    self.assertEqual(legacy[key], parent[key])
+                self.assertEqual(config["training"]["batching"], "global_shuffled_samples")
+                self.assertEqual(config["data"]["input_precision"], "fp16_with_fp32_overflow")
                 self.assertEqual(config["parent_solution_id"], "v9")
                 self.assertIsNone(config["parent_run_id"])
                 self.assertIsNone(config["references"]["parent"])
                 MODULES[version]["train"].validate_training(config, PROTOCOL)
-                for name in ("data", "loss", "preprocessing"):
+                for name in ("loss", "preprocessing"):
                     actual = (ROOT / "solutions" / version / (version + "_" + name + ".py")).read_text(encoding="utf-8")
                     expected = (ROOT / "solutions/v9" / ("v9_" + name + ".py")).read_text(encoding="utf-8")
                     self.assertEqual(actual.replace(version, "v9"), expected)

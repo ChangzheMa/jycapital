@@ -91,7 +91,8 @@
     },
     "calendar_source": "universe_trading_dates",
     "future_slots": "zero_all_channels",
-    "insufficient_history": "left_zero_pad"
+    "insufficient_history": "left_zero_pad",
+    "input_precision": "fp16_with_fp32_overflow"
   },
   "model": {
     "family": "factorized_mixer",
@@ -124,7 +125,7 @@
     "cpu_threads": 4,
     "precision": "bfloat16_autocast_on_supported_cuda",
     "deterministic": true,
-    "batching": "monthly_shuffled_samples",
+    "batching": "global_shuffled_samples",
     "batch_size": 512,
     "loss": "cross_section_zscore_huber",
     "loss_reduction": "mean_samples",
@@ -134,7 +135,14 @@
     "structural_policy": "finite_nonconstant_labels",
     "constant_prediction_policy": "allow_huber_gradient",
     "huber_delta": 1.0,
-    "label_ddof": 0
+    "label_ddof": 0,
+    "resident_cache": {
+      "format": "jycapital-resident-fp16-v1",
+      "prefetch_batches": 2,
+      "build_batch_rows": 16384,
+      "evaluation_days": 5,
+      "memory_reserve_gib": 8.0
+    }
   },
   "inference": {
     "batch_size": 1024,
@@ -157,7 +165,10 @@
     "research_family": "factorized_mixer",
     "changes": [
       "replace_residual_convolution_backbone",
-      "adapt_normalization_dropout_and_readout"
+      "adapt_normalization_dropout_and_readout",
+      "global_training_shuffle",
+      "resident_fp16_stock_day_cache",
+      "double_buffered_transfer"
     ],
     "input_supervision_and_protocol": "inherited_v9"
   },

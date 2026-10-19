@@ -116,6 +116,11 @@ class WindowBlock:
             safe = positions.clip(0)
             eligible = (positions >= 0) & (stamps <= requested[:, None])
             raw = values[safe, stocks[:, None]]
+            if self.config["data"].get("input_precision", "float32") == "fp16_with_fp32_overflow":
+                with np.errstate(over="ignore", invalid="ignore"):
+                    rounded = raw.astype(np.float16).astype(np.float32)
+                overflow = np.isfinite(raw) & ~np.isfinite(rounded)
+                raw = np.where(overflow, raw, rounded)
             mask = np.isfinite(raw) & eligible[..., None]
             x = np.zeros((*raw.shape[:2], INPUT_CHANNELS), np.float32)
             x[:, :, :72] = np.where(mask, raw, 0)
@@ -167,8 +172,14 @@ class ProcessedStore:
     def load(self, split, month):
         lo = pd.Period(month, "M").start_time
         hi = (lo.to_period("M") + 1).start_time
+        return self.load_range(split, lo, hi)
+
+    def load_range(self, split, lo, hi):
+        """按有限日期范围加载，供全量常驻模式的验证和测试使用。"""
         interval = self.protocol["splits"][split]
-        lo, hi = max(lo, pd.Timestamp(interval["start"])), min(hi, pd.Timestamp(interval["stop"]))
+        lo, hi = max(pd.Timestamp(lo), pd.Timestamp(interval["start"])), min(pd.Timestamp(hi), pd.Timestamp(interval["stop"]))
+        if lo >= hi:
+            raise ValueError("评估日期范围为空")
         keys = self.universe.loc[(self.universe.date >= lo) & (self.universe.date < hi), KEYS].sort_values(KEYS).reset_index(drop=True)
         labels = pq.read_table(self.data_root / (self.protocol["label_table"] + ".parquet"),
                                columns=KEYS + [self.protocol["label_column"]],

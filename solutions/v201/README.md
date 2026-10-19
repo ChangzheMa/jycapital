@@ -2,7 +2,7 @@
 
 [文档目录](../../docs/README.md) · [三个研究家族](../../docs/research-branches.md) · [代码父版本 v9](../v9/README.md) · [模型](v201_model.py) · [模型配置](model-config.json)
 
-v20x MLP 混合器研究家族的首版，以 v9 为代码父版本。研究假设是以时间／通道分解、共享权重及低秩约束，学习长窗口中的有效组合并控制容量。当前交付代码与合成实现验证，尚未正式训练，没有模型成绩或平台材料。
+v20x MLP 混合器研究家族的首版，以 v9 为代码父版本。研究假设是以时间／通道分解、共享权重及低秩约束，学习长窗口中的有效组合并控制容量。当前默认全局模式交付代码与合成实现验证，尚无该模式的正式成绩或平台材料；旧月内运行以冻结记录为准。
 
 ## 主干
 
@@ -17,14 +17,20 @@ v20x MLP 混合器研究家族的首版，以 v9 为代码父版本。研究假�
 
 总参数 **552,973**。主干没有卷积或注意力；固定的可学习时间权重表达位置，所有历史槽位可以在时间混合阶段交互。该方案的适应性与容量取舍、共同监督及检查入口见[研究家族说明](../../docs/research-branches.md)。
 
+## 全量随机训练模式
+
+当前默认配置采用[全量 FP16 常驻缓存与全局 shuffle](../../docs/resident-training.md)：基础行情按股票／交易日去重，CPU 缓存与传输使用 FP16，有限极值通过稀疏 FP32 记录恢复，双缓冲预取下一批。label、损失、batch 大小和选模规则保持原定义；验证／推理采用相同输入舍入，验证数据按有限交易日块加载。
+
+原月内 FP32 配置保存在 [model-config-monthly.json](model-config-monthly.json)。本次全局模式尚未正式训练；既有月内运行只代表其冻结代码和配置，不能直接切换模式续跑。缓存容量估算、构建命令、内存预算和完整验证范围见上面的统一说明。
+
 ## 后续使用
 
-目录内包含独立预处理、切窗、训练、原始行情推理、文本张量和复现模块，不导入其他方案。沿用 v9 的输入与训练配置；低秩瓶颈、LayerNorm、Dropout 和分解汇总属于本主干方案。`parent_solution_id=v9`，父 run 为空。
+目录内包含独立预处理、切窗、训练、原始行情推理、文本张量和复现模块，不导入其他方案。沿用 v9 的窗口、字段和监督定义，采样及存储精度按当前配置；低秩瓶颈、LayerNorm、Dropout 和分解汇总属于本主干方案。`parent_solution_id=v9`，父 run 为空。
 
 以下仅为未来获准正式训练后的命令，本轮未执行：
 
 ```powershell
-.venv-training/Scripts/python.exe -u solutions/v201/v201_train.py --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v201-factorized-mixer-s42 --training-confirmed
+.venv-training/Scripts/python.exe -u solutions/v201/v201_train.py --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v201-global-fp16-s42 --training-confirmed
 ```
 
 原始行情入口为 [v201_predict.py](v201_predict.py)，与训练共用 [WindowBlock](v201_data.py)。独立预处理使用 `v201_prepare.py`、`v201_apply.py`；协议、恢复、评估和文本附件约定见[开发约定](../../docs/development.md)。正式导出及平台运行尚未验证。

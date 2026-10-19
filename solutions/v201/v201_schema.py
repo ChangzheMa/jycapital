@@ -24,6 +24,8 @@ PREDICTION_TIMES = ("09:30", "10:00", "10:30", "11:00", "11:30", "13:30", "14:00
 
 def validate_input_config(config):
     data = config.get("data", {})
+    if data.get("input_precision", "float32") not in ("float32", "fp16_with_fp32_overflow"):
+        raise ValueError("未知输入精度策略")
     expected = {"window_policy": "fixed_trading_days", "trading_day_windows": TRADING_DAY_WINDOWS,
                 "window_bars": {"bar1m": 480, "bar5m": 240, "bar30m": 160},
                 "calendar_source": "universe_trading_dates", "future_slots": "zero_all_channels",

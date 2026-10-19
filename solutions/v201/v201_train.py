@@ -30,6 +30,7 @@ from v201_model import MultiFrequencyMixer, validate_model_config
 from v201_data import section_indices
 from v201_loss import standardized_huber_loss, standardized_targets, sample_huber_loss
 from protocol_compatibility import validate_protocol_compatibility
+from resident_data import (ResidentBatches, ResidentStore, open_resident_store, validate_resident_config)
 
 
 def atomic_torch_save(value, path):
@@ -160,13 +161,14 @@ def draw_history(run, history):
 def validate_training(config, protocol):
     validate_model_config(config)
     spec = config["training"]
-    expected = {"batching": "monthly_shuffled_samples", "loss": "cross_section_zscore_huber",
+    validate_resident_config(config)
+    expected = {"loss": "cross_section_zscore_huber",
                 "loss_reduction": "mean_samples", "loss_precision": "float64",
                 "target_transform": "cross_section_zscore", "label_ddof": 0,
                 "structural_policy": "finite_nonconstant_labels",
                 "constant_prediction_policy": "allow_huber_gradient"}
     if any(spec.get(key) != value for key, value in expected.items()):
-        raise ValueError("v201 必须先按完整截面标准化标签，再使用月内随机样本 Huber 配置")
+        raise ValueError("v201 必须先按完整截面标准化标签，再使用已登记的样本 Huber 配置")
     if any(key in spec for key in ("target_scale", "target_clip", "sections_per_step", "checkpoint_sections")):
         raise ValueError("v201 不裁剪或固定缩放标签，不接受逐截面更新配置")
     if not math.isfinite(spec.get("huber_delta", float("nan"))) or spec["huber_delta"] <= 0:
@@ -185,9 +187,16 @@ def structural_catalog(store, run):
         saved = read_json(path)
         if saved["data_manifest_sha256"] != sha256(run / "data-manifest.json"):
             raise ValueError("结构性退化清单的数据指纹不同")
+        if isinstance(store, ResidentStore) and saved.get("resident_cache_key") != store.block.manifest["cache_key"]:
+            raise ValueError("续跑的常驻缓存已改变")
         return saved
     result = {"policy": "finite_nonconstant_labels",
               "data_manifest_sha256": sha256(run / "data-manifest.json"), "months": {}}
+    if isinstance(store, ResidentStore):
+        result["months"]["global"] = store.block.manifest["catalog"]
+        result["resident_cache_key"] = store.block.manifest["cache_key"]
+        write_json(path, result)
+        return result
     minimum = store.protocol["min_cross_section_size"]
     for month, block in blocks(store, "train", store.months("train")):
         groups = section_indices(block.keys)
@@ -242,7 +251,8 @@ def prepare_training_targets(keys, protocol):
 
 def shuffled_sample_indices(targets, seed, epoch, month):
     indices = np.flatnonzero(np.isfinite(targets))
-    generator = np.random.default_rng(np.random.SeedSequence([seed, epoch, int(month.replace("-", ""))]))
+    partition_seed = 0 if month == "global" else int(month.replace("-", ""))
+    generator = np.random.default_rng(np.random.SeedSequence([seed, epoch, partition_seed]))
     generator.shuffle(indices)
     return indices
 
@@ -251,6 +261,17 @@ def restore_rng(checkpoint, device):
     torch.set_rng_state(checkpoint["torch_rng"])
     if device.type == "cuda":
         torch.cuda.set_rng_state_all(checkpoint["cuda_rng"])
+
+
+def training_batches(block, order, targets, start, batch_size, device):
+    if hasattr(block, "raw_batch"):
+        yield from ResidentBatches(block, order, targets, start, batch_size, device)
+        return
+    for offset in range(start, len(order), batch_size):
+        indices = order[offset:offset + batch_size]
+        windows, clock = tensor_batch(block, indices, device)
+        target = torch.from_numpy(targets[indices]).to(device)
+        yield offset, indices, windows, clock, target
 
 
 def training_step(model, optimizer, windows, clock, targets, config, amp):
@@ -318,6 +339,8 @@ def parent_snapshot(root, config):
 
 def train(store, run, config, manifest, resume=False):
     validate_training(config, store.protocol)
+    if (config["training"]["batching"] == "global_shuffled_samples") != isinstance(store, ResidentStore):
+        raise ValueError("训练采样配置与数据加载器不一致")
     device = configure(config)
     spec = config["training"]
     catalog = structural_catalog(store, run)
@@ -330,7 +353,8 @@ def train(store, run, config, manifest, resume=False):
                torch=torch.__version__, cuda=torch.version.cuda, training_autocast_bfloat16=amp,
                evaluation_precision="float32", loss_precision="float64",
                parameters=sum(p.numel() for p in model.parameters()), model_family=config["model"]["family"],
-               recurrent_precision=config["model"].get("recurrent_precision"))
+               recurrent_precision=config["model"].get("recurrent_precision"),
+               input_precision=config["data"].get("input_precision", "float32"), batching=spec["batching"])
     write_json(run / "environment.json", env)
     (run / "requirements-lock.txt").write_text("\n".join(f"{k}=={v}" for k, v in env["packages"].items()) + "\n",
                                                encoding="utf-8")
@@ -358,6 +382,8 @@ def train(store, run, config, manifest, resume=False):
                            "config": config, "progress": state, "torch_rng": torch.get_rng_state(),
                            "cuda_rng": torch.cuda.get_rng_state_all() if device.type == "cuda" else [],
                            "catalog_sha256": catalog_digest}, run / "last.pt")
+        write_json(run / "progress.json", {k: state[k] for k in (
+            "epoch", "month_cursor", "sample_cursor", "optimizer_steps", "best_epoch", "stale")})
 
     for epoch in range(state["epoch"], spec["epochs"] + 1):
         if should_stop(state):
@@ -367,15 +393,14 @@ def train(store, run, config, manifest, resume=False):
         if remaining:
             for month, block in blocks(store, "train", remaining):
                 month_start, month_batches = time.perf_counter(), 0
-                targets, actual_skipped = prepare_training_targets(block.keys, store.protocol)
+                targets, actual_skipped = (block.training_targets() if hasattr(block, "training_targets")
+                                           else prepare_training_targets(block.keys, store.protocol))
                 skipped = catalog["months"][month]["skipped"]
                 if actual_skipped != {stamp: record["reason"] for stamp, record in skipped.items()}:
                     raise ValueError("标准化目标与预检退化截面清单不同")
                 order = shuffled_sample_indices(targets, config["seed"], epoch, month)
-                for offset in range(state["sample_cursor"], len(order), spec["batch_size"]):
-                    indices = order[offset:offset + spec["batch_size"]]
-                    windows, clock = tensor_batch(block, indices, device)
-                    target = torch.from_numpy(targets[indices]).to(device)
+                for offset, indices, windows, clock, target in training_batches(
+                        block, order, targets, state["sample_cursor"], spec["batch_size"], device):
                     step = training_step(model, optimizer, windows, clock, target, config, amp)
                     state["loss_sum"] += step["loss"] * step["rows"]
                     state["rows"] += step["rows"]
@@ -481,6 +506,7 @@ def main():
     parser.add_argument("--holdout-run", type=Path, required=True)
     parser.add_argument("--data-root", type=Path, default=ROOT / "data")
     parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument("--resident-cache", type=Path, help="共享的全量 FP16 缓存目录")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--reproduction-only", action="store_true",
                         help="仅供独立复现工作区使用，显式记录缺少历史比较产物")
@@ -528,6 +554,11 @@ def main():
             verify_parent(ROOT, read_json(run / "baseline-preservation.json"))
         store = ProcessedStore(args.training_run, args.holdout_run, args.data_root, config, protocol)
         data_manifest(store, run)
+        if config["training"]["batching"] == "global_shuffled_samples":
+            manifest.update(stage="resident_cache")
+            write_json(run / "manifest.json", manifest)
+            store = open_resident_store(store, run, prepare_training_targets, args.resident_cache,
+                                        lambda event, **fields: log_event(run, event, **fields))
         train(store, run, config, manifest, args.resume)
     except BaseException as error:
         manifest.update(status="interrupted" if isinstance(error, KeyboardInterrupt) else "failed", error=str(error), stopped_at=now())

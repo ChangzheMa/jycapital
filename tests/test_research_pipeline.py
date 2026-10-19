@@ -46,7 +46,7 @@ class PipelineChecks:
         cls.stats = {"fields": FIELDS, "fit_interval": {"start": "2020-01-01", "stop": "2024-01-01"},
                      "stocks": {"A": fixed, "B": fixed}, "global": fixed}
         cls.preprocessing = json.loads((ROOT / "solutions" / cls.version / "config.json").read_text(encoding="utf-8"))
-        cls.config = small_config(cls.version)
+        cls.config = small_config(cls.version, resident=getattr(cls, "resident", False))
         torch.manual_seed(42)
         cls.state = cls.model_class(cls.config).state_dict()
         cls.bundle = {"format": cls.artifact.FORMAT, "config": cls.config, "preprocessing": cls.preprocessing,

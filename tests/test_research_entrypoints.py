@@ -18,6 +18,8 @@ from test_research_branches import ROOT, VERSIONS, small_config
 
 
 class EntrypointTests(unittest.TestCase):
+    config_factory = staticmethod(small_config)
+
     def test_three_families_full_synthetic_entrypoints(self):
         for version in VERSIONS:
             with self.subTest(version=version), tempfile.TemporaryDirectory() as tmp:
@@ -28,7 +30,7 @@ class EntrypointTests(unittest.TestCase):
                 root = Path(tmp)
                 data = root / "data"
                 data.mkdir()
-                config = small_config(version)
+                config = self.config_factory(version)
                 preprocessing = json.loads((ROOT / "solutions" / version / "config.json").read_text(encoding="utf-8"))
                 preprocessing["processing"].update(threads=1, batch_rows=256)
                 config["training"].update(epochs=1, cpu_threads=1, batch_size=8, checkpoint_batches=1)

@@ -35,7 +35,8 @@ v1—v3 按验证 Rank IC 选模，v4—v7 及 v7e 按验证 IC 选模。测试�
 | 正则化方案 | [v6：TCN 残差块 Dropout 提高至 0.35](../solutions/v6/README.md) |
 | 备忘录整合版 | [v8：整合备忘录全部六组修改](../solutions/v8/README.md)，保持四路原窗口和 77 通道；尚未正式训练，依据见 [v7 修改备忘录](v7-discussion.md) |
 | 当前待训练版本 | [v9：三路固定交易日窗口与 75 通道输入](../solutions/v9/README.md)，1／5／30 分钟窗口为 480／240／160 根；未来补零，保留预测时刻 one-hot，尚未正式训练 |
-| 非卷积研究家族 | [家族命名、共同控制与验证](research-branches.md)；[v101：Patch Transformer](../solutions/v101/README.md)、[v201：低秩时间／通道 Mixer](../solutions/v201/README.md)、[v301：分层 GRU](../solutions/v301/README.md)，均基于 v9，代码与合成验证已准备，尚未正式训练 |
+| 非卷积研究家族 | [家族命名、共同控制与验证](research-branches.md)；[v101：Patch Transformer](../solutions/v101/README.md)、[v201：低秩时间／通道 Mixer](../solutions/v201/README.md)、[v301：分层 GRU](../solutions/v301/README.md)，均基于 v9；当前默认全局模式的代码与合成验证已准备，旧月内运行以冻结记录为准 |
+| 全局采样与内存优化 | [全量 FP16 缓存、双缓冲传输与恢复](resident-training.md)；v101／v201／v301 当前默认全局 shuffle，保留原月内 FP32 配置，本次模式尚无正式训练结果 |
 | v7 派生对比实验 | [六组实验代码与执行交接](v7-ablation-experiments.md)；[v7e 冻结结果与平台材料](../solutions/v7e/README.md#冻结结果与平台材料)，其他版本状态以各自运行记录为准 |
 | 缺失数据结论 | [完整样本过滤代价](v2-complete-samples.md)、[逐字段无效值统计](raw-field-validity.md)、[盘口零价格含义](book-price-zero.md) |
 | 冻结实验结果 | [v1](../experiments/v1-baseline.json)、[v2](../experiments/v2-tcn.json)、[v3](../experiments/v3-tcn.json)、[v4](../experiments/v4-tcn.json)、[v5](../experiments/v5-tcn.json)、[v6](../experiments/v6-tcn.json)、[v7](../experiments/v7-tcn.json)、[v7e](../experiments/v7e-tcn.json)、[运行索引](../experiments/runs.csv) |
