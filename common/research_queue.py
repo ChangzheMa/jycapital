@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import ast
+from contextlib import contextmanager
 import json
+import os
 from pathlib import Path
 import re
+import tempfile
 
 from artifacts import now, read_json, sha256
 
@@ -13,9 +16,41 @@ from artifacts import now, read_json, sha256
 def atomic_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    temporary.replace(path)
+    content = json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n", dir=path.parent,
+                                     prefix=path.name + ".", suffix=".tmp", delete=False) as stream:
+        stream.write(content)
+        temporary = Path(stream.name)
+    try:
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+@contextmanager
+def capacity_lock(root):
+    """串行更新容量滞回状态，锁不涉及训练进程或模型文件。"""
+    path = Path(root) / "outputs/run-control/continuous-research/capacity.lock"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a+b") as handle:
+        if handle.tell() == 0:
+            handle.write(b"0")
+            handle.flush()
+        handle.seek(0)
+        if os.name == "nt":
+            import msvcrt
+            msvcrt.locking(handle.fileno(), msvcrt.LK_LOCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            handle.seek(0)
+            if os.name == "nt":
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
 
 
 def safe_path(root, value):
@@ -120,7 +155,7 @@ def readiness_error(root, spec):
     return None
 
 
-def snapshot(root):
+def _snapshot_unlocked(root):
     root = Path(root).resolve()
     policy = read_json(root / "experiments/research-policy.json")
     candidates, seen = [], set()
@@ -151,6 +186,23 @@ def snapshot(root):
             "pause_construction": len(unfinished) > policy["construction_pause_when_unevaluated_gt"],
             "resume_construction": len(unfinished) < policy["construction_resume_when_unevaluated_lt"],
             "next": ready[0] if ready and not active else None, "candidates": candidates}
+
+
+def snapshot(root):
+    root = Path(root).resolve()
+    with capacity_lock(root):
+        result = _snapshot_unlocked(root)
+        path = root / "outputs/run-control/continuous-research/capacity.json"
+        previous = read_json(path) if path.exists() else {}
+        paused = bool(previous.get("construction_paused", False))
+        if result["pause_construction"]:
+            paused = True
+        elif result["resume_construction"]:
+            paused = False
+        atomic_json(path, {"at": result["at"], "unevaluated_count": result["unevaluated_count"],
+                           "construction_paused": paused})
+        result["pause_construction"] = paused
+        return result
 
 
 def publish(root, solution_id, report_path):

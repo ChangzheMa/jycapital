@@ -60,14 +60,20 @@ def main():
         fcntl.flock(lock_handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
     enabled = control / "enabled.json"
     atomic_json(enabled, {"enabled": True, "thread_id": args.thread_id, "started_at": now()})
-    previous = observe({}, current)
+    state_path = control / "state.json"
+    prior_state = read_json(state_path) if state_path.exists() else {}
+    previous = observe(prior_state, current)
+    first_due = datetime.now().astimezone() + timedelta(seconds=args.interval)
+    if prior_state.get("next_check_at"):
+        first_due = min(first_due, datetime.fromisoformat(prior_state["next_check_at"]))
+    next_deadline = time.monotonic() + max(0, (first_due - datetime.now().astimezone()).total_seconds())
     state = {"thread_id": args.thread_id, "pid": os.getpid(), "checked_at": now(),
-             **previous, "queue": current, "notification_delivery": "not_yet_sent",
+             **previous, "queue": current, "notification_delivery": prior_state.get("notification_delivery", "not_yet_sent"),
              "current_thread_idle_wake_verified": False,
-             "next_check_at": (datetime.now().astimezone() + timedelta(seconds=args.interval)).isoformat()}
+             "next_check_at": first_due.isoformat()}
     atomic_json(control / "state.json", state)
     while True:
-        deadline = time.monotonic() + args.interval
+        deadline = next_deadline
         while time.monotonic() < deadline:
             if not read_json(enabled).get("enabled", False):
                 atomic_json(control / "stopped.json", {"at": now(), "reason": "disabled_by_user_or_owner"})
@@ -94,6 +100,7 @@ def main():
         except Exception as error:
             state.update(last_error={"at": now(), "type": type(error).__name__, "message": str(error)})
             atomic_json(control / "state.json", state)
+        next_deadline = time.monotonic() + args.interval
 
 
 if __name__ == "__main__":

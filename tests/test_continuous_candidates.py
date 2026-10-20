@@ -15,9 +15,10 @@ import pandas as pd
 import test_research_branches as base
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSIONS = ("v102", "v202", "v302")
-CLASSES = {"v102": "MultiFrequencyPatchTransformer", "v202": "MultiFrequencyMixer", "v302": "MultiFrequencyGRU"}
-PARENTS = {"v102": "v101", "v202": "v201", "v302": "v301"}
+VERSIONS = ("v102", "v202", "v302", "v303", "v304")
+CLASSES = {"v102": "MultiFrequencyPatchTransformer", "v202": "MultiFrequencyMixer",
+           "v302": "MultiFrequencyGRU", "v303": "MultiFrequencyGRU", "v304": "MultiFrequencyGRU"}
+PARENTS = {"v102": "v101", "v202": "v201", "v302": "v301", "v303": "v301", "v304": "v301"}
 for version in VERSIONS:
     sys.path.insert(0, str(ROOT / "solutions" / version))
 MODULES = {v: {name: importlib.import_module(v + "_" + name)
@@ -47,6 +48,50 @@ def create_model(version, config=None):
 
 
 class CandidateTests(unittest.TestCase):
+    def test_huber_delta_control_preserves_network_and_changes_training_loss(self):
+        parent, changed = base.CONFIGS["v301"], CONFIGS["v303"]
+        for key in ("data", "model", "inference", "seed"):
+            self.assertEqual(parent[key], changed[key])
+        a, b = copy.deepcopy(parent["training"]), copy.deepcopy(changed["training"])
+        self.assertEqual(a.pop("huber_delta"), 1.0)
+        self.assertEqual(b.pop("huber_delta"), 2.0)
+        self.assertEqual(a, b)
+
+        class ConstantModel(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.score = torch.nn.Parameter(torch.tensor(0.0))
+
+            def forward(self, windows, clock):
+                return self.score.expand(len(clock))
+
+        for version, expected in (("v301", 2.5), ("v303", 4.0)):
+            trainer = base.MODULES[version]["train"]
+            config = base.CONFIGS[version]
+            model = ConstantModel()
+            optimizer = torch.optim.SGD(model.parameters(), lr=0)
+            result = trainer.training_step(model, optimizer, {}, torch.eye(8)[:1],
+                                           torch.tensor([3.0], dtype=torch.float64), config, False)
+            self.assertEqual(result["loss"], expected)
+
+    def test_clock_gate_contains_parent_readout_as_a_limit(self):
+        child_config = small_config("v304")
+        parent_config = copy.deepcopy(child_config)
+        parent_config["solution_id"] = "v301"
+        parent_config["model"]["pooling"] = "last_available_state"
+        parent = base.create_model("v301", parent_config).eval()
+        child = create_model("v304", child_config).eval()
+        state = child.load_state_dict(parent.state_dict(), strict=False)
+        self.assertEqual(len(state.missing_keys), 6)
+        self.assertFalse(state.unexpected_keys)
+        with torch.no_grad():
+            for encoder in child.encoders.values():
+                encoder.gate.weight.zero_()
+                encoder.gate.bias.fill_(-80)
+        windows, clock = base.sample_inputs(child_config)
+        with torch.inference_mode():
+            torch.testing.assert_close(child(windows, clock), parent(windows, clock), rtol=0, atol=2e-7)
+
     def test_parent_protection_excludes_mutable_monitoring(self):
         for version in VERSIONS:
             with self.subTest(version=version), tempfile.TemporaryDirectory() as temporary:

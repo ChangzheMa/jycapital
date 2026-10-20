@@ -80,6 +80,20 @@ class QueueTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             safe_path(self.root, "../outside")
 
+    def test_capacity_remembers_a_peak_between_hourly_checks(self):
+        for version in ("v102", "v202", "v302", "v303"):
+            self.candidate(version)
+        self.assertTrue(snapshot(self.root)["pause_construction"])
+        for version, expected_count, expected_paused in (("v303", 3, True), ("v302", 2, False)):
+            path = self.root / "solutions" / version / "experiment.json"
+            spec = json.loads(path.read_text(encoding="utf-8"))
+            spec.update(status="retired", retirement_reason="测试中明确撤销")
+            atomic_json(path, spec)
+            # 每次调用重新读取文件，不能依赖同一 Python 对象保存暂停状态。
+            result = snapshot(self.root)
+            self.assertEqual(result["unevaluated_count"], expected_count)
+            self.assertEqual(result["pause_construction"], expected_paused)
+
     def test_only_imported_common_dependencies_invalidate_readiness(self):
         directory = self.candidate("v202")
         common = self.root / "common"
