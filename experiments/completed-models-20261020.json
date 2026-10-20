@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-20T18:24:32+08:00",
+  "checked_at": "2026-10-20T19:48:00+08:00",
   "source": "本地运行的冻结产物",
-  "completed_count": 19,
+  "completed_count": 20,
   "protocol_compatibility": "local-v1 仅协议标识和选模指标不同；评估器、标签与股票池指纹一致，保留原先选出的权重。",
   "runs": [
     {
@@ -1580,6 +1580,92 @@
         }
       },
       "run_path": "outputs/runs/v202-patch-mixer-s42"
+    },
+    {
+      "run_id": "v302-patch-gru-s42",
+      "solution_id": "v302",
+      "parent_run_id": "v301-global-fp16-s42",
+      "parent_solution_id": "v301",
+      "selected_at": "2026-10-20T19:20:42+08:00",
+      "selection": {
+        "best_epoch": 7,
+        "best_validation_metric": 0.0793998431466455,
+        "best_validation_ic": 0.0793998431466455,
+        "epochs_completed": 12,
+        "selection_metric": "ic_mean",
+        "patience_epochs": 5,
+        "early_stopping": {
+          "mode": "best_epoch_fraction",
+          "fraction": 0.6,
+          "minimum": 4,
+          "maximum": 12,
+          "rounding": "ceil",
+          "improvement": "strict"
+        },
+        "stale_epochs": 5,
+        "model_sha256": "ec292c0d4dd17bb6f67156e588d481e0acffebfd26d501bfd175056b94edba04",
+        "selected_at": "2026-10-20T19:20:42+08:00",
+        "optimizer_steps": 181476,
+        "training_seconds_this_session": 6702.882,
+        "stop_reason": "early_stopping"
+      },
+      "parameters": 469409,
+      "seed": 42,
+      "config_sha256": "2cd392ab6b81348676e58e4eb7a1eb48203601cedbe76635f769a7d613f3b068",
+      "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+      "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+      "model_sha256": "ec292c0d4dd17bb6f67156e588d481e0acffebfd26d501bfd175056b94edba04",
+      "metrics": {
+        "validation": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 936000,
+          "predicted_rows": 936000,
+          "valid_label_rows": 935224,
+          "evaluated_rows": 935224,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 936,
+          "mse": 0.015758692810154264,
+          "mae": 0.07296838945178526,
+          "zero_prediction_mse": 2.057265373878181e-05,
+          "ic_mean": 0.0793998431466455,
+          "ic_std": 0.10688473302627517,
+          "ic_ir": 0.7428548577384467,
+          "ic_valid_cross_sections": 936,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08007194604123359,
+          "rank_ic_std": 0.09147761536751552,
+          "rank_ic_ir": 0.8753173737590434,
+          "rank_ic_valid_cross_sections": 936,
+          "rank_ic_undefined_cross_sections": 0
+        },
+        "test": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 1000000,
+          "predicted_rows": 1000000,
+          "valid_label_rows": 998539,
+          "evaluated_rows": 998539,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 1000,
+          "mse": 0.017114156845469262,
+          "mae": 0.07608960933941611,
+          "zero_prediction_mse": 2.20817637455184e-05,
+          "ic_mean": 0.08591472163509825,
+          "ic_std": 0.11649793142214615,
+          "ic_ir": 0.7374785164534341,
+          "ic_valid_cross_sections": 1000,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08234746983039959,
+          "rank_ic_std": 0.10332127712647779,
+          "rank_ic_ir": 0.797003987180649,
+          "rank_ic_valid_cross_sections": 1000,
+          "rank_ic_undefined_cross_sections": 0
+        }
+      },
+      "run_path": "outputs/runs/v302-patch-gru-s42"
     }
   ]
 }
