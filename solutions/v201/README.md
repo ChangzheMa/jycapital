@@ -2,7 +2,7 @@
 
 [文档目录](../../docs/README.md) · [三个研究家族](../../docs/research-branches.md) · [代码父版本 v9](../v9/README.md) · [模型](v201_model.py) · [模型配置](model-config.json)
 
-v20x MLP 混合器研究家族的首版，以 v9 为代码父版本。研究假设是以时间／通道分解、共享权重及低秩约束，学习长窗口中的有效组合并控制容量。当前默认全局模式交付代码与合成实现验证，尚无该模式的正式成绩或平台材料；旧月内运行以冻结记录为准。
+v20x MLP 混合器研究家族的首版，以 v9 为代码父版本。研究假设是以时间／通道分解、共享权重及低秩约束，学习长窗口中的有效组合并控制容量。全局运行 `v201-global-fp16-s42` 已完成训练、验证和测试，达到本地改善条件；冻结结果及平台材料见下文。
 
 ## 主干
 
@@ -29,10 +29,27 @@ v20x MLP 混合器研究家族的首版，以 v9 为代码父版本。研究假�
 
 目录内包含独立预处理、切窗、训练、原始行情推理、文本张量和复现模块，不导入其他方案。沿用 v9 的窗口、字段和监督定义，采样及存储精度按当前配置；低秩瓶颈、LayerNorm、Dropout 和分解汇总属于本主干方案。`parent_solution_id=v9`，父 run 为空。
 
-以下仅为未来获准正式训练后的命令，本轮未执行：
+后续新建独立运行可使用以下入口；已完成的冻结运行不能重训覆盖：
 
 ```powershell
-.venv-training/Scripts/python.exe -u solutions/v201/v201_train.py --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v201-global-fp16-s42 --training-confirmed
+.venv-training/Scripts/python.exe -u solutions/v201/v201_train.py --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v201-global-fp16-new-s42 --evaluation-cache-mode stream --training-confirmed
 ```
 
-原始行情入口为 [v201_predict.py](v201_predict.py)，与训练共用 [WindowBlock](v201_data.py)。独立预处理使用 `v201_prepare.py`、`v201_apply.py`；协议、恢复、评估和文本附件约定见[开发约定](../../docs/development.md)。正式导出及平台运行尚未验证。
+原始行情入口为 [v201_predict.py](v201_predict.py)，与训练共用 [WindowBlock](v201_data.py)。独立预处理使用 `v201_prepare.py`、`v201_apply.py`；协议、恢复、评估和文本附件约定见[开发约定](../../docs/development.md)。
+
+## 冻结结果与平台材料
+
+依据 2026-10-20（UTC+08:00）的实际产物，seed=42，第 5 轮按验证 IC 选中，第 9 轮动态早停。训练从头使用全局随机样本与 FP16 输入；验证执行路径升级和资源暂停保留原模型、配置、优化器、随机状态及早停计数。累计逐轮耗时约 4.59 小时，包含验证；最后一次恢复会话的 1.01 小时不是全部训练成本。
+
+| 参照角色／方案 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC |
+| --- | ---: | ---: | ---: | ---: |
+| v201 | 0.077352 | 0.078214 | 0.081427 | 0.080190 |
+| 此前本地验证最优 v7e | 0.076757 | 0.072320 | 0.079773 | 0.074215 |
+| 轻量非卷积对照 v101 | 0.076741 | 0.079479 | 0.082303 | 0.083960 |
+| 代码父版本 v9 | 0.067835 | 0.067583 | 0.077534 | 0.075617 |
+
+相对 v7e，验证／测试 IC 分别提高 0.000595／0.001654，两个区间各有 4／6 个月改善；全局及最低截面覆盖均为 100%，IC 未定义截面为零，因此属于单种子本地改善候选。测试 IC IR 从 0.720469 降至 0.681233，9 月和 10 月 IC 退化，不能称为全面改善。v9 是代码父版本对照，没有继承其权重。
+
+[换手与持续性诊断](../../docs/signal-diagnostics.md)中，v201 相对 v7e 的日内换手代理下降、秩自相关提高，为平台测试提供补充依据；该代理不等同于平台 BARRA 后的官方换手。已有最高公榜提交按文件名对应 v7e，但尚缺可信本地 run／权重绑定。
+
+冻结比较见 [v201-mixer.json](../../experiments/v201-mixer.json)。平台材料在 [submissions/v201-global-fp16-s42](../../submissions/v201-global-fp16-s42)，只上传其中的 `v201-submission.ipynb` 和 `v201-model.json`。权重为完整精度文本，训练及推理使用冻结源码；独立入口验证的环境、日期范围、误差和状态以[提交清单](../../experiments/v201-global-fp16-s42-submission.json)为准。平台上传及官方评分另行记录。

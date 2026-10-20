@@ -80,6 +80,8 @@ v3 及以后使用 `--training-confirmed`；v2 不接受该参数。中断运行
 | v7 导出／验证 | [export-v7.py](../scripts/export-v7.py)、[verify-v7-submission.py](../scripts/verify-v7-submission.py) |
 | v7e 导出／验证 | [export-v7e.py](../scripts/export-v7e.py)、[verify-v7e-submission.py](../scripts/verify-v7e-submission.py) |
 | v101 导出／验证 | [export-v101.py](../scripts/export-v101.py)、[verify-v101-submission.py](../scripts/verify-v101-submission.py) |
+| v201 导出／验证 | [export-v201.py](../scripts/export-v201.py)、[verify-v201-submission.py](../scripts/verify-v201-submission.py) |
+| 信号换手与持续性代理 | [diagnose-signals.py](../scripts/diagnose-signals.py)，定义及局限见[诊断说明](signal-diagnostics.md) |
 
 晋级、历史参照及平台分回填统一按[比较规则](../.agents/skills/jycapital-experiment/references/comparison.md)。用户要求导出未晋级版本时，使用 `--platform-test-reason` 保留原判定和导出理由。
 

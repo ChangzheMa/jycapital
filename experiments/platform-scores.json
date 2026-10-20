@@ -2,19 +2,150 @@
   "source": "bigquant_submissions_api",
   "endpoint": "https://bigquant.com/bigapis/alphathon/v1/submissions",
   "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
-  "queried_at": "2026-10-16T12:07:59+08:00",
-  "scope": "当前账号可见的完整提交列表，不代表全平台排行榜；平台未返回评估区间、榜单版本或名次。",
-  "ranking": {
-    "stage": "public",
-    "metric": "public_score",
-    "direction": "higher_is_better",
-    "source": "docs/bigquant-2026-end-to-end/rules.md#6-评分"
-  },
+  "queried_at": "2026-10-20T14:50:54+08:00",
+  "pages_fetched": 1,
+  "total_pages": 1,
+  "total": 7,
+  "returned": 7,
   "submissions": [
     {
+      "id": "9a994f25-1181-4630-b27e-755522151391",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-20T11:21:56.614018+08:00",
+      "updated_at": "2026-10-20T11:21:56.614028+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v101-submission.ipynb",
+          "size": 8069
+        },
+        {
+          "name": "v101-model.json",
+          "size": 18195183
+        }
+      ],
+      "public_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "public_score_data": {},
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v101",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
+      }
+    },
+    {
+      "id": "c4ad5583-6c12-4296-87db-ab89672bebea",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-19T16:09:07.239855+08:00",
+      "updated_at": "2026-10-20T14:33:53.206035+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v7e-submission.ipynb",
+          "size": 7342
+        },
+        {
+          "name": "v7e-model.json",
+          "size": 44707826
+        }
+      ],
+      "public_score": {
+        "raw": "0.37500",
+        "value": 0.375,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4322315423908765,
+        "ic_mean": 0.07216794075826705,
+        "turnover": 0.6291563786008232,
+        "sharpe_ratio": 36.274662354635325,
+        "stress_stability": 1.217428697242544
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v7e",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
+      }
+    },
+    {
+      "id": "4a69f92f-7e4f-4ab8-86b6-6cf1e68715be",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-16T12:35:26.918797+08:00",
+      "updated_at": "2026-10-20T14:33:42.311766+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v7-model.json",
+          "size": 45131559
+        },
+        {
+          "name": "v7-submission.ipynb",
+          "size": 6684
+        }
+      ],
+      "public_score": {
+        "raw": "0.30852",
+        "value": 0.30852,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.2939684502727045,
+        "ic_mean": 0.06887717882609064,
+        "turnover": 0.631331569664903,
+        "sharpe_ratio": 36.902480827177754,
+        "stress_stability": 1.0515822759788207
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v7",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
+      }
+    },
+    {
       "id": "10f68d9e-d4ff-412e-b0a6-7f0f05acb08e",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-15T18:33:33.959220+08:00",
-      "updated_at": "2026-10-16T12:03:14.955378+08:00",
+      "updated_at": "2026-10-20T14:33:38.718157+08:00",
+      "selected_for_private": false,
       "files": [
         {
           "name": "v6-model.json",
@@ -26,8 +157,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.37414",
-        "value": 0.37414,
+        "raw": "0.32216",
+        "value": 0.32216,
         "state": "available"
       },
       "public_score_data": {
@@ -37,23 +168,30 @@
         "sharpe_ratio": 34.84898503004809,
         "stress_stability": 0.9722944088018692
       },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
       "private_score": {
         "raw": null,
         "value": null,
         "state": "missing"
       },
       "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
       "binding": {
         "status": "unconfirmed",
         "candidate_solution_id": "v6",
         "run_id": null,
-        "model_sha256": null
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
       }
     },
     {
       "id": "4ef73a7f-ebd7-4741-96ab-150f68366a2d",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-15T11:40:17.692107+08:00",
-      "updated_at": "2026-10-16T12:03:14.676184+08:00",
+      "updated_at": "2026-10-20T14:33:37.715983+08:00",
+      "selected_for_private": false,
       "files": [
         {
           "name": "v5-model.json",
@@ -65,8 +203,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.36426",
-        "value": 0.36426,
+        "raw": "0.30966",
+        "value": 0.30966,
         "state": "available"
       },
       "public_score_data": {
@@ -76,23 +214,30 @@
         "sharpe_ratio": 33.726411629039625,
         "stress_stability": 0.9861270388677992
       },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
       "private_score": {
         "raw": null,
         "value": null,
         "state": "missing"
       },
       "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
       "binding": {
         "status": "unconfirmed",
         "candidate_solution_id": "v5",
         "run_id": null,
-        "model_sha256": null
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
       }
     },
     {
       "id": "93ca2fa9-cdb4-46da-9e31-41131a036dbc",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-15T02:00:30.751606+08:00",
-      "updated_at": "2026-10-16T12:03:14.338957+08:00",
+      "updated_at": "2026-10-20T14:33:36.324584+08:00",
+      "selected_for_private": false,
       "files": [
         {
           "name": "v4-model.json",
@@ -104,8 +249,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.34297",
-        "value": 0.34297,
+        "raw": "0.29432",
+        "value": 0.29432,
         "state": "available"
       },
       "public_score_data": {
@@ -115,23 +260,30 @@
         "sharpe_ratio": 31.869809150814376,
         "stress_stability": 0.9156311294410936
       },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
       "private_score": {
         "raw": null,
         "value": null,
         "state": "missing"
       },
       "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
       "binding": {
         "status": "unconfirmed",
         "candidate_solution_id": "v4",
         "run_id": null,
-        "model_sha256": null
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
       }
     },
     {
       "id": "50590be6-c2c1-4d5a-bb0d-d3ec480956ec",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-12T22:14:17.732601+08:00",
-      "updated_at": "2026-10-16T12:03:13.486373+08:00",
+      "updated_at": "2026-10-20T14:33:34.591863+08:00",
+      "selected_for_private": false,
       "files": [
         {
           "name": "v2-submission.ipynb",
@@ -143,8 +295,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.25171",
-        "value": 0.25171,
+        "raw": "0.21989",
+        "value": 0.21989,
         "state": "available"
       },
       "public_score_data": {
@@ -154,145 +306,35 @@
         "sharpe_ratio": 18.45889050798737,
         "stress_stability": 0.5549764960695285
       },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
       "private_score": {
         "raw": null,
         "value": null,
         "state": "missing"
       },
       "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
       "binding": {
         "status": "unconfirmed",
         "candidate_solution_id": "v2",
         "run_id": null,
-        "model_sha256": null
-      }
-    },
-    {
-      "id": "f84c5c6b-2e98-47ec-89d2-8280340ec150",
-      "created_at": "2026-10-10T10:43:41.014986+08:00",
-      "updated_at": "2026-10-16T12:03:12.847736+08:00",
-      "files": [
-        {
-          "name": "v1-submission.ipynb",
-          "size": 658
-        },
-        {
-          "name": "submission-manifest.json",
-          "size": 3518
-        },
-        {
-          "name": "requirements-training.txt",
-          "size": 65
-        },
-        {
-          "name": "selection.json",
-          "size": 307
-        },
-        {
-          "name": "v1-model.json",
-          "size": 222993
-        },
-        {
-          "name": "v1_model.py",
-          "size": 2694
-        },
-        {
-          "name": "v1_data.py",
-          "size": 7277
-        },
-        {
-          "name": "baseline_evaluation.py",
-          "size": 4190
-        },
-        {
-          "name": "config.json",
-          "size": 868
-        },
-        {
-          "name": "artifacts.py",
-          "size": 2950
-        },
-        {
-          "name": "v1_train.py",
-          "size": 16693
-        },
-        {
-          "name": "v1_predict.py",
-          "size": 1551
-        },
-        {
-          "name": "requirements.txt",
-          "size": 112
-        },
-        {
-          "name": "protocol.json",
-          "size": 1810
-        }
-      ],
-      "public_score": {
-        "raw": "0.26236",
-        "value": 0.26236,
-        "state": "available"
-      },
-      "public_score_data": {
-        "ic_ir": 0.2961108540319508,
-        "ic_mean": 0.01091193677996877,
-        "turnover": 0.005879120879120879,
-        "sharpe_ratio": 5.230560039029173,
-        "stress_stability": 0.1908637599099925
-      },
-      "private_score": {
-        "raw": null,
-        "value": null,
-        "state": "missing"
-      },
-      "private_score_data": {},
-      "binding": {
-        "status": "unconfirmed",
-        "candidate_solution_id": "v1",
-        "run_id": null,
-        "model_sha256": null
-      }
-    },
-    {
-      "id": "d9108552-8ed9-4889-9c89-95800598952b",
-      "created_at": "2026-10-10T00:51:27.918171+08:00",
-      "updated_at": "2026-10-16T12:03:12.726328+08:00",
-      "files": [
-        {
-          "name": "mock-submission.ipynb",
-          "size": 5982
-        }
-      ],
-      "public_score": {
-        "raw": "0.03270",
-        "value": 0.0327,
-        "state": "available"
-      },
-      "public_score_data": {
-        "ic_ir": -0.057554320650896294,
-        "ic_mean": -0.0016647496553173571,
-        "turnover": 0.8995532039976484,
-        "sharpe_ratio": -0.7755368247257564,
-        "stress_stability": -0.10298046894013582
-      },
-      "private_score": {
-        "raw": null,
-        "value": null,
-        "state": "missing"
-      },
-      "private_score_data": {},
-      "binding": {
-        "status": "not_a_model_run",
-        "candidate_solution_id": null,
-        "run_id": null,
-        "model_sha256": null
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
       }
     }
   ],
+  "scope": "当前账号可见的提交列表，不代表全平台排行榜；本地 run 和权重对应关系尚未确认。",
+  "ranking": {
+    "stage": "public",
+    "metric": "public_score",
+    "direction": "higher_is_better",
+    "source": "docs/bigquant-2026-end-to-end/rules.md#6-评分"
+  },
   "best_public": {
-    "platform_submission_id": "10f68d9e-d4ff-412e-b0a6-7f0f05acb08e",
-    "score": 0.37414,
+    "platform_submission_id": "c4ad5583-6c12-4296-87db-ab89672bebea",
+    "score": 0.375,
     "run_id": null,
     "binding_status": "unconfirmed"
   },

@@ -2,9 +2,9 @@
 
 [文档目录](../../docs/README.md) · [修改备忘录](../../docs/v7-discussion.md) · [模型配置](model-config.json) · [模型代码](v8_model.py) · [训练入口](v8_train.py)
 
-父版本为冻结运行 `v7-20261016-no-layernorm-s42`。根据用户于 2026-10-18（UTC+08:00）的要求整合备忘录全部六组修改，同次确认将第 6 组预测时刻 one-hot 纳入 v8。当前交付为待训练代码，可继续讨论调整；尚无正式训练、验证／测试成绩或平台材料。
+父版本为冻结运行 `v7-20261016-no-layernorm-s42`。根据用户于 2026-10-18（UTC+08:00）的要求整合备忘录全部六组修改，同次确认将第 6 组预测时刻 one-hot 纳入 v8。运行 `v8-combined-s42` 已完成训练和双集评估：验证 IC 0.070983、测试 IC 0.078567，未达到改善条件，没有导出平台材料。完整指标见[冻结汇总](../../experiments/completed-models-20261020.json)。
 
-v8 的研究变量限定为备忘录六组修改，没有混入后续讨论的长窗口、删除 15 分钟分支或移除 Bar 时间通道；这些变更单独实现于 [v9](../v9/README.md)。代码中的额外整合工作仅为版本命名、配置／形状校验及无用辅助函数清理。配置范围和沿用模块由测试核对；原始 Parquet → 预处理 → 留出集转换 → 训练／验证／测试主入口已在临时合成数据上贯通，正式行情效果仍待训练评估。
+v8 的研究变量限定为备忘录六组修改，没有混入后续讨论的长窗口、删除 15 分钟分支或移除 Bar 时间通道；这些变更单独实现于 [v9](../v9/README.md)。代码中的额外整合工作仅为版本命名、配置／形状校验及无用辅助函数清理。配置范围和沿用模块由测试核对；合成入口验证与正式行情效果分别记录。
 
 ## 组合方案
 
@@ -33,11 +33,11 @@ v8 的研究变量限定为备忘录六组修改，没有混入后续讨论的�
 - `factor_scale=1`，输出保留标准化目标单位，不对预测做截面标准化，也不解释为收益预测。公共评估器的原始标签差值 MSE／MAE 与标准化目标 Huber 分开解释。
 - 预测时刻按 UTC+08:00 固定为 `09:30、10:00、10:30、11:00、11:30、13:30、14:00、14:30`。未知时刻、非整分钟或 NaT 报错。
 
-模型、切窗、损失、预处理、训练、推理、文本张量和复现模块均位于本目录，不导入 v7a—v7f 代码。训练快照按 `solution_id=v8` 保存实际源码；[比较工具](../../scripts/compare.py)和[候选评估工具](../../scripts/assess.py)接受该方案标识。当前只准备训练和推理代码，平台导出及附件分片在后续材料阶段处理。
+模型、切窗、损失、预处理、训练、推理、文本张量和复现模块均位于本目录，不导入 v7a—v7f 代码。训练快照按 `solution_id=v8` 保存实际源码；[比较工具](../../scripts/compare.py)和[候选评估工具](../../scripts/assess.py)接受该方案标识。正式运行已冻结，后续不得以修改工作区代码的方式改变旧权重含义。
 
 ## 后续运行
 
-复用冻结输入预处理，无需因本版改动重新生成：`outputs/preprocessing/v2-20261010` 和 `outputs/preprocessing/v2-holdout-20261011`。时间划分和数据边界见[开发约定](../../docs/development.md)。以下命令仅供后续明确开始训练时使用，本次未执行：
+复用冻结输入预处理，无需因本版改动重新生成：`outputs/preprocessing/v2-20261010` 和 `outputs/preprocessing/v2-holdout-20261011`。时间划分和数据边界见[开发约定](../../docs/development.md)。以下是历史运行入口；新实验须换用独立 run_id，不重跑覆盖已经完成的目录：
 
 ```powershell
 .venv-training/Scripts/python.exe -u solutions/v8/v8_train.py --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v8-combined-s42 --training-confirmed
