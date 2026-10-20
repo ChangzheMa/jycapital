@@ -1,6 +1,8 @@
 """临时合成 Parquet 上的预处理、留出集转换和训练主入口完整衔接。"""
 
 import contextlib
+import copy
+import hashlib
 import importlib
 import io
 import json
@@ -14,15 +16,16 @@ import torch
 import numpy as np
 import pandas as pd
 
-from test_continuous_candidates import ROOT, VERSIONS, small_config, PARENTS
+from test_continuous_candidates import ROOT, VERSIONS, CONFIGS, small_config, PARENTS
 
 
 class EntrypointTests(unittest.TestCase):
     config_factory = staticmethod(small_config)
 
     def test_three_families_full_synthetic_entrypoints(self):
-        for version in VERSIONS:
-            with self.subTest(version=version), tempfile.TemporaryDirectory() as tmp:
+        cases = [(v, False) for v in VERSIONS] + [("v401", True)]
+        for version, global_mode in cases:
+            with self.subTest(version=version, global_mode=global_mode), tempfile.TemporaryDirectory() as tmp:
                 sys.path.insert(0, str(ROOT / "solutions" / version))
                 prep = importlib.import_module(version + "_prepare")
                 apply = importlib.import_module(version + "_apply")
@@ -34,6 +37,11 @@ class EntrypointTests(unittest.TestCase):
                 preprocessing = json.loads((ROOT / "solutions" / version / "config.json").read_text(encoding="utf-8"))
                 preprocessing["processing"].update(threads=1, batch_rows=256)
                 config["training"].update(epochs=1, cpu_threads=1, batch_size=8, checkpoint_batches=1)
+                if global_mode:
+                    config["data"]["input_precision"] = CONFIGS[version]["data"]["input_precision"]
+                    config["training"]["batching"] = "global_shuffled_samples"
+                    config["training"]["resident_cache"] = copy.deepcopy(CONFIGS[version]["training"]["resident_cache"])
+                    config["training"]["resident_cache"]["memory_reserve_gib"] = 0
                 protocol = json.loads((ROOT / "evaluation/protocols/local-v2-ic.json").read_text(encoding="utf-8"))
                 protocol["min_cross_section_size"] = 3
                 protocol["splits"] = {
@@ -85,6 +93,13 @@ class EntrypointTests(unittest.TestCase):
                 self.assertEqual(manifest["status"], "complete")
                 self.assertEqual(manifest["stage"], "complete")
                 self.assertEqual(manifest["solution_id"], version)
+                if global_mode:
+                    overlay = json.loads((run / "target-overlay.json").read_text(encoding="utf-8"))
+                    self.assertEqual(overlay, manifest["target_overlay"])
+                    self.assertEqual(overlay["eligible_rows"], 42)
+                    record = json.loads((run / "resident-cache.json").read_text(encoding="utf-8"))
+                    base_targets = np.load(Path(record["path"]) / "targets.npy")
+                    self.assertNotEqual(overlay["targets_sha256"], hashlib.sha256(base_targets.tobytes()).hexdigest())
                 for split in ("validation", "test"):
                     self.assertEqual(manifest["metrics"][split]["coverage"], 1)
                     predictions = pd.read_parquet(run / "evaluation" / split / "predictions.parquet")

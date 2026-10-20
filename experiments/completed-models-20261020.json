@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-20T19:48:00+08:00",
+  "checked_at": "2026-10-20T21:55:20+08:00",
   "source": "本地运行的冻结产物",
-  "completed_count": 20,
+  "completed_count": 21,
   "protocol_compatibility": "local-v1 仅协议标识和选模指标不同；评估器、标签与股票池指纹一致，保留原先选出的权重。",
   "runs": [
     {
@@ -1666,6 +1666,92 @@
         }
       },
       "run_path": "outputs/runs/v302-patch-gru-s42"
+    },
+    {
+      "run_id": "v102-clock-readout-s42",
+      "solution_id": "v102",
+      "parent_run_id": "v101-global-fp16-migrated-s42",
+      "parent_solution_id": "v101",
+      "selected_at": "2026-10-20T21:22:43+08:00",
+      "selection": {
+        "best_epoch": 7,
+        "best_validation_metric": 0.07512053351631273,
+        "best_validation_ic": 0.07512053351631273,
+        "epochs_completed": 12,
+        "selection_metric": "ic_mean",
+        "patience_epochs": 5,
+        "early_stopping": {
+          "mode": "best_epoch_fraction",
+          "fraction": 0.6,
+          "minimum": 4,
+          "maximum": 12,
+          "rounding": "ceil",
+          "improvement": "strict"
+        },
+        "stale_epochs": 5,
+        "model_sha256": "47abff469c53eebd1058e74abd87e21b0cfb9aaa45e40198959ed78a93fdbe64",
+        "selected_at": "2026-10-20T21:22:43+08:00",
+        "optimizer_steps": 181476,
+        "training_seconds_this_session": 7090.18,
+        "stop_reason": "early_stopping"
+      },
+      "parameters": 770465,
+      "seed": 42,
+      "config_sha256": "824e2406ee160fa624c00e30764f56a128f5a19f1e81f32bfe4d2c7144ce7159",
+      "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+      "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+      "model_sha256": "47abff469c53eebd1058e74abd87e21b0cfb9aaa45e40198959ed78a93fdbe64",
+      "metrics": {
+        "validation": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 936000,
+          "predicted_rows": 936000,
+          "valid_label_rows": 935224,
+          "evaluated_rows": 935224,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 936,
+          "mse": 0.01273774982737328,
+          "mae": 0.0671315929034535,
+          "zero_prediction_mse": 2.057265373878181e-05,
+          "ic_mean": 0.07512053351631273,
+          "ic_std": 0.10760844681109075,
+          "ic_ir": 0.6980914207245149,
+          "ic_valid_cross_sections": 936,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.07860437175998265,
+          "rank_ic_std": 0.10064778725541444,
+          "rank_ic_ir": 0.7809845989013937,
+          "rank_ic_valid_cross_sections": 936,
+          "rank_ic_undefined_cross_sections": 0
+        },
+        "test": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 1000000,
+          "predicted_rows": 1000000,
+          "valid_label_rows": 998539,
+          "evaluated_rows": 998539,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 1000,
+          "mse": 0.014695797452395958,
+          "mae": 0.07103133216533983,
+          "zero_prediction_mse": 2.20817637455184e-05,
+          "ic_mean": 0.07962754115625677,
+          "ic_std": 0.1197156016446754,
+          "ic_ir": 0.6651392137893363,
+          "ic_valid_cross_sections": 1000,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08050166489497326,
+          "rank_ic_std": 0.11521167834369483,
+          "rank_ic_ir": 0.6987283411914541,
+          "rank_ic_valid_cross_sections": 1000,
+          "rank_ic_undefined_cross_sections": 0
+        }
+      },
+      "run_path": "outputs/runs/v102-clock-readout-s42"
     }
   ]
 }
