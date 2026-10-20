@@ -2,12 +2,92 @@
   "source": "bigquant_submissions_api",
   "endpoint": "https://bigquant.com/bigapis/alphathon/v1/submissions",
   "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
-  "queried_at": "2026-10-20T14:50:54+08:00",
+  "queried_at": "2026-10-20T18:26:03+08:00",
   "pages_fetched": 1,
   "total_pages": 1,
-  "total": 7,
-  "returned": 7,
+  "total": 9,
+  "returned": 9,
   "submissions": [
+    {
+      "id": "50bb9716-dd47-4439-b269-5e3867db97f0",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-20T17:59:58.879247+08:00",
+      "updated_at": "2026-10-20T17:59:58.879259+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v301-submission.ipynb",
+          "size": 8005
+        },
+        {
+          "name": "v301-model.json",
+          "size": 15274281
+        }
+      ],
+      "public_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "public_score_data": {},
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v301",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
+      }
+    },
+    {
+      "id": "d4fec513-f654-420c-8e05-be472821273f",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-20T17:58:11.292414+08:00",
+      "updated_at": "2026-10-20T17:58:11.292431+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v201-submission.ipynb",
+          "size": 8030
+        },
+        {
+          "name": "v201-model.json",
+          "size": 16942197
+        }
+      ],
+      "public_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "public_score_data": {},
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v201",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only"
+      }
+    },
     {
       "id": "9a994f25-1181-4630-b27e-755522151391",
       "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
@@ -52,7 +132,7 @@
       "id": "c4ad5583-6c12-4296-87db-ab89672bebea",
       "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-19T16:09:07.239855+08:00",
-      "updated_at": "2026-10-20T14:33:53.206035+08:00",
+      "updated_at": "2026-10-20T18:25:56.583855+08:00",
       "selected_for_private": false,
       "files": [
         {
@@ -65,8 +145,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.37500",
-        "value": 0.375,
+        "raw": "0.37288",
+        "value": 0.37288,
         "state": "available"
       },
       "public_score_data": {
@@ -98,7 +178,7 @@
       "id": "4a69f92f-7e4f-4ab8-86b6-6cf1e68715be",
       "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-16T12:35:26.918797+08:00",
-      "updated_at": "2026-10-20T14:33:42.311766+08:00",
+      "updated_at": "2026-10-20T18:25:53.499031+08:00",
       "selected_for_private": false,
       "files": [
         {
@@ -111,8 +191,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.30852",
-        "value": 0.30852,
+        "raw": "0.30678",
+        "value": 0.30678,
         "state": "available"
       },
       "public_score_data": {
@@ -144,7 +224,7 @@
       "id": "10f68d9e-d4ff-412e-b0a6-7f0f05acb08e",
       "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-15T18:33:33.959220+08:00",
-      "updated_at": "2026-10-20T14:33:38.718157+08:00",
+      "updated_at": "2026-10-20T18:25:52.563565+08:00",
       "selected_for_private": false,
       "files": [
         {
@@ -157,8 +237,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.32216",
-        "value": 0.32216,
+        "raw": "0.32090",
+        "value": 0.3209,
         "state": "available"
       },
       "public_score_data": {
@@ -190,7 +270,7 @@
       "id": "4ef73a7f-ebd7-4741-96ab-150f68366a2d",
       "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-15T11:40:17.692107+08:00",
-      "updated_at": "2026-10-20T14:33:37.715983+08:00",
+      "updated_at": "2026-10-20T18:25:52.183942+08:00",
       "selected_for_private": false,
       "files": [
         {
@@ -203,8 +283,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.30966",
-        "value": 0.30966,
+        "raw": "0.30847",
+        "value": 0.30847,
         "state": "available"
       },
       "public_score_data": {
@@ -236,7 +316,7 @@
       "id": "93ca2fa9-cdb4-46da-9e31-41131a036dbc",
       "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-15T02:00:30.751606+08:00",
-      "updated_at": "2026-10-20T14:33:36.324584+08:00",
+      "updated_at": "2026-10-20T18:25:51.809992+08:00",
       "selected_for_private": false,
       "files": [
         {
@@ -249,8 +329,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.29432",
-        "value": 0.29432,
+        "raw": "0.29322",
+        "value": 0.29322,
         "state": "available"
       },
       "public_score_data": {
@@ -282,7 +362,7 @@
       "id": "50590be6-c2c1-4d5a-bb0d-d3ec480956ec",
       "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
       "created_at": "2026-10-12T22:14:17.732601+08:00",
-      "updated_at": "2026-10-20T14:33:34.591863+08:00",
+      "updated_at": "2026-10-20T18:25:50.767583+08:00",
       "selected_for_private": false,
       "files": [
         {
@@ -295,8 +375,8 @@
         }
       ],
       "public_score": {
-        "raw": "0.21989",
-        "value": 0.21989,
+        "raw": "0.21921",
+        "value": 0.21921,
         "state": "available"
       },
       "public_score_data": {
@@ -334,7 +414,7 @@
   },
   "best_public": {
     "platform_submission_id": "c4ad5583-6c12-4296-87db-ab89672bebea",
-    "score": 0.375,
+    "score": 0.37288,
     "run_id": null,
     "binding_status": "unconfirmed"
   },
