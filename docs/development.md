@@ -64,6 +64,8 @@ x=\min\left(12,\max\left(4,\left\lceil0.6e_{\text{best}}\right\rceil\right)\righ
 
 v3 及以后使用 `--training-confirmed`；v2 不接受该参数。中断运行可加 `--resume`，已完成运行不能续跑；源码、配置或数据改变时创建新运行。v1 的不同入口见 [基线说明](baseline-v1.md#使用与提交)。
 
+限定例外：v201／v301 已有全局 run 可通过[验证缓存升级入口](resident-training.md#已有全局-run-的恢复)在原目录恢复。该入口只接受已登记的验证执行路径补丁，保留原源码及 checkpoint 状态，继续检查配置、协议和其他源码；不用于改变模型或训练方案。
+
 ## 比较与导出工具
 
 | 用途 | 入口 |

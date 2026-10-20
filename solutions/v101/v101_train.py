@@ -30,13 +30,19 @@ from v101_model import MultiFrequencyPatchTransformer, validate_model_config
 from v101_data import section_indices
 from v101_loss import standardized_huber_loss, standardized_targets, sample_huber_loss
 from protocol_compatibility import validate_protocol_compatibility
-from resident_data import (ResidentBatches, ResidentStore, open_resident_store, validate_resident_config)
+from resident_data import (ResidentBatches, ResidentStore, TrainingPlan, open_resident_store, validate_resident_config)
+from training_migration import (prepare_state, remaining_order, validate_implementation, verify_source, state_digest,
+                                source_record, validate_transition)
+from training_resources import record_resources
 
 
 def atomic_torch_save(value, path):
+    started = time.perf_counter()
     temporary = Path(str(path) + ".tmp")
     torch.save(value, temporary)
     os.replace(temporary, path)
+    log_event(Path(path).parent, "checkpoint_saved", checkpoint=Path(path).name,
+              seconds=round(time.perf_counter() - started, 6))
 
 
 def configure(config):
@@ -152,6 +158,9 @@ def draw_history(run, history):
         axes[1].plot(frame.epoch, frame[key], label="validation_" + key)
     for axis in axes:
         axis.set_xlabel("Epoch")
+        if (run / "migration.json").exists():
+            boundary = read_json(run / "migration.json")["sample_handoff"]["epoch"] - .5
+            axis.axvline(boundary, color="gray", linestyle="--", label="FP16/global migration")
         axis.legend()
     fig.tight_layout()
     fig.savefig(run / "learning-curves.png", dpi=160)
@@ -337,6 +346,55 @@ def parent_snapshot(root, config):
     return files
 
 
+def initialize_migration(store, run, config, manifest, catalog, model, optimizer, device):
+    if not isinstance(store, ResidentStore):
+        raise ValueError("迁移目标必须加载全局常驻缓存")
+    source = Path(manifest["migration_source"]).resolve()
+    validate_implementation(source, HERE)
+    plan = TrainingPlan(store.original)
+    state, record, last, best = prepare_state(source, run, config, store.protocol, catalog,
+                                             plan.keys, store.block.targets, read_json(run / "data-manifest.json"))
+    del plan
+    shutil.copyfile(source / "history.csv", run / "legacy-history.csv")
+    model.load_state_dict(best["state_dict"], strict=True)
+    baseline_started = time.perf_counter()
+    manifest.update(stage="migration_baseline_validation")
+    write_json(run / "manifest.json", manifest)
+    log_event(run, "migration_baseline_started", source_best_epoch=best["epoch"])
+    predictions, keys, result = predict_split(store, "validation", model, device, config, run)
+    huber, undefined = huber_loss_check(predictions, keys, store.protocol, config)
+    if result[0]["ic_mean"] is None or undefined or result[0]["coverage_violations"]:
+        raise ValueError("原最佳权重在新输入精度下未通过验证，不能初始化选模基线")
+    atomic_torch_save({"state_dict": {k: v.cpu() for k, v in model.state_dict().items()},
+                       "config": config, "protocol": store.protocol, "epoch": best["epoch"]}, run / "best.pt")
+    save_evaluation(run, "validation", predictions, result)
+    save_evaluation(run / "migration-baseline", "validation", predictions, result)
+    baseline = {"epoch": best["epoch"], "source_best_sha256": record["source_files"]["best.pt"],
+                "new_best_sha256": sha256(run / "best.pt"), "metrics": result[0], "huber_loss": huber,
+                "seconds": time.perf_counter() - baseline_started, "input_precision": config["data"]["input_precision"],
+                "legacy_validation_ic": state["best"], "preserved_stale_epochs": state["stale"]}
+    write_json(run / "migration-baseline.json", baseline)
+    state["best"] = result[0]["ic_mean"]
+    # 基线验证与继续优化分开；最后恢复 last.pt、完整 AdamW 和随机状态。
+    model.load_state_dict(last["state_dict"], strict=True)
+    optimizer.load_state_dict(last["optimizer"])
+    if state_digest(model.state_dict()) != state_digest(last["state_dict"]) or state_digest(optimizer.state_dict()) != state_digest(last["optimizer"]):
+        raise ValueError("迁移后的模型或优化器状态未精确继承")
+    restore_rng(last, device)
+    record.update(optimizer_inherited=True, rng_inherited=True,
+                  last_state_sha256=state_digest(last["state_dict"]),
+                  optimizer_state_sha256=state_digest(last["optimizer"]),
+                  validation_baseline=baseline)
+    write_json(run / "migration.json", record)
+    verify_source(record)
+    manifest["migration"] = {"kind": record["kind"], "source_run_id": record["source_run_id"],
+                             "epoch": state["epoch"], "sample_handoff": record["sample_handoff"]}
+    log_event(run, "migration_initialized", source_run_id=source.name, epoch=state["epoch"],
+              processed_samples=record["sample_handoff"]["processed_samples"],
+              remaining_samples=record["sample_handoff"]["remaining_samples"], optimizer_inherited=True)
+    return state
+
+
 def train(store, run, config, manifest, resume=False):
     validate_training(config, store.protocol)
     if (config["training"]["batching"] == "global_shuffled_samples") != isinstance(store, ResidentStore):
@@ -367,8 +425,12 @@ def train(store, run, config, manifest, resume=False):
         optimizer.load_state_dict(checkpoint["optimizer"])
         state = checkpoint["progress"]
         restore_rng(checkpoint, device)
+        if manifest.get("migration_source"):
+            verify_source(read_json(run / "migration.json"))
+    elif manifest.get("migration_source"):
+        state = initialize_migration(store, run, config, manifest, catalog, model, optimizer, device)
     log_event(run, "training_started", parameters=env["parameters"], device=env["device_name"], resume=resume)
-    manifest.update(stage="training")
+    manifest.update(status="running", stage="training")
     write_json(run / "manifest.json", manifest)
     started = checkpoint_clock = time.perf_counter()
     catalog_digest = sha256(run / "structural-sections.json")
@@ -385,6 +447,8 @@ def train(store, run, config, manifest, resume=False):
         write_json(run / "progress.json", {k: state[k] for k in (
             "epoch", "month_cursor", "sample_cursor", "optimizer_steps", "best_epoch", "stale")})
 
+    if manifest.get("migration_source") and not (run / "last.pt").exists():
+        save_progress()
     for epoch in range(state["epoch"], spec["epochs"] + 1):
         if should_stop(state):
             break
@@ -399,6 +463,9 @@ def train(store, run, config, manifest, resume=False):
                 if actual_skipped != {stamp: record["reason"] for stamp, record in skipped.items()}:
                     raise ValueError("标准化目标与预检退化截面清单不同")
                 order = shuffled_sample_indices(targets, config["seed"], epoch, month)
+                handoff_order = remaining_order(run, state, config["seed"], epoch)
+                if handoff_order is not None:
+                    order = handoff_order
                 for offset, indices, windows, clock, target in training_batches(
                         block, order, targets, state["sample_cursor"], spec["batch_size"], device):
                     step = training_step(model, optimizer, windows, clock, target, config, amp)
@@ -410,10 +477,15 @@ def train(store, run, config, manifest, resume=False):
                     state["sample_cursor"] = offset + len(indices)
                     if state["epoch_steps"] % spec["checkpoint_batches"] == 0:
                         save_progress()
+                if isinstance(store, ResidentStore):
+                    state["skipped"] = {}
                 for record in skipped.values():
                     reason = record["reason"]
                     state["skipped"][reason] = state["skipped"].get(reason, 0) + 1
-                state["sections"] += catalog["months"][month]["sections"] - len(skipped)
+                if isinstance(store, ResidentStore):
+                    state["sections"] = catalog["months"][month]["sections"] - len(skipped)
+                else:
+                    state["sections"] += catalog["months"][month]["sections"] - len(skipped)
                 state.update(month_cursor=state["month_cursor"] + 1, sample_cursor=0)
                 save_progress()
                 log_event(run, "trained_month", epoch=epoch, month=month, month_cursor=state["month_cursor"],
@@ -421,9 +493,11 @@ def train(store, run, config, manifest, resume=False):
                           optimizer_steps=state["optimizer_steps"],
                           seconds=round(time.perf_counter() - month_start, 3))
                 del block
+        validation_started = time.perf_counter()
         predictions, keys, result = predict_split(store, "validation", model, device, config, run)
         metric = result[0]["ic_mean"]
         validation_loss, model_undefined = huber_loss_check(predictions, keys, store.protocol, config)
+        validation_seconds = time.perf_counter() - validation_started
         if metric is None:
             raise ValueError("验证 IC 无定义，不能选择权重")
         eligible = model_undefined == 0 and result[0]["coverage_violations"] == 0
@@ -448,10 +522,26 @@ def train(store, run, config, manifest, resume=False):
                "train_rows": state["rows"],
                "train_sections": state["sections"], "optimizer_steps": state["epoch_steps"],
                "skipped_sections": sum(state["skipped"].values()),
+               "validation_seconds": validation_seconds,
                "seconds": round(state["epoch_seconds"] + time.perf_counter() - checkpoint_clock, 3)}
+        migration = state.get("migration")
+        row["training_phase"] = "global_fp16" if isinstance(store, ResidentStore) else "monthly_fp32"
+        if migration and epoch == migration["epoch"]:
+            new_rows = state["rows"] - migration["legacy_rows"]
+            if new_rows != migration["remaining_samples"]:
+                raise ValueError("迁移轮次的剩余样本未恰好处理一次")
+            row.update(training_phase="monthly_fp32_then_global_fp16",
+                       legacy_train_rows=migration["legacy_rows"], new_train_rows=new_rows,
+                       legacy_train_loss=migration["legacy_loss_sum"] / migration["legacy_rows"] if migration["legacy_rows"] else None,
+                       new_train_loss=(state["loss_sum"] - migration["legacy_loss_sum"]) / new_rows if new_rows else None,
+                       legacy_epoch_seconds=migration["legacy_seconds"],
+                       new_epoch_seconds=row["seconds"] - migration["legacy_seconds"],
+                       legacy_optimizer_steps=migration["legacy_epoch_steps"],
+                       new_optimizer_steps=state["epoch_steps"] - migration["legacy_epoch_steps"])
         state["history"].append(row)
         pd.DataFrame(state["history"]).to_csv(run / "history.csv", index=False, encoding="utf-8-sig")
         log_event(run, "epoch_finished", **row)
+        record_resources(run, device)
         state.update(epoch=epoch + 1, month_cursor=0, sample_cursor=0, loss_sum=0.0,
                      sections=0, rows=0, epoch_steps=0, skipped={}, epoch_seconds=0.0)
         checkpoint_clock = time.perf_counter()
@@ -466,6 +556,11 @@ def train(store, run, config, manifest, resume=False):
                  "selected_at": now(), "optimizer_steps": state["optimizer_steps"],
                  "training_seconds_this_session": round(time.perf_counter() - started, 3),
                  "stop_reason": "early_stopping" if should_stop(state) else "max_epochs"}
+    if manifest.get("migration_source"):
+        baseline = read_json(run / "migration-baseline.json")
+        selection.update(training_trajectory="monthly_fp32_then_global_fp16",
+                         initialization_source_run=read_json(run / "migration.json")["source_run_id"],
+                         selection_baseline_epoch=baseline["epoch"], selection_baseline_ic=baseline["metrics"]["ic_mean"])
     write_json(run / "selection.json", selection)
     manifest.update(stage="test_evaluation", selection=selection)
     write_json(run / "manifest.json", manifest)
@@ -473,8 +568,11 @@ def train(store, run, config, manifest, resume=False):
     draw_history(run, state["history"])
     checkpoint = torch.load(run / "best.pt", map_location=device, weights_only=True)
     model.load_state_dict(checkpoint["state_dict"])
+    test_started = time.perf_counter()
+    log_event(run, "test_evaluation_started")
     predictions, keys, result = predict_split(store, "test", model, device, config, run)
     test_loss, undefined = huber_loss_check(predictions, keys, store.protocol, config)
+    log_event(run, "test_evaluation_finished", seconds=time.perf_counter() - test_started)
     save_evaluation(run, "test", predictions, result)
     preservation = read_json(run / "baseline-preservation.json")
     verify_parent(ROOT, preservation)
@@ -484,8 +582,9 @@ def train(store, run, config, manifest, resume=False):
         "training_batching": spec["batching"], "batch_size": spec["batch_size"],
         "training_loss_reduction": spec["loss_reduction"], "evaluation_loss_reduction": "equal_cross_sections",
         "selection_metric": "ic_mean", "factor_scale": config["inference"]["factor_scale"],
-        "best_validation_huber_loss": next(r["validation_huber_loss"] for r in state["history"]
-                                           if r["epoch"] == state["best_epoch"]),
+        "best_validation_huber_loss": (read_json(run / "migration-baseline.json")["huber_loss"]
+             if manifest.get("migration_source") and state["best_epoch"] == read_json(run / "migration-baseline.json")["epoch"]
+             else next(r["validation_huber_loss"] for r in state["history"] if r["epoch"] == state["best_epoch"])),
         "test_huber_loss": test_loss,
         "test_model_undefined_sections": undefined, "parent_preserved": bool(preservation),
     })
@@ -493,9 +592,12 @@ def train(store, run, config, manifest, resume=False):
                     metrics={s: read_json(run / "evaluation" / s / "metrics.json")
                              for s in ("validation", "test")})
     write_json(run / "manifest.json", manifest)
+    if manifest.get("migration_source"):
+        verify_source(read_json(run / "migration.json"))
     log_event(run, "completed", validation_ic=state["best"], test_ic=result[0]["ic_mean"],
               validation_rank_ic=manifest["metrics"]["validation"]["rank_ic_mean"],
               test_rank_ic=result[0]["rank_ic_mean"])
+    record_resources(run, device)
 
 
 def main():
@@ -507,6 +609,7 @@ def main():
     parser.add_argument("--data-root", type=Path, default=ROOT / "data")
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--resident-cache", type=Path, help="共享的全量 FP16 缓存目录")
+    parser.add_argument("--migrate-from", type=Path, help="从月内 FP32 运行的 last.pt 显式迁移到新的全局运行")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--reproduction-only", action="store_true",
                         help="仅供独立复现工作区使用，显式记录缺少历史比较产物")
@@ -515,8 +618,16 @@ def main():
     args = parser.parse_args()
     if not args.training_confirmed:
         parser.error("v101 训练尚待用户确认；确认后才可传入 --training-confirmed")
+    if args.migrate_from and args.resume:
+        parser.error("首次迁移用 --migrate-from；新迁移 run 的后续恢复只用 --resume")
     config, protocol, run = read_json(args.config), read_json(args.protocol), args.run_dir.resolve()
     validate_training(config, protocol)
+    if args.migrate_from and (run == args.migrate_from.resolve() or run.is_relative_to(args.migrate_from.resolve())):
+        parser.error("迁移必须使用独立新运行目录，不能写入来源运行")
+    if args.migrate_from:
+        provenance, _, _ = source_record(args.migrate_from)
+        validate_transition(provenance["source_config"], config, provenance["source_protocol"], protocol)
+        validate_implementation(args.migrate_from, HERE)
     if run.exists() and not args.resume:
         raise FileExistsError("运行目录已存在；续跑须显式指定 --resume")
     run.mkdir(parents=True, exist_ok=True)
@@ -536,6 +647,8 @@ def main():
                     "parent_solution_id": config["parent_solution_id"],
                     "parent_run_id": config["parent_run_id"], "references": config["references"],
                     "source": snapshot_sources(ROOT, run, solution_id="v101")}
+        if args.migrate_from:
+            manifest["migration_source"] = str(args.migrate_from.resolve())
         write_json(run / "manifest.json", manifest)
     try:
         if not args.resume:
@@ -553,7 +666,9 @@ def main():
         else:
             verify_parent(ROOT, read_json(run / "baseline-preservation.json"))
         store = ProcessedStore(args.training_run, args.holdout_run, args.data_root, config, protocol)
+        verification_started = time.perf_counter()
         data_manifest(store, run)
+        log_event(run, "data_verification_finished", seconds=time.perf_counter() - verification_started)
         if config["training"]["batching"] == "global_shuffled_samples":
             manifest.update(stage="resident_cache")
             write_json(run / "manifest.json", manifest)

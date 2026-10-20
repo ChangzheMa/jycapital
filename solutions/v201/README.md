@@ -21,7 +21,9 @@ v20x MLP 混合器研究家族的首版，以 v9 为代码父版本。研究假�
 
 当前默认配置采用[全量 FP16 常驻缓存与全局 shuffle](../../docs/resident-training.md)：基础行情按股票／交易日去重，CPU 缓存与传输使用 FP16，有限极值通过稀疏 FP32 记录恢复，双缓冲预取下一批。label、损失、batch 大小和选模规则保持原定义；验证／推理采用相同输入舍入，验证数据按有限交易日块加载。
 
-原月内 FP32 配置保存在 [model-config-monthly.json](model-config-monthly.json)。本次全局模式尚未正式训练；既有月内运行只代表其冻结代码和配置，不能直接切换模式续跑。缓存容量估算、构建命令、内存预算和完整验证范围见上面的统一说明。
+原月内 FP32 配置保存在 [model-config-monthly.json](model-config-monthly.json)。全局模式的运行状态以各 run 冻结记录为准；既有月内运行只代表其冻结代码和配置，不能直接切换模式续跑。缓存容量估算、构建命令、内存预算和完整验证范围见上面的统一说明。
+
+验证与测试默认使用[评估缓存与异步双缓冲](../../docs/resident-training.md#v201v301-验证与测试加速)，按内存预算选择全量常驻或分块加载，保留原 FP32 模型计算和完整选模口径。新 run 自动启用；旧全局 run 停止后用 `--resume --upgrade-evaluation` 显式升级恢复，详见[恢复说明](../../docs/resident-training.md#已有全局-run-的恢复)。
 
 ## 后续使用
 

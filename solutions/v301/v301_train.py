@@ -31,12 +31,18 @@ from v301_data import section_indices
 from v301_loss import standardized_huber_loss, standardized_targets, sample_huber_loss
 from protocol_compatibility import validate_protocol_compatibility
 from resident_data import (ResidentBatches, ResidentStore, open_resident_store, validate_resident_config)
+from training_resources import record_resources
+from evaluation_cache import predict_cached_split
+from evaluation_upgrade import upgrade_evaluation_sources
 
 
 def atomic_torch_save(value, path):
+    started = time.perf_counter()
     temporary = Path(str(path) + ".tmp")
     torch.save(value, temporary)
     os.replace(temporary, path)
+    log_event(Path(path).parent, "checkpoint_saved", checkpoint=Path(path).name,
+              seconds=round(time.perf_counter() - started, 6))
 
 
 def configure(config):
@@ -69,6 +75,8 @@ def blocks(store, split, months):
 
 
 def predict_split(store, split, model, device, config, run=None):
+    if isinstance(store, ResidentStore) and run is not None:
+        return predict_cached_split(store, split, model, device, config, run)
     model.eval()
     frames, labels = [], []
     batch = config["inference"]["batch_size"]
@@ -368,7 +376,7 @@ def train(store, run, config, manifest, resume=False):
         state = checkpoint["progress"]
         restore_rng(checkpoint, device)
     log_event(run, "training_started", parameters=env["parameters"], device=env["device_name"], resume=resume)
-    manifest.update(stage="training")
+    manifest.update(status="running", stage="training")
     write_json(run / "manifest.json", manifest)
     started = checkpoint_clock = time.perf_counter()
     catalog_digest = sha256(run / "structural-sections.json")
@@ -421,9 +429,11 @@ def train(store, run, config, manifest, resume=False):
                           optimizer_steps=state["optimizer_steps"],
                           seconds=round(time.perf_counter() - month_start, 3))
                 del block
+        validation_started = time.perf_counter()
         predictions, keys, result = predict_split(store, "validation", model, device, config, run)
         metric = result[0]["ic_mean"]
         validation_loss, model_undefined = huber_loss_check(predictions, keys, store.protocol, config)
+        validation_seconds = time.perf_counter() - validation_started
         if metric is None:
             raise ValueError("验证 IC 无定义，不能选择权重")
         eligible = model_undefined == 0 and result[0]["coverage_violations"] == 0
@@ -448,10 +458,12 @@ def train(store, run, config, manifest, resume=False):
                "train_rows": state["rows"],
                "train_sections": state["sections"], "optimizer_steps": state["epoch_steps"],
                "skipped_sections": sum(state["skipped"].values()),
+               "validation_seconds": validation_seconds,
                "seconds": round(state["epoch_seconds"] + time.perf_counter() - checkpoint_clock, 3)}
         state["history"].append(row)
         pd.DataFrame(state["history"]).to_csv(run / "history.csv", index=False, encoding="utf-8-sig")
         log_event(run, "epoch_finished", **row)
+        record_resources(run, device)
         state.update(epoch=epoch + 1, month_cursor=0, sample_cursor=0, loss_sum=0.0,
                      sections=0, rows=0, epoch_steps=0, skipped={}, epoch_seconds=0.0)
         checkpoint_clock = time.perf_counter()
@@ -473,8 +485,11 @@ def train(store, run, config, manifest, resume=False):
     draw_history(run, state["history"])
     checkpoint = torch.load(run / "best.pt", map_location=device, weights_only=True)
     model.load_state_dict(checkpoint["state_dict"])
+    test_started = time.perf_counter()
+    log_event(run, "test_evaluation_started")
     predictions, keys, result = predict_split(store, "test", model, device, config, run)
     test_loss, undefined = huber_loss_check(predictions, keys, store.protocol, config)
+    log_event(run, "test_evaluation_finished", seconds=time.perf_counter() - test_started)
     save_evaluation(run, "test", predictions, result)
     preservation = read_json(run / "baseline-preservation.json")
     verify_parent(ROOT, preservation)
@@ -496,6 +511,7 @@ def train(store, run, config, manifest, resume=False):
     log_event(run, "completed", validation_ic=state["best"], test_ic=result[0]["ic_mean"],
               validation_rank_ic=manifest["metrics"]["validation"]["rank_ic_mean"],
               test_rank_ic=result[0]["rank_ic_mean"])
+    record_resources(run, device)
 
 
 def main():
@@ -508,11 +524,17 @@ def main():
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--resident-cache", type=Path, help="共享的全量 FP16 缓存目录")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--upgrade-evaluation", action="store_true",
+                        help="恢复旧全局 run 时，显式升级验证缓存并保留原源码记录")
+    parser.add_argument("--evaluation-cache-mode", choices=("auto", "resident", "stream"), default="auto",
+                        help="评估缓存按预算自动选择常驻或分块；不改变模型和训练配置")
     parser.add_argument("--reproduction-only", action="store_true",
                         help="仅供独立复现工作区使用，显式记录缺少历史比较产物")
     parser.add_argument("--training-confirmed", action="store_true",
                         help="仅在用户明确确认开始训练后使用")
     args = parser.parse_args()
+    if args.upgrade_evaluation and not args.resume:
+        parser.error("--upgrade-evaluation 必须与 --resume 一起使用")
     if not args.training_confirmed:
         parser.error("v301 训练尚待用户确认；确认后才可传入 --training-confirmed")
     config, protocol, run = read_json(args.config), read_json(args.protocol), args.run_dir.resolve()
@@ -526,6 +548,8 @@ def main():
             raise ValueError("已完成的运行不能续跑")
         if config != read_json(run / "config.json") or protocol != read_json(run / "protocol.json"):
             raise ValueError("续跑配置或协议已改变")
+        if args.upgrade_evaluation:
+            manifest = upgrade_evaluation_sources(ROOT, run, manifest)
         for path, digest in manifest["source"]["files"].items():
             if sha256(ROOT / path) != digest:
                 raise ValueError(f"续跑源码已改变: {path}")
@@ -553,12 +577,15 @@ def main():
         else:
             verify_parent(ROOT, read_json(run / "baseline-preservation.json"))
         store = ProcessedStore(args.training_run, args.holdout_run, args.data_root, config, protocol)
+        verification_started = time.perf_counter()
         data_manifest(store, run)
+        log_event(run, "data_verification_finished", seconds=time.perf_counter() - verification_started)
         if config["training"]["batching"] == "global_shuffled_samples":
             manifest.update(stage="resident_cache")
             write_json(run / "manifest.json", manifest)
             store = open_resident_store(store, run, prepare_training_targets, args.resident_cache,
                                         lambda event, **fields: log_event(run, event, **fields))
+        store.evaluation_cache_mode = args.evaluation_cache_mode
         train(store, run, config, manifest, args.resume)
     except BaseException as error:
         manifest.update(status="interrupted" if isinstance(error, KeyboardInterrupt) else "failed", error=str(error), stopped_at=now())
