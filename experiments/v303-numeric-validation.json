@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-21T00:56:13+08:00",
+  "run_id": "v303-huber-delta2-s42",
+  "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
+  "scope": "仅核对所列验证区间的数值影响；不改变模型、权重、训练结果或正式指标。",
+  "methods": {
+    "metric": "使用原 baseline_evaluation.py，在相同预测键和原始标签上比较。",
+    "tail_weights": "使用 signal_diagnostics.tail_weights，两端各取固定 10%，绝对名义权重合计为 1。",
+    "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "signal_diagnostics_sha256": "cef64a68cd2412126dcde385300453cb6cf3f2eb866a3303bf0aa91b5d678e65"
+  },
+  "intervals": [
+    {
+      "split": "validation",
+      "start_inclusive": "2024-01-02",
+      "stop_exclusive": "2024-01-06",
+      "rows": 32000,
+      "minimum_cross_section_score_rank_correlation": 0.9999999639999642,
+      "decile_weight_changed_stock_rows": 0,
+      "cpu_minus_frozen_gpu_ic_mean": 4.542458673095773e-08,
+      "cpu_minus_frozen_gpu_rank_ic_mean": 1.0113302060382745e-06,
+      "cpu_prediction_sha256": "e9f113670992ccf2b8a00abca3e3486f3c7a60b6d6b7c9774c34c22c5d0681f0",
+      "cpu_reference_sha256": "e9f113670992ccf2b8a00abca3e3486f3c7a60b6d6b7c9774c34c22c5d0681f0",
+      "frozen_gpu_prediction_file_sha256": "569d6a7de3f70da1cab317cb637cbe874f7409e48c16a3960fa580e1a48b0290"
+    },
+    {
+      "split": "test",
+      "start_inclusive": "2024-12-30",
+      "stop_exclusive": "2025-01-01",
+      "rows": 16000,
+      "minimum_cross_section_score_rank_correlation": 0.9999999759999763,
+      "decile_weight_changed_stock_rows": 0,
+      "cpu_minus_frozen_gpu_ic_mean": -3.5398453696044996e-08,
+      "cpu_minus_frozen_gpu_rank_ic_mean": -3.0200062027530006e-07,
+      "cpu_prediction_sha256": "f2cb9d0ca760f7afcd60cdf3bb7a5e6a2334d567f6305f047338225e21783f66",
+      "cpu_reference_sha256": "f2cb9d0ca760f7afcd60cdf3bb7a5e6a2334d567f6305f047338225e21783f66",
+      "frozen_gpu_prediction_file_sha256": "e4891f9a72488f214ba87abb1385b1b038e7356836cd20786e4de7e4cc60f9da"
+    }
+  ]
+}
