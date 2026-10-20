@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-20T17:18:45+08:00",
+  "run_id": "v301-global-fp16-s42",
+  "model_sha256": "2a8a2789517666d567ed28f0c907edfe84ca43619e7c88de85c9701508b636e3",
+  "scope": "仅核对所列验证区间的数值影响；不改变模型、权重、训练结果或正式指标。",
+  "methods": {
+    "metric": "使用原 baseline_evaluation.py，在相同预测键和原始标签上比较。",
+    "tail_weights": "使用 signal_diagnostics.tail_weights，两端各取固定 10%，绝对名义权重合计为 1。",
+    "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "signal_diagnostics_sha256": "cef64a68cd2412126dcde385300453cb6cf3f2eb866a3303bf0aa91b5d678e65"
+  },
+  "intervals": [
+    {
+      "split": "validation",
+      "start_inclusive": "2024-01-02",
+      "stop_exclusive": "2024-01-06",
+      "rows": 32000,
+      "minimum_cross_section_score_rank_correlation": 0.9999999639999642,
+      "decile_weight_changed_stock_rows": 0,
+      "cpu_minus_frozen_gpu_ic_mean": 4.453448884667033e-08,
+      "cpu_minus_frozen_gpu_rank_ic_mean": 1.9685097718546984e-09,
+      "cpu_prediction_sha256": "229103fc282d51b2a15bc02bcdea8d0dd88abf7dbbac449df3857d46cdc86081",
+      "cpu_reference_sha256": "229103fc282d51b2a15bc02bcdea8d0dd88abf7dbbac449df3857d46cdc86081",
+      "frozen_gpu_prediction_file_sha256": "0e21c312af08070e1213a7f688c41197c677673951fcba35e7a345e2b5dae05f"
+    },
+    {
+      "split": "test",
+      "start_inclusive": "2024-12-30",
+      "stop_exclusive": "2025-01-01",
+      "rows": 16000,
+      "minimum_cross_section_score_rank_correlation": 0.9999999639999642,
+      "decile_weight_changed_stock_rows": 0,
+      "cpu_minus_frozen_gpu_ic_mean": 3.4084862154948325e-08,
+      "cpu_minus_frozen_gpu_rank_ic_mean": -5.283568655506388e-07,
+      "cpu_prediction_sha256": "a568460b7b25a9b8e17aa08dad5c06d45a025437ddbb6c1b990b85e7217377e5",
+      "cpu_reference_sha256": "a568460b7b25a9b8e17aa08dad5c06d45a025437ddbb6c1b990b85e7217377e5",
+      "frozen_gpu_prediction_file_sha256": "76b9515a6b056f55eb91cf98a481835bccf8a400579f2cb399ece4e8789dc9b1"
+    }
+  ]
+}

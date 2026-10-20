@@ -2,7 +2,7 @@
 
 [文档目录](../../docs/README.md) · [三个研究家族](../../docs/research-branches.md) · [代码父版本 v9](../v9/README.md) · [模型](v301_model.py) · [模型配置](model-config.json)
 
-v30x 循环状态研究家族的首版，以 v9 为代码父版本。研究假设是先建模日内过程，再积累跨日背景，两级状态共同解释未来收益分数。当前默认全局模式交付代码与合成实现验证，尚无该模式的正式成绩或平台材料；旧月内运行以冻结记录为准。
+v30x 循环状态研究家族的首版，以 v9 为代码父版本。研究假设是先建模日内过程，再积累跨日背景，两级状态共同解释未来收益分数。全局运行 `v301-global-fp16-s42` 已完成训练和双集评估，达到本地改善条件；冻结结果和平台材料见下文。
 
 ## 主干
 
@@ -32,10 +32,36 @@ GRU 状态递推显式使用 FP32，输入投影和预测头保留训练器的 B
 
 目录内包含独立预处理、切窗、训练、原始行情推理、文本张量和复现模块，不导入其他方案。沿用 v9 的窗口、字段和监督定义，采样及存储精度按当前配置，`parent_solution_id=v9`，父 run 为空。
 
-以下仅为未来获准正式训练后的命令，本轮未执行：
+后续新建独立运行可使用以下入口，不覆盖已经完成的冻结运行：
 
 ```powershell
-.venv-training/Scripts/python.exe -u solutions/v301/v301_train.py --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v301-global-fp16-s42 --training-confirmed
+.venv-training/Scripts/python.exe -u solutions/v301/v301_train.py --training-run outputs/preprocessing/v2-20261010 --holdout-run outputs/preprocessing/v2-holdout-20261011 --run-dir outputs/runs/v301-global-fp16-new-s42 --evaluation-cache-mode stream --training-confirmed
 ```
 
-原始行情入口为 [v301_predict.py](v301_predict.py)，与训练共用 [WindowBlock](v301_data.py)。独立预处理使用 `v301_prepare.py`、`v301_apply.py`；协议、恢复、评估和文本附件约定见[开发约定](../../docs/development.md)。正式导出及平台运行尚未验证。
+原始行情入口为 [v301_predict.py](v301_predict.py)，与训练共用 [WindowBlock](v301_data.py)。独立预处理使用 `v301_prepare.py`、`v301_apply.py`；协议、恢复、评估和文本附件约定见[开发约定](../../docs/development.md)。
+
+## 冻结结果与平台材料
+
+依据 2026-10-20（UTC+08:00）的实际运行记录，seed=42，按验证 IC 选择第 7 轮权重，第 12 轮动态早停。全局 FP16 模式从头训练，未继承其他模型权重；累计逐轮耗时约 3.20 小时，包含验证。不同模型的数据读取、精度和缓存路径不同，不能把总耗时比例解释为纯网络速度比。
+
+| 方案／参照角色 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC |
+| --- | ---: | ---: | ---: | ---: |
+| v301 | 0.082544 | 0.084265 | 0.086791 | 0.085596 |
+| 此前本地验证最优 v201 | 0.077352 | 0.078214 | 0.081427 | 0.080190 |
+| v7e | 0.076757 | 0.072320 | 0.079773 | 0.074215 |
+| 非卷积对照 v101 | 0.076741 | 0.079479 | 0.082303 | 0.083960 |
+| 代码父版本 v9 | 0.067835 | 0.067583 | 0.077534 | 0.075617 |
+
+验证／测试全局及最低截面覆盖均为 100%，IC 和 Rank IC 未定义截面均为零。相对 v201，验证 IC 提高 0.005192，测试提高 0.005364，分别有 6／6 和 5／6 个月改善；相对 v101，两个区间各有 6／6 个月 IC 改善。测试 IC IR 为 0.715680，高于 v201，但略低于 v7e 的 0.720469；仍是单种子证据。
+
+相对 v7e，验证／测试 Rank IC 每个月均提高，但 9 月测试 IC 低 0.014123。日内增益仍偏向 14:30；移除该时点后，其他七时点合计的验证／测试 IC 仍分别提高 0.002099／0.001536。不能依据已观察的测试月份或时点手工切换模型。
+
+[换手与持续性诊断](../../docs/signal-diagnostics.md)显示，本地日内换手代理从 v7e 的验证／测试 0.669444／0.661006 降至 0.623516／0.628674。它为平台测试提供补充依据，不代表官方 BARRA 后换手或综合分已改善。
+
+比较摘要见 [v301-gru.json](../../experiments/v301-gru.json)。平台目录为 [submissions/v301-global-fp16-s42](../../submissions/v301-global-fp16-s42)，包含 `v301-submission.ipynb` 与 `v301-model.json`；附件来自冻结源码、配置和第 7 轮权重。独立入口验证的范围与状态见[提交清单](../../experiments/v301-global-fp16-s42-submission.json)，平台上传及官方成绩另行记录。
+
+本地独立验证覆盖 2024-01-02 至 2024-01-05，以及 2024-12-30 至 2024-12-31，共 48,000 行。34 个权重张量逐位恢复；平台原始行情入口与原 checkpoint 加冻结预处理数据，在相同 CPU 后端和逐日批量边界下的输出最大差均为 0。相同后端对照保持 `atol=2e-7、rtol=1e-4`。
+
+原冻结评测使用 CUDA 及不同的日期分块批量边界，两段区间与 CPU 平台输出的最大绝对差分别为 4.77×10⁻⁶ 和 3.93×10⁻⁶。只有独立同后端对照通过后，才按 `atol=1e-5、rtol=1e-4` 单独检查这项跨执行路径差异；原较严容差的未通过计数也保留在清单中，不能以放宽容差替代同后端验证。该数值策略是本次本地核验设置，不是框架提供的误差保证。
+
+PyTorch 不保证不同设备或不同批量计算方式得到逐位相同的浮点结果，依据为 2026-10-20（UTC+08:00）查阅的 [PyTorch 2.11 数值精度说明](https://docs.pytorch.org/docs/2.11/notes/numerical_accuracy.html)。核验区间内的秩相关、两端组合权重和 IC 变化见[数值影响记录](../../experiments/v301-numeric-validation.json)；这些局部核验不代替平台运行及官方评分。

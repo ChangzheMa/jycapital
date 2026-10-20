@@ -4,7 +4,7 @@
 
 ## 冻结模型结果
 
-本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-20（UTC+08:00），下表 17 个版本完成训练及双集评估，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261020.json)。
+本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-20（UTC+08:00）本次归档，下表 18 个版本完成训练及双集评估，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261020.json)。
 
 | 方案 | 参数量 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC | 结果 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -24,7 +24,8 @@
 | [v8](../solutions/v8/README.md) | 6,723,521 | 0.070983 | 0.070475 | 0.078567 | 0.074808 | 六组修改整合；未改善 |
 | [v9](../solutions/v9/README.md) | 25,458,401 | 0.067835 | 0.067583 | 0.077534 | 0.075617 | 三频固定交易日长窗口；未改善 |
 | [v101](../solutions/v101/README.md) | 656,993 | 0.076741 | 0.079479 | 0.082303 | 0.083960 | 月内 FP32 迁移至全局 FP16 的 Patch Transformer；验证 IC 略低于 v7e，按用户要求导出平台测试材料 |
-| [v201](../solutions/v201/README.md) | 552,973 | 0.077352 | 0.078214 | 0.081427 | 0.080190 | 当前已完成版本的验证 IC 最优；单种子改善候选，测试 IC IR 低于 v7e |
+| [v201](../solutions/v201/README.md) | 552,973 | 0.077352 | 0.078214 | 0.081427 | 0.080190 | 单种子改善候选，测试 IC IR 低于 v7e；已导出平台材料 |
+| [v301](../solutions/v301/README.md) | 433,409 | 0.082544 | 0.084265 | 0.086791 | 0.085596 | 当前已归档版本的验证 IC 最优；相对 v101 全部月份 IC 改善，9 月仍弱于 v7e |
 
 v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
 
@@ -42,6 +43,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 持续研究与串行调度 | [研究 session 与训练 session 的交接约定](continuous-research.md)、[训练监控 session 提示词](training-session-prompt.md)；候选通过各版本的 `experiment.json` 发布 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |
 | 信号诊断与 v201 结论 | [换手及持续性代理定义与结果](signal-diagnostics.md)、[v201 冻结比较](../experiments/v201-mixer.json)、[全体完成模型汇总](../experiments/completed-models-20261020.json) |
+| v301 冻结结论 | [分层 GRU 结果与平台材料](../solutions/v301/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v301-gru.json)、[信号代理诊断](../experiments/v301-signal-diagnostics.json) |
 | 模型与损失 | [v6 冻结模型逐层图解](v6-model.html)、[v2 交互图解](v2-model.html)、[字段可用性及组掩码](v3-field-validity.md)、[Pearson IC 损失设计](v4-ic-loss-plan.md) |
 | 扩容方案 | [v5：四频 TCN 隐藏通道扩至 160](../solutions/v5/README.md) |
 | 正则化方案 | [v6：TCN 残差块 Dropout 提高至 0.35](../solutions/v6/README.md) |
