@@ -1,0 +1,76 @@
+"""学习短 patch 投影后进行日内／跨日 GRU，缩短状态递推链。"""
+
+import torch
+from torch import nn
+from torch.nn import functional as F
+
+from v302_schema import (FREQUENCIES, INPUT_CHANNELS, prepare_model_inputs,
+                         validate_backbone_config)
+
+DAILY_BARS = {"bar1m": 240, "bar5m": 48, "bar30m": 8}
+
+
+def validate_model_config(config):
+    validate_backbone_config(config, "hierarchical_gru", ("intraday_layers", "interday_layers"))
+    expected = {"normalization": "none", "pooling": "last_available_patch_state",
+                "recurrent_precision": "float32", "missing_history": "keep_slots_and_flags"}
+    if any(config["model"].get(k) != v for k, v in expected.items()):
+        raise ValueError("v302 要求 FP32 单向递推、截点读取和保留历史缺失槽位")
+    patches = config["model"].get("patch_bars", {})
+    if set(patches) != set(FREQUENCIES):
+        raise ValueError("每个频率必须配置 patch 长度")
+    for frequency, size in patches.items():
+        if isinstance(size, bool) or not isinstance(size, int) or size < 1 or DAILY_BARS[frequency] % size:
+            raise ValueError("patch 长度必须为整除交易日槽数的正整数")
+
+
+class FrequencyEncoder(nn.Module):
+    def __init__(self, spec, frequency, length):
+        super().__init__()
+        hidden = spec["hidden_dim"]
+        self.raw_daily_bars = DAILY_BARS[frequency]
+        self.patch = spec["patch_bars"][frequency]
+        self.daily_bars = self.raw_daily_bars // self.patch
+        self.days = length // self.raw_daily_bars
+        self.project = nn.Linear(INPUT_CHANNELS * self.patch, hidden)
+        self.dropout = nn.Dropout(spec["dropout"])
+        self.intraday = nn.GRU(hidden, hidden, num_layers=spec["intraday_layers"], batch_first=True,
+                              dropout=spec["dropout"] if spec["intraday_layers"] > 1 else 0)
+        self.interday = nn.GRU(hidden, hidden, num_layers=spec["interday_layers"], batch_first=True,
+                              dropout=spec["dropout"] if spec["interday_layers"] > 1 else 0)
+
+    def forward(self, x, lengths):
+        batch = x.shape[0]
+        patches = x.transpose(1, 2).reshape(batch, self.days * self.daily_bars, INPUT_CHANNELS * self.patch)
+        h = self.dropout(F.gelu(self.project(patches)))
+        h = h.reshape(batch * self.days, self.daily_bars, -1)
+        day_lengths = (lengths[:, None] - torch.arange(self.days, device=x.device)[None, :] * self.raw_daily_bars).clamp(0, self.raw_daily_bars)
+        day_lengths = (day_lengths + self.patch - 1) // self.patch
+        # FP32 状态递推兼容 CUDA GRU 并避免 BF16 长链状态误差；输入投影及预测头仍可 autocast。
+        with torch.autocast(device_type=x.device.type, enabled=False):
+            states, _ = self.intraday(h.float())
+            last = (day_lengths.flatten() - 1).clamp_min(0)
+            daily = states[torch.arange(batch * self.days, device=x.device), last]
+            daily = daily.reshape(batch, self.days, -1)
+            daily = daily.masked_fill((day_lengths == 0)[:, :, None], 0)
+            states, _ = self.interday(self.dropout(daily))
+            # 09:30 今日尚无 Bar，直接读取昨日状态；不让未来零槽位改变输出。
+            last_day = (lengths - 1) // self.raw_daily_bars
+            return states[torch.arange(batch, device=x.device), last_day]
+
+
+class MultiFrequencyGRU(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        validate_model_config(config)
+        spec = config["model"]
+        self.window_bars = dict(config["data"]["window_bars"])
+        self.encoders = nn.ModuleDict({f: FrequencyEncoder(spec, f, self.window_bars[f]) for f in FREQUENCIES})
+        self.head = nn.Sequential(
+            nn.Linear(len(FREQUENCIES) * spec["hidden_dim"] + spec["prediction_clock_dim"], spec["fusion_hidden_dim"]),
+            nn.GELU(), nn.Dropout(spec["dropout"]), nn.Linear(spec["fusion_hidden_dim"], 1))
+
+    def forward(self, windows, clock):
+        windows, lengths = prepare_model_inputs(windows, clock, self.window_bars)
+        vectors = [self.encoders[f](windows[f], lengths[f]) for f in FREQUENCIES]
+        return self.head(torch.cat([*vectors, clock], dim=1)).squeeze(1)

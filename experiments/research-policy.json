@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "authorized_at": "2026-10-20",
+  "timezone": "Asia/Hong_Kong",
+  "objective": "持续改进模型，尽可能提高平台分数，直到用户叫停。",
+  "solution_root": "solutions",
+  "candidate_manifest": "experiment.json",
+  "design_session": "负责研究、版本实现、实现验证、结果分析和优秀候选平台材料。",
+  "training_session": "唯一正式训练调度者，串行训练并完成验证和测试，持续扫描 ready 候选。",
+  "max_concurrent_training": 1,
+  "formal_attempts_per_candidate": 1,
+  "construction_pause_when_unevaluated_gt": 3,
+  "construction_resume_when_unevaluated_lt": 3,
+  "capacity_check_seconds": 3600,
+  "daily_platform_submission_limit": 5,
+  "platform_submission_actor": "user",
+  "checkpoint_selection": "local-v2-ic: validation ic_mean",
+  "platform_candidate_selection": "本地验证 IC 改善优先；同时综合稳定性、Rank IC、换手代理、互补性、效率及已有平台反馈，保留具体理由，不伪造官方综合分。",
+  "evaluation_policy": "训练目标可迭代；用于横向比较的官方标签、股票池、时间划分、覆盖要求保持固定。",
+  "legacy_runs": [
+    {
+      "solution_id": "v201",
+      "run_id": "v201-global-fp16-s42"
+    },
+    {
+      "solution_id": "v301",
+      "run_id": "v301-global-fp16-s42"
+    }
+  ]
+}
