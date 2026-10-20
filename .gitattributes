@@ -2,3 +2,5 @@
 /submissions/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 # v7e 提交清单参与索引哈希，跨平台检出时同样保持原始字节。
 /experiments/v7e*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# v101 提交清单同样参与提交索引哈希。
+/experiments/v101*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
