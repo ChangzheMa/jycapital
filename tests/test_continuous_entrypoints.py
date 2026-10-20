@@ -16,14 +16,15 @@ import torch
 import numpy as np
 import pandas as pd
 
-from test_continuous_candidates import ROOT, VERSIONS, CONFIGS, small_config, PARENTS
+from test_continuous_candidates import ROOT, TEST_VERSIONS, CONFIGS, small_config, PARENTS
 
 
 class EntrypointTests(unittest.TestCase):
     config_factory = staticmethod(small_config)
 
     def test_three_families_full_synthetic_entrypoints(self):
-        cases = [(v, False) for v in VERSIONS] + [("v401", True)]
+        cases = [(v, False) for v in TEST_VERSIONS]
+        cases += [(v, True) for v in TEST_VERSIONS if v in ("v401", "v501")]
         for version, global_mode in cases:
             with self.subTest(version=version, global_mode=global_mode), tempfile.TemporaryDirectory() as tmp:
                 sys.path.insert(0, str(ROOT / "solutions" / version))
@@ -93,13 +94,18 @@ class EntrypointTests(unittest.TestCase):
                 self.assertEqual(manifest["status"], "complete")
                 self.assertEqual(manifest["stage"], "complete")
                 self.assertEqual(manifest["solution_id"], version)
-                if global_mode:
+                if global_mode and version == "v401":
                     overlay = json.loads((run / "target-overlay.json").read_text(encoding="utf-8"))
                     self.assertEqual(overlay, manifest["target_overlay"])
                     self.assertEqual(overlay["eligible_rows"], 42)
                     record = json.loads((run / "resident-cache.json").read_text(encoding="utf-8"))
                     base_targets = np.load(Path(record["path"]) / "targets.npy")
                     self.assertNotEqual(overlay["targets_sha256"], hashlib.sha256(base_targets.tobytes()).hexdigest())
+                if version == "v501":
+                    checkpoint = torch.load(run / "last.pt", weights_only=True)
+                    self.assertEqual(checkpoint["ema_updates"], checkpoint["progress"]["optimizer_steps"])
+                    selected = torch.load(run / "best.pt", weights_only=True)
+                    self.assertEqual(selected["weight_source"], "ema")
                 for split in ("validation", "test"):
                     self.assertEqual(manifest["metrics"][split]["coverage"], 1)
                     predictions = pd.read_parquet(run / "evaluation" / split / "predictions.parquet")

@@ -3,6 +3,7 @@
 import copy
 import importlib
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -15,12 +16,16 @@ import pandas as pd
 import test_research_branches as base
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSIONS = ("v102", "v202", "v302", "v303", "v304", "v305", "v401")
+VERSIONS = ("v102", "v202", "v302", "v303", "v304", "v305", "v401", "v306", "v501")
+TEST_VERSIONS = tuple(os.environ.get("JYC_TEST_SOLUTIONS", ",".join(VERSIONS)).split(","))
+if not TEST_VERSIONS or not set(TEST_VERSIONS).issubset(VERSIONS):
+    raise ValueError("JYC_TEST_SOLUTIONS 包含未登记的候选")
 CLASSES = {"v102": "MultiFrequencyPatchTransformer", "v202": "MultiFrequencyMixer",
            "v302": "MultiFrequencyGRU", "v303": "MultiFrequencyGRU", "v304": "MultiFrequencyGRU",
-           "v305": "MultiFrequencyGRU", "v401": "MultiFrequencyGRU"}
+           "v305": "MultiFrequencyGRU", "v401": "MultiFrequencyGRU",
+           "v306": "MultiFrequencyGRU", "v501": "MultiFrequencyGRU"}
 PARENTS = {"v102": "v101", "v202": "v201", "v302": "v301", "v303": "v301", "v304": "v301",
-           "v305": "v302", "v401": "v301"}
+           "v305": "v302", "v401": "v301", "v306": "v303", "v501": "v303"}
 for version in VERSIONS:
     sys.path.insert(0, str(ROOT / "solutions" / version))
 MODULES = {v: {name: importlib.import_module(v + "_" + name)
@@ -50,6 +55,19 @@ def create_model(version, config=None):
 
 
 class CandidateTests(unittest.TestCase):
+    def test_huber_delta4_control(self):
+        parent, changed = CONFIGS["v303"], CONFIGS["v306"]
+        for key in ("data", "model", "inference", "seed"):
+            self.assertEqual(parent[key], changed[key])
+        a, b = copy.deepcopy(parent["training"]), copy.deepcopy(changed["training"])
+        self.assertEqual(a.pop("huber_delta"), 2.0)
+        self.assertEqual(b.pop("huber_delta"), 4.0)
+        self.assertEqual(a, b)
+        for version, expected in (("v303", 10.0), ("v306", 16.0)):
+            criterion = importlib.import_module(version + "_loss").sample_huber_loss
+            value = criterion(torch.zeros(1), torch.tensor([6.0]), CONFIGS[version]["training"]["huber_delta"])
+            self.assertEqual(value.item(), expected)
+
     def test_huber_delta_control_preserves_network_and_changes_training_loss(self):
         parent, changed = base.CONFIGS["v301"], CONFIGS["v303"]
         for key in ("data", "model", "inference", "seed"):
@@ -95,7 +113,7 @@ class CandidateTests(unittest.TestCase):
             torch.testing.assert_close(child(windows, clock), parent(windows, clock), rtol=0, atol=2e-7)
 
     def test_parent_protection_excludes_mutable_monitoring(self):
-        for version in VERSIONS:
+        for version in TEST_VERSIONS:
             with self.subTest(version=version), tempfile.TemporaryDirectory() as temporary:
                 root = Path(temporary)
                 config = CONFIGS[version]
@@ -117,7 +135,7 @@ class CandidateTests(unittest.TestCase):
 
     def test_input_target_and_cache_functions_match_parent(self):
         import inspect
-        for version in VERSIONS:
+        for version in TEST_VERSIONS:
             parent = PARENTS[version]
             trainer = MODULES[version]["train"]
             trainer.validate_training(CONFIGS[version], base.PROTOCOL)
@@ -131,7 +149,7 @@ class CandidateTests(unittest.TestCase):
                              inspect.getsource(base.MODULES[parent]["train"].prepare_training_targets))
 
     def test_default_model_causal_gradients_batching_and_text_roundtrip(self):
-        for version in VERSIONS:
+        for version in TEST_VERSIONS:
             with self.subTest(version=version):
                 torch.manual_seed(17)
                 model = create_model(version).eval()
@@ -181,7 +199,7 @@ class CandidateTests(unittest.TestCase):
             torch.testing.assert_close(model(windows, clock), model(altered, clock), rtol=0, atol=0)
 
     def test_train_evaluate_and_resume_exactly(self):
-        for version in VERSIONS:
+        for version in TEST_VERSIONS:
             with self.subTest(version=version), tempfile.TemporaryDirectory() as temporary:
                 trainer, config = MODULES[version]["train"], small_config(version)
                 configure, step = trainer.configure, trainer.training_step
@@ -218,6 +236,12 @@ class CandidateTests(unittest.TestCase):
                     for key in left["state_dict"]:
                         torch.testing.assert_close(left["state_dict"][key], right["state_dict"][key], rtol=0, atol=0)
                 torch.testing.assert_close(left["torch_rng"], right["torch_rng"], rtol=0, atol=0)
+                if version == "v501":
+                    self.assertEqual(left["ema_updates"], right["ema_updates"])
+                    self.assertEqual(left["ema_updates"], left["progress"]["optimizer_steps"])
+                    for key in left["ema_state_dict"]:
+                        torch.testing.assert_close(left["ema_state_dict"][key], right["ema_state_dict"][key],
+                                                   rtol=0, atol=0)
                 for parameter, values in left["optimizer"]["state"].items():
                     for key, value in values.items():
                         torch.testing.assert_close(value, right["optimizer"]["state"][parameter][key], rtol=0, atol=0)
