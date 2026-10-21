@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "solution_id": "v1001",
+  "status": "passed",
+  "checked_at": "2026-10-22T03:08:03+08:00",
+  "scope": "CPU 合成因果推理、训练期时间权重、标签辅助分配、精确恢复及完整入口；未执行正式行情训练。",
+  "checks": [
+    "test_data_and_primary_target_cache_identity",
+    "test_shared_heads_match_reference_and_are_causal",
+    "test_group_mapping_partial_keys_and_unchanged_targets",
+    "test_actual_training_loss_combines_heads_and_masks_missing_labels",
+    "test_interrupted_group_cursor_restores_raw_ema_optimizer_and_rng",
+    "test_temporal_weights_use_only_training_dates_and_keep_all_samples",
+    "test_balanced_assignment_and_weighted_gradient_ignore_missing_targets",
+    "test_grouped_monthly_and_resident_full_synthetic_entrypoints"
+  ],
+  "parameters": 2418576,
+  "unit_tests_passed": 7,
+  "unit_tests_seconds": 3.597,
+  "entrypoint_tests_passed": 1,
+  "entrypoint_seconds": 16.203,
+  "entrypoint_modes": [
+    "monthly_shuffled_stock_days",
+    "global_shuffled_stock_days"
+  ],
+  "entrypoint_features": [
+    "causal_shared_clock_inference",
+    "unaltered_raw_target_cache",
+    "training_calendar_only_loss_weights",
+    "masked_balanced_assignment_objective",
+    "router_diagnostics_and_exact_resume"
+  ],
+  "cpu_test_environment": {
+    "CUDA_VISIBLE_DEVICES": "-1"
+  },
+  "default_model_cpu_gradient_preflight": {
+    "status": "passed",
+    "parameters": 2418576,
+    "train_stock_days": 2,
+    "inference_stock_days": 4,
+    "date_weight_scope": "预检使用单位样本权重；日期权重与完整入口另有合成检查。"
+  },
+  "default_gpu_batch_preflight": "训练 session 在当前运行结束后执行默认批量预检。",
+  "fast_validation": "继承股票日因果前缀分解；小样本八时点逐样本对照及未来梯度为零。未执行长区间测速。",
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/evaluation_cache.py": "daf07f2b8edde62bf0e33a0f93ca49f83454e1e838fb6438d7f3db87f33b1c03",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/resident_data.py": "921e6c2ec3d0b52499fe926492224c038ecb49ab3bb84e92eb591465573f8fe7",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v1001/config.json": "5d165cc60140bf304cf53fdacfd990aff741db6b67678df172981752c22ad208",
+    "solutions/v1001/model-config.json": "81284095e39d4f54178a45d99c39daab502bcb70567e651ad939435f5e980210",
+    "solutions/v1001/requirements-inference.txt": "1a99016e2590e59b2c1a9c7f7a6a7fd80703c558f9c53ec19742b48bbb2f75fc",
+    "solutions/v1001/requirements-training.txt": "fa2481cabb4c546fdfb30756b0e5d2a0aca27de74fcbc7a8dd10ce25db493ca1",
+    "solutions/v1001/requirements.txt": "d72c61e0ea921d0067586b0267ca1760ca4f72b0e4eebdb74ddc917150550a0d",
+    "solutions/v1001/v1001_apply.py": "f5c02500ae6b68d81e33cead8bac4d28fadee011467cbb97e89a12473e3a5fb4",
+    "solutions/v1001/v1001_data.py": "fb6394574a8f5effe4443ed38b705bb77c695bdc19b6bbbd5afe46497d6422bd",
+    "solutions/v1001/v1001_ema.py": "14c6527a38f204cd4bd434ca0c92c40837ef34dcb1c0bb93a16fa57c4e257ade",
+    "solutions/v1001/v1001_evaluation.py": "f1b6ec68a36937b3f4a074c40388ef69b018595912c06f359991548fd0686b81",
+    "solutions/v1001/v1001_fast.py": "b8bcae55b1a49b4236329a29f44be935e37e9cfbe797d04b6626d076f59bd0bb",
+    "solutions/v1001/v1001_grouped.py": "29cdfdb7186d0b44f8f4beac8bf9122807cdc4cda0949adfec6ebd504df285aa",
+    "solutions/v1001/v1001_loss.py": "37c4c47b6868c9bdfd2aaf6f1a768780e428f7634caaea722b278d46eae67e92",
+    "solutions/v1001/v1001_model.py": "34b1cb9b45b48a36c55257a6aa35144950726e8b483199054383cbd6e363e400",
+    "solutions/v1001/v1001_notebook.py": "57563ce69d64fd8876f65c8248dc7b7bdbce06b95c2cf42e7c7f115ca989c3e1",
+    "solutions/v1001/v1001_objective.py": "9bfb7206edecf9de551a8bf199561c07a93e405f134b9018e84d3c69d150c05f",
+    "solutions/v1001/v1001_predict.py": "70159832330d1c98fc9d0778a182e4286fa79f0bf849d4c5e269aa6287448d07",
+    "solutions/v1001/v1001_predict_fast.py": "d0a2ed76c6274c18d763622881c3d753a046560d2fbcb6443a10fe2e629b4731",
+    "solutions/v1001/v1001_prepare.py": "db24b779587aa0e6f9bdf117d2192e201993d920563fe27efd20c464b7cd1080",
+    "solutions/v1001/v1001_preprocessing.py": "d5b5c2b1a4d03601b7a0d32f58450c008e9a479875e83757744dbf71ca90c7b3",
+    "solutions/v1001/v1001_reproduce.py": "f664bec7571cec6db90836ac0a3988833c18664fb256e651a23fb05f339bedca",
+    "solutions/v1001/v1001_schema.py": "3332e26231fa18840c48aba37cae1f8df03bf1e9764798d9a79345dbe2973cb5",
+    "solutions/v1001/v1001_targets.py": "7818296e648696ab077d1a75e1df34da7e47bcb2e55f1f016b6550af09c3cf24",
+    "solutions/v1001/v1001_temporal.py": "30272d0b71ac54cd04a943c249285e642bf510581a4f7387e4082a690be582cb",
+    "solutions/v1001/v1001_text_artifact.py": "b616db8a4749d9d55d682add6f261284608706cd7ee25d0dcec24e2eec17ab82",
+    "solutions/v1001/v1001_train.py": "fa10f628658b3390e54f8255b9822f25864dc760c7c25c4ab12f032209b7a9c0"
+  },
+  "test_files": {
+    "tests/test_v1001.py": "ccbd0ebd72b0652b47c69b7ea3b727b8d9d4a68832e7a63d0ceae5831080de4c",
+    "tests/test_v1001_entrypoint.py": "0ce52c458e39d621317c7c45ea8e9af7b13f14a031972343f7992572070fcb7b"
+  },
+  "preflight_script_sha256": "21969a66e8eeb938c01289fbc28bbd08ffce35138190c028e71a38e82071f966"
+}

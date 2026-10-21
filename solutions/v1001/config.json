@@ -1,0 +1,84 @@
+{
+  "solution_id": "v1001",
+  "parent_run_id": null,
+  "stage": "data_preprocessing",
+  "data": {
+    "frequencies": [
+      "bar1m",
+      "bar5m",
+      "bar30m"
+    ],
+    "fields": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "volume",
+      "amount",
+      "ask_price1",
+      "ask_price2",
+      "ask_price3",
+      "ask_price4",
+      "ask_price5",
+      "bid_price1",
+      "bid_price2",
+      "bid_price3",
+      "bid_price4",
+      "bid_price5",
+      "ask_volume1",
+      "ask_volume2",
+      "ask_volume3",
+      "ask_volume4",
+      "ask_volume5",
+      "bid_volume1",
+      "bid_volume2",
+      "bid_volume3",
+      "bid_volume4",
+      "bid_volume5",
+      "ask_num_orders1",
+      "ask_num_orders2",
+      "ask_num_orders3",
+      "ask_num_orders4",
+      "ask_num_orders5",
+      "bid_num_orders1",
+      "bid_num_orders2",
+      "bid_num_orders3",
+      "bid_num_orders4",
+      "bid_num_orders5"
+    ],
+    "session": "all",
+    "window_bars": null,
+    "missing_values": "preserve_null"
+  },
+  "normalization": {
+    "price_transform": "log",
+    "quantity_transform": "log1p",
+    "fit_group": [
+      "instrument",
+      "frequency",
+      "field"
+    ],
+    "fit_scope": "all_unique_training_bars",
+    "ddof": 0,
+    "min_observations": 30,
+    "scale_epsilon": 1e-08,
+    "fallback": "expanding_then_pooled",
+    "expanding_includes_current_closed_bar": true,
+    "cross_section_universe": "latest_snapshot_at_or_before_bar_end",
+    "min_cross_section_observations": 2,
+    "channels": [
+      "z",
+      "c"
+    ],
+    "clip": null
+  },
+  "processing": {
+    "threads": 8,
+    "memory_limit": "8GB",
+    "batch_rows": 65536,
+    "output_dtype": "float32",
+    "partition": "frequency/calendar_month"
+  },
+  "model": null,
+  "parent_solution_id": "v701"
+}

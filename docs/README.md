@@ -71,6 +71,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 跨股票上下文候选 | [v801：冻结时序表示与完整截面残差](../solutions/v801/README.md)；v80x 首版，继承 v501 权重，约 170 万可训练参数，平台重新编码原始输入 |
 | 跨股票联合适应结果 | [v802：时序与关系联合训练](../solutions/v802/README.md#冻结结果)、[比较摘要](../experiments/v802-gru.json)；约 213 万参数全部可训练，双集 IC 未改善 |
 | 当天多频输入候选 | [v901：因果当天多频与共享历史](../solutions/v901/README.md)、[静态输入审计](../experiments/current-day-input-audit-20261021.json)；v90x 首版，纳入当天已结束的 5／30 分钟 Bar，约 156 万参数 |
+| 训练分布适应候选 | [v1001：行情条件多分支与时间加权](../solutions/v1001/README.md)；v100x 首版，约 242 万参数，单个共享时序主干、训练期平衡分配和有下限的日期权重 |
 | 信号诊断与 v201 结论 | [换手及持续性代理定义与结果](signal-diagnostics.md)、[v201 冻结比较](../experiments/v201-mixer.json)、[全体完成模型汇总](../experiments/completed-models-20261021.json) |
 | v301 冻结结论 | [分层 GRU 结果与平台材料](../solutions/v301/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v301-gru.json)、[信号代理诊断](../experiments/v301-signal-diagnostics.json) |
 | v202 冻结结论 | [Patch Mixer 的效率与效果](../solutions/v202/README.md#冻结结果)、[比较摘要](../experiments/v202-mixer.json)；保留快速结构研究价值，当前不晋级 |
