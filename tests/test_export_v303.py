@@ -18,6 +18,12 @@ spec.loader.exec_module(exporter)
 
 
 class ExportV303Test(unittest.TestCase):
+    def test_cli_defaults_to_fast_and_requires_explicit_reference_mode(self):
+        parser = exporter.build_parser()
+        self.assertTrue(parser.parse_args(["--run-dir", "example"]).fast_inference)
+        self.assertTrue(parser.parse_args(["--run-dir", "example", "--fast-inference"]).fast_inference)
+        self.assertFalse(parser.parse_args(["--run-dir", "example", "--reference-inference"]).fast_inference)
+
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
@@ -70,7 +76,7 @@ class ExportV303Test(unittest.TestCase):
     def test_default_rejects_non_candidate_without_creating_package(self):
         with self.assertRaisesRegex(ValueError, "默认只导出"):
             exporter.export(self.run)
-        self.assertFalse((self.root / "submissions/v303-test").exists())
+        self.assertFalse((self.root / "submissions/v303-test-fast").exists())
 
     def test_candidate_exports_bit_exact_float32_text_with_signed_zero(self):
         comparison = exporter.read_json(self.run / "comparison.json")
@@ -82,7 +88,7 @@ class ExportV303Test(unittest.TestCase):
                     "state_dict": {"weight": weights}}, self.run / "best.pt")
         self.manifest["selection"]["model_sha256"] = exporter.sha256(self.run / "best.pt")
         exporter.write_json(self.run / "manifest.json", self.manifest)
-        package = exporter.export(self.run)
+        package = exporter.export(self.run, fast_inference=False)
         bundle = exporter.read_json(package / "v303-model.json")
         notebook = exporter.read_json(package / "v303-submission.ipynb")
         description = "".join(notebook["cells"][0]["source"])
@@ -101,7 +107,7 @@ class ExportV303Test(unittest.TestCase):
         current.mkdir(parents=True)
         (current / "v303_notebook.py").write_text("raise RuntimeError('changed adapter')\n")
         (current / "v303_schema.py").write_text("raise RuntimeError('changed model core')\n")
-        package = exporter.export(self.run, platform_test_reason="用户要求平台比较")
+        package = exporter.export(self.run, fast_inference=False, platform_test_reason="用户要求平台比较")
         bundle = exporter.read_json(package / "v303-model.json")
         self.assertFalse(bundle["metadata"]["candidate"])
         self.assertEqual(bundle["metadata"]["decision"], "no_local_improvement")
@@ -121,13 +127,13 @@ class ExportV303Test(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "明确确认"):
             namespace["reproduce"]("unused", "unused")
 
-    def test_fast_variant_preserves_frozen_model_and_records_runtime_override(self):
+    def test_default_fast_variant_preserves_frozen_model_and_records_runtime_override(self):
         current = self.root / "solutions/v303"
         current.mkdir(parents=True)
         for name in ("v303_fast.py", "v303_predict_fast.py"):
             shutil.copyfile(ROOT / "solutions/v303" / name, current / name)
         (current / "v303_model.py").write_text("raise RuntimeError('must use frozen model')\n")
-        package = exporter.export(self.run, platform_test_reason="用户要求推理加速", fast_inference=True)
+        package = exporter.export(self.run, platform_test_reason="用户要求推理加速")
         bundle = exporter.read_json(package / "v303-model.json")
         self.assertEqual(package.name, "v303-test-fast")
         self.assertEqual(bundle["config"], exporter.read_json(self.run / "config.json"))
@@ -148,7 +154,7 @@ class ExportV303Test(unittest.TestCase):
                          "solutions/v303/v303_predict_fast.py")
 
     def test_training_restore_can_import_huber_trainer_without_repository(self):
-        package = exporter.export(self.run, platform_test_reason="用户要求平台比较")
+        package = exporter.export(self.run, fast_inference=False, platform_test_reason="用户要求平台比较")
         bundle = exporter.read_json(package / "v303-model.json")
         spec = importlib.util.spec_from_file_location("v303_reproduce_check", ROOT / "solutions/v303/v303_reproduce.py")
         reproduction = importlib.util.module_from_spec(spec)
@@ -171,26 +177,26 @@ class ExportV303Test(unittest.TestCase):
     def test_changed_selected_weights_rejected(self):
         (self.run / "best.pt").write_bytes(b"changed weights")
         with self.assertRaisesRegex(ValueError, "所选权重已改变"):
-            exporter.export(self.run, platform_test_reason="用户要求平台比较")
+            exporter.export(self.run, fast_inference=False, platform_test_reason="用户要求平台比较")
 
     def test_attachment_limit_rejects_export_before_creating_package(self):
         with patch.object(exporter, "MAX_ATTACHMENT_BYTES", 10):
             with self.assertRaisesRegex(ValueError, "超过"):
-                exporter.export(self.run, platform_test_reason="用户要求平台比较")
+                exporter.export(self.run, fast_inference=False, platform_test_reason="用户要求平台比较")
         self.assertFalse((self.root / "submissions/v303-test").exists())
 
     def test_changed_frozen_loss_dependency_rejected(self):
         (self.run / "source/solutions/v303/v303_loss.py").write_text("changed loss\n")
         with self.assertRaisesRegex(ValueError, "冻结源码已改变"):
-            exporter.export(self.run, platform_test_reason="用户要求平台比较")
+            exporter.export(self.run, fast_inference=False, platform_test_reason="用户要求平台比较")
 
     def test_running_or_blank_authorization_rejected(self):
         with self.assertRaisesRegex(ValueError, "须注明"):
-            exporter.export(self.run, platform_test_reason="  ")
+            exporter.export(self.run, fast_inference=False, platform_test_reason="  ")
         self.manifest["status"] = "running"
         exporter.write_json(self.run / "manifest.json", self.manifest)
         with self.assertRaisesRegex(ValueError, "只能导出已完成"):
-            exporter.export(self.run, platform_test_reason="用户要求平台比较")
+            exporter.export(self.run, fast_inference=False, platform_test_reason="用户要求平台比较")
 
 
 if __name__ == "__main__":

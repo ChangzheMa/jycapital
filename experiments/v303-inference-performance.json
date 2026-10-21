@@ -168,13 +168,14 @@
     }
   ],
   "implementation_checks": {
-    "tests_passed": 16,
-    "seconds": 5.887,
+    "tests_passed": 17,
+    "seconds": 5.957,
     "scope": "CPU synthetic inference, frozen-source export and numeric-policy checks",
     "test_files": {
       "tests/test_v303_fast.py": "291d9716c82d6ad83c5c4cdf91c85354ce47ac66aa89c0562ce05656e996aeb7",
-      "tests/test_export_v303.py": "a849659e380145dfc079e0ab3192e18dc7b274d10f171e5c8f9c0a9732e1c4af",
+      "tests/test_export_v303.py": "1809ba7014b1da7aee1dd7e0d7d07c7758e639f904be82cebaff0191d3b90af1",
       "tests/test_verify_v303_parity.py": "65062c8c7fca3d20c2ca3c97acd453deba8b8dc77297cd722beebcb374ed1e27"
-    }
+    },
+    "checked_at": "2026-10-21T14:42:07+08:00"
   }
 }

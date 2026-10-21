@@ -52,7 +52,7 @@ def notebook(description, entry):
             "language_info": {"name": "python", "version": "3.11"}}, "nbformat": 4, "nbformat_minor": 5}
 
 
-def export(run, destination=None, platform_test_reason=None, *, fast_inference=False):
+def export(run, destination=None, platform_test_reason=None, *, fast_inference=True):
     run = Path(run).resolve()
     manifest = read_json(run / "manifest.json")
     if manifest["status"] != "complete" or manifest["solution_id"] != "v303":
@@ -206,11 +206,20 @@ JSON 包含完整数值权重、三频统计量、配置、依赖及训练／推
     return destination
 
 
-if __name__ == "__main__":
+def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--destination", type=Path)
     parser.add_argument("--platform-test-reason", help="用户明确要求平台测试的理由；不改变本地晋级判定")
-    parser.add_argument("--fast-inference", action="store_true", help="复用股票日编码；冻结权重及训练源码不变")
-    args = parser.parse_args()
+    execution = parser.add_mutually_exclusive_group()
+    execution.add_argument("--fast-inference", dest="fast_inference", action="store_true",
+                           help="默认：复用股票日编码；冻结权重及训练源码不变")
+    execution.add_argument("--reference-inference", dest="fast_inference", action="store_false",
+                           help="仅为本地回归对照导出原执行路径；后续平台材料使用默认 fast")
+    parser.set_defaults(fast_inference=True)
+    return parser
+
+
+if __name__ == "__main__":
+    args = build_parser().parse_args()
     print(export(args.run_dir, args.destination, args.platform_test_reason, fast_inference=args.fast_inference))

@@ -82,13 +82,15 @@ v3 及以后使用 `--training-confirmed`；v2 不接受该参数。中断运行
 | v101 导出／验证 | [export-v101.py](../scripts/export-v101.py)、[verify-v101-submission.py](../scripts/verify-v101-submission.py) |
 | v201 导出／验证 | [export-v201.py](../scripts/export-v201.py)、[verify-v201-submission.py](../scripts/verify-v201-submission.py) |
 | v301 导出／验证 | [export-v301.py](../scripts/export-v301.py)、[verify-v301-submission.py](../scripts/verify-v301-submission.py)；GRU 数值核验说明见[版本文档](../solutions/v301/README.md#冻结结果与平台材料) |
-| v303 导出／验证 | [export-v303.py](../scripts/export-v303.py)、[verify-v303-submission.py](../scripts/verify-v303-submission.py)；`--fast-inference` 导出共享编码材料，详见[加速说明](v303-inference-fast.md)；验证 CLI 默认 `--device cpu` |
+| v303 导出／验证 | [export-v303.py](../scripts/export-v303.py)、[verify-v303-submission.py](../scripts/verify-v303-submission.py)；默认导出 fast 共享编码材料，详见[加速说明](v303-inference-fast.md)；验证 CLI 默认 `--device cpu` |
 | v303 推理测量 | [profile-v303-submission.py](../scripts/profile-v303-submission.py)，CPU 上测量独立提交包的完整请求及各阶段耗时 |
 | 信号换手与持续性代理 | [diagnose-signals.py](../scripts/diagnose-signals.py)，定义及局限见[诊断说明](signal-diagnostics.md) |
 
 晋级、历史参照及平台分回填统一按[比较规则](../.agents/skills/jycapital-experiment/references/comparison.md)。用户要求导出未晋级版本时，使用 `--platform-test-reason` 保留原判定和导出理由。
 
 导出取冻结源码、配置、统计量和所选权重，默认拒绝覆盖已有目录。全部附件为 UTF-8 文本，模型参数可分片，每个参数文件不超过 **50,000,000 字节**。v4 使用[紧凑数值数组布局](../common/text_json.py)；v5—v7、v7e、v101、v201、v301 和 v303 的 FP32 权重用九位有效数字保存，并校验 dtype、形状和字节精确恢复，其他数值保持原精度。
+
+依据用户 2026-10-21 的要求，后续所有平台材料统一使用经验证的 **fast 推理路径**：按股票日复用切窗与可共享历史编码，保留完整截面归一化、原输出键和因果性。新模型应在设计时兼顾该路径，导出前按网络结构适配并核验数值及完整请求耗时；不能直接将单向 GRU 的前缀状态复用套用到非因果注意力等其他结构。历史导出工具及原包保留追溯，新平台导出须先满足此约定。v303 默认 fast，`--reference-inference` 仅供本地回归对照。
 
 验证须覆盖附件独立加载、全部权重分片、训练源码恢复及代表性完整区间推理，核对有限输出、唯一键、时间边界和股票池覆盖。Notebook 导入不查询行情，推理不读取标签、不生成额外权重附件；运行时不添加哈希／附件匹配检查，哈希仅用于本地追溯。
 

@@ -33,7 +33,7 @@
 
 ## 独立验证与材料
 
-16 项 CPU 实现及导出检查通过，覆盖八时点原模型对照、未来扰动隔离、乱序及不完整请求、动态股票池、缺失值、FP16 溢出修复、文本权重、冻结源码依赖和原有数值容差。
+17 项 CPU 实现及导出检查通过，覆盖八时点原模型对照、未来扰动隔离、乱序及不完整请求、动态股票池、缺失值、FP16 溢出修复、文本权重、冻结源码依赖和原有数值容差。
 
 独立双文件平台入口验证覆盖验证期 2024-01-02—2024-01-05 的 32,000 行及测试期 2024-12-30—2024-12-31 的 16,000 行。两段均与原 checkpoint 加冻结预处理数据的独立 CPU 输出完全一致；34 个权重张量逐位恢复，22 份训练源码恢复及导入通过，输出覆盖、键唯一性、有限性和类型通过。原有 `atol=2e-7、rtol=1e-4` 同后端标准没有放宽。
 
@@ -48,10 +48,10 @@
 
 ## 重建与测量
 
-导出到尚不存在的新目录：
+导出默认使用 fast，目标目录须不存在；`--fast-inference` 保留为显式别名，`--reference-inference` 仅供本地回归对照。后续平台材料使用默认 fast：
 
 ```powershell
-.venv-training/Scripts/python.exe scripts/export-v303.py --run-dir outputs/runs/v303-huber-delta2-s42 --fast-inference
+.venv-training/Scripts/python.exe scripts/export-v303.py --run-dir outputs/runs/v303-huber-delta2-s42
 ```
 
 CPU 性能测量示例，原版可替换 `--package` 为原目录；预测仅写入忽略的 `outputs/`：

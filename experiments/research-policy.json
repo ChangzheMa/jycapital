@@ -14,6 +14,21 @@
   "capacity_check_seconds": 3600,
   "daily_platform_submission_limit": 5,
   "platform_submission_actor": "user",
+  "platform_inference": {
+    "updated_at": "2026-10-21",
+    "default": "fast",
+    "scope": "all_future_platform_materials",
+    "basis": "用户要求后续所有平台提交使用 fast 逻辑。",
+    "principle": "按股票日复用切窗和可共享历史编码，保留完整截面归一化、请求键及逐时点因果边界。",
+    "required_checks": [
+      "冻结权重精确恢复",
+      "独立预测一致性",
+      "完整输出覆盖",
+      "完整请求耗时与峰值内存"
+    ],
+    "architecture_adaptation": "按实际网络适配，不能直接把单向 GRU 的前缀复用套用到其他结构。",
+    "reference": "docs/v303-inference-fast.md"
+  },
   "platform_monitoring": {
     "updated_at": "2026-10-21",
     "automatic_queries": false,
