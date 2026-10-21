@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-22T00:35:45.152245+08:00",
+  "generated_at": "2026-10-22T02:59:11.415229+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
@@ -42,6 +42,27 @@
           "ic_mean": 0.08923490164796218,
           "rank_ic_mean": 0.08285936058468976,
           "ic_ir": 0.7784782385323331
+        }
+      }
+    },
+    {
+      "solution_id": "v802",
+      "run_id": "v802-joint-market-gru-s42",
+      "model_sha256": "5dd1a42a87ab9275eb8dac1174c962f2244b193abc6fb9f2ae8e97cbbe07fb2e",
+      "summary_file": "experiments/v802-gru.json",
+      "summary_content_sha256": "d9f04c0dd0624e8646e913720861c748fd97d229572d8fa089c256bf973d383c",
+      "parameters": 2129158,
+      "epochs_completed": 5,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08629857103800025,
+          "rank_ic_mean": 0.08177499369796436,
+          "ic_ir": 0.7987249358945586
+        },
+        "test": {
+          "ic_mean": 0.08905760887122713,
+          "rank_ic_mean": 0.08257768308191663,
+          "ic_ir": 0.7734198578380725
         }
       }
     },
@@ -319,5 +340,5 @@
       }
     }
   ],
-  "image_sha256": "10c39573ae0aed64cabdb759144328b91b97dbf942ceb999a39498fd96bbe868"
+  "image_sha256": "a724c3fd899ab24df35c97a37b7b83bb49f1c50a089921f1769538a3b51d075a"
 }
