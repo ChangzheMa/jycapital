@@ -86,6 +86,7 @@ v3 及以后使用 `--training-confirmed`；v2 不接受该参数。中断运行
 | v303 推理测量 | [profile-v303-submission.py](../scripts/profile-v303-submission.py)，CPU 上测量独立提交包的完整请求及各阶段耗时 |
 | v501 导出／诊断 | [export-v501.py](../scripts/export-v501.py)默认 fast 并核对 EMA 来源；[verify-v501-submission.py](../scripts/verify-v501-submission.py)、[profile-v501-submission.py](../scripts/profile-v501-submission.py)保留为需要时的诊断工具，后续同构转换按下述简化约定 |
 | v901 导出／简化核验 | [export-v901.py](../scripts/export-v901.py)从冻结快照导出当天多频 fast 材料；[verify-v901-submission.py](../scripts/verify-v901-submission.py)检查权重精确恢复、隔离合成推理及复现依赖，不重复长行情或性能基准 |
+| v1001 导出／简化核验 | [export-v1001.py](../scripts/export-v1001.py)、[verify-v1001-submission.py](../scripts/verify-v1001-submission.py)；保留训练期时间权重和分支辅助目标的复现源码，平台仅使用共享编码与行情路由 |
 | 信号换手与持续性代理 | [diagnose-signals.py](../scripts/diagnose-signals.py)，定义及局限见[诊断说明](signal-diagnostics.md) |
 
 晋级、历史参照及平台分回填统一按[比较规则](../.agents/skills/jycapital-experiment/references/comparison.md)。用户要求导出未晋级版本时，使用 `--platform-test-reason` 保留原判定和导出理由。

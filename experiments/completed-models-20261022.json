@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-22T04:39:28+08:00",
+  "checked_at": "2026-10-22T06:07:26+08:00",
   "source": "本地运行的冻结产物",
-  "completed_count": 33,
+  "completed_count": 34,
   "protocol_compatibility": "local-v1 仅协议标识和选模指标不同；评估器、标签与股票池指纹一致，保留原先选出的权重。",
   "runs": [
     {
@@ -2799,6 +2799,95 @@
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "cdcbd41dc3d0fc3efc86f8fbd0308841f7ba71f8d6fcb280ced354335682b06a"
+    },
+    {
+      "run_id": "v1001-temporal-experts-s42",
+      "solution_id": "v1001",
+      "parent_run_id": "v701-wide-day-gru-s42",
+      "parent_solution_id": "v701",
+      "selection": {
+        "best_epoch": 4,
+        "best_validation_metric": 0.09072537173214802,
+        "evaluation_weights": "ema",
+        "ema_decay": 0.9999,
+        "ema_warmup_epochs": 1,
+        "best_validation_ic": 0.09072537173214802,
+        "epochs_completed": 8,
+        "selection_metric": "ic_mean",
+        "patience_epochs": 4,
+        "early_stopping": {
+          "mode": "best_epoch_fraction",
+          "fraction": 0.6,
+          "minimum": 4,
+          "maximum": 12,
+          "rounding": "ceil",
+          "improvement": "strict"
+        },
+        "stale_epochs": 4,
+        "model_sha256": "926e32d5cc8dfd7342ce362f26c1dfe201160f9cf8b78df18a80c5dde9b5853a",
+        "selected_at": "2026-10-22T06:01:56+08:00",
+        "optimizer_steps": 120984,
+        "training_seconds_this_session": 5235.324,
+        "stop_reason": "early_stopping"
+      },
+      "parameters": 2418576,
+      "metrics": {
+        "validation": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 936000,
+          "predicted_rows": 936000,
+          "valid_label_rows": 935224,
+          "evaluated_rows": 935224,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 936,
+          "mse": 0.014945971289295337,
+          "mae": 0.07004174007945752,
+          "zero_prediction_mse": 2.057265373878181e-05,
+          "ic_mean": 0.09072537173214802,
+          "ic_std": 0.11138928408643685,
+          "ic_ir": 0.8144892255681089,
+          "ic_valid_cross_sections": 936,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08798281723910215,
+          "rank_ic_std": 0.09659789072159349,
+          "rank_ic_ir": 0.9108150973262864,
+          "rank_ic_valid_cross_sections": 936,
+          "rank_ic_undefined_cross_sections": 0
+        },
+        "test": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 1000000,
+          "predicted_rows": 1000000,
+          "valid_label_rows": 998539,
+          "evaluated_rows": 998539,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 1000,
+          "mse": 0.017101443274396142,
+          "mae": 0.07362539404846459,
+          "zero_prediction_mse": 2.20817637455184e-05,
+          "ic_mean": 0.09483706377714876,
+          "ic_std": 0.12396685589005996,
+          "ic_ir": 0.7650195134516845,
+          "ic_valid_cross_sections": 1000,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08966641353708377,
+          "rank_ic_std": 0.10601867685089414,
+          "rank_ic_ir": 0.8457605414486696,
+          "rank_ic_valid_cross_sections": 1000,
+          "rank_ic_undefined_cross_sections": 0
+        }
+      },
+      "run_path": "outputs/runs/v1001-temporal-experts-s42",
+      "selected_at": "2026-10-22T06:01:56+08:00",
+      "seed": 42,
+      "config_sha256": "e4494c2bbb71ed7a20a0e9a6c2050b526984f73e138560d6aecc1268a103e667",
+      "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+      "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+      "model_sha256": "926e32d5cc8dfd7342ce362f26c1dfe201160f9cf8b78df18a80c5dde9b5853a"
     }
   ]
 }

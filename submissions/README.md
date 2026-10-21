@@ -19,7 +19,8 @@
 | [v303-huber-delta2-s42](v303-huber-delta2-s42/v303-submission.ipynb) | `v303-submission.ipynb`、`v303-model.json` | 本地改善候选；Huber delta=2 的分层 GRU，第 7 轮权重，已通过独立 CPU 与冻结 checkpoint 对照；[清单](../experiments/v303-huber-delta2-s42-submission.json) |
 | [v303-huber-delta2-s42-fast](v303-huber-delta2-s42-fast/v303-submission.ipynb) | 同一加速目录的 `v303-submission.ipynb`、`v303-model.json` | **v303 后续评测推荐材料**；同一冻结权重，12 日 CPU 对照约快 2.94 倍且预测一致；[清单](../experiments/v303-huber-delta2-s42-fast-submission.json)、[说明](../docs/v303-inference-fast.md) |
 | [v501-ema-gru-s42-fast](v501-ema-gru-s42-fast/v501-submission.ipynb) | `v501-submission.ipynb`、`v501-model.json` | 先前本地验证最优、可作对照；第 8 轮 EMA，默认 fast；[清单](../experiments/v501-ema-gru-s42-fast-submission.json)、[结果](../solutions/v501/README.md#冻结结果) |
-| [v901-current-multifrequency-s42-fast](v901-current-multifrequency-s42-fast/v901-submission.ipynb) | `v901-submission.ipynb`、`v901-model.json` | **当前优先候选**；第 5 轮 EMA，三频当天因果输入、默认 fast；双集 IC／Rank IC 提高，验证 IC IR 略低、换手代理略高；[清单](../experiments/v901-current-multifrequency-s42-fast-submission.json)、[结果](../solutions/v901/README.md#冻结结果与平台材料) |
+| [v901-current-multifrequency-s42-fast](v901-current-multifrequency-s42-fast/v901-submission.ipynb) | `v901-submission.ipynb`、`v901-model.json` | 前一本地最优、保留为 IR 对照；第 5 轮 EMA，三频当天因果输入、默认 fast；[清单](../experiments/v901-current-multifrequency-s42-fast-submission.json)、[结果](../solutions/v901/README.md#冻结结果与平台材料) |
+| [v1001-temporal-experts-s42-fast](v1001-temporal-experts-s42-fast/v1001-submission.ipynb) | `v1001-submission.ipynb`、`v1001-model.json` | **当前优先候选**；第 4 轮 EMA，时间加权与共享主干多分支，默认 fast；双集 IC／换手代理改善，部分 Rank IC／IR 指标退化；[清单](../experiments/v1001-temporal-experts-s42-fast-submission.json)、[结果](../solutions/v1001/README.md#冻结结果与平台材料) |
 
 v2／v4—v7／v7e／v101／v201／v301／v303 的两个文本文件需置于同一平台目录。JSON 内嵌冻结权重、归一化统计量、配置和训练／推理源码；Notebook 提供评测入口、依赖及复现说明。附件大小、数值精度及独立推理的验证范围以各清单为准。
 
@@ -32,6 +33,8 @@ v301 的 JSON 为 15,274,281 字节，Notebook 为 8,005 字节。相同两段�
 v303 的 JSON 为 15,272,894 字节，Notebook 为 8,007 字节。相同两段区间共 48,000 行通过独立 CPU 核验：原始行情入口与原 checkpoint 的同后端对照完全一致，与原 CUDA 冻结预测的最大差约 5.87×10⁻⁶。它以较大的 Huber delta 提高双集 IC 和 IC IR，但 Rank IC 略低、换手代理增加，提交理由和完整验证见 [v303 说明](../solutions/v303/README.md#冻结结果与平台材料)。
 
 ## 平台状态与完整性
+
+v1001 fast 的 JSON 为 42,023,924 字节、Notebook 为 9,326 字节。完成实际文本权重位精确恢复、隔离两文件的 21 行合成窗口 fast 对照和独立复现源码导入；没有重复长行情区间或速度基准，也未验证平台运行。四个预测分支共享一个时序主干，推理不使用训练日期权重、标签辅助分配或历史误差记忆。
 
 v901 fast 的 JSON 为 30,498,868 字节、Notebook 为 8,917 字节。按用户的简化转换约定完成冻结源码逻辑审查、实际文本权重位精确恢复、隔离两文件的 21 行合成窗口推理和独立训练源码导入；没有重复长行情区间验证或性能基准，也未验证平台运行。上传时将这两份文件放在同一目录，选择其中唯一 Notebook。
 

@@ -14,3 +14,5 @@
 /experiments/v501*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 # v901 fast 提交清单参与提交索引哈希，保留原始字节。
 /experiments/v901*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# v1001 fast 提交清单参与提交索引哈希，保留原始字节。
+/experiments/v1001*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

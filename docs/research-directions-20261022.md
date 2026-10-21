@@ -16,7 +16,8 @@ v801 的表示缓存残差头虽使 IR／换手代理改善，但验证和测试
 | --- | --- | --- |
 | **ShifTS: Tackling Time-Series Forecasting Generalization via Mitigating Concept Drift**，ICLR 2026；[正式记录](https://proceedings.iclr.cc/paper_files/paper/2026/hash/96d328a1f6d8396d8c8a62f2beee252a-Abstract-Conference.html)、[论文](https://proceedings.iclr.cc/paper_files/paper/2026/file/96d328a1f6d8396d8c8a62f2beee252a-Paper-Conference.pdf) | 正式发表，核验方法、实验与附录；区分边际统计变化和条件关系变化，评估汇率、流感与 ETT 等六个数据集，有不同主干及模块消融。该评估范围不含本项目的分钟股票截面收益任务 | 提醒将归一化与预测关系变化分开分析；不能根据通用序列误差改善，断言本地 IC 提高，也不能仅由月份成绩波动诊断漂移 |
 | **Meta-learning for return prediction in shifting market regimes / FinPFN**，Journal of Financial Markets，2026 年 6 月；[出版社记录与摘要](https://www.sciencedirect.com/science/article/pii/S1386418125000825) | 本次仅核验出版社记录、摘要和研究范围，未独立核验全文协议、代码或复现；方法条件包含近期特征—收益对 | 不能默认平台推理阶段能够取得相同的收益反馈；在信息可用性和复现证据明确前，不作为实现依据 |
-| **Adaptive mixture of experts framework for multi horizon stock market forecasting using heterogeneous deep learning models**，Discover Computing，2026-09-25；[出版社页面](https://link.springer.com/article/10.1007/s10791-026-10613-z) | 本次核验正式记录及摘要；五只股票、1／5／10 日预测，报告价格误差与统计比较。股票范围和指标与大股票池分钟收益排序存在明显差异 | 新近发表及显著性报告不足以支持本项目效果预期；不据价格 RMSE 改善部署多个重型时序网络 |
+| **Adaptive mixture of experts framework for multi horizon stock market forecasting using heterogeneous deep learning models**，Discover Computing，2026-09-25；[出版社页面](https://link.springer.com/article/10.1007/s10791-026-10613-z) | 初次核验正式记录与摘要；随后正文补查发现，第 3.1 节列出 AAPL／MSFT／IBM／INFY／META，第 3.2 节却列出 AAPL／MSFT／GOOGL／AMZN／META，研究股票名单存在内部不一致。任务为少量股票的日频价格预测，并使用人工技术指标 | 不采用其效果结论；正式发表、统计检验或新近日期不能替代实验对象及协议的一致性核查 |
+| **M²FMoE: Multi-Resolution Multi-View Frequency Mixture-of-Experts for Extreme-Adaptive Time Series Forecasting**，AAAI 2026；[正式记录与摘要](https://doi.org/10.1609/aaai.v40i26.39362) | 本轮核验正式记录和摘要：以傅里叶／小波频段、多分辨率融合和时序门控处理水文极端模式；未据摘要推断金融效果，也未核验独立复现 | 其“频率”是谱域频段，不能与本项目 1／5／30 分钟采样粒度直接等同；保留为机制线索，不导入谱域分解或把多频组合视为必然增益 |
 | **DoubleAdapt**，KDD 2023；[正式 DOI](https://doi.org/10.1145/3580305.3599315)、[作者正文 v3](https://arxiv.org/html/2306.09862v3) | 正式发表，正文明确模型和数据适配器在增量任务间更新，新的真实标签到达后推动后续任务。该使用场景属于持续在线适应 | 与本项目冻结权重的评测入口不同；本轮不移植在线更新。若借鉴元学习，训练内任务必须全部限制于 2020—2023，并另行证明冻结推理方式可用 |
 | **TRA: Learning Multiple Stock Trading Patterns with Temporal Routing Adaptor and Optimal Transport**，KDD 2021；[作者机构记录](https://www.microsoft.com/en-us/research/publication/learning-multiple-stock-trading-patterns-with-temporal-routing-adaptor-and-optimal-transport/)、[作者正文 v2](https://arxiv.org/html/2106.12950v2)、[官方代码](https://github.com/microsoft/qlib/tree/main/examples/benchmarks/TRA) | 时间顺序划分，有路由输入与最优传输消融；表格报告五种子的 MSE／MAE 离散程度，不能据此声称 IC 也有完整不确定性报告。完整路由使用历史预测误差，测试需按时间推进；官方旧论文复现入口标注不维护 | 原始完整方案不直接适配当前提交。仅表示输入的消融 IC 为 0.053，结合误差记忆为 0.059，不能删除误差输入后照搬完整效果。模型内部的可学习多分支仍可作为假设，但须解决路由坍缩，并保持推理与历史标签解耦 |
 
@@ -32,3 +33,7 @@ v802 已提供联合适应的负结果，不能单独归因于解冻。v1001 在
 - **纯行情条件的多模式预测**：共享一个已有效的时序主干，用小型模型分支和可学习路由表达不同关系。训练辅助分配可使用训练标签，推理路由只看当时行情表示，不引入历史标签／预测误差存储。需要先验证不会坍缩到单一分支，且不破坏股票日复用；不能自称复现了 TRA 的完整效果。
 
 v1001 仍按原验证 IC 选模、完整评估双集，保留 EMA、动态早停和因果 fast 路径；实际 ready 状态以候选清单为准。仅检索或讨论方向不构成已发布候选，未实现的方向不占据训练队列。研究 session 不启动正式训练，训练 session 继续串行调度。
+
+v1001 已完成正式双集评估：验证 IC 0.090725、测试 IC 0.094837，超过 v901，并降低双集换手代理；验证 Rank IC 略低，双集 Rank IC IR 及测试 IC IR 较低。训练路由平均概率和熵接近均匀，不能宣称学到清晰的市场模式，收益仍归于整体组合。
+
+下一步优先检验 v1001 训练组合与 v901 当天多频输入的兼容性。两条局部有效路线不保证合并后仍有效，仍需独立的新版本与一次正式运行。已有 v1101 保持冻结并由训练 session 调度，不因为出现新最优而修改在训方案。
