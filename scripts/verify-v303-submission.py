@@ -233,6 +233,8 @@ def verify(run, package, start, end, split="test"):
         raise AssertionError("提交入口与评测输出键集合不同")
     difference = np.abs(merged.factor_package - merged.factor_reference)
     diagnostic = run / "local-only" / "submission-parity"
+    if package.name != run.name:
+        diagnostic = diagnostic / package.name
     diagnostic.mkdir(parents=True, exist_ok=True)
     tag = split + "-" + lo.strftime("%Y%m%d") + "-" + hi.strftime("%Y%m%d")
     result.to_parquet(diagnostic / (tag + "-package.parquet"), index=False)
@@ -266,6 +268,7 @@ def verify(run, package, start, end, split="test"):
                                                         "mismatched_rows": numeric["original_mismatched_rows"]},
               "numeric_profile": ("GRU FP32: strict same-backend input-path parity plus separate frozen-execution comparison"
                                   if same_backend is not None else "original_frozen_execution_comparison"),
+              "inference_execution": manifest.get("inference_execution", {"method": "original_per_sample"}),
               "cpu_threads": torch.get_num_threads(),
               "seconds": round(seconds, 3), "device": "cuda" if torch.cuda.is_available() else "cpu",
               "torch": torch.__version__, "queried_tables": sorted(recorder.tables),
@@ -294,11 +297,11 @@ def verify(run, package, start, end, split="test"):
 def record(run, package, report):
     index_path = ROOT / "experiments/submissions.csv"
     index = pd.read_csv(index_path, dtype=str, keep_default_na=False)
-    row = {"submission_id": run.name, "run_id": run.name, "status": "local_verified_not_submitted",
+    row = {"submission_id": package.name, "run_id": run.name, "status": "local_verified_not_submitted",
            "directory": package.relative_to(ROOT).as_posix(), "manifest_sha256": sha256(manifest_path(package)),
            "platform_submission_id": None, "platform_score": None,
            "manifest_path": manifest_path(package).relative_to(ROOT).as_posix()}
-    index = pd.concat([index.loc[index.submission_id != run.name], pd.DataFrame([row])], ignore_index=True)
+    index = pd.concat([index.loc[index.submission_id != package.name], pd.DataFrame([row])], ignore_index=True)
     index["manifest_path"] = index["manifest_path"].fillna("")
     missing = index.manifest_path == ""
     index.loc[missing, "manifest_path"] = index.loc[missing, "directory"] + "/submission-manifest.json"

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-21T12:46:06.443409+08:00",
+  "generated_at": "2026-10-21T14:33:49.059261+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
@@ -8,7 +8,7 @@
       "run_id": "v303-huber-delta2-s42",
       "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
       "summary_file": "experiments/v303-gru.json",
-      "summary_content_sha256": "ca7d69d083d0a83f677812b6b2acba6fbfb8d64f1eeee717d61e7bd5464c9668",
+      "summary_content_sha256": "df9f50980933607471cdf9eb940aa895908588e0943e4e561319cb24f6d91f57",
       "parameters": 433409,
       "epochs_completed": 12,
       "metrics": {

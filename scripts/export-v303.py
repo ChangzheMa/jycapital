@@ -52,7 +52,7 @@ def notebook(description, entry):
             "language_info": {"name": "python", "version": "3.11"}}, "nbformat": 4, "nbformat_minor": 5}
 
 
-def export(run, destination=None, platform_test_reason=None):
+def export(run, destination=None, platform_test_reason=None, *, fast_inference=False):
     run = Path(run).resolve()
     manifest = read_json(run / "manifest.json")
     if manifest["status"] != "complete" or manifest["solution_id"] != "v303":
@@ -80,7 +80,8 @@ def export(run, destination=None, platform_test_reason=None):
     for frequency in FREQUENCIES:
         if sha256(run / "normalization" / (frequency + ".json")) != statistics[frequency]["statistics_sha256"]:
             raise ValueError("冻结归一化参数已改变")
-    destination = Path(destination).resolve() if destination else ROOT / "submissions" / run.name
+    package_name = run.name + "-fast" if fast_inference else run.name
+    destination = Path(destination).resolve() if destination else ROOT / "submissions" / package_name
     if destination.exists():
         raise FileExistsError(destination)
 
@@ -111,6 +112,20 @@ def export(run, destination=None, platform_test_reason=None):
             raise ValueError("冻结源码已改变: " + relative)
         sources[relative] = source_entry(path)
 
+    runtime_overrides = {}
+    inference_execution = {"method": "original_per_sample"}
+    if fast_inference:
+        for embedded, actual in (("v303_predict.py", "v303_predict_fast.py"), ("v303_fast.py", "v303_fast.py")):
+            relative = "solutions/v303/" + embedded
+            actual_path = ROOT / "solutions/v303" / actual
+            sources[relative] = source_entry(actual_path)
+            runtime_overrides[relative] = {"source_path": actual_path.relative_to(ROOT).as_posix(),
+                                           "sha256": sources[relative]["sha256"],
+                                           "frozen_source_sha256": frozen.get(relative)}
+        inference_execution = {"method": "shared_stock_day_encoding", "stock_batch_size": 128,
+                               "model_precision": "float32", "grid_stocks": "requested_instruments_only",
+                               "normalization_cross_sections": "unchanged_full_source_and_original_pool"}
+
     checkpoint = torch.load(run / "best.pt", map_location="cpu", weights_only=True)
     config = read_json(run / "config.json")
     if checkpoint["config"] != config:
@@ -130,6 +145,10 @@ def export(run, destination=None, platform_test_reason=None):
                      "training_trajectory": "fresh_global_fp16",
                      "reproduction_scope": "恢复冻结源码后从头全局训练当前配置；本运行没有继承其他模型权重"},
     }
+    if fast_inference:
+        bundle["runtime_sources"].insert(-1, "solutions/v303/v303_fast.py")
+        bundle["inference_execution"] = inference_execution
+        bundle["metadata"]["runtime_overrides"] = runtime_overrides
     for item in bundle["state_dict"].values():
         if item["dtype"] == "float32":
             item["values"] = Float32Values(item["values"])
@@ -158,6 +177,8 @@ JSON 包含完整数值权重、三频统计量、配置、依赖及训练／推
 复现工作目录必须不存在；该调用会生成预处理数据并从头全局训练当前配置。硬件和软件环境差异可能影响重新训练的数值结果；冻结权重可直接用于推理。仅执行下方调试单元格不会训练。
 本地评估摘要与原权重 SHA-256 见 JSON 的 `metadata`；逐文件哈希及本地入口验证记录位于仓库 `experiments/{destination.name}-submission.json`，无需上传。
 """
+    if fast_inference:
+        description += "\n本包采用股票日共享编码：每只股票一次取窗并复用八时点历史表示，仍使用冻结的 FP32 GRU 权重及原归一化。窗口网格仅保存请求目标股票，截面归一化仍处理完整行情与原股票池；运行时只返回请求键。训练源码及原模型结构不变，推理批量形状变化的数值影响须以独立验证记录为准。\n"
     write_compact_numeric_json(destination / "v303-model.json", bundle,
                                max_bytes=MAX_ATTACHMENT_BYTES)
     write_json(destination / "v303-submission.ipynb", notebook(
@@ -175,6 +196,7 @@ JSON 包含完整数值权重、三频统计量、配置、依赖及训练／推
         "local_decision": comparison["decision"], "export_purpose": purpose, "export_reason": reason,
         "export_script_sha256": sha256(__file__),
         "notebook_template_sha256": sources["solutions/v303/v303_notebook.py"]["sha256"],
+        "inference_execution": inference_execution, "runtime_overrides": runtime_overrides,
         "platform_status": "not_submitted", "validation_status": "pending",
         "attachment_bytes": {p.name: p.stat().st_size for p in sorted(destination.iterdir()) if p.is_file()},
         "files": {p.name: sha256(p) for p in sorted(destination.iterdir()) if p.is_file()},
@@ -189,5 +211,6 @@ if __name__ == "__main__":
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--destination", type=Path)
     parser.add_argument("--platform-test-reason", help="用户明确要求平台测试的理由；不改变本地晋级判定")
+    parser.add_argument("--fast-inference", action="store_true", help="复用股票日编码；冻结权重及训练源码不变")
     args = parser.parse_args()
-    print(export(args.run_dir, args.destination, args.platform_test_reason))
+    print(export(args.run_dir, args.destination, args.platform_test_reason, fast_inference=args.fast_inference))

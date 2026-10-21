@@ -66,6 +66,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | v302 冻结结论 | [压缩 GRU 的效率与效果](../solutions/v302/README.md#冻结结果)、[比较摘要](../experiments/v302-gru.json)、[信号代理诊断](../experiments/v302-signal-diagnostics.json)；保留效率价值，暂不导出 |
 | v102 冻结结论 | [时钟条件 Transformer 读出结果](../solutions/v102/README.md#冻结结果)、[比较摘要](../experiments/v102-patch-transformer.json)；未超过父版本，不导出 |
 | v303 冻结结论 | [Huber delta=2 的 GRU 结果与平台材料](../solutions/v303/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v303-gru.json)、[信号代理诊断](../experiments/v303-signal-diagnostics.json) |
+| v303 推理加速 | [共享股票日编码与加速材料](v303-inference-fast.md)、[性能记录](../experiments/v303-inference-performance.json)；12 日 CPU 对照约加速 2.94 倍，96,000 行预测逐行一致 |
 | v304 冻结结论 | [门控读出结果与资源恢复口径](../solutions/v304/README.md#冻结结果)、[比较摘要](../experiments/v304-gru.json)；同一 run 保留状态恢复，未达到改善条件 |
 | v305 冻结结论 | [较小压缩率的效果与成本](../solutions/v305/README.md#冻结结果)、[比较摘要](../experiments/v305-gru.json)；Rank IC 改善不足以抵消 IC 与成本代价，不导出 |
 | v306 冻结结论 | [Huber delta=4 的取舍](../solutions/v306/README.md#冻结结果)、[比较摘要](../experiments/v306-gru.json)、[信号诊断](../experiments/v306-signal-diagnostics.json)；保留稳定性变化证据，当前未晋级 |

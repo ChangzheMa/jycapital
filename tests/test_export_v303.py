@@ -121,6 +121,32 @@ class ExportV303Test(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "明确确认"):
             namespace["reproduce"]("unused", "unused")
 
+    def test_fast_variant_preserves_frozen_model_and_records_runtime_override(self):
+        current = self.root / "solutions/v303"
+        current.mkdir(parents=True)
+        for name in ("v303_fast.py", "v303_predict_fast.py"):
+            shutil.copyfile(ROOT / "solutions/v303" / name, current / name)
+        (current / "v303_model.py").write_text("raise RuntimeError('must use frozen model')\n")
+        package = exporter.export(self.run, platform_test_reason="用户要求推理加速", fast_inference=True)
+        bundle = exporter.read_json(package / "v303-model.json")
+        self.assertEqual(package.name, "v303-test-fast")
+        self.assertEqual(bundle["config"], exporter.read_json(self.run / "config.json"))
+        self.assertEqual(bundle["sources"]["solutions/v303/v303_model.py"]["sha256"],
+                         self.manifest["source"]["files"]["solutions/v303/v303_model.py"])
+        self.assertEqual(bundle["inference_execution"]["method"], "shared_stock_day_encoding")
+        self.assertNotIn("solutions/v303/v303_fast.py", bundle["training_sources"])
+        notebook = exporter.read_json(package / "v303-submission.ipynb")
+        namespace = {"__name__": "submission_import", "__file__": str(package / "v303-submission.ipynb")}
+        for cell in notebook["cells"]:
+            if cell["cell_type"] == "code":
+                exec("".join(cell["source"]), namespace)
+        _, modules = namespace["_runtime"]()
+        self.assertIn("v303_fast", modules)
+        self.assertIs(modules["v303_predict"].predict_day, modules["v303_fast"].predict_day)
+        report = exporter.read_json(exporter.manifest_path(package))
+        self.assertEqual(report["runtime_overrides"]["solutions/v303/v303_predict.py"]["source_path"],
+                         "solutions/v303/v303_predict_fast.py")
+
     def test_training_restore_can_import_huber_trainer_without_repository(self):
         package = exporter.export(self.run, platform_test_reason="用户要求平台比较")
         bundle = exporter.read_json(package / "v303-model.json")

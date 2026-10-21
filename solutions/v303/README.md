@@ -40,8 +40,14 @@ v30x 系列的损失敏感性对照，以 `v301-global-fp16-s42` 为父版本，
 
 代价是双集 Rank IC 略低、换手代理有所增加，不能宣称所有指标同时改善。信号持续性、逐月及日内代理结果见[诊断记录](../../experiments/v303-signal-diagnostics.json)，方法和平台口径的区别见[说明](../../docs/signal-diagnostics.md)。本版达到本地改善条件，建议作为下一份平台评测候选；官方总分仍须平台反馈，当前结论为单种子、已经观察过的测试期结果。
 
-平台文件已从冻结源码、配置、统计量和第 7 轮权重导出：[v303-submission.ipynb](../../submissions/v303-huber-delta2-s42/v303-submission.ipynb) 与 [v303-model.json](../../submissions/v303-huber-delta2-s42/v303-model.json)，分别为 8,007 和 15,272,894 字节。只需将这两个文件置于同一平台目录，选择 Notebook 推理入口；上传仍由用户执行。
+原始平台材料从冻结源码、配置、统计量和第 7 轮权重导出：[v303-submission.ipynb](../../submissions/v303-huber-delta2-s42/v303-submission.ipynb) 与 [v303-model.json](../../submissions/v303-huber-delta2-s42/v303-model.json)，分别为 8,007 和 15,272,894 字节。以下保留原版验证记录；后续评测推荐采用[共享编码加速材料](../../docs/v303-inference-fast.md)，使用相同冻结模型和权重。
 
 独立 CPU 核验覆盖 2024-01-02 至 2024-01-05、2024-12-30 至 2024-12-31，共 **48,000 行**。34 个权重张量经九位有效数字文本逐位恢复，22 份训练源码恢复及训练入口导入通过。平台原始行情入口与原 checkpoint 加冻结预处理数据，在同一 CPU 后端及逐日批量边界下的输出完全一致；输出键、覆盖率、类型和有限性均通过检查，Notebook 调试单元格也已本地执行。
 
 沿用 [v301 的数值核验方法](../v301/README.md#冻结结果与平台材料)：同后端保持 `atol=2e-7、rtol=1e-4`；同后端验证通过后，再以 `atol=1e-5、rtol=1e-4` 单独检查原 CUDA 冻结预测。两段跨后端最大绝对差为 4.35×10⁻⁶ 和 5.87×10⁻⁶，原较严容差的未通过计数保留在[清单](../../experiments/v303-huber-delta2-s42-submission.json)。核验区间内固定两端 10% 的组合权重没有变化，IC 差异的绝对值小于 4.6×10⁻⁸；详见[数值影响记录](../../experiments/v303-numeric-validation.json)。这些局部核验不代替平台运行及官方评分。
+
+## 推理加速材料
+
+2026-10-21 增加 `v303-huber-delta2-s42-fast` 材料版本，通过股票日编码及切窗复用提速，原训练 run、参数、完整历史和 FP32 计算保持不变。12 个交易日、96,000 行的本地 CPU 4 线程对照由 204.1 秒降到 69.4 秒，约加速 2.94 倍，预测逐行一致；另有验证／测试共 48,000 行独立 checkpoint 对照通过。完整范围与局限见[加速说明](../../docs/v303-inference-fast.md)。
+
+上传同一加速目录内的 [Notebook](../../submissions/v303-huber-delta2-s42-fast/v303-submission.ipynb) 和 [模型 JSON](../../submissions/v303-huber-delta2-s42-fast/v303-model.json)；[新版清单](../../experiments/v303-huber-delta2-s42-fast-submission.json)记录推理适配器覆盖及验证结果。原版保留追溯；加速版尚待实际平台运行验证。

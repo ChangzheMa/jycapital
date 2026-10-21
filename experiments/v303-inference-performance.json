@@ -1,0 +1,180 @@
+{
+  "checked_at": "2026-10-21T14:29:21+08:00",
+  "run_id": "v303-huber-delta2-s42",
+  "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
+  "baseline": {
+    "checked_at": "2026-10-21T14:26:02+08:00",
+    "package": "submissions/v303-huber-delta2-s42",
+    "run_id": "v303-huber-delta2-s42",
+    "package_sha256": "7997cd5404dc63dc342c8055abbe51301abb8b49b8a3da62f086e49a6d22e829",
+    "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
+    "device": "cpu",
+    "cpu_threads": 4,
+    "torch": "2.11.0+cu130",
+    "start": "2024-12-16",
+    "end": "2024-12-31",
+    "rows": 96000,
+    "bundle_load_seconds": 0.20049369998741895,
+    "prediction_seconds": 204.0952180000022,
+    "inclusive_stage_timings": {
+      "prior_trading_days": {
+        "calls": 1,
+        "seconds": 0.056096999964211136
+      },
+      "read_table_including_query_and_frame_checks": {
+        "calls": 122,
+        "seconds": 16.64712610008428
+      },
+      "warm_history_including_its_queries": {
+        "calls": 3,
+        "seconds": 7.0791380000300705
+      },
+      "normalize": {
+        "calls": 86,
+        "seconds": 27.38962700002594
+      },
+      "window_plan": {
+        "calls": 12,
+        "seconds": 0.035253999929409474
+      },
+      "window_batch": {
+        "calls": 96,
+        "seconds": 82.83855300059076
+      },
+      "original_model_forward": {
+        "calls": 96,
+        "seconds": 66.57993180002086
+      }
+    },
+    "process_peak_working_set_bytes": 5218230272,
+    "inference_execution": {
+      "method": "original_per_sample"
+    },
+    "scope": "本地 dai 兼容层、CPU、完整请求；阶段耗时存在嵌套，不能全部相加；不代表平台耗时。"
+  },
+  "fast": {
+    "checked_at": "2026-10-21T14:27:15+08:00",
+    "package": "submissions/v303-huber-delta2-s42-fast",
+    "run_id": "v303-huber-delta2-s42",
+    "package_sha256": "0f9a4d870e73eda6c18914ac13222004f6cdf79b0a5c0772a127e4524f64585b",
+    "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
+    "device": "cpu",
+    "cpu_threads": 4,
+    "torch": "2.11.0+cu130",
+    "start": "2024-12-16",
+    "end": "2024-12-31",
+    "rows": 96000,
+    "bundle_load_seconds": 0.20655360003001988,
+    "prediction_seconds": 69.37348479998764,
+    "inclusive_stage_timings": {
+      "prior_trading_days": {
+        "calls": 1,
+        "seconds": 0.05342650000238791
+      },
+      "read_table_including_query_and_frame_checks": {
+        "calls": 122,
+        "seconds": 16.636310099856928
+      },
+      "warm_history_including_its_queries": {
+        "calls": 3,
+        "seconds": 6.972756200004369
+      },
+      "normalize": {
+        "calls": 86,
+        "seconds": 26.707631399913225
+      },
+      "window_plan": {
+        "calls": 12,
+        "seconds": 0.03472429985413328
+      },
+      "window_batch": {
+        "calls": 96,
+        "seconds": 9.363310800457839
+      },
+      "shared_model_forward": {
+        "calls": 96,
+        "seconds": 9.527332500438206
+      },
+      "shared_day_including_windows_and_model": {
+        "calls": 12,
+        "seconds": 19.01729319995502
+      }
+    },
+    "process_peak_working_set_bytes": 3460907008,
+    "inference_execution": {
+      "method": "shared_stock_day_encoding",
+      "stock_batch_size": 128,
+      "model_precision": "float32",
+      "grid_stocks": "requested_instruments_only",
+      "normalization_cross_sections": "unchanged_full_source_and_original_pool"
+    },
+    "scope": "本地 dai 兼容层、CPU、完整请求；阶段耗时存在嵌套，不能全部相加；不代表平台耗时。"
+  },
+  "comparison": {
+    "rows": 96000,
+    "trading_days": 12,
+    "prediction_keys_identical": true,
+    "max_abs_difference": 0.0,
+    "p99_abs_difference": 0.0,
+    "exactly_equal_predictions": true,
+    "same_backend_atol": 2e-07,
+    "same_backend_rtol": 0.0001,
+    "speedup": 2.941977307157541,
+    "time_reduction_fraction": 0.660092551507077,
+    "peak_memory_reduction_fraction": 0.33676613955299206
+  },
+  "prediction_artifact_sha256": {
+    "profile-baseline-20241216-20250101.parquet": "2a4fa63843784dd957e21240397806012ca4098ff61082db7c10c7450fa723eb",
+    "profile-fast-20241216-20250101.parquet": "2a4fa63843784dd957e21240397806012ca4098ff61082db7c10c7450fa723eb"
+  },
+  "measurement_conditions": {
+    "backend": "CPU FP32",
+    "cpu_threads": 4,
+    "data_access": "local dai shim",
+    "other_work": "另一 session 的串行 GPU 训练保持运行；性能测量不使用 GPU",
+    "repetitions": 1,
+    "order": [
+      "baseline",
+      "fast"
+    ],
+    "profiler": "scripts/profile-v303-submission.py"
+  },
+  "limitations": [
+    "一次本地配对测量，不是平台运行时长保证。",
+    "行情读取及完整截面归一化保持原处理；阶段计时与历史准备存在嵌套。",
+    "冻结权重及模型结构不变，没有新增正式训练运行。",
+    "只输出请求键；未来状态不参与较早时点的因果读出。"
+  ],
+  "validation_manifest": "experiments/v303-huber-delta2-s42-fast-submission.json",
+  "validation_manifest_sha256": "70ff88d6c5ab08a900a3079b0b09a617e65e675fc51bdf64104cb93f1172b01f",
+  "independent_checkpoint_validation": [
+    {
+      "split": "test",
+      "start": "2024-12-30 00:00:00",
+      "stop_exclusive": "2025-01-01 00:00:00",
+      "rows": 16000,
+      "max_abs_difference_vs_cpu_checkpoint": 0.0,
+      "exact_weight_roundtrip": true,
+      "passed": true
+    },
+    {
+      "split": "validation",
+      "start": "2024-01-02 00:00:00",
+      "stop_exclusive": "2024-01-06 00:00:00",
+      "rows": 32000,
+      "max_abs_difference_vs_cpu_checkpoint": 0.0,
+      "exact_weight_roundtrip": true,
+      "passed": true
+    }
+  ],
+  "implementation_checks": {
+    "tests_passed": 16,
+    "seconds": 5.887,
+    "scope": "CPU synthetic inference, frozen-source export and numeric-policy checks",
+    "test_files": {
+      "tests/test_v303_fast.py": "291d9716c82d6ad83c5c4cdf91c85354ce47ac66aa89c0562ce05656e996aeb7",
+      "tests/test_export_v303.py": "a849659e380145dfc079e0ab3192e18dc7b274d10f171e5c8f9c0a9732e1c4af",
+      "tests/test_verify_v303_parity.py": "65062c8c7fca3d20c2ca3c97acd453deba8b8dc77297cd722beebcb374ed1e27"
+    }
+  }
+}

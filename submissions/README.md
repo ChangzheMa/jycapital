@@ -4,7 +4,7 @@
 
 每个子目录对应一份冻结材料。只上传选定目录内的文件，保留文件名，选择其中唯一的推理 Notebook；不混入其他运行或本地 `dai.py`，不生成 ZIP。平台提交由用户执行。
 
-| 运行 | 上传材料 | 本地判定与验证清单 |
+| 运行／材料版本 | 上传材料 | 本地判定与验证清单 |
 | --- | --- | --- |
 | [v1-20261010-s42](v1-20261010-s42/README.md) | 目录中的 Notebook 及配套脚本、权重和配置，见目录说明 | 历史基线；[清单](v1-20261010-s42/submission-manifest.json) |
 | [v2-20261011-s42](v2-20261011-s42/v2-submission.ipynb) | `v2-submission.ipynb`、`v2-model.json` | 未晋级，按用户要求导出；[清单](../experiments/v2-20261011-s42-submission.json) |
@@ -17,6 +17,7 @@
 | [v201-global-fp16-s42](v201-global-fp16-s42/v201-submission.ipynb) | `v201-submission.ipynb`、`v201-model.json` | 本地改善候选；低秩 Mixer，第 5 轮权重，已通过独立 CPU 推理验证；[清单](../experiments/v201-global-fp16-s42-submission.json) |
 | [v301-global-fp16-s42](v301-global-fp16-s42/v301-submission.ipynb) | `v301-submission.ipynb`、`v301-model.json` | 本地改善候选；分层 GRU，第 7 轮权重，已通过独立 CPU 与冻结 checkpoint 对照；[清单](../experiments/v301-global-fp16-s42-submission.json) |
 | [v303-huber-delta2-s42](v303-huber-delta2-s42/v303-submission.ipynb) | `v303-submission.ipynb`、`v303-model.json` | 本地改善候选；Huber delta=2 的分层 GRU，第 7 轮权重，已通过独立 CPU 与冻结 checkpoint 对照；[清单](../experiments/v303-huber-delta2-s42-submission.json) |
+| [v303-huber-delta2-s42-fast](v303-huber-delta2-s42-fast/v303-submission.ipynb) | 同一加速目录的 `v303-submission.ipynb`、`v303-model.json` | **v303 后续评测推荐材料**；同一冻结权重，12 日 CPU 对照约快 2.94 倍且预测一致；[清单](../experiments/v303-huber-delta2-s42-fast-submission.json)、[说明](../docs/v303-inference-fast.md) |
 
 v2／v4—v7／v7e／v101／v201／v301／v303 的两个文本文件需置于同一平台目录。JSON 内嵌冻结权重、归一化统计量、配置和训练／推理源码；Notebook 提供评测入口、依赖及复现说明。附件大小、数值精度及独立推理的验证范围以各清单为准。
 

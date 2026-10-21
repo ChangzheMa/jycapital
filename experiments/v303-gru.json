@@ -533,24 +533,24 @@
     "test_model_undefined_sections": 0,
     "parent_preserved": true
   },
-  "submission_directory": "submissions/v303-huber-delta2-s42",
+  "submission_directory": "submissions/v303-huber-delta2-s42-fast",
   "submission_validation": {
-    "checked_at": "2026-10-21T00:55:28+08:00",
+    "checked_at": "2026-10-21T14:28:47+08:00",
     "run_id": "v303-huber-delta2-s42",
-    "package": "submissions/v303-huber-delta2-s42",
+    "package": "submissions/v303-huber-delta2-s42-fast",
     "environment": "local_dai_shim",
-    "start": "2024-12-30 00:00:00",
-    "stop_exclusive": "2025-01-01 00:00:00",
-    "reference_split": "test",
-    "rows": 16000,
+    "start": "2024-01-02 00:00:00",
+    "stop_exclusive": "2024-01-06 00:00:00",
+    "reference_split": "validation",
+    "rows": 32000,
     "coverage_vs_reference": 1.0,
-    "max_abs_difference": 5.8710575103759766e-06,
+    "max_abs_difference": 4.351139068603516e-06,
     "output_dtypes": {
       "date": "datetime64[ns]",
       "instrument": "object",
       "factor": "float64"
     },
-    "p99_abs_difference": 1.1026859283447266e-06,
+    "p99_abs_difference": 9.387731552124023e-07,
     "atol": 1e-05,
     "rtol": 0.0001,
     "same_backend_checkpoint_reference": {
@@ -558,7 +558,7 @@
       "input_path": "frozen_preprocessed_data",
       "checkpoint": "original_best_pt",
       "batching": "same_daily_boundaries_as_submission",
-      "rows": 16000,
+      "rows": 32000,
       "max_abs_difference": 0.0,
       "atol": 2e-07,
       "rtol": 0.0001,
@@ -568,11 +568,18 @@
       "atol": 2e-07,
       "rtol": 0.0001,
       "passed": false,
-      "mismatched_rows": 74
+      "mismatched_rows": 136
     },
     "numeric_profile": "GRU FP32: strict same-backend input-path parity plus separate frozen-execution comparison",
+    "inference_execution": {
+      "method": "shared_stock_day_encoding",
+      "stock_batch_size": 128,
+      "model_precision": "float32",
+      "grid_stocks": "requested_instruments_only",
+      "normalization_cross_sections": "unchanged_full_source_and_original_pool"
+    },
     "cpu_threads": 4,
-    "seconds": 57.881,
+    "seconds": 27.474,
     "device": "cpu",
     "torch": "2.11.0+cu130",
     "queried_tables": [
@@ -582,7 +589,7 @@
       "cpt_jyc_2026_stock_bar5m"
     ],
     "notebook_import_queried_data": false,
-    "debug_cell_executed": true,
+    "debug_cell_executed": false,
     "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
     "text_tensor_sha256": "d1f2ed5659f172db8e164f16507079023e3051acce0087148cbc35d2d8edec10",
     "exact_weight_roundtrip": true,
@@ -593,8 +600,8 @@
     "isolated_two_file_inference": true,
     "repository_code_on_import_path": false,
     "attachment_bytes": {
-      "v303-model.json": 15272894,
-      "v303-submission.ipynb": 8007
+      "v303-model.json": 15278129,
+      "v303-submission.ipynb": 8424
     },
     "max_attachment_bytes": 50000000,
     "utf8_text_only": true,
@@ -603,76 +610,9 @@
   },
   "submission_validations": [
     {
-      "checked_at": "2026-10-21T00:53:08+08:00",
+      "checked_at": "2026-10-21T14:16:27+08:00",
       "run_id": "v303-huber-delta2-s42",
-      "package": "submissions/v303-huber-delta2-s42",
-      "environment": "local_dai_shim",
-      "start": "2024-01-02 00:00:00",
-      "stop_exclusive": "2024-01-06 00:00:00",
-      "reference_split": "validation",
-      "rows": 32000,
-      "coverage_vs_reference": 1.0,
-      "max_abs_difference": 4.351139068603516e-06,
-      "output_dtypes": {
-        "date": "datetime64[ns]",
-        "instrument": "object",
-        "factor": "float64"
-      },
-      "p99_abs_difference": 9.387731552124023e-07,
-      "atol": 1e-05,
-      "rtol": 0.0001,
-      "same_backend_checkpoint_reference": {
-        "backend": "cpu",
-        "input_path": "frozen_preprocessed_data",
-        "checkpoint": "original_best_pt",
-        "batching": "same_daily_boundaries_as_submission",
-        "rows": 32000,
-        "max_abs_difference": 0.0,
-        "atol": 2e-07,
-        "rtol": 0.0001,
-        "passed": true
-      },
-      "original_frozen_prediction_tolerance": {
-        "atol": 2e-07,
-        "rtol": 0.0001,
-        "passed": false,
-        "mismatched_rows": 136
-      },
-      "numeric_profile": "GRU FP32: strict same-backend input-path parity plus separate frozen-execution comparison",
-      "cpu_threads": 4,
-      "seconds": 87.511,
-      "device": "cpu",
-      "torch": "2.11.0+cu130",
-      "queried_tables": [
-        "cpt_jyc_2026_instruments",
-        "cpt_jyc_2026_stock_bar1m",
-        "cpt_jyc_2026_stock_bar30m",
-        "cpt_jyc_2026_stock_bar5m"
-      ],
-      "notebook_import_queried_data": false,
-      "debug_cell_executed": false,
-      "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
-      "text_tensor_sha256": "d1f2ed5659f172db8e164f16507079023e3051acce0087148cbc35d2d8edec10",
-      "exact_weight_roundtrip": true,
-      "weight_tensors": 34,
-      "training_sources_restored": 22,
-      "restored_huber_trainer_import_passed": true,
-      "restored_preprocessing_config_validated": true,
-      "isolated_two_file_inference": true,
-      "repository_code_on_import_path": false,
-      "attachment_bytes": {
-        "v303-model.json": 15272894,
-        "v303-submission.ipynb": 8007
-      },
-      "max_attachment_bytes": 50000000,
-      "utf8_text_only": true,
-      "passed": true,
-      "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
-    },
-    {
-      "checked_at": "2026-10-21T00:55:28+08:00",
-      "run_id": "v303-huber-delta2-s42",
-      "package": "submissions/v303-huber-delta2-s42",
+      "package": "submissions/v303-huber-delta2-s42-fast",
       "environment": "local_dai_shim",
       "start": "2024-12-30 00:00:00",
       "stop_exclusive": "2025-01-01 00:00:00",
@@ -706,8 +646,15 @@
         "mismatched_rows": 74
       },
       "numeric_profile": "GRU FP32: strict same-backend input-path parity plus separate frozen-execution comparison",
+      "inference_execution": {
+        "method": "shared_stock_day_encoding",
+        "stock_batch_size": 128,
+        "model_precision": "float32",
+        "grid_stocks": "requested_instruments_only",
+        "normalization_cross_sections": "unchanged_full_source_and_original_pool"
+      },
       "cpu_threads": 4,
-      "seconds": 57.881,
+      "seconds": 25.147,
       "device": "cpu",
       "torch": "2.11.0+cu130",
       "queried_tables": [
@@ -728,8 +675,82 @@
       "isolated_two_file_inference": true,
       "repository_code_on_import_path": false,
       "attachment_bytes": {
-        "v303-model.json": 15272894,
-        "v303-submission.ipynb": 8007
+        "v303-model.json": 15278129,
+        "v303-submission.ipynb": 8424
+      },
+      "max_attachment_bytes": 50000000,
+      "utf8_text_only": true,
+      "passed": true,
+      "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
+    },
+    {
+      "checked_at": "2026-10-21T14:28:47+08:00",
+      "run_id": "v303-huber-delta2-s42",
+      "package": "submissions/v303-huber-delta2-s42-fast",
+      "environment": "local_dai_shim",
+      "start": "2024-01-02 00:00:00",
+      "stop_exclusive": "2024-01-06 00:00:00",
+      "reference_split": "validation",
+      "rows": 32000,
+      "coverage_vs_reference": 1.0,
+      "max_abs_difference": 4.351139068603516e-06,
+      "output_dtypes": {
+        "date": "datetime64[ns]",
+        "instrument": "object",
+        "factor": "float64"
+      },
+      "p99_abs_difference": 9.387731552124023e-07,
+      "atol": 1e-05,
+      "rtol": 0.0001,
+      "same_backend_checkpoint_reference": {
+        "backend": "cpu",
+        "input_path": "frozen_preprocessed_data",
+        "checkpoint": "original_best_pt",
+        "batching": "same_daily_boundaries_as_submission",
+        "rows": 32000,
+        "max_abs_difference": 0.0,
+        "atol": 2e-07,
+        "rtol": 0.0001,
+        "passed": true
+      },
+      "original_frozen_prediction_tolerance": {
+        "atol": 2e-07,
+        "rtol": 0.0001,
+        "passed": false,
+        "mismatched_rows": 136
+      },
+      "numeric_profile": "GRU FP32: strict same-backend input-path parity plus separate frozen-execution comparison",
+      "inference_execution": {
+        "method": "shared_stock_day_encoding",
+        "stock_batch_size": 128,
+        "model_precision": "float32",
+        "grid_stocks": "requested_instruments_only",
+        "normalization_cross_sections": "unchanged_full_source_and_original_pool"
+      },
+      "cpu_threads": 4,
+      "seconds": 27.474,
+      "device": "cpu",
+      "torch": "2.11.0+cu130",
+      "queried_tables": [
+        "cpt_jyc_2026_instruments",
+        "cpt_jyc_2026_stock_bar1m",
+        "cpt_jyc_2026_stock_bar30m",
+        "cpt_jyc_2026_stock_bar5m"
+      ],
+      "notebook_import_queried_data": false,
+      "debug_cell_executed": false,
+      "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
+      "text_tensor_sha256": "d1f2ed5659f172db8e164f16507079023e3051acce0087148cbc35d2d8edec10",
+      "exact_weight_roundtrip": true,
+      "weight_tensors": 34,
+      "training_sources_restored": 22,
+      "restored_huber_trainer_import_passed": true,
+      "restored_preprocessing_config_validated": true,
+      "isolated_two_file_inference": true,
+      "repository_code_on_import_path": false,
+      "attachment_bytes": {
+        "v303-model.json": 15278129,
+        "v303-submission.ipynb": 8424
       },
       "max_attachment_bytes": 50000000,
       "utf8_text_only": true,
@@ -737,10 +758,10 @@
       "scope": "已在所列本地环境与完整请求区间验证，不代表平台运行或官方评分通过"
     }
   ],
-  "submission_manifest_sha256": "953266e1b22da3494eac5671e29799d3b26d687b0b713da4153babfa6b4c16a7",
+  "submission_manifest_sha256": "70ff88d6c5ab08a900a3079b0b09a617e65e675fc51bdf64104cb93f1172b01f",
   "export_purpose": "local_improvement",
   "export_reason": "本地验证主指标提高且覆盖未降低",
-  "submission_manifest_path": "experiments/v303-huber-delta2-s42-submission.json",
+  "submission_manifest_path": "experiments/v303-huber-delta2-s42-fast-submission.json",
   "signal_diagnostics": "experiments/v303-signal-diagnostics.json",
   "numeric_validation": "experiments/v303-numeric-validation.json",
   "clock_differences_from_parent": {
