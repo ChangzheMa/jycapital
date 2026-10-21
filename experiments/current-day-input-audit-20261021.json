@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-21T23:40:44+08:00",
+  "scope": "static_input_contract_audit_not_market_data_coverage",
+  "source": {
+    "data_document": "docs/bigquant-2026-end-to-end/data.md",
+    "source_semantics": "market date denotes the end of a bar",
+    "reference_config": "solutions/v501/model-config.json",
+    "reference_config_sha256": "39b8bb636ce5a091f46569f481cc998a599eb1814ac5708c0e1697b3b259052d"
+  },
+  "reference_current_day_included": {
+    "bar1m": true,
+    "bar5m": false,
+    "bar30m": false
+  },
+  "proposed_current_day_included": {
+    "bar1m": true,
+    "bar5m": true,
+    "bar30m": true
+  },
+  "potential_closed_current_day_slots": [
+    {
+      "clock": "09:30",
+      "bar1m": 0,
+      "bar5m": 0,
+      "bar30m": 0
+    },
+    {
+      "clock": "10:00",
+      "bar1m": 30,
+      "bar5m": 6,
+      "bar30m": 1
+    },
+    {
+      "clock": "10:30",
+      "bar1m": 60,
+      "bar5m": 12,
+      "bar30m": 2
+    },
+    {
+      "clock": "11:00",
+      "bar1m": 90,
+      "bar5m": 18,
+      "bar30m": 3
+    },
+    {
+      "clock": "11:30",
+      "bar1m": 120,
+      "bar5m": 24,
+      "bar30m": 4
+    },
+    {
+      "clock": "13:30",
+      "bar1m": 150,
+      "bar5m": 30,
+      "bar30m": 5
+    },
+    {
+      "clock": "14:00",
+      "bar1m": 180,
+      "bar5m": 36,
+      "bar30m": 6
+    },
+    {
+      "clock": "14:30",
+      "bar1m": 210,
+      "bar5m": 42,
+      "bar30m": 7
+    }
+  ],
+  "old_window_bars": {
+    "bar1m": 480,
+    "bar5m": 240,
+    "bar30m": 160
+  },
+  "new_window_bars": {
+    "bar1m": 480,
+    "bar5m": 288,
+    "bar30m": 168
+  },
+  "limitations": [
+    "槽位数来自规则交易时间网格，不等同于每个股票的有效行情数。",
+    "缺失 Bar 仍保留位置和有效性标志；不增加未来标签、手工因子或外部数据。",
+    "这是输入组织研究变量，不能由逻辑推断分数改善。"
+  ]
+}

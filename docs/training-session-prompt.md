@@ -19,6 +19,8 @@
 
 3. 使用候选清单指定的训练入口、配置和 run_id；复用 .venv-training、现有训练／留出集预处理、共享 resident cache 及已验证的 evaluation cache。先做可用内存与显存检查，默认使用保留内存的流式验证缓存模式；不要为抢速度引发换页或同时构建多个大缓存。GPU 批量预检放在正式训练间隙，运行 .venv-training/Scripts/python.exe scripts/check-candidate-device.py --solution-id <version> --device cuda，检查默认训练 batch 的前向、反向及默认推理 batch；预检不拟合正式行情。
 
+   新输入契约不能强行复用旧缓存。若候选声明独立缓存（例如 v901 的当天 5／30 分钟输入），沿用候选自己的加载入口和格式；其入口可把旧格式路径参数转到独立新键目录，但不得改写旧目录。交接及资源统计读取该 run 的 resident-cache.json 与事件记录，不把控制器的全局 CACHE 常量当作所有模型的实际缓存。初次构建时间必须与训练时间分别记录。
+
 4. 运行前保存实际源码、配置、协议、数据指纹和环境；仓库有未提交内容时如实记录。研究 session 会继续新增目录，已运行版本使用自己的冻结快照。不要因为其他版本或无关工具新增而把现有运行偷偷切换到新代码。若恢复检查发生冲突，保留原运行并报告，由冻结源码恢复或使用已登记的执行路径升级，不通过忽略指纹继续。
 
 5. 采用候选的训练目标与配置，验证／测试保持固定的 local-v2-ic 评估协议，checkpoint 按验证 IC 选取，使用仓库动态早停。每个训练完成的候选都完成验证和测试，包括未改善版本；测试不选 epoch。保存 predictions、cross-sections、monthly、metrics、history、selection、best/last checkpoint 及资源记录。核对输出有限、键唯一、覆盖率、未定义截面和权重哈希。manifest 的 status、stage 及双集产物都完整才算完成。
