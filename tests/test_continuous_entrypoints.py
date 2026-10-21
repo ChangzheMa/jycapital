@@ -24,7 +24,7 @@ class EntrypointTests(unittest.TestCase):
 
     def test_three_families_full_synthetic_entrypoints(self):
         cases = [(v, False) for v in TEST_VERSIONS]
-        cases += [(v, True) for v in TEST_VERSIONS if v in ("v401", "v501")]
+        cases += [(v, True) for v in TEST_VERSIONS if v in ("v401", "v501", "v402", "v601")]
         for version, global_mode in cases:
             with self.subTest(version=version, global_mode=global_mode), tempfile.TemporaryDirectory() as tmp:
                 sys.path.insert(0, str(ROOT / "solutions" / version))
@@ -94,7 +94,7 @@ class EntrypointTests(unittest.TestCase):
                 self.assertEqual(manifest["status"], "complete")
                 self.assertEqual(manifest["stage"], "complete")
                 self.assertEqual(manifest["solution_id"], version)
-                if global_mode and version == "v401":
+                if global_mode and version in ("v401", "v402"):
                     overlay = json.loads((run / "target-overlay.json").read_text(encoding="utf-8"))
                     self.assertEqual(overlay, manifest["target_overlay"])
                     self.assertEqual(overlay["eligible_rows"], 42)

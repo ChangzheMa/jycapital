@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "solution_id": "v402",
+  "status": "passed",
+  "checked_at": "2026-10-21T09:35:26+08:00",
+  "scope": "CPU synthetic implementation and full entrypoint checks; not formal market training",
+  "checks": [
+    "test_clock_gate_contains_parent_readout_as_a_limit",
+    "test_default_model_causal_gradients_batching_and_text_roundtrip",
+    "test_huber_delta4_control",
+    "test_huber_delta_control_preserves_network_and_changes_training_loss",
+    "test_input_target_and_cache_functions_match_parent",
+    "test_invalid_patch_config_and_partial_patch_boundary",
+    "test_parent_protection_excludes_mutable_monitoring",
+    "test_train_evaluate_and_resume_exactly",
+    "test_three_families_full_synthetic_entrypoints",
+    "test_model_control_and_base_cache_identity",
+    "test_overlay_alignment_boundary_resume_and_shared_array_preserved",
+    "test_ties_invalid_labels_monotone_invariance_and_raw_ic",
+    "test_blended_target_amplitudes_ties_scale_and_original_ic",
+    "test_causal_convolution_prefix_and_invalid_dilations",
+    "test_new_candidates_preserve_data_loss_controls_and_cache"
+  ],
+  "parameters": 433409,
+  "tested_solutions": [
+    "v402",
+    "v601"
+  ],
+  "cpu_test_environment": {
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "JYC_TEST_SOLUTIONS": "v402,v601"
+  },
+  "suite_tests_passed": 15,
+  "suite_seconds": 28.816,
+  "entrypoint_modes": [
+    "monthly_shuffled_samples",
+    "global_shuffled_samples"
+  ],
+  "default_gpu_batch_preflight": "required_in_training_session_between_runs",
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/evaluation_cache.py": "daf07f2b8edde62bf0e33a0f93ca49f83454e1e838fb6438d7f3db87f33b1c03",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/resident_data.py": "921e6c2ec3d0b52499fe926492224c038ecb49ab3bb84e92eb591465573f8fe7",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v402/config.json": "024baa3203e175b7ce654f2d00e3a7363aa04d50af50c9b85f50591858373c7e",
+    "solutions/v402/model-config.json": "d16b6e870e2306f42c5111e9b4b7554a4bacf4c02a61ae98bcb2cd26540b8121",
+    "solutions/v402/requirements-inference.txt": "1a99016e2590e59b2c1a9c7f7a6a7fd80703c558f9c53ec19742b48bbb2f75fc",
+    "solutions/v402/requirements-training.txt": "fa2481cabb4c546fdfb30756b0e5d2a0aca27de74fcbc7a8dd10ce25db493ca1",
+    "solutions/v402/requirements.txt": "d72c61e0ea921d0067586b0267ca1760ca4f72b0e4eebdb74ddc917150550a0d",
+    "solutions/v402/v402_apply.py": "8b05246e5e4e50117140f86a1c52bba478979295fdd2c04d8770455363ee66a8",
+    "solutions/v402/v402_data.py": "b176b92729fcc1e70cb7c768558dabb04a5c7020129baf8f7d0d74f2806dd27a",
+    "solutions/v402/v402_loss.py": "c5099dd6c38a66f8ca573d83711650c51a290477484a046a9087b695d4365a41",
+    "solutions/v402/v402_model.py": "c17765db4c5545edfa276ce7030d412166fab2feee6c93de5b2c2f641bfe4e8c",
+    "solutions/v402/v402_notebook.py": "a505644ed3ff0473c6fbb7e62356f84afaa0e03aa973d0597e7f45915c5626d1",
+    "solutions/v402/v402_predict.py": "c62bbec80e6dd21f34422b8f05ef1a85ac3d20c90e8119ae63a142c3c6f51cff",
+    "solutions/v402/v402_prepare.py": "e663ff3ddae9cd1755dad821a72d06615858eafe9af3218c41fd24601e80d371",
+    "solutions/v402/v402_preprocessing.py": "d5b5c2b1a4d03601b7a0d32f58450c008e9a479875e83757744dbf71ca90c7b3",
+    "solutions/v402/v402_reproduce.py": "ba9fe58523f4d0f4128ca04b0379cb31a2662e9c8298c42ea571fb01644971ba",
+    "solutions/v402/v402_schema.py": "6f3183d0f8a7e0298bf4e3badbc8a8c402df03925a02dd3cc7edc4926e7475f2",
+    "solutions/v402/v402_targets.py": "604ae9495bb72af6a78ce37662923d0286a5f08f31d5fe5f11cbde5af21bfa36",
+    "solutions/v402/v402_text_artifact.py": "974cfa59d5c2f20212196c32ae95887d262d688b9260c33f8dd8bc4fdca075e3",
+    "solutions/v402/v402_train.py": "ed30a9986146b470ce8e1ca470b832b17b0366be01d96c83030e599326449491"
+  },
+  "test_files": {
+    "tests/test_continuous_candidates.py": "c35cb9f5be6bf1a02d6bb352e93c06e1c08e72ed2c1736f4bd1c73b231ee25db",
+    "tests/test_continuous_entrypoints.py": "a31e0fb053e4039e72de37aca1e15dba44d997ba7fcec2de4b01fc09f456e29c",
+    "tests/test_continuous_rank_targets.py": "fde83fe0563347a52c20fac84005a1be5eb136e4230bc7305cbba06428008c84",
+    "tests/test_continuous_blend_tcn.py": "9679a398fe7267ef9d56df1b0535330c25ef8eb1165f86b787bef9341c1c229b"
+  }
+}

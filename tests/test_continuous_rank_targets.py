@@ -58,6 +58,14 @@ class RankTargetTests(unittest.TestCase):
         self.assertEqual(*keys)
 
     def test_overlay_alignment_boundary_resume_and_shared_array_preserved(self):
+        for version, prefix in (("v401", "rank"), ("v402", "blended")):
+            with self.subTest(version=version):
+                self.check_overlay(version, prefix)
+
+    def check_overlay(self, version, prefix):
+        target_module = importlib.import_module(version + "_targets")
+        attach = getattr(target_module, "attach_" + prefix + "_targets")
+        prepare = getattr(target_module, "prepare_" + prefix + "_training_targets")
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             protocol = copy.deepcopy(base.PROTOCOL)
@@ -74,7 +82,7 @@ class RankTargetTests(unittest.TestCase):
             labels.iloc[::-1].to_parquet(label_path, index=False)
             eligible_keys = labels.copy()
             eligible_keys.loc[eligible_keys.date.dt.hour.eq(10), protocol["label_column"]] = np.nan
-            baseline, skipped = MODULES["v401"]["train"].prepare_training_targets(eligible_keys, protocol)
+            baseline, skipped = MODULES[version]["train"].prepare_training_targets(eligible_keys, protocol)
             original_baseline = baseline.copy()
             block = SimpleNamespace(
                 arrays={"days": np.array([pd.Timestamp("2020-01-02").value]), "targets": baseline},
@@ -88,21 +96,21 @@ class RankTargetTests(unittest.TestCase):
                 universe=keys.iloc[::-1], protocol=protocol, data_root=root,
             ))
             (root / "data-manifest.json").write_text("{}\n", encoding="utf-8")
-            record = target_module.attach_rank_targets(store, root)
+            record = attach(store, root)
             self.assertEqual(record["eligible_rows"], 4)
             np.testing.assert_array_equal(block.arrays["targets"], original_baseline)
             self.assertIsNot(block.targets, block.arrays["targets"])
-            expected, _ = target_module.prepare_rank_training_targets(eligible_keys, protocol)
+            expected, _ = prepare(eligible_keys, protocol)
             np.testing.assert_array_equal(block.targets, expected)
-            self.assertEqual(target_module.attach_rank_targets(store, root), record)
+            self.assertEqual(attach(store, root), record)
             block.stock = block.stock[::-1]
             with self.assertRaisesRegex(ValueError, "行顺序"):
-                target_module.attach_rank_targets(store, root)
+                attach(store, root)
             block.stock = block.stock[::-1]
             labels.loc[0, protocol["label_column"]] = 100.
             labels.to_parquet(label_path, index=False)
             with self.assertRaisesRegex(ValueError, "断点恢复"):
-                target_module.attach_rank_targets(store, root)
+                attach(store, root)
 
 
 if __name__ == "__main__":

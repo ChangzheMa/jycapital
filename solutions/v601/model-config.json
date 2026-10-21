@@ -1,0 +1,191 @@
+{
+  "solution_id": "v601",
+  "parent_run_id": "v303-huber-delta2-s42",
+  "seed": 42,
+  "data": {
+    "window_bars": {
+      "bar1m": 480,
+      "bar5m": 240,
+      "bar30m": 160
+    },
+    "session": "regular_closed_bars",
+    "missing_slots": "preserve_regular_grid",
+    "time_encoding": "prediction_one_hot_only",
+    "normalization": "frozen_v2_z_and_c",
+    "masking": {
+      "mode": "two_group_complete",
+      "groups": {
+        "non_book": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume",
+          "amount"
+        ],
+        "book": [
+          "ask_price1",
+          "ask_price2",
+          "ask_price3",
+          "ask_price4",
+          "ask_price5",
+          "bid_price1",
+          "bid_price2",
+          "bid_price3",
+          "bid_price4",
+          "bid_price5",
+          "ask_volume1",
+          "ask_volume2",
+          "ask_volume3",
+          "ask_volume4",
+          "ask_volume5",
+          "bid_volume1",
+          "bid_volume2",
+          "bid_volume3",
+          "bid_volume4",
+          "bid_volume5",
+          "ask_num_orders1",
+          "ask_num_orders2",
+          "ask_num_orders3",
+          "ask_num_orders4",
+          "ask_num_orders5",
+          "bid_num_orders1",
+          "bid_num_orders2",
+          "bid_num_orders3",
+          "bid_num_orders4",
+          "bid_num_orders5"
+        ]
+      },
+      "value_policy": "keep_finite_fill_missing_zero",
+      "bar_validity": "any_finite_value_in_separate_channel",
+      "drop_incomplete_samples": false
+    },
+    "prediction_clock": {
+      "mode": "one_hot",
+      "times": [
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "13:30",
+        "14:00",
+        "14:30"
+      ],
+      "unknown": "error"
+    },
+    "window_policy": "fixed_trading_days",
+    "trading_day_windows": {
+      "bar1m": {
+        "previous_days": 1,
+        "include_today": true
+      },
+      "bar5m": {
+        "previous_days": 5,
+        "include_today": false
+      },
+      "bar30m": {
+        "previous_days": 20,
+        "include_today": false
+      }
+    },
+    "calendar_source": "universe_trading_dates",
+    "future_slots": "zero_all_channels",
+    "insufficient_history": "left_zero_pad",
+    "input_precision": "fp16_with_fp32_overflow"
+  },
+  "model": {
+    "family": "hierarchical_gru",
+    "input_channels": 75,
+    "hidden_dim": 96,
+    "fusion_hidden_dim": 256,
+    "prediction_clock_dim": 8,
+    "dropout": 0.1,
+    "interday_layers": 1,
+    "normalization": "none",
+    "pooling": "last_and_visible_mean_then_interday_last",
+    "recurrent_precision": "float32",
+    "missing_history": "keep_slots_and_flags",
+    "intraday_encoder": "causal_residual_tcn",
+    "kernel_size": 3,
+    "intraday_dilations": {
+      "bar1m": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "bar5m": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "bar30m": [
+        1,
+        2
+      ]
+    }
+  },
+  "training": {
+    "epochs": 100,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "early_stopping": {
+      "mode": "best_epoch_fraction",
+      "fraction": 0.6,
+      "minimum": 4,
+      "maximum": 12,
+      "rounding": "ceil",
+      "improvement": "strict"
+    },
+    "cpu_threads": 4,
+    "precision": "bfloat16_autocast_on_supported_cuda",
+    "deterministic": true,
+    "batching": "global_shuffled_samples",
+    "batch_size": 512,
+    "loss": "cross_section_zscore_huber",
+    "loss_reduction": "mean_samples",
+    "loss_precision": "float64",
+    "target_transform": "cross_section_zscore",
+    "checkpoint_batches": 64,
+    "structural_policy": "finite_nonconstant_labels",
+    "constant_prediction_policy": "allow_huber_gradient",
+    "huber_delta": 2.0,
+    "label_ddof": 0,
+    "resident_cache": {
+      "format": "jycapital-resident-fp16-v1",
+      "prefetch_batches": 2,
+      "build_batch_rows": 16384,
+      "evaluation_days": 5,
+      "memory_reserve_gib": 8.0
+    }
+  },
+  "inference": {
+    "batch_size": 1024,
+    "precision": "float32",
+    "factor_scale": 1.0
+  },
+  "references": {
+    "local_best": "v303-huber-delta2-s42",
+    "platform_best": null,
+    "parent": "v303-huber-delta2-s42"
+  },
+  "execution": {
+    "training_requires_explicit_confirmation": true
+  },
+  "comparison": {
+    "allow_selection_metric_change": true
+  },
+  "experiment": {
+    "parent_solution_id": "v303",
+    "research_family": "causal_tcn_interday_gru",
+    "changes": [
+      "parallel_causal_intraday_tcn",
+      "last_and_visible_mean_daily_readout"
+    ],
+    "input_supervision_and_protocol": "parent_except_declared_change"
+  },
+  "parent_solution_id": "v303"
+}

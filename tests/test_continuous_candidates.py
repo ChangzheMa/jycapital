@@ -16,16 +16,18 @@ import pandas as pd
 import test_research_branches as base
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSIONS = ("v102", "v202", "v302", "v303", "v304", "v305", "v401", "v306", "v501")
+VERSIONS = ("v102", "v202", "v302", "v303", "v304", "v305", "v401", "v306", "v501", "v402", "v601")
 TEST_VERSIONS = tuple(os.environ.get("JYC_TEST_SOLUTIONS", ",".join(VERSIONS)).split(","))
 if not TEST_VERSIONS or not set(TEST_VERSIONS).issubset(VERSIONS):
     raise ValueError("JYC_TEST_SOLUTIONS 包含未登记的候选")
 CLASSES = {"v102": "MultiFrequencyPatchTransformer", "v202": "MultiFrequencyMixer",
            "v302": "MultiFrequencyGRU", "v303": "MultiFrequencyGRU", "v304": "MultiFrequencyGRU",
            "v305": "MultiFrequencyGRU", "v401": "MultiFrequencyGRU",
-           "v306": "MultiFrequencyGRU", "v501": "MultiFrequencyGRU"}
+           "v306": "MultiFrequencyGRU", "v501": "MultiFrequencyGRU",
+           "v402": "MultiFrequencyGRU", "v601": "MultiFrequencyGRU"}
 PARENTS = {"v102": "v101", "v202": "v201", "v302": "v301", "v303": "v301", "v304": "v301",
-           "v305": "v302", "v401": "v301", "v306": "v303", "v501": "v303"}
+           "v305": "v302", "v401": "v301", "v306": "v303", "v501": "v303",
+           "v402": "v303", "v601": "v303"}
 for version in VERSIONS:
     sys.path.insert(0, str(ROOT / "solutions" / version))
 MODULES = {v: {name: importlib.import_module(v + "_" + name)
@@ -140,7 +142,7 @@ class CandidateTests(unittest.TestCase):
             trainer = MODULES[version]["train"]
             trainer.validate_training(CONFIGS[version], base.PROTOCOL)
             for name in ("loss", "data", "preprocessing"):
-                if version == "v401" and name == "loss":
+                if version in ("v401", "v402") and name == "loss":
                     continue
                 left = (ROOT / "solutions" / version / (version + "_" + name + ".py")).read_text(encoding="utf-8")
                 right = (ROOT / "solutions" / parent / (parent + "_" + name + ".py")).read_text(encoding="utf-8")
