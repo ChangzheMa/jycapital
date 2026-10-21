@@ -14,8 +14,15 @@
   "capacity_check_seconds": 3600,
   "daily_platform_submission_limit": 5,
   "platform_submission_actor": "user",
+  "platform_monitoring": {
+    "updated_at": "2026-10-21",
+    "automatic_queries": false,
+    "feedback_source": "user",
+    "basis": "用户要求只按本地结果改进与生成平台提交材料，平台成绩更新由用户同步。",
+    "hourly_checks": "local_training_results_and_queue_capacity_only"
+  },
   "checkpoint_selection": "local-v2-ic: validation ic_mean",
-  "platform_candidate_selection": "本地验证 IC 改善优先；同时综合稳定性、Rank IC、换手代理、互补性、效率及已有平台反馈，保留具体理由，不伪造官方综合分。",
+  "platform_candidate_selection": "仅按本地结果改进及生成候选材料：验证 IC 改善优先，同时比较稳定性、Rank IC、换手代理、互补性及效率；用户同步平台反馈后再纳入分析，不主动查询或等待平台成绩。",
   "evaluation_policy": "训练目标可迭代；用于横向比较的官方标签、股票池、时间划分、覆盖要求保持固定。",
   "research_strategy": {
     "updated_at": "2026-10-21",
