@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "solution_id": "v1002",
+  "reference_run_id": "v901-current-multifrequency-s42",
+  "checked_at": "2026-10-22T06:20:19+08:00",
+  "same_training_cache_key": true,
+  "cache_key": "dbcd47ff50672ccee5adc5dec94833d43d5c4226fb540909fa080c71467b960b",
+  "cache_format": "jycapital-resident-all-current-fp16-v1",
+  "reference_data_manifest_sha256": "f0c2fb1a69e0918bafae1484c1030d7a5eeff7bd285ee0092986c5e18567c414",
+  "resident_builder_sha256": "0accc25fffdfa968523c5e1b26214113601e08a7186d241cec359c361802caf3",
+  "array_data_opened": false,
+  "cache_modified": false,
+  "scope": "使用 v901 冻结预处理数据清单、协议及相同输入契约核对缓存身份；正式运行仍须匹配自己的数据指纹。"
+}
