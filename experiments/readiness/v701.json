@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "solution_id": "v701",
+  "status": "passed",
+  "checked_at": "2026-10-21T17:25:15+08:00",
+  "scope": "CPU synthetic implementation and full entrypoint checks; no formal market training or repeated long fast benchmark",
+  "checks": [
+    "test_data_and_primary_target_cache_identity",
+    "test_shared_heads_match_reference_and_are_causal",
+    "test_group_mapping_partial_keys_and_unchanged_targets",
+    "test_actual_training_loss_combines_heads_and_masks_missing_labels",
+    "test_interrupted_group_cursor_restores_raw_ema_optimizer_and_rng",
+    "test_grouped_monthly_and_resident_full_synthetic_entrypoints"
+  ],
+  "parameters": 3878662,
+  "unit_tests_passed": 5,
+  "unit_tests_seconds": 2.482,
+  "entrypoint_tests_passed": 1,
+  "entrypoint_seconds": 14.771,
+  "entrypoint_modes": [
+    "monthly_shuffled_stock_days",
+    "global_shuffled_stock_days"
+  ],
+  "entrypoint_evaluation_cache_mode": "stream",
+  "cpu_test_environment": {
+    "CUDA_VISIBLE_DEVICES": "-1"
+  },
+  "default_model_cpu_gradient_preflight": {
+    "parameters": 3878662,
+    "train_stock_days": 2,
+    "inference_stock_days": 4,
+    "status": "passed"
+  },
+  "default_gpu_batch_preflight": "required_in_training_session_between_runs",
+  "fast_validation": "logical causal prefix review plus synthetic shared/reference parity; reuse v303 evidence for unchanged input and normalization semantics",
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/evaluation_cache.py": "daf07f2b8edde62bf0e33a0f93ca49f83454e1e838fb6438d7f3db87f33b1c03",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/resident_data.py": "921e6c2ec3d0b52499fe926492224c038ecb49ab3bb84e92eb591465573f8fe7",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v701/config.json": "b68583ae0dfac2ec875721f63c6d7a0ff36cb14deee165f65b32a4b16f631157",
+    "solutions/v701/model-config.json": "9ccf98e9403caff74ed2dbf0f4a3fea0aabbebb34baaa045738e1a8d51870fb7",
+    "solutions/v701/requirements-inference.txt": "1a99016e2590e59b2c1a9c7f7a6a7fd80703c558f9c53ec19742b48bbb2f75fc",
+    "solutions/v701/requirements-training.txt": "fa2481cabb4c546fdfb30756b0e5d2a0aca27de74fcbc7a8dd10ce25db493ca1",
+    "solutions/v701/requirements.txt": "d72c61e0ea921d0067586b0267ca1760ca4f72b0e4eebdb74ddc917150550a0d",
+    "solutions/v701/v701_apply.py": "c8cb4511f3d3922866837382dfde4329b2f3f613e3b8079ba00798e4f04a6fc5",
+    "solutions/v701/v701_data.py": "f8490d591d7c990a6a3c260673e50876d333600d4ab872736593568c92087a48",
+    "solutions/v701/v701_ema.py": "14c6527a38f204cd4bd434ca0c92c40837ef34dcb1c0bb93a16fa57c4e257ade",
+    "solutions/v701/v701_evaluation.py": "5261b0b5f20f5c3b978c2a3790917adac932cafd698d1f0b930685e5b1d3b549",
+    "solutions/v701/v701_fast.py": "4440d84d953751654b6d458074dc39660a85fa7a44accb384e5ee71edc4ec335",
+    "solutions/v701/v701_grouped.py": "55a1643d706877b5bce08a5cb77634413b337eb4338c00d4ca2bd5798a82d863",
+    "solutions/v701/v701_loss.py": "37c4c47b6868c9bdfd2aaf6f1a768780e428f7634caaea722b278d46eae67e92",
+    "solutions/v701/v701_model.py": "48ad0316e9ea5146cd5d1762395fec20724a5ff09343f6b58f2507d5a626c2e7",
+    "solutions/v701/v701_notebook.py": "5863aa7701b4f52a6856d84529170c31b98fb19789833a780ce80278d838cfae",
+    "solutions/v701/v701_predict.py": "11f0194f5ca12435e666fbff6e7007c0820fa147c9df292408089c57cbb82365",
+    "solutions/v701/v701_predict_fast.py": "f98fec7e2230217f82dbd3eda4377c765aa7f9776f37cac51f6583c7d50f6f4b",
+    "solutions/v701/v701_prepare.py": "2b0f21bf76d26fb206c3ed0defbcaa8fafeecf0248b625a995b9c07591e5a745",
+    "solutions/v701/v701_preprocessing.py": "d5b5c2b1a4d03601b7a0d32f58450c008e9a479875e83757744dbf71ca90c7b3",
+    "solutions/v701/v701_reproduce.py": "7880f24a560c5fbd9df4b0115851e6e68c02f581d777311e670c85c1a262466e",
+    "solutions/v701/v701_schema.py": "297cbf6f50887ae915e5cd6290132b8d7f20b736dcb01ba3b930ca1389009c9b",
+    "solutions/v701/v701_targets.py": "649d36da9ffe92f8719a828505cd7f1a1333725cac4112c967d9a1d5a4c9feb7",
+    "solutions/v701/v701_text_artifact.py": "4d16d6c4bedb9f7803753f91726e11b7bffe5aa2325e26d41dc01464f492bee3",
+    "solutions/v701/v701_train.py": "722788af4afafc6ccaadc2ff136753468f66de438949b605f9a3326e3be5a1aa"
+  },
+  "test_files": {
+    "tests/test_v701.py": "12488f918f9c621b2c269ec7264b90998c1e6ac98f0eb1e3c9333af0fa81b583",
+    "tests/test_v701_entrypoint.py": "9ba8e712e259fcb138b117f0420d697b366474bb3153d490cc53aa947f0759b6"
+  },
+  "preflight_script_sha256": "481c3537b8a4a43c8e2b9321643d3e4436f584c3c85db4df953f8bc0b903d807"
+}

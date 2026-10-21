@@ -44,19 +44,26 @@ def main():
         torch.cuda.reset_peak_memory_stats()
     model = getattr(model_module, class_names[config["model"]["family"]])(config).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config["training"]["learning_rate"])
+    grouped = config["training"]["batching"].endswith("_stock_days")
 
     def inputs(count):
         windows = {f: torch.randn(count, config["model"]["input_channels"], length, device=device)
                    for f, length in config["data"]["window_bars"].items()}
-        clock = torch.nn.functional.one_hot(torch.arange(count, device=device) % 8, 8).float()
+        clock_ids = torch.full((count,), 7, device=device) if grouped else torch.arange(count, device=device) % 8
+        clock = torch.nn.functional.one_hot(clock_ids, 8).float()
         for value in windows.values():
             value[:, 72:75] = 1
         return windows, clock
 
     train_batch = config["training"]["batch_size"] if device.type == "cuda" else 8
     inference_batch = config["inference"]["batch_size"] if device.type == "cuda" else 16
+    if grouped:
+        train_batch = config["training"]["stock_day_batch_size"] if device.type == "cuda" else 2
+        inference_batch = config["inference"]["stock_day_batch_size"] if device.type == "cuda" else 4
     windows, clock = inputs(train_batch)
     targets = torch.linspace(-2, 2, train_batch, dtype=torch.float64, device=device)
+    if grouped:
+        targets = torch.linspace(-2, 2, train_batch * 16, dtype=torch.float64, device=device).reshape(train_batch, 8, 2)
     elapsed = []
     for _ in range(3):
         if device.type == "cuda":
@@ -72,11 +79,14 @@ def main():
     del windows, clock, targets
     model.eval()
     with torch.inference_mode():
-        predictions = model(*inputs(inference_batch))
+        predictions = model.forward_group(*inputs(inference_batch))[..., 0] if grouped else model(*inputs(inference_batch))
     if predictions.dtype != torch.float32 or not torch.isfinite(predictions).all():
         raise FloatingPointError("FP32 推理检查失败")
     record = {"solution_id": args.solution_id, "checked_at": now(), "status": "passed", "scope": "synthetic_device_preflight",
               "device": str(device), "train_batch": train_batch, "inference_batch": inference_batch,
+              "batch_unit": "stock_day" if grouped else "sample",
+              "train_target_slots": train_batch * (8 if grouped else 1),
+              "inference_output_slots": int(predictions.numel()),
               "parameters": sum(p.numel() for p in model.parameters()), "step_seconds": elapsed,
               "source_files": source_files(ROOT, args.solution_id),
               "cuda_peak_allocated_bytes": torch.cuda.max_memory_allocated() if device.type == "cuda" else None,
