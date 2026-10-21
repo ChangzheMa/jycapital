@@ -63,6 +63,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | v303 后续候选 | [v306：Huber delta=4 对照](../solutions/v306/README.md)、[v501：EMA 参数选模](../solutions/v501/README.md)；v501 开启 v50x 训练方法系列，推理网络规模不变 |
 | 混合监督与日内卷积候选 | [v402：收益与排名混合目标](../solutions/v402/README.md)、[v601：日内因果卷积与跨日 GRU](../solutions/v601/README.md)；均以 v303 为对照，保持原始时间分辨率 |
 | 扩容与股票日共享候选 | [v701：宽 GRU、跨频交互与双头监督](../solutions/v701/README.md)；v70x 首版，以 v501 为父版本，约 388 万参数，正式训练待调度 |
+| 跨股票上下文候选 | [v801：冻结时序表示与完整截面残差](../solutions/v801/README.md)；v80x 首版，继承 v501 权重，约 170 万可训练参数，平台重新编码原始输入 |
 | 信号诊断与 v201 结论 | [换手及持续性代理定义与结果](signal-diagnostics.md)、[v201 冻结比较](../experiments/v201-mixer.json)、[全体完成模型汇总](../experiments/completed-models-20261021.json) |
 | v301 冻结结论 | [分层 GRU 结果与平台材料](../solutions/v301/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v301-gru.json)、[信号代理诊断](../experiments/v301-signal-diagnostics.json) |
 | v202 冻结结论 | [Patch Mixer 的效率与效果](../solutions/v202/README.md#冻结结果)、[比较摘要](../experiments/v202-mixer.json)；保留快速结构研究价值，当前不晋级 |

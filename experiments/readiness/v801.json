@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "solution_id": "v801",
+  "status": "passed",
+  "checked_at": "2026-10-21T21:23:28+08:00",
+  "scope": "CPU synthetic implementation, frozen representation cache and full entrypoint; no formal market training",
+  "checks": [
+    "test_default_parameter_count_and_unchanged_primary_cache_transform",
+    "test_zero_initialization_frozen_backbone_and_complete_set_equivariance",
+    "test_shared_encoding_matches_reference_and_chunking_does_not_change_context",
+    "test_text_initialization_rejects_different_frozen_weights",
+    "test_full_section_resume_restores_raw_ema_rng_and_optimizer",
+    "test_frozen_cache_and_complete_section_full_synthetic_entrypoint"
+  ],
+  "parameters": 2129158,
+  "trainable_parameters": 1695749,
+  "unit_tests_passed": 5,
+  "unit_tests_seconds": 2.153,
+  "entrypoint_tests_passed": 1,
+  "entrypoint_seconds": 8.574,
+  "entrypoint_modes": [
+    "global_shuffled_cross_sections"
+  ],
+  "cache_precision": "float32",
+  "cpu_test_environment": {
+    "CUDA_VISIBLE_DEVICES": "-1"
+  },
+  "default_model_cpu_gradient_preflight": {
+    "status": "passed",
+    "parameters": 2129158,
+    "train_stocks": 8,
+    "inference_stocks": 16,
+    "frozen_encoder_checked": true
+  },
+  "default_gpu_batch_preflight": "required_in_training_session_between_runs",
+  "fast_validation": "reuse unchanged v501 prefix/input evidence; synthetic set equivariance, encoder chunking and per-clock reference parity",
+  "formal_initialization": {
+    "parent_run_id": "v501-ema-gru-s42",
+    "parent_model_sha256": "ee86ea2fb408c92c4509c85b5e13230b4cce327adfa2726e13839c412196afce",
+    "parent_tensor_sha256": "c27ddac0f5c6aa2ccae1a942b55dc6d969c9964d972aa19248d3fba7ed273d36"
+  },
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/evaluation_cache.py": "daf07f2b8edde62bf0e33a0f93ca49f83454e1e838fb6438d7f3db87f33b1c03",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/resident_data.py": "921e6c2ec3d0b52499fe926492224c038ecb49ab3bb84e92eb591465573f8fe7",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v801/config.json": "62e2200038802e2559a125bdd3cc6c3e2889e67ff4ae47ad1cb553a529602610",
+    "solutions/v801/model-config.json": "f3b792d9bd686571fe4483e16c135801a557fd7b8872f05376aa206b85ec38b9",
+    "solutions/v801/requirements-inference.txt": "1a99016e2590e59b2c1a9c7f7a6a7fd80703c558f9c53ec19742b48bbb2f75fc",
+    "solutions/v801/requirements-training.txt": "fa2481cabb4c546fdfb30756b0e5d2a0aca27de74fcbc7a8dd10ce25db493ca1",
+    "solutions/v801/requirements.txt": "d72c61e0ea921d0067586b0267ca1760ca4f72b0e4eebdb74ddc917150550a0d",
+    "solutions/v801/v801_apply.py": "2d7cc11b23037022ea211ef548ba37e8de073852f36af4fe101af948d24e8840",
+    "solutions/v801/v801_backbone.py": "19b7fcd47454008c0c18408f9826fa885dcc7bf76c0aef92255a3ed38ba18d5b",
+    "solutions/v801/v801_cache.py": "15da315ab996c54c6b2fb2bac3316af1f50c20bb6a55c587917a22181fb6fcf8",
+    "solutions/v801/v801_context.py": "9e2668dd7735c61de1ca1dd4b755bd51ef7a6611c325ab07a74ba76152e61425",
+    "solutions/v801/v801_data.py": "1bf3aba1a56adbf7c89129ff79ae37ac0ecd40f118128a842ff8be6998dd7fb8",
+    "solutions/v801/v801_ema.py": "14c6527a38f204cd4bd434ca0c92c40837ef34dcb1c0bb93a16fa57c4e257ade",
+    "solutions/v801/v801_encoding.py": "9b330aef0bf82f109b55ea2193ebe3eba3c2aa09c3b26da92853cbd41b187957",
+    "solutions/v801/v801_fast.py": "bcf2bc1475ccb06b23e28ecc374dbdc45baf36ef10a63b33d794d316ec34a6ec",
+    "solutions/v801/v801_loss.py": "fe479d7418a530f2db0c995fcdb2f0b37b287da2da78d1ae03f6add3cb4a3e8b",
+    "solutions/v801/v801_market_fast.py": "8208be291cb90f1c57f8899085ad93a0127730fa3de1025adeed9791597e190b",
+    "solutions/v801/v801_model.py": "4b4523e3dcc685fbbfe3aa9e6f9a4dd1f1214a70740f3d6cc3be093acd29bd70",
+    "solutions/v801/v801_notebook.py": "b99ff739e845138e6b7ab5c50fd6150108f476c034f4b0a8696b08f39e93521f",
+    "solutions/v801/v801_predict.py": "a4bd8c1c4016f010a30d0d6e651d1ad9da70117d4375f10338b4b76acea0e9f3",
+    "solutions/v801/v801_predict_fast.py": "97532b6ea6e7ebbd4025dcb37458e07ee8e796a7d021c181bc887f5c43ea4873",
+    "solutions/v801/v801_prepare.py": "47565ce8c1449b97cb73422141a84cbfc39c9c96a6c77b4df5868f80d0704fec",
+    "solutions/v801/v801_preprocessing.py": "d5b5c2b1a4d03601b7a0d32f58450c008e9a479875e83757744dbf71ca90c7b3",
+    "solutions/v801/v801_reproduce.py": "fbc65e5d53381b6e27c5449d3c71315f183a304fe1d125cd653006c7b8543a12",
+    "solutions/v801/v801_schema.py": "04e077cb83e4695b7f9bb974e4d8bd5a1037cd368f29048aee7ea7a586e10eee",
+    "solutions/v801/v801_text_artifact.py": "1a0043eedf3e53db8a1fe79e3d0144c5d99abbe419c29026ab0f11487671451f",
+    "solutions/v801/v801_train.py": "40df309bc8ab4baf25d778e8e6699bf011b03af3c82132107cc987121f20e0d2"
+  },
+  "test_files": {
+    "tests/test_v801.py": "d71634f6cb7c141a3e4dd1558fe1465b81913f3587f4c7c3da7b97b7f05e8ff3",
+    "tests/test_v801_entrypoint.py": "801e50cfcc84c927fffcd5b72c1bdd91947f8f3cf32a6edee70a756220cc87c1"
+  },
+  "preflight_script_sha256": "21969a66e8eeb938c01289fbc28bbd08ffce35138190c028e71a38e82071f966"
+}

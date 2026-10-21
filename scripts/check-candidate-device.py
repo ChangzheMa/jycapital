@@ -47,6 +47,8 @@ def main():
     grouped = config["training"]["batching"].endswith("_stock_days")
 
     def inputs(count):
+        if hasattr(trainer, "preflight_inputs"):
+            return trainer.preflight_inputs(config, count, device)
         windows = {f: torch.randn(count, config["model"]["input_channels"], length, device=device)
                    for f, length in config["data"]["window_bars"].items()}
         clock_ids = torch.full((count,), 7, device=device) if grouped else torch.arange(count, device=device) % 8
@@ -74,7 +76,7 @@ def main():
         if device.type == "cuda":
             torch.cuda.synchronize()
         elapsed.append(time.perf_counter() - started)
-        if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in model.parameters()):
+        if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in model.parameters() if p.requires_grad):
             raise FloatingPointError("参数梯度缺失或非有限")
     del windows, clock, targets
     model.eval()
@@ -82,9 +84,12 @@ def main():
         predictions = model.forward_group(*inputs(inference_batch))[..., 0] if grouped else model(*inputs(inference_batch))
     if predictions.dtype != torch.float32 or not torch.isfinite(predictions).all():
         raise FloatingPointError("FP32 推理检查失败")
+    if hasattr(trainer, "preflight_encoder"):
+        trainer.preflight_encoder(model, config, device)
     record = {"solution_id": args.solution_id, "checked_at": now(), "status": "passed", "scope": "synthetic_device_preflight",
               "device": str(device), "train_batch": train_batch, "inference_batch": inference_batch,
-              "batch_unit": "stock_day" if grouped else "sample",
+              "batch_unit": ("stock_day" if grouped else "stocks_in_complete_cross_section"
+                             if config["training"]["batching"] == "global_shuffled_cross_sections" else "sample"),
               "train_target_slots": train_batch * (8 if grouped else 1),
               "inference_output_slots": int(predictions.numel()),
               "parameters": sum(p.numel() for p in model.parameters()), "step_seconds": elapsed,
