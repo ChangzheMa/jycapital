@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-21T10:17:06+08:00",
+  "scope": "read-only training-cache sample-index audit; no model construction or market training",
+  "cache_key": "f8d65a306ddf111983e1291896adc775beb5d0de324541a1a41246c8000faabe",
+  "cache_manifest_sha256": "15f201f645bbe46848f0b5f70b7aac9c02d22ebbe28b7c94aaec42ee1046c2f9",
+  "source_index_fingerprints": {
+    "sample_day.npy": "66c665dffe87c493dae195e05f79c7fa52ae4606f6cfdb61aba6262184c22818",
+    "sample_stock.npy": "1e047307dac1ddc76288932a7388d2af9ebcbef0901b3df4cd9cb48e20013a46",
+    "sample_clock.npy": "f3e76bd2998c3e375cc454e7a6e8ccff72e5a364da78960fd9cc74a7c900f32b",
+    "targets.npy": "e7de68d257ceec4a7a1ae74bcc5b367a2ac8c0eed41b66b9bf6772f8d564dd6e"
+  },
+  "train_samples": 7760000,
+  "eligible_train_samples": 7742958,
+  "trading_days": 970,
+  "distinct_instruments_over_training": 1764,
+  "stock_day_groups": 970000,
+  "samples_per_group_histogram": {
+    "8": 970000
+  },
+  "eligible_samples_per_group_histogram": {
+    "0": 2128,
+    "4": 3,
+    "7": 6,
+    "8": 967863
+  },
+  "all_eight_clock_groups": 970000,
+  "any_clock_missing_groups": 0,
+  "average_prediction_times_per_stock_day": 8.0,
+  "shared_encoding_speedup_measured": false,
+  "source_index_files_verified_against_manifest": true,
+  "method": "Group every cached training sample by (sample_day, sample_stock); count sample_clock bit masks and finite targets. Read mmap index/target arrays only; no feature arrays loaded, shared files unchanged.",
+  "limitations": [
+    "Training split only; validation, test and platform request grouping still require separate audit.",
+    "Eight input occurrences do not imply eightfold wall-time speedup.",
+    "Grouped training changes sample correlation and shared dropout; it is a new training design, not numerical equivalence to sample shuffle."
+  ]
+}
