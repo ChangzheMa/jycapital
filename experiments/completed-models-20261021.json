@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-21T16:24:58+08:00",
+  "checked_at": "2026-10-21T19:37:03+08:00",
   "source": "本地运行的冻结产物",
-  "completed_count": 27,
+  "completed_count": 28,
   "protocol_compatibility": "local-v1 仅协议标识和选模指标不同；评估器、标签与股票池指纹一致，保留原先选出的权重。",
   "runs": [
     {
@@ -2271,6 +2271,92 @@
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "ee86ea2fb408c92c4509c85b5e13230b4cce327adfa2726e13839c412196afce"
+    },
+    {
+      "run_id": "v402-blended-target-gru-s42",
+      "solution_id": "v402",
+      "parent_run_id": "v303-huber-delta2-s42",
+      "parent_solution_id": "v303",
+      "selection": {
+        "best_epoch": 7,
+        "best_validation_metric": 0.08445593111913664,
+        "best_validation_ic": 0.08445593111913664,
+        "epochs_completed": 12,
+        "selection_metric": "ic_mean",
+        "patience_epochs": 5,
+        "early_stopping": {
+          "mode": "best_epoch_fraction",
+          "fraction": 0.6,
+          "minimum": 4,
+          "maximum": 12,
+          "rounding": "ceil",
+          "improvement": "strict"
+        },
+        "stale_epochs": 5,
+        "model_sha256": "fe30fb150870e5d1168f0509b3cc9a745b1509fdd3c42536a87f91f7a2cda735",
+        "selected_at": "2026-10-21T19:32:15+08:00",
+        "optimizer_steps": 181476,
+        "training_seconds_this_session": 11479.424,
+        "stop_reason": "early_stopping"
+      },
+      "parameters": 433409,
+      "metrics": {
+        "validation": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 936000,
+          "predicted_rows": 936000,
+          "valid_label_rows": 935224,
+          "evaluated_rows": 935224,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 936,
+          "mse": 0.020752449722386365,
+          "mae": 0.09061218239657516,
+          "zero_prediction_mse": 2.057265373878181e-05,
+          "ic_mean": 0.08445593111913664,
+          "ic_std": 0.10904481876136742,
+          "ic_ir": 0.7745065935132521,
+          "ic_valid_cross_sections": 936,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08463411856966999,
+          "rank_ic_std": 0.0971410034006135,
+          "rank_ic_ir": 0.8712501992658588,
+          "rank_ic_valid_cross_sections": 936,
+          "rank_ic_undefined_cross_sections": 0
+        },
+        "test": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 1000000,
+          "predicted_rows": 1000000,
+          "valid_label_rows": 998539,
+          "evaluated_rows": 998539,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 1000,
+          "mse": 0.023825561235448798,
+          "mae": 0.09465834028943866,
+          "zero_prediction_mse": 2.20817637455184e-05,
+          "ic_mean": 0.09048489834701212,
+          "ic_std": 0.1169693547073166,
+          "ic_ir": 0.7735778193649567,
+          "ic_valid_cross_sections": 1000,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08681640100522162,
+          "rank_ic_std": 0.10653830516565416,
+          "rank_ic_ir": 0.8148843823846516,
+          "rank_ic_valid_cross_sections": 1000,
+          "rank_ic_undefined_cross_sections": 0
+        }
+      },
+      "run_path": "outputs/runs/v402-blended-target-gru-s42",
+      "selected_at": "2026-10-21T19:32:15+08:00",
+      "seed": 42,
+      "config_sha256": "d16b6e870e2306f42c5111e9b4b7554a4bacf4c02a61ae98bcb2cd26540b8121",
+      "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+      "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+      "model_sha256": "fe30fb150870e5d1168f0509b3cc9a745b1509fdd3c42536a87f91f7a2cda735"
     }
   ]
 }
