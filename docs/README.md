@@ -4,7 +4,7 @@
 
 ## 冻结模型结果
 
-本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-21（UTC+08:00）本次归档，下表 26 个版本完成训练及双集评估，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261021.json)。
+本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-21（UTC+08:00）本次归档，下表 27 个版本完成训练及双集评估，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261021.json)。
 
 | 方案 | 参数量 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC | 结果 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -29,11 +29,12 @@
 | [v202](../solutions/v202/README.md) | 550,093 | 0.075618 | 0.077872 | 0.080511 | 0.083187 | Patch 压缩提高训练效率，但验证 IC 低于 v201、v301；不导出平台材料 |
 | [v301](../solutions/v301/README.md) | 433,409 | 0.082544 | 0.084265 | 0.086791 | 0.085596 | 分层 GRU 基准；相对 v101 全部月份 IC 改善，9 月仍弱于 v7e |
 | [v302](../solutions/v302/README.md) | 469,409 | 0.079400 | 0.080072 | 0.085915 | 0.082347 | 训练及逐轮验证耗时较 v301 少约 42%，IC IR 略好；验证 IC 未晋级，暂不导出 |
-| [v303](../solutions/v303/README.md) | 433,409 | 0.085625 | 0.083970 | 0.090160 | 0.084293 | 当前验证 IC 最优；Huber delta=2，相对 v301 全部月份 IC 改善，但 Rank IC 略低、换手代理增加 |
+| [v303](../solutions/v303/README.md) | 433,409 | 0.085625 | 0.083970 | 0.090160 | 0.084293 | Huber delta=2 基准；相对 v301 全部月份 IC 改善，但 Rank IC 略低、换手代理增加 |
 | [v304](../solutions/v304/README.md) | 491,297 | 0.081398 | 0.081085 | 0.084087 | 0.080573 | 时钟门控两级状态读出；双集 IC、Rank IC 低于 v301 和 v303，不导出 |
 | [v305](../solutions/v305/README.md) | 440,609 | 0.079784 | 0.082750 | 0.083208 | 0.084647 | 较小片段压缩率；相对 v302 的 Rank IC 提高，但测试 IC、双集 IC IR 和耗时不占优，不导出 |
 | [v306](../solutions/v306/README.md) | 433,409 | 0.082907 | 0.078575 | 0.087217 | 0.078165 | Huber delta=4；双集 IR 提高，但 IC／Rank IC 低于 v303，换手代理结果不一致，不导出 |
 | [v401](../solutions/v401/README.md) | 433,409 | 0.083442 | 0.087203 | 0.089112 | 0.089590 | 排名监督提高 Rank IC；双集 IC 低于 v303，换手代理更高，不导出 |
+| [v501](../solutions/v501/README.md) | 433,409 | **0.087199** | 0.084019 | **0.090330** | 0.085085 | 当前验证 IC 最优；EMA 选模提高双集 IC／IR，测试 IC 增益较小、换手代理略高 |
 
 v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
 
@@ -71,6 +72,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | v305 冻结结论 | [较小压缩率的效果与成本](../solutions/v305/README.md#冻结结果)、[比较摘要](../experiments/v305-gru.json)；Rank IC 改善不足以抵消 IC 与成本代价，不导出 |
 | v306 冻结结论 | [Huber delta=4 的取舍](../solutions/v306/README.md#冻结结果)、[比较摘要](../experiments/v306-gru.json)、[信号诊断](../experiments/v306-signal-diagnostics.json)；保留稳定性变化证据，当前未晋级 |
 | v401 冻结结论 | [排名监督的取舍](../solutions/v401/README.md#冻结结果)、[比较摘要](../experiments/v401-gru.json)、[信号诊断](../experiments/v401-signal-diagnostics.json)；保留排序改善证据，当前未晋级 |
+| v501 冻结结论 | [EMA 选模结果](../solutions/v501/README.md#冻结结果)、[fast 材料](../solutions/v501/README.md#fast-平台材料)、[比较摘要](../experiments/v501-gru.json)、[信号诊断](../experiments/v501-signal-diagnostics.json)、[推理记录](../experiments/v501-inference-performance.json) |
 | 模型与损失 | [v6 冻结模型逐层图解](v6-model.html)、[v2 交互图解](v2-model.html)、[字段可用性及组掩码](v3-field-validity.md)、[Pearson IC 损失设计](v4-ic-loss-plan.md) |
 | 扩容方案 | [v5：四频 TCN 隐藏通道扩至 160](../solutions/v5/README.md) |
 | 正则化方案 | [v6：TCN 残差块 Dropout 提高至 0.35](../solutions/v6/README.md) |

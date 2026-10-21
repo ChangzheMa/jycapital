@@ -18,6 +18,7 @@
 | [v301-global-fp16-s42](v301-global-fp16-s42/v301-submission.ipynb) | `v301-submission.ipynb`、`v301-model.json` | 本地改善候选；分层 GRU，第 7 轮权重，已通过独立 CPU 与冻结 checkpoint 对照；[清单](../experiments/v301-global-fp16-s42-submission.json) |
 | [v303-huber-delta2-s42](v303-huber-delta2-s42/v303-submission.ipynb) | `v303-submission.ipynb`、`v303-model.json` | 本地改善候选；Huber delta=2 的分层 GRU，第 7 轮权重，已通过独立 CPU 与冻结 checkpoint 对照；[清单](../experiments/v303-huber-delta2-s42-submission.json) |
 | [v303-huber-delta2-s42-fast](v303-huber-delta2-s42-fast/v303-submission.ipynb) | 同一加速目录的 `v303-submission.ipynb`、`v303-model.json` | **v303 后续评测推荐材料**；同一冻结权重，12 日 CPU 对照约快 2.94 倍且预测一致；[清单](../experiments/v303-huber-delta2-s42-fast-submission.json)、[说明](../docs/v303-inference-fast.md) |
+| [v501-ema-gru-s42-fast](v501-ema-gru-s42-fast/v501-submission.ipynb) | `v501-submission.ipynb`、`v501-model.json` | **当前本地验证最优候选**；第 8 轮 EMA，默认 fast；测试增益较小、换手代理略高；[清单](../experiments/v501-ema-gru-s42-fast-submission.json)、[结果](../solutions/v501/README.md#冻结结果) |
 
 v2／v4—v7／v7e／v101／v201／v301／v303 的两个文本文件需置于同一平台目录。JSON 内嵌冻结权重、归一化统计量、配置和训练／推理源码；Notebook 提供评测入口、依赖及复现说明。附件大小、数值精度及独立推理的验证范围以各清单为准。
 

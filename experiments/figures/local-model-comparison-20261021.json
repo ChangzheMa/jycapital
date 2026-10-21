@@ -1,8 +1,29 @@
 {
-  "generated_at": "2026-10-21T14:33:49.059261+08:00",
+  "generated_at": "2026-10-21T16:52:18.215564+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
+    {
+      "solution_id": "v501",
+      "run_id": "v501-ema-gru-s42",
+      "model_sha256": "ee86ea2fb408c92c4509c85b5e13230b4cce327adfa2726e13839c412196afce",
+      "summary_file": "experiments/v501-gru.json",
+      "summary_content_sha256": "e899c457c958acdee7fb367c2880294ec1cad3605b7fbd189cae44ef7af3a7b6",
+      "parameters": 433409,
+      "epochs_completed": 13,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08719903493491783,
+          "rank_ic_mean": 0.08401920040408578,
+          "ic_ir": 0.8031216610329402
+        },
+        "test": {
+          "ic_mean": 0.09033029215478851,
+          "rank_ic_mean": 0.08508543951767192,
+          "ic_ir": 0.7717490991797894
+        }
+      }
+    },
     {
       "solution_id": "v303",
       "run_id": "v303-huber-delta2-s42",
@@ -214,5 +235,5 @@
       }
     }
   ],
-  "image_sha256": "083478a7cea0a624539359b9993b289879d5c97a13447ccae92f7a148fbfa136"
+  "image_sha256": "9bd359f7fb2629eab01a43f1d08e682fd95b86abcd53515ab0fb0a3822d8d773"
 }

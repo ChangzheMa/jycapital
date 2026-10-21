@@ -1,0 +1,101 @@
+{
+  "checked_at": "2026-10-21T16:30:32+08:00",
+  "package": "submissions/v501-ema-gru-s42-fast",
+  "run_id": "v501-ema-gru-s42",
+  "package_sha256": "bdce736a2653869e01d94014849704036a2f4d65b5c4040c2d3ceda9af81db15",
+  "model_sha256": "ee86ea2fb408c92c4509c85b5e13230b4cce327adfa2726e13839c412196afce",
+  "device": "cpu",
+  "cpu_threads": 4,
+  "torch": "2.11.0+cu130",
+  "start": "2024-12-16",
+  "end": "2024-12-31",
+  "rows": 96000,
+  "bundle_load_seconds": 0.2030390999861993,
+  "prediction_seconds": 72.10211189999245,
+  "inclusive_stage_timings": {
+    "prior_trading_days": {
+      "calls": 1,
+      "seconds": 0.08284659998025745
+    },
+    "read_table_including_query_and_frame_checks": {
+      "calls": 122,
+      "seconds": 17.65280330006499
+    },
+    "warm_history_including_its_queries": {
+      "calls": 3,
+      "seconds": 7.965581499971449
+    },
+    "normalize": {
+      "calls": 86,
+      "seconds": 27.945892000454478
+    },
+    "window_plan": {
+      "calls": 12,
+      "seconds": 0.03432989993598312
+    },
+    "window_batch": {
+      "calls": 96,
+      "seconds": 9.340966799936723
+    },
+    "shared_model_forward": {
+      "calls": 96,
+      "seconds": 9.631334799865726
+    },
+    "shared_day_including_windows_and_model": {
+      "calls": 12,
+      "seconds": 19.112161199969705
+    }
+  },
+  "process_peak_working_set_bytes": 3403059200,
+  "inference_execution": {
+    "method": "shared_stock_day_encoding",
+    "stock_batch_size": 128,
+    "model_precision": "float32",
+    "grid_stocks": "requested_instruments_only",
+    "normalization_cross_sections": "unchanged_full_source_and_original_pool"
+  },
+  "scope": "本地 dai 兼容层、CPU、完整请求；阶段耗时存在嵌套，不能全部相加；不代表平台耗时。",
+  "logic_review": {
+    "reference_solution": "v303",
+    "version_renaming_only": {
+      "model": true,
+      "schema": true,
+      "data": true,
+      "preprocessing": true,
+      "fast": true,
+      "predict_fast": true
+    },
+    "data_model_inference_configs_equal": true,
+    "selected_weight_source": "ema",
+    "reuse_prior_fast_evidence": "experiments/v303-inference-performance.json"
+  },
+  "validation_manifest": "experiments/v501-ema-gru-s42-fast-submission.json",
+  "validation_manifest_sha256": "ad38025ee47e667a3691d757b686beb757f747a66652b70267b8b0915bf90850",
+  "independent_checkpoint_validation": [
+    {
+      "split": "test",
+      "rows": 16000,
+      "max_abs_difference_vs_cpu_checkpoint": 0.0,
+      "selected_weight_source": "ema",
+      "selected_ema_updates": 120984,
+      "passed": true
+    },
+    {
+      "split": "validation",
+      "rows": 32000,
+      "max_abs_difference_vs_cpu_checkpoint": 0.0,
+      "selected_weight_source": "ema",
+      "selected_ema_updates": 120984,
+      "passed": true
+    }
+  ],
+  "implementation_checks": {
+    "tests_passed": 18,
+    "seconds": 7.39,
+    "test_files": {
+      "tests/test_v501_fast.py": "e68a6aa26995e0d2ca46cbc01bc2a8cae2e3a77f9a14ec651f1c898fdeda0de8",
+      "tests/test_export_v501.py": "3c6a467e820a0c20f9ce847eaa2d0c8c730b47183002d20d2644d25a4ce062df",
+      "tests/test_verify_v501_parity.py": "0a2547fe0a03c5110828991e5c68103b1b5edccccfaa243b321cbf03766b3e19"
+    }
+  }
+}
