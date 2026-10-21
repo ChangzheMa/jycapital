@@ -35,6 +35,10 @@
 
 v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
 
+下图聚焦近期完成的全局采样方案；对应[绘图数据与来源指纹](../experiments/figures/local-model-comparison-20261021.json)，可用[绘图脚本](../scripts/plot-local-comparison.py)从冻结摘要重建。
+
+![近期完成模型的本地 IC、Rank IC 和 IC IR 对比](../experiments/figures/local-model-comparison-20261021.png)
+
 附件、上传方式及平台状态统一见 [平台提交目录](../submissions/README.md)；Mock 接口确认依据见 [来源记录](bigquant-2026-end-to-end/sources.md)。
 
 ## 文档索引

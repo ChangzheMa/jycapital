@@ -1,0 +1,176 @@
+{
+  "generated_at": "2026-10-21T09:14:48.362364+08:00",
+  "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
+  "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
+  "rows": [
+    {
+      "solution_id": "v303",
+      "run_id": "v303-huber-delta2-s42",
+      "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
+      "summary_file": "experiments/v303-gru.json",
+      "summary_content_sha256": "ca7d69d083d0a83f677812b6b2acba6fbfb8d64f1eeee717d61e7bd5464c9668",
+      "parameters": 433409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08562533225979052,
+          "rank_ic_mean": 0.08397024070067644,
+          "ic_ir": 0.7856804324907682
+        },
+        "test": {
+          "ic_mean": 0.09015989766091664,
+          "rank_ic_mean": 0.08429281221265691,
+          "ic_ir": 0.7634897743107745
+        }
+      }
+    },
+    {
+      "solution_id": "v301",
+      "run_id": "v301-global-fp16-s42",
+      "model_sha256": "2a8a2789517666d567ed28f0c907edfe84ca43619e7c88de85c9701508b636e3",
+      "summary_file": "experiments/v301-gru.json",
+      "summary_content_sha256": "c40603ebbc985430e3a5f152aead682fd30ab9cf92148968019f88740cfd0acb",
+      "parameters": 433409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08254428055906214,
+          "rank_ic_mean": 0.08426543172715369,
+          "ic_ir": 0.7399157606243192
+        },
+        "test": {
+          "ic_mean": 0.08679094091361013,
+          "rank_ic_mean": 0.08559630095964303,
+          "ic_ir": 0.7156795189701181
+        }
+      }
+    },
+    {
+      "solution_id": "v304",
+      "run_id": "v304-clock-gated-gru-s42",
+      "model_sha256": "bca5e27274b4ed38e658004b22f0d30b9a228a9b168e6d4ffaf3bf88e93d9058",
+      "summary_file": "experiments/v304-gru.json",
+      "summary_content_sha256": "44bb43af9c6cf25763fb5dab2dab44c3f591c1495a0f8c870f67b1fb0278c222",
+      "parameters": 491297,
+      "epochs_completed": 10,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08139825601707477,
+          "rank_ic_mean": 0.08108488352937622,
+          "ic_ir": 0.7569887779915783
+        },
+        "test": {
+          "ic_mean": 0.08408654361269127,
+          "rank_ic_mean": 0.08057305138159415,
+          "ic_ir": 0.7103689782811776
+        }
+      }
+    },
+    {
+      "solution_id": "v305",
+      "run_id": "v305-fine-patch-gru-s42",
+      "model_sha256": "b7c707780084fcddf0e8c61c65d0b523e4c3e0c5d221ba76c4ec7e19ba0bac1b",
+      "summary_file": "experiments/v305-gru.json",
+      "summary_content_sha256": "fbbe88343de635079c2742f661ff5de213415b1d439b89a0422ad760739143d1",
+      "parameters": 440609,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0797844510601703,
+          "rank_ic_mean": 0.08274972174426157,
+          "ic_ir": 0.7337936888857917
+        },
+        "test": {
+          "ic_mean": 0.08320756076323096,
+          "rank_ic_mean": 0.08464712418114713,
+          "ic_ir": 0.7034306347488227
+        }
+      }
+    },
+    {
+      "solution_id": "v302",
+      "run_id": "v302-patch-gru-s42",
+      "model_sha256": "ec292c0d4dd17bb6f67156e588d481e0acffebfd26d501bfd175056b94edba04",
+      "summary_file": "experiments/v302-gru.json",
+      "summary_content_sha256": "0d19a8fee0672d56ce793db276c35f54607f5c0a645e10fab2f233965a615556",
+      "parameters": 469409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0793998431466455,
+          "rank_ic_mean": 0.08007194604123359,
+          "ic_ir": 0.7428548577384467
+        },
+        "test": {
+          "ic_mean": 0.08591472163509825,
+          "rank_ic_mean": 0.08234746983039959,
+          "ic_ir": 0.7374785164534341
+        }
+      }
+    },
+    {
+      "solution_id": "v201",
+      "run_id": "v201-global-fp16-s42",
+      "model_sha256": "9217d0d5e4e89b0d3c12cb088fdc073e0ae1b5e0e3fff8cb20959d5a121c7d6b",
+      "summary_file": "experiments/v201-mixer.json",
+      "summary_content_sha256": "fc4d0ae92632d7b2f33a91793376fd6e85d6d3dc2c6d63a16a33ab944d4d86ba",
+      "parameters": 552973,
+      "epochs_completed": 9,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.07735205652124308,
+          "rank_ic_mean": 0.07821411781706815,
+          "ic_ir": 0.7199648629819254
+        },
+        "test": {
+          "ic_mean": 0.08142730618981978,
+          "rank_ic_mean": 0.08019047532121877,
+          "ic_ir": 0.6812328769785957
+        }
+      }
+    },
+    {
+      "solution_id": "v202",
+      "run_id": "v202-patch-mixer-s42",
+      "model_sha256": "2bba9cb2d06d064de12f7ac00e7a4a18af6d9e269c11e9406e0c933b77bef534",
+      "summary_file": "experiments/v202-mixer.json",
+      "summary_content_sha256": "e0fd17c79ec5f347587311dac7aad3af5b9ce551bab30a8993d5aa6161086f6a",
+      "parameters": 550093,
+      "epochs_completed": 8,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.07561848772806617,
+          "rank_ic_mean": 0.0778718975484365,
+          "ic_ir": 0.6861853529777981
+        },
+        "test": {
+          "ic_mean": 0.08051104872850909,
+          "rank_ic_mean": 0.08318668586498282,
+          "ic_ir": 0.6589406950075862
+        }
+      }
+    },
+    {
+      "solution_id": "v102",
+      "run_id": "v102-clock-readout-s42",
+      "model_sha256": "47abff469c53eebd1058e74abd87e21b0cfb9aaa45e40198959ed78a93fdbe64",
+      "summary_file": "experiments/v102-patch-transformer.json",
+      "summary_content_sha256": "0f41df9215a24c0d54af5ad7c11bcc7a59ca60e9c790b6cd767c73a78867422d",
+      "parameters": 770465,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.07512053351631273,
+          "rank_ic_mean": 0.07860437175998265,
+          "ic_ir": 0.6980914207245149
+        },
+        "test": {
+          "ic_mean": 0.07962754115625677,
+          "rank_ic_mean": 0.08050166489497326,
+          "ic_ir": 0.6651392137893363
+        }
+      }
+    }
+  ],
+  "image_sha256": "781ab393b71673464d0abe3c7bc447728dc291bac15f9a475326f23e5d4f7ab9"
+}
