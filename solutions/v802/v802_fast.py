@@ -1,0 +1,1 @@
+from v802_market_fast import predict_day
