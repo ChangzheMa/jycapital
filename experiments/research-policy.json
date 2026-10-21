@@ -17,6 +17,30 @@
   "checkpoint_selection": "local-v2-ic: validation ic_mean",
   "platform_candidate_selection": "本地验证 IC 改善优先；同时综合稳定性、Rank IC、换手代理、互补性、效率及已有平台反馈，保留具体理由，不伪造官方综合分。",
   "evaluation_policy": "训练目标可迭代；用于横向比较的官方标签、股票池、时间划分、覆盖要求保持固定。",
+  "research_strategy": {
+    "updated_at": "2026-10-21",
+    "basis": "用户要求加大单轮改进力度、合并多个改进、适当扩大规模和训练时间，并在新改进前检索近期论文及鉴别质量。",
+    "prefer_coherent_combined_changes": true,
+    "literature_review_before_new_design": true,
+    "review_requirements": [
+      "原始论文及发表状态",
+      "时间划分与选模是否使用测试集",
+      "基线、多种子、复现代码及数据",
+      "与本项目输入、标签和评分的适用性",
+      "结合本地正反实验结果"
+    ],
+    "initial_design_parameter_range": [
+      1000000,
+      5000000
+    ],
+    "initial_estimated_training_hours": [
+      6,
+      12
+    ],
+    "cost_ranges_are_estimates_not_user_hard_limits": true,
+    "design_note": "docs/research-directions-20261021.md",
+    "existing_ready_candidates_remain_frozen": true
+  },
   "legacy_runs": [
     {
       "solution_id": "v201",
