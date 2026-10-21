@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "computed_at": "2026-10-22T00:43:04+08:00",
+  "new_run_id": "v701-wide-day-gru-s42",
+  "reference_run_id": "v501-ema-gru-s42",
+  "method": "按时间戳配对已冻结的逐截面指标，再在每个划分内按预测时刻等权平均；没有新增推理、选模或正式训练。",
+  "source_files": {
+    "outputs/runs/v701-wide-day-gru-s42/evaluation/validation/cross-sections.parquet": "6d1bdadf0931cf725e55fd82d406144c83b917ac85bad9bc82a24ce52b2ce45b",
+    "outputs/runs/v501-ema-gru-s42/evaluation/validation/cross-sections.parquet": "9dc19811335b06bea873b1087a3ca7a7f52a0fe787f65e3df10554683f635034",
+    "outputs/runs/v701-wide-day-gru-s42/evaluation/test/cross-sections.parquet": "36e245f553c2fd8930daf3addec8403892ec041b031a8a8595773121975122b3",
+    "outputs/runs/v501-ema-gru-s42/evaluation/test/cross-sections.parquet": "82e8092bb642f0bcb5a5545dfb8247dc36b391477ac5f6f5802426e40164f1c4"
+  },
+  "splits": {
+    "validation": [
+      {
+        "clock": "09:30",
+        "cross_sections": 117,
+        "ic_new": 0.026300878940857357,
+        "ic_reference": 0.0254014967084325,
+        "ic_delta": 0.0008993822324248578,
+        "rank_ic_new": 0.04096797842417714,
+        "rank_ic_reference": 0.039341209622474796,
+        "rank_ic_delta": 0.001626768801702344
+      },
+      {
+        "clock": "10:00",
+        "cross_sections": 117,
+        "ic_new": 0.10076808382519473,
+        "ic_reference": 0.10680968282617913,
+        "ic_delta": -0.006041599000984402,
+        "rank_ic_new": 0.10586710507497704,
+        "rank_ic_reference": 0.10450241396280945,
+        "rank_ic_delta": 0.0013646911121675959
+      },
+      {
+        "clock": "10:30",
+        "cross_sections": 117,
+        "ic_new": 0.08600694546919015,
+        "ic_reference": 0.08333058952827709,
+        "ic_delta": 0.002676355940913061,
+        "rank_ic_new": 0.08305916695958694,
+        "rank_ic_reference": 0.08081999682906554,
+        "rank_ic_delta": 0.002239170130521398
+      },
+      {
+        "clock": "11:00",
+        "cross_sections": 117,
+        "ic_new": 0.07343950747572049,
+        "ic_reference": 0.07474752058354517,
+        "ic_delta": -0.0013080131078246765,
+        "rank_ic_new": 0.07932683509529605,
+        "rank_ic_reference": 0.08168471204437866,
+        "rank_ic_delta": -0.002357876949082613
+      },
+      {
+        "clock": "11:30",
+        "cross_sections": 117,
+        "ic_new": 0.10576754466181607,
+        "ic_reference": 0.10578785528705578,
+        "ic_delta": -2.0310625239716718e-05,
+        "rank_ic_new": 0.08902329787630338,
+        "rank_ic_reference": 0.08852907557435578,
+        "rank_ic_delta": 0.0004942223019475944
+      },
+      {
+        "clock": "13:30",
+        "cross_sections": 117,
+        "ic_new": 0.09787503519714508,
+        "ic_reference": 0.09995584543117628,
+        "ic_delta": -0.0020808102340311996,
+        "rank_ic_new": 0.0984179185911857,
+        "rank_ic_reference": 0.09750724602701616,
+        "rank_ic_delta": 0.0009106725641695457
+      },
+      {
+        "clock": "14:00",
+        "cross_sections": 117,
+        "ic_new": 0.0553061768908795,
+        "ic_reference": 0.05496224129615765,
+        "ic_delta": 0.0003439355947218517,
+        "rank_ic_new": 0.06381760100163494,
+        "rank_ic_reference": 0.058559391363855524,
+        "rank_ic_delta": 0.005258209637779419
+      },
+      {
+        "clock": "14:30",
+        "cross_sections": 117,
+        "ic_new": 0.14380501069923182,
+        "ic_reference": 0.14659704781851896,
+        "ic_delta": -0.002792037119287133,
+        "rank_ic_new": 0.1193830241466489,
+        "rank_ic_reference": 0.12120955780873037,
+        "rank_ic_delta": -0.0018265336620814643
+      }
+    ],
+    "test": [
+      {
+        "clock": "09:30",
+        "cross_sections": 125,
+        "ic_new": 0.008324477635603608,
+        "ic_reference": 0.014853873896681824,
+        "ic_delta": -0.006529396261078216,
+        "rank_ic_new": 0.028693228201723136,
+        "rank_ic_reference": 0.02727588098092759,
+        "rank_ic_delta": 0.0014173472207955444
+      },
+      {
+        "clock": "10:00",
+        "cross_sections": 125,
+        "ic_new": 0.07891100050811306,
+        "ic_reference": 0.07275881766075619,
+        "ic_delta": 0.006152182847356871,
+        "rank_ic_new": 0.09095786423623932,
+        "rank_ic_reference": 0.08964374339841709,
+        "rank_ic_delta": 0.0013141208378222302
+      },
+      {
+        "clock": "10:30",
+        "cross_sections": 125,
+        "ic_new": 0.09140220568666803,
+        "ic_reference": 0.09405983083183785,
+        "ic_delta": -0.0026576251451698174,
+        "rank_ic_new": 0.08826619934935426,
+        "rank_ic_reference": 0.0865602619910158,
+        "rank_ic_delta": 0.0017059373583384607
+      },
+      {
+        "clock": "11:00",
+        "cross_sections": 125,
+        "ic_new": 0.0835741927797054,
+        "ic_reference": 0.08280697068281995,
+        "ic_delta": 0.000767222096885456,
+        "rank_ic_new": 0.07888660253703868,
+        "rank_ic_reference": 0.08081047737871998,
+        "rank_ic_delta": -0.0019238748416813
+      },
+      {
+        "clock": "11:30",
+        "cross_sections": 125,
+        "ic_new": 0.1240147315858627,
+        "ic_reference": 0.12244279582555585,
+        "ic_delta": 0.0015719357603068418,
+        "rank_ic_new": 0.12460450492190761,
+        "rank_ic_reference": 0.12161618918451025,
+        "rank_ic_delta": 0.002988315737397357
+      },
+      {
+        "clock": "13:30",
+        "cross_sections": 125,
+        "ic_new": 0.10892886840734367,
+        "ic_reference": 0.10516047196435634,
+        "ic_delta": 0.0037683964429873346,
+        "rank_ic_new": 0.10648977464667202,
+        "rank_ic_reference": 0.09946753414518386,
+        "rank_ic_delta": 0.007022240501488156
+      },
+      {
+        "clock": "14:00",
+        "cross_sections": 125,
+        "ic_new": 0.08547214241089293,
+        "ic_reference": 0.08418915317049454,
+        "ic_delta": 0.001282989240398394,
+        "rank_ic_new": 0.07176226354008892,
+        "rank_ic_reference": 0.06674280303860493,
+        "rank_ic_delta": 0.005019460501483997
+      },
+      {
+        "clock": "14:30",
+        "cross_sections": 125,
+        "ic_new": 0.15046537056676246,
+        "ic_reference": 0.1463704232058056,
+        "ic_delta": 0.004094947360956863,
+        "rank_ic_new": 0.11117139719951258,
+        "rank_ic_reference": 0.10856662602399585,
+        "rank_ic_delta": 0.002604771175516732
+      }
+    ]
+  },
+  "limitations": [
+    "单种子描述性比较，不主张统计显著。",
+    "测试期已在持续研究中反复观察。",
+    "分时点差异不能识别组合改动中各组件的因果效果。"
+  ]
+}
