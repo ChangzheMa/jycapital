@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-21T19:37:03.901815+08:00",
+  "generated_at": "2026-10-21T22:20:51.744391+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
@@ -214,6 +214,27 @@
       }
     },
     {
+      "solution_id": "v601",
+      "run_id": "v601-causal-tcn-gru-s42",
+      "model_sha256": "2d64a7ce202501b07725b98f1274a105fc44704de7da4c1222030dcf0044c7fa",
+      "summary_file": "experiments/v601-gru.json",
+      "summary_content_sha256": "0048a9dac48600fea27258fc94f70431d4e86e3c7946b7a9848d4b45e7b005ee",
+      "parameters": 876257,
+      "epochs_completed": 8,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0768545240274629,
+          "rank_ic_mean": 0.076308733977491,
+          "ic_ir": 0.7385344281688081
+        },
+        "test": {
+          "ic_mean": 0.0838336952846859,
+          "rank_ic_mean": 0.08074935109127658,
+          "ic_ir": 0.7287221048589699
+        }
+      }
+    },
+    {
       "solution_id": "v202",
       "run_id": "v202-patch-mixer-s42",
       "model_sha256": "2bba9cb2d06d064de12f7ac00e7a4a18af6d9e269c11e9406e0c933b77bef534",
@@ -256,5 +277,5 @@
       }
     }
   ],
-  "image_sha256": "9e7635473248bcdc0791cf33374e789bc6948f4df2ded094c2e05461823f26df"
+  "image_sha256": "c970605e12670f60cabab4b4e4769b6803dd4d1224dcb77025531ccf26dbfd17"
 }
