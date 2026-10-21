@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-21T22:20:50+08:00",
+  "checked_at": "2026-10-21T23:06:44+08:00",
   "source": "本地运行的冻结产物",
-  "completed_count": 29,
+  "completed_count": 30,
   "protocol_compatibility": "local-v1 仅协议标识和选模指标不同；评估器、标签与股票池指纹一致，保留原先选出的权重。",
   "runs": [
     {
@@ -2443,6 +2443,95 @@
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "2d64a7ce202501b07725b98f1274a105fc44704de7da4c1222030dcf0044c7fa"
+    },
+    {
+      "run_id": "v801-market-context-s42",
+      "solution_id": "v801",
+      "parent_run_id": "v501-ema-gru-s42",
+      "parent_solution_id": "v501",
+      "selection": {
+        "best_epoch": 1,
+        "best_validation_metric": 0.08668594350517529,
+        "evaluation_weights": "ema",
+        "ema_decay": 0.9998,
+        "ema_warmup_epochs": 1,
+        "best_validation_ic": 0.08668594350517529,
+        "epochs_completed": 5,
+        "selection_metric": "ic_mean",
+        "patience_epochs": 4,
+        "early_stopping": {
+          "mode": "best_epoch_fraction",
+          "fraction": 0.6,
+          "minimum": 4,
+          "maximum": 12,
+          "rounding": "ceil",
+          "improvement": "strict"
+        },
+        "stale_epochs": 4,
+        "model_sha256": "77dd455039d0876d82246af75f52077a0efbd5dd1b3d2d4440a916a0be391ca1",
+        "selected_at": "2026-10-21T22:53:53+08:00",
+        "optimizer_steps": 38800,
+        "training_seconds_this_session": 712.097,
+        "stop_reason": "early_stopping"
+      },
+      "parameters": 2129158,
+      "metrics": {
+        "validation": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 936000,
+          "predicted_rows": 936000,
+          "valid_label_rows": 935224,
+          "evaluated_rows": 935224,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 936,
+          "mse": 0.018869303077514762,
+          "mae": 0.0807767933355815,
+          "zero_prediction_mse": 2.057265373878181e-05,
+          "ic_mean": 0.08668594350517529,
+          "ic_std": 0.10735689833412808,
+          "ic_ir": 0.8074557373610185,
+          "ic_valid_cross_sections": 936,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08262566205298134,
+          "rank_ic_std": 0.0916457233816821,
+          "rank_ic_ir": 0.9015768440046635,
+          "rank_ic_valid_cross_sections": 936,
+          "rank_ic_undefined_cross_sections": 0
+        },
+        "test": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 1000000,
+          "predicted_rows": 1000000,
+          "valid_label_rows": 998539,
+          "evaluated_rows": 998539,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 1000,
+          "mse": 0.022460189319519177,
+          "mae": 0.08649239186418141,
+          "zero_prediction_mse": 2.20817637455184e-05,
+          "ic_mean": 0.08923490164796218,
+          "ic_std": 0.11462735530821895,
+          "ic_ir": 0.7784782385323331,
+          "ic_valid_cross_sections": 1000,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08285936058468976,
+          "rank_ic_std": 0.09731282683096706,
+          "rank_ic_ir": 0.8514741918721254,
+          "rank_ic_valid_cross_sections": 1000,
+          "rank_ic_undefined_cross_sections": 0
+        }
+      },
+      "run_path": "outputs/runs/v801-market-context-s42",
+      "selected_at": "2026-10-21T22:53:53+08:00",
+      "seed": 42,
+      "config_sha256": "f3b792d9bd686571fe4483e16c135801a557fd7b8872f05376aa206b85ec38b9",
+      "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+      "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+      "model_sha256": "77dd455039d0876d82246af75f52077a0efbd5dd1b3d2d4440a916a0be391ca1"
     }
   ]
 }
