@@ -4,7 +4,7 @@
 
 ## 冻结模型结果
 
-本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-21（UTC+08:00）本次归档，下表 30 个版本完成训练及双集评估，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261021.json)。
+本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-22（UTC+08:00）本次归档，下表 31 个版本完成训练及双集评估，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261022.json)。
 
 | 方案 | 参数量 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC | 结果 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -34,16 +34,17 @@
 | [v305](../solutions/v305/README.md) | 440,609 | 0.079784 | 0.082750 | 0.083208 | 0.084647 | 较小片段压缩率；相对 v302 的 Rank IC 提高，但测试 IC、双集 IC IR 和耗时不占优，不导出 |
 | [v306](../solutions/v306/README.md) | 433,409 | 0.082907 | 0.078575 | 0.087217 | 0.078165 | Huber delta=4；双集 IR 提高，但 IC／Rank IC 低于 v303，换手代理结果不一致，不导出 |
 | [v401](../solutions/v401/README.md) | 433,409 | 0.083442 | 0.087203 | 0.089112 | 0.089590 | 排名监督提高 Rank IC；双集 IC 低于 v303，换手代理更高，不导出 |
-| [v402](../solutions/v402/README.md) | 433,409 | 0.084456 | 0.084634 | **0.090485** | 0.086816 | 混合目标提高测试 IC／Rank IC，但验证 IC 低于 v501 和 v303、换手代理更高；不导出 |
+| [v402](../solutions/v402/README.md) | 433,409 | 0.084456 | 0.084634 | 0.090485 | 0.086816 | 混合目标提高测试 IC／Rank IC，但验证 IC 低于 v501 和 v303、换手代理更高；不导出 |
 | [v501](../solutions/v501/README.md) | 433,409 | **0.087199** | 0.084019 | 0.090330 | 0.085085 | 当前验证 IC 最优；EMA 选模提高双集 IC／IR，测试 IC 增益较小、换手代理略高 |
 | [v601](../solutions/v601/README.md) | 876,257 | 0.076855 | 0.076309 | 0.083834 | 0.080749 | 日内卷积与跨日 GRU；双集主要指标低于 v501、v303，单轮也更慢，不导出 |
+| [v701](../solutions/v701/README.md) | 3,878,662 | 0.086159 | 0.084983 | **0.091387** | 0.087604 | 股票日共享、扩容与双头；测试 IC／双集 Rank IC 提高，验证 IC 未超过 v501，不默认导出 |
 | [v801](../solutions/v801/README.md) | 2,129,158 | 0.086686 | 0.082626 | 0.089235 | 0.082859 | 冻结表示上的截面残差；IR／换手代理改善，但双集 IC／Rank IC 低于 v501，不默认导出 |
 
 v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
 
-下图聚焦近期完成的全局采样方案；对应[绘图数据与来源指纹](../experiments/figures/local-model-comparison-20261021.json)，可用[绘图脚本](../scripts/plot-local-comparison.py)从冻结摘要重建。
+下图聚焦近期完成的全局采样方案；对应[绘图数据与来源指纹](../experiments/figures/local-model-comparison-20261022.json)，可用[绘图脚本](../scripts/plot-local-comparison.py)从冻结摘要重建。
 
-![近期完成模型的本地 IC、Rank IC 和 IC IR 对比](../experiments/figures/local-model-comparison-20261021.png)
+![近期完成模型的本地 IC、Rank IC 和 IC IR 对比](../experiments/figures/local-model-comparison-20261022.png)
 
 附件、上传方式及平台状态统一见 [平台提交目录](../submissions/README.md)；Mock 接口确认依据见 [来源记录](bigquant-2026-end-to-end/sources.md)。
 
@@ -64,7 +65,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 效率与监督候选 | [v305：较小时间压缩率](../solutions/v305/README.md)、[v401：排名监督与独立目标向量](../solutions/v401/README.md)；v401 开启 v40x 监督目标系列，正式评估仍使用原始收益标签 |
 | v303 后续候选 | [v306：Huber delta=4 对照](../solutions/v306/README.md)、[v501：EMA 参数选模](../solutions/v501/README.md)；v501 开启 v50x 训练方法系列，推理网络规模不变 |
 | 混合监督与日内卷积候选 | [v402：收益与排名混合目标](../solutions/v402/README.md)、[v601：日内因果卷积与跨日 GRU](../solutions/v601/README.md)；均以 v303 为对照，保持原始时间分辨率 |
-| 扩容与股票日共享候选 | [v701：宽 GRU、跨频交互与双头监督](../solutions/v701/README.md)；v70x 首版，以 v501 为父版本，约 388 万参数，正式训练待调度 |
+| 扩容与股票日共享结果 | [v701：宽 GRU、跨频交互与双头监督](../solutions/v701/README.md#冻结结果)、[比较摘要](../experiments/v701-gru.json)；约 388 万参数，九轮训练及验证约 96 分钟，验证 IC 未晋级 |
 | 跨股票上下文候选 | [v801：冻结时序表示与完整截面残差](../solutions/v801/README.md)；v80x 首版，继承 v501 权重，约 170 万可训练参数，平台重新编码原始输入 |
 | 跨股票联合适应候选 | [v802：时序与关系联合训练](../solutions/v802/README.md)；在 v801 结构上解冻主干、分组学习率与加强正则化，约 213 万参数全部可训练 |
 | 当天多频输入候选 | [v901：因果当天多频与共享历史](../solutions/v901/README.md)、[静态输入审计](../experiments/current-day-input-audit-20261021.json)；v90x 首版，纳入当天已结束的 5／30 分钟 Bar，约 156 万参数 |

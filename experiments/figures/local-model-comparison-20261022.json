@@ -1,0 +1,323 @@
+{
+  "generated_at": "2026-10-22T00:35:45.152245+08:00",
+  "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
+  "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
+  "rows": [
+    {
+      "solution_id": "v501",
+      "run_id": "v501-ema-gru-s42",
+      "model_sha256": "ee86ea2fb408c92c4509c85b5e13230b4cce327adfa2726e13839c412196afce",
+      "summary_file": "experiments/v501-gru.json",
+      "summary_content_sha256": "e899c457c958acdee7fb367c2880294ec1cad3605b7fbd189cae44ef7af3a7b6",
+      "parameters": 433409,
+      "epochs_completed": 13,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08719903493491783,
+          "rank_ic_mean": 0.08401920040408578,
+          "ic_ir": 0.8031216610329402
+        },
+        "test": {
+          "ic_mean": 0.09033029215478851,
+          "rank_ic_mean": 0.08508543951767192,
+          "ic_ir": 0.7717490991797894
+        }
+      }
+    },
+    {
+      "solution_id": "v801",
+      "run_id": "v801-market-context-s42",
+      "model_sha256": "77dd455039d0876d82246af75f52077a0efbd5dd1b3d2d4440a916a0be391ca1",
+      "summary_file": "experiments/v801-gru.json",
+      "summary_content_sha256": "7768d68717402cdc56cec6262609811094c5e8d3c9e55397b84aac0013cf9e92",
+      "parameters": 2129158,
+      "epochs_completed": 5,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08668594350517529,
+          "rank_ic_mean": 0.08262566205298134,
+          "ic_ir": 0.8074557373610185
+        },
+        "test": {
+          "ic_mean": 0.08923490164796218,
+          "rank_ic_mean": 0.08285936058468976,
+          "ic_ir": 0.7784782385323331
+        }
+      }
+    },
+    {
+      "solution_id": "v701",
+      "run_id": "v701-wide-day-gru-s42",
+      "model_sha256": "20de738b8ee01b3dd2240737bf4e44b8719496666bfc43b871094178e1bdbb55",
+      "summary_file": "experiments/v701-gru.json",
+      "summary_content_sha256": "98c003218c6dff0c74e5b0200a24eb962379b7fdc151c9f94a0eb9fb0081560e",
+      "parameters": 3878662,
+      "epochs_completed": 9,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0861586478950044,
+          "rank_ic_mean": 0.08498286589622626,
+          "ic_ir": 0.7933730353937779
+        },
+        "test": {
+          "ic_mean": 0.09138662369761899,
+          "rank_ic_mean": 0.08760397932906706,
+          "ic_ir": 0.7591370149013833
+        }
+      }
+    },
+    {
+      "solution_id": "v303",
+      "run_id": "v303-huber-delta2-s42",
+      "model_sha256": "f8f6c340afe28201e5b5989158f90f9d62393b0e7c35a98c73bff8d5a6ad6d07",
+      "summary_file": "experiments/v303-gru.json",
+      "summary_content_sha256": "df9f50980933607471cdf9eb940aa895908588e0943e4e561319cb24f6d91f57",
+      "parameters": 433409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08562533225979052,
+          "rank_ic_mean": 0.08397024070067644,
+          "ic_ir": 0.7856804324907682
+        },
+        "test": {
+          "ic_mean": 0.09015989766091664,
+          "rank_ic_mean": 0.08429281221265691,
+          "ic_ir": 0.7634897743107745
+        }
+      }
+    },
+    {
+      "solution_id": "v402",
+      "run_id": "v402-blended-target-gru-s42",
+      "model_sha256": "fe30fb150870e5d1168f0509b3cc9a745b1509fdd3c42536a87f91f7a2cda735",
+      "summary_file": "experiments/v402-gru.json",
+      "summary_content_sha256": "ac86d37c16570b8ae7fdd4b3241eba09368b5e9ad3d30bc910b332bdd433abbe",
+      "parameters": 433409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08445593111913664,
+          "rank_ic_mean": 0.08463411856966999,
+          "ic_ir": 0.7745065935132521
+        },
+        "test": {
+          "ic_mean": 0.09048489834701212,
+          "rank_ic_mean": 0.08681640100522162,
+          "ic_ir": 0.7735778193649567
+        }
+      }
+    },
+    {
+      "solution_id": "v401",
+      "run_id": "v401-rank-target-gru-s42",
+      "model_sha256": "8a0abf385764efaefc7c425d009420585bd936c96d27b4fe85d7d563142dcb29",
+      "summary_file": "experiments/v401-gru.json",
+      "summary_content_sha256": "344084bc7398a52eab72daba3c5dc0015014ea6abc0863ecca5cec6ffe2f8808",
+      "parameters": 433409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08344150852326371,
+          "rank_ic_mean": 0.08720250086858176,
+          "ic_ir": 0.7745375736795476
+        },
+        "test": {
+          "ic_mean": 0.08911191551720611,
+          "rank_ic_mean": 0.08959020991128094,
+          "ic_ir": 0.779634902615257
+        }
+      }
+    },
+    {
+      "solution_id": "v306",
+      "run_id": "v306-huber-delta4-s42",
+      "model_sha256": "fe4baa616b6dae95d394a6beffc0b0449885833f84c4bab4c45daebb777b0a9b",
+      "summary_file": "experiments/v306-gru.json",
+      "summary_content_sha256": "9fa9d7ee4d303bd4d7d773b5ccd6f719df4a3a070d66bd8b5fe5df6cff6bd655",
+      "parameters": 433409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0829069964742925,
+          "rank_ic_mean": 0.0785754107468914,
+          "ic_ir": 0.7922879413951905
+        },
+        "test": {
+          "ic_mean": 0.08721747847648623,
+          "rank_ic_mean": 0.07816513630529846,
+          "ic_ir": 0.7786201238418157
+        }
+      }
+    },
+    {
+      "solution_id": "v301",
+      "run_id": "v301-global-fp16-s42",
+      "model_sha256": "2a8a2789517666d567ed28f0c907edfe84ca43619e7c88de85c9701508b636e3",
+      "summary_file": "experiments/v301-gru.json",
+      "summary_content_sha256": "c40603ebbc985430e3a5f152aead682fd30ab9cf92148968019f88740cfd0acb",
+      "parameters": 433409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08254428055906214,
+          "rank_ic_mean": 0.08426543172715369,
+          "ic_ir": 0.7399157606243192
+        },
+        "test": {
+          "ic_mean": 0.08679094091361013,
+          "rank_ic_mean": 0.08559630095964303,
+          "ic_ir": 0.7156795189701181
+        }
+      }
+    },
+    {
+      "solution_id": "v304",
+      "run_id": "v304-clock-gated-gru-s42",
+      "model_sha256": "bca5e27274b4ed38e658004b22f0d30b9a228a9b168e6d4ffaf3bf88e93d9058",
+      "summary_file": "experiments/v304-gru.json",
+      "summary_content_sha256": "44bb43af9c6cf25763fb5dab2dab44c3f591c1495a0f8c870f67b1fb0278c222",
+      "parameters": 491297,
+      "epochs_completed": 10,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.08139825601707477,
+          "rank_ic_mean": 0.08108488352937622,
+          "ic_ir": 0.7569887779915783
+        },
+        "test": {
+          "ic_mean": 0.08408654361269127,
+          "rank_ic_mean": 0.08057305138159415,
+          "ic_ir": 0.7103689782811776
+        }
+      }
+    },
+    {
+      "solution_id": "v305",
+      "run_id": "v305-fine-patch-gru-s42",
+      "model_sha256": "b7c707780084fcddf0e8c61c65d0b523e4c3e0c5d221ba76c4ec7e19ba0bac1b",
+      "summary_file": "experiments/v305-gru.json",
+      "summary_content_sha256": "fbbe88343de635079c2742f661ff5de213415b1d439b89a0422ad760739143d1",
+      "parameters": 440609,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0797844510601703,
+          "rank_ic_mean": 0.08274972174426157,
+          "ic_ir": 0.7337936888857917
+        },
+        "test": {
+          "ic_mean": 0.08320756076323096,
+          "rank_ic_mean": 0.08464712418114713,
+          "ic_ir": 0.7034306347488227
+        }
+      }
+    },
+    {
+      "solution_id": "v302",
+      "run_id": "v302-patch-gru-s42",
+      "model_sha256": "ec292c0d4dd17bb6f67156e588d481e0acffebfd26d501bfd175056b94edba04",
+      "summary_file": "experiments/v302-gru.json",
+      "summary_content_sha256": "0d19a8fee0672d56ce793db276c35f54607f5c0a645e10fab2f233965a615556",
+      "parameters": 469409,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0793998431466455,
+          "rank_ic_mean": 0.08007194604123359,
+          "ic_ir": 0.7428548577384467
+        },
+        "test": {
+          "ic_mean": 0.08591472163509825,
+          "rank_ic_mean": 0.08234746983039959,
+          "ic_ir": 0.7374785164534341
+        }
+      }
+    },
+    {
+      "solution_id": "v201",
+      "run_id": "v201-global-fp16-s42",
+      "model_sha256": "9217d0d5e4e89b0d3c12cb088fdc073e0ae1b5e0e3fff8cb20959d5a121c7d6b",
+      "summary_file": "experiments/v201-mixer.json",
+      "summary_content_sha256": "fc4d0ae92632d7b2f33a91793376fd6e85d6d3dc2c6d63a16a33ab944d4d86ba",
+      "parameters": 552973,
+      "epochs_completed": 9,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.07735205652124308,
+          "rank_ic_mean": 0.07821411781706815,
+          "ic_ir": 0.7199648629819254
+        },
+        "test": {
+          "ic_mean": 0.08142730618981978,
+          "rank_ic_mean": 0.08019047532121877,
+          "ic_ir": 0.6812328769785957
+        }
+      }
+    },
+    {
+      "solution_id": "v601",
+      "run_id": "v601-causal-tcn-gru-s42",
+      "model_sha256": "2d64a7ce202501b07725b98f1274a105fc44704de7da4c1222030dcf0044c7fa",
+      "summary_file": "experiments/v601-gru.json",
+      "summary_content_sha256": "0048a9dac48600fea27258fc94f70431d4e86e3c7946b7a9848d4b45e7b005ee",
+      "parameters": 876257,
+      "epochs_completed": 8,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.0768545240274629,
+          "rank_ic_mean": 0.076308733977491,
+          "ic_ir": 0.7385344281688081
+        },
+        "test": {
+          "ic_mean": 0.0838336952846859,
+          "rank_ic_mean": 0.08074935109127658,
+          "ic_ir": 0.7287221048589699
+        }
+      }
+    },
+    {
+      "solution_id": "v202",
+      "run_id": "v202-patch-mixer-s42",
+      "model_sha256": "2bba9cb2d06d064de12f7ac00e7a4a18af6d9e269c11e9406e0c933b77bef534",
+      "summary_file": "experiments/v202-mixer.json",
+      "summary_content_sha256": "e0fd17c79ec5f347587311dac7aad3af5b9ce551bab30a8993d5aa6161086f6a",
+      "parameters": 550093,
+      "epochs_completed": 8,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.07561848772806617,
+          "rank_ic_mean": 0.0778718975484365,
+          "ic_ir": 0.6861853529777981
+        },
+        "test": {
+          "ic_mean": 0.08051104872850909,
+          "rank_ic_mean": 0.08318668586498282,
+          "ic_ir": 0.6589406950075862
+        }
+      }
+    },
+    {
+      "solution_id": "v102",
+      "run_id": "v102-clock-readout-s42",
+      "model_sha256": "47abff469c53eebd1058e74abd87e21b0cfb9aaa45e40198959ed78a93fdbe64",
+      "summary_file": "experiments/v102-patch-transformer.json",
+      "summary_content_sha256": "0f41df9215a24c0d54af5ad7c11bcc7a59ca60e9c790b6cd767c73a78867422d",
+      "parameters": 770465,
+      "epochs_completed": 12,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.07512053351631273,
+          "rank_ic_mean": 0.07860437175998265,
+          "ic_ir": 0.6980914207245149
+        },
+        "test": {
+          "ic_mean": 0.07962754115625677,
+          "rank_ic_mean": 0.08050166489497326,
+          "ic_ir": 0.6651392137893363
+        }
+      }
+    }
+  ],
+  "image_sha256": "10c39573ae0aed64cabdb759144328b91b97dbf942ceb999a39498fd96bbe868"
+}
