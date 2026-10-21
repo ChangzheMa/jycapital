@@ -1,4 +1,4 @@
-"""研究 session 的每小时容量监测；不训练、不修改候选、不通知其他 session。"""
+"""研究 session 的定期容量监测；不训练、不修改候选、不通知其他 session。"""
 
 import argparse
 from datetime import datetime, timedelta
@@ -33,9 +33,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--thread-id", required=True)
     parser.add_argument("--codex-binary", type=Path, required=True)
-    parser.add_argument("--interval", type=int, default=3600)
+    parser.add_argument("--interval", type=int, help="默认读取 research-policy.json 的容量检查间隔")
     parser.add_argument("--once", action="store_true", help="只读取状态，不发送通知")
     args = parser.parse_args()
+    if args.interval is None:
+        args.interval = read_json(ROOT / "experiments/research-policy.json")["capacity_check_seconds"]
     if args.thread_id != os.environ.get("CODEX_THREAD_ID"):
         parser.error("只允许监测并通知启动者自己的当前 session")
     if args.interval < 3600:
@@ -68,6 +70,7 @@ def main():
         first_due = min(first_due, datetime.fromisoformat(prior_state["next_check_at"]))
     next_deadline = time.monotonic() + max(0, (first_due - datetime.now().astimezone()).total_seconds())
     state = {"thread_id": args.thread_id, "pid": os.getpid(), "checked_at": now(),
+             "interval_seconds": args.interval,
              **previous, "queue": current, "notification_delivery": prior_state.get("notification_delivery", "not_yet_sent"),
              "current_thread_idle_wake_verified": False,
              "next_check_at": first_due.isoformat()}
@@ -85,7 +88,8 @@ def main():
             state.update(checked_at=now(), queue=current, **observed,
                          next_check_at=(datetime.now().astimezone() + timedelta(seconds=args.interval)).isoformat())
             if observed["notify"]:
-                notice = {"kind": "research_capacity_hourly", "event_id": "research-capacity:" + now(),
+                notice = {"kind": "research_capacity_periodic", "event_id": "research-capacity:" + now(),
+                          "interval_seconds": args.interval,
                           "unevaluated": current["unevaluated_count"], "paused": observed["construction_paused"],
                           "new_completed": observed["new_completed"],
                           "state_file": str((control / "state.json").relative_to(ROOT)),
