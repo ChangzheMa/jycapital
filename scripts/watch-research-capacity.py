@@ -16,11 +16,9 @@ from run_notifications import send_notice
 
 
 def observe(previous, current):
-    paused = bool(previous.get("construction_paused", False))
-    if current["pause_construction"]:
-        paused = True
-    elif paused and current["resume_construction"]:
-        paused = False
+    # snapshot 已持锁维护共享滞回状态，包含两次例行检查之间的容量恢复。
+    # 不能用 watcher 的旧状态再次计算滞回，否则 4→2→3 会被误报为仍暂停。
+    paused = bool(current["pause_construction"])
     completed = sorted(row["run_id"] for row in current["candidates"] if row["run_status"] == "complete")
     new_completed = sorted(set(completed) - set(previous.get("completed", completed)))
     recovered = bool(previous.get("construction_paused", False)) and not paused
@@ -93,7 +91,9 @@ def main():
                           "unevaluated": current["unevaluated_count"], "paused": observed["construction_paused"],
                           "new_completed": observed["new_completed"],
                           "state_file": str((control / "state.json").relative_to(ROOT)),
-                          "action": "先分析完成结果；待评测少于3才构造，不启动训练。"}
+                          "action": ("先分析完成结果；暂停期间待评测少于3才恢复构造，不启动训练。"
+                                     if observed["construction_paused"] else
+                                     "先分析完成结果；按共享队列容量规则继续研究，不启动训练。")}
                 atomic_json(control / "state.json", state)
                 delivery = send_notice(args.codex_binary, args.thread_id, notice)
                 with (control / "deliveries.jsonl").open("a", encoding="utf-8") as stream:

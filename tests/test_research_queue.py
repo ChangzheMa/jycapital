@@ -106,26 +106,30 @@ class QueueTests(unittest.TestCase):
         (common / "helper.py").write_text("VALUE = 3\n", encoding="utf-8")
         self.assertIsNone(snapshot(self.root)["next"])
 
-    def test_hourly_watcher_hysteresis_and_new_completion(self):
+    def test_periodic_watcher_uses_shared_hysteresis_and_new_completion(self):
         spec = importlib.util.spec_from_file_location("capacity_watcher", ROOT / "scripts/watch-research-capacity.py")
         watcher = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(watcher)
 
-        def state(count, complete=False):
-            return {"pause_construction": count > 3, "resume_construction": count < 3,
+        def state(count, complete=False, paused=None):
+            return {"pause_construction": count > 3 if paused is None else paused, "resume_construction": count < 3,
                     "candidates": [{"run_id": "v301-s42", "run_status": "complete" if complete else "running"}]}
 
         first = watcher.observe({}, state(4))
         self.assertTrue(first["construction_paused"])
-        second = watcher.observe(first, state(3))
+        second = watcher.observe(first, state(3, paused=True))
         self.assertTrue(second["construction_paused"])
         self.assertFalse(second["notify"])
-        third = watcher.observe(second, state(3, complete=True))
+        third = watcher.observe(second, state(3, complete=True, paused=True))
         self.assertTrue(third["construction_paused"])
         self.assertTrue(third["notify"])
         fourth = watcher.observe(third, state(2, complete=True))
         self.assertFalse(fourth["construction_paused"])
         self.assertTrue(fourth["capacity_recovered"])
+        # 主线程在检查间隙已见到 2 并新增一版回到 3；共享状态已恢复。
+        recovered_between_checks = watcher.observe(third, state(3, complete=True, paused=False))
+        self.assertFalse(recovered_between_checks["construction_paused"])
+        self.assertTrue(recovered_between_checks["capacity_recovered"])
 
 
 if __name__ == "__main__":
