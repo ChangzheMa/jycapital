@@ -31,3 +31,6 @@
 /common/coordinate_inputs.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /common/coordinate_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /common/coordinate_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+# 只读研究诊断记录脚本字节指纹，检出时保留对应来源。
+/scripts/audit-temporal-sensitivity.py -text
+/scripts/audit-quantity-supervision.py -text
