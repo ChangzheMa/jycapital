@@ -99,5 +99,14 @@
       "solution_id": "v301",
       "run_id": "v301-global-fp16-s42"
     }
-  ]
+  ],
+  "training_incident_responsibility": {
+    "updated_at": "2026-10-22",
+    "basis": "用户明确要求：除非专门指定，研究session不处理训练异常；没有结果时继续等待。",
+    "owner": "training_session",
+    "research_intervention_requires_explicit_user_request": true,
+    "research_action_without_complete_results": "wait_for_complete_evaluation_results",
+    "research_scope": "完整评测结果的分析和模型改进探索；不接管训练进程、资源诊断、分配器调整、断点恢复或调度。",
+    "partial_metrics_are_formal_results": false
+  }
 }
