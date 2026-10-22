@@ -23,9 +23,12 @@
 | [v1001-temporal-experts-s42-fast](v1001-temporal-experts-s42-fast/v1001-submission.ipynb) | `v1001-submission.ipynb`、`v1001-model.json` | 前一本地最优、换手代理较低的对照；第 4 轮 EMA，默认 fast；[清单](../experiments/v1001-temporal-experts-s42-fast-submission.json)、[结果](../solutions/v1001/README.md#冻结结果与平台材料) |
 | [v1002-current-temporal-experts-s42-fast](v1002-current-temporal-experts-s42-fast/v1002-submission.ipynb) | `v1002-submission.ipynb`、`v1002-model.json` | 单模型及 IR 对照；第 4 轮 EMA，当天多频与时间加权分支组合，默认 fast；[清单](../experiments/v1002-current-temporal-experts-s42-fast-submission.json)、[结果](../solutions/v1002/README.md#冻结结果与平台材料) |
 | [v1101-structured-fields-s42-fast](v1101-structured-fields-s42-fast/v1101-submission.ipynb) | `v1101-submission.ipynb`、`v1101-model.json` | **按用户要求导出平台对照**；原第 5 轮 EMA，字段结构与当天多频、默认 fast；验证 IC 未晋级判定保持；[清单](../experiments/v1101-structured-fields-s42-fast-submission.json)、[说明](../solutions/v1101/README.md#用户指定的平台对照材料) |
-| [v1401-frozen-equal-ensemble-s42-fast](v1401-frozen-equal-ensemble-s42-fast/v1401-submission.ipynb) | **同目录三个文件**：`v1401-submission.ipynb`、`v1002-model.json`、`v1101-model.json` | 当前本地总体 IC 最优的固定组合；共享预处理、双主干 fast，新增训练为零；[清单](../experiments/v1401-frozen-equal-ensemble-s42-fast-submission.json)、[结果与代价](../solutions/v1401/README.md) |
+| [v1401-frozen-equal-ensemble-s42-fast](v1401-frozen-equal-ensemble-s42-fast/v1401-submission.ipynb) | **同目录三个文件**：`v1401-submission.ipynb`、`v1002-model.json`、`v1101-model.json` | 原本地总体 IC 最优，保留为固定组合对照；共享预处理、双主干 fast，新增训练为零；[清单](../experiments/v1401-frozen-equal-ensemble-s42-fast-submission.json)、[结果与代价](../solutions/v1401/README.md) |
+| [v1601-price-geometry-s42-fast](v1601-price-geometry-s42-fast/v1601-submission.ipynb) | `v1601-submission.ipynb`、`v1601-model.json` | **当前本地优先评测候选**；第 4 轮 EMA，共同价格坐标、单主干 fast；测试 Rank IC IR 和换手代理有代价；[清单](../experiments/v1601-price-geometry-s42-fast-submission.json)、[冻结结果](../solutions/v1601/README.md#冻结结果与平台材料) |
 
 v2／v4—v7／v7e／v101／v201／v301／v303 的两个文本文件需置于同一平台目录。JSON 内嵌冻结权重、归一化统计量、配置和训练／推理源码；Notebook 提供评测入口、依赖及复现说明。附件大小、数值精度及独立推理的验证范围以各清单为准。
+
+v1601 fast 的 JSON 为 **43,403,545 字节**，Notebook 为 **7,155 字节**。实际文本权重精确恢复、隔离两文件推理和训练源码导入均通过；21 行合成 fast／参考最大差为 \(5.96\times10^{-8}\)，其中实际执行了共同价格变换。按简化约定未重复长行情或速度基准；尚未提交平台，不能把本地改善当作官方评分结果。
 
 v101 使用 `bar1m`、`bar5m`、`bar30m` 三个行情源，JSON 为 18,195,183 字节；输出为标准化目标单位的模型分数。它来自月内 FP32 到全局 FP16 的迁移训练，复现入口从头训练当前配置，不重放历史迁移轨迹。冻结指标与对照结论见 [v101 说明](../solutions/v101/README.md#冻结结果与平台材料)。
 

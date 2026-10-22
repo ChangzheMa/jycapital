@@ -8,10 +8,13 @@ import math
 from pathlib import Path
 import re
 
+from compare import compare
+
 
 def read_rows(paths):
-    rows, identities, versions = [], set(), set()
-    protocol_path = Path(__file__).resolve().parents[1] / "evaluation/protocols/local-v2-ic.json"
+    rows, runs, versions = [], [], set()
+    root = Path(__file__).resolve().parents[1]
+    protocol_path = root / "evaluation/protocols/local-v2-ic.json"
     protocol_text = protocol_path.read_text(encoding="utf-8")
     expected_protocols = {hashlib.sha256(text.encode("utf-8")).hexdigest()
                           for text in (protocol_text, protocol_text.replace("\n", "\r\n"))}
@@ -25,7 +28,11 @@ def read_rows(paths):
         if data["protocol_sha256"] not in expected_protocols or not data["run_id"].endswith("-s42"):
             raise ValueError("当前图注限定为仓库 local-v2-ic 协议和 s42 运行")
         versions.add(version)
-        identities.add((data["protocol_sha256"], data["data_manifest_sha256"]))
+        run = root / data["run_path"]
+        for filename, key in (("protocol.json", "protocol_sha256"), ("data-manifest.json", "data_manifest_sha256")):
+            if hashlib.sha256((run / filename).read_bytes()).hexdigest() != data[key]:
+                raise ValueError("冻结摘要与本地运行来源不一致: " + version)
+        runs.append(run)
         metrics = {}
         for split in ("validation", "test"):
             item = data["metrics"][split]
@@ -46,8 +53,14 @@ def read_rows(paths):
             "epochs_completed": data["selection"]["epochs_completed"],
             "metrics": metrics,
         })
-    if len(identities) != 1:
-        raise ValueError("当前对照要求相同协议及数据指纹")
+    # 输入表达是实验变量；复用正式比较的协议、评估器和标签／股票池核验。
+    for split in ("validation", "test"):
+        checked = compare(runs, split).to_dict("records")
+        for row, actual in zip(rows, checked):
+            if row["run_id"] != actual["run_id"] or row["solution_id"] != actual["solution_id"]:
+                raise ValueError("摘要与冻结运行标识不一致")
+            if any(value != actual[key] for key, value in row["metrics"][split].items()):
+                raise ValueError("绘图指标与冻结运行不一致")
     return sorted(rows, key=lambda row: row["metrics"]["validation"]["ic_mean"], reverse=True)
 
 
