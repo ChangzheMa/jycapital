@@ -44,6 +44,8 @@ x=\min\left(12,\max\left(4,\left\lceil0.6e_{\text{best}}\right\rceil\right)\righ
 
 [评估器](../evaluation/baseline_evaluation.py)使用原股票池的完整 `(date, instrument)` 键及官方 `vwap_return`；标签仅按有限性和边界过滤，不裁剪评估标签。
 
+按用户 2026-10-22 的约定，已提供的 `vwap_return` 不另行重算或反推公式，训练时可在其基础上标准化、排名等加工。已删除的 `exposure` 表不用于训练、评估、推理或诊断，具体约束见[持续研究约定](continuous-research.md#效果效率与平台额度)。
+
 - IC 为逐截面 Pearson 相关系数；Rank IC 为双方取平均秩后的 Pearson 相关系数。
 - 截面等权，至少 30 个有效样本；常数因子或标签的相关系数为空，单独报告，不记为 0。
 - IR 为有效截面均值除以样本标准差（`ddof=1`），不年化。

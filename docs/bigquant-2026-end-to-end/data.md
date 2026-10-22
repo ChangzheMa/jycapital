@@ -125,6 +125,8 @@
 
 ## 5. 风险暴露（元数据口径）
 
+**当前研究限制（用户于 2026-10-22 确认）：**该表已删除，训练、评估、推理和诊断均不使用，也不恢复。以下只保留历史官方元数据，不表示当前本地可用或获准使用。
+
 `cpt_jyc_2026_exposure` 的 schema 有 **49 列**：日期与股票、10 个风格暴露、32 个行业哑变量、4 个辅助业务字段和 1 个系统分区字段。完整名字及说明见 CSV。
 
 | 字段/分组 | 类型 | 字段含义 |
@@ -161,6 +163,8 @@ ELECEQP MACHIEQUIP AERODEF COMPUTER MEDIA TELECOM COAL PETRO ENVP BEAUTY
 来源：[风险暴露官方详情](https://jinyicapital.bigquant.com/data/datasources/cpt_jyc_2026_exposure)及对应元数据接口；预处理规则见 [比赛介绍](https://bigquant.com/square/competition/45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca)。
 
 ## 6. VWAP 标签：需要特别核实的口径
+
+**当前实现约定（用户于 2026-10-22 确认）：**直接读取已提供的 `vwap_return`，可继续做标准化、排名等加工；不另行计算、替换或反推其具体公式。下面的文字差异作为历史来源问题保留，不据此重算标签。
 
 `cpt_jyc_2026_vwap` 的官方中文名称为“未来30分VWAP收益率”，2026-09-22 读取的 schema 有 9 列。元数据说明如下：
 

@@ -43,6 +43,14 @@
   "checkpoint_selection": "local-v2-ic: validation ic_mean",
   "platform_candidate_selection": "仅按本地结果改进及生成候选材料：验证 IC 改善优先，同时比较稳定性、Rank IC、换手代理、互补性及效率；用户同步平台反馈后再纳入分析，不主动查询或等待平台成绩。",
   "evaluation_policy": "训练目标可迭代；用于横向比较的官方标签、股票池、时间划分、覆盖要求保持固定。",
+  "data_constraints": {
+    "updated_at": "2026-10-22",
+    "basis": "用户明确要求保留已提供 vwap_return 的计算方式，禁止使用已删除的 exposure 表。",
+    "supervised_return_label": "直接使用已提供的 vwap_return；允许标准化、排名等后续加工，不从价格或其他字段重算、替换或反推其具体计算公式。",
+    "exposure_table_allowed": false,
+    "exposure_scope": "训练、评估、推理及研究诊断均不读取、恢复或依赖 exposure 表。",
+    "official_metadata": "历史官方字段资料保留来源和原始口径；本地删除及研究禁用不构成官方 schema 更新。"
+  },
   "research_strategy": {
     "updated_at": "2026-10-22T11:58:11+08:00",
     "basis": "用户要求加大单轮改进力度、合并多个改进、适当扩大规模和训练时间，并在新改进前检索近期论文及鉴别质量。",
