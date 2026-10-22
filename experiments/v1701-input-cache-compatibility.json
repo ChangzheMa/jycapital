@@ -1,0 +1,55 @@
+{
+  "checked_at": "2026-10-22T16:12:09+08:00",
+  "scope": "只读父运行冻结元数据、源码和股票池键，核验短期缓存身份并估算长期输入容量；未读取行情数值或标签，未构建新缓存。",
+  "solution_id": "v1701",
+  "parent_run_id": "v1102-structured-temporal-experts-s42",
+  "short_data_config_identical": true,
+  "short_resident_builder_sha256": "0accc25fffdfa968523c5e1b26214113601e08a7186d241cec359c361802caf3",
+  "short_training_cache_key": "dbcd47ff50672ccee5adc5dec94833d43d5c4226fb540909fa080c71467b960b",
+  "short_evaluation_cache_keys": {
+    "validation": "02d6be41154b6e1f541d01037d0ff49f9c035f543ff360a9af7a69103121f996",
+    "test": "00d1181d2a649af929592826b0697eaf808f38ad2d7ae06a288e25a0ac4a0cfe"
+  },
+  "short_evaluation_cache_present": {
+    "validation": true,
+    "test": true
+  },
+  "long_context_capacity": [
+    {
+      "split": "train",
+      "days": 970,
+      "stocks": 1764,
+      "prediction_rows": 7760000,
+      "blocks_including_zero": 1157681,
+      "fp32_values_bytes": 2667297024,
+      "map_bytes": 6844320
+    },
+    {
+      "split": "validation",
+      "days": 369,
+      "stocks": 1103,
+      "prediction_rows": 936000,
+      "blocks_including_zero": 393854,
+      "fp32_values_bytes": 907439616,
+      "map_bytes": 1628028
+    },
+    {
+      "split": "test",
+      "days": 377,
+      "stocks": 1103,
+      "prediction_rows": 1000000,
+      "blocks_including_zero": 401854,
+      "fp32_values_bytes": 925871616,
+      "map_bytes": 1663324
+    }
+  ],
+  "long_fp32_values_total_bytes": 4500608256,
+  "new_cache_built": false,
+  "labels_read": false,
+  "exposure_read": false,
+  "limitations": [
+    "容量不含所有元数据、临时缓冲、框架及模型激活。",
+    "已有短期评测缓存若被授权清理，后续会按同一身份重建，另需约9.85GiB。",
+    "正式运行须独立校验自身完整数据清单，不能只依赖本报告的父版元数据。"
+  ]
+}
