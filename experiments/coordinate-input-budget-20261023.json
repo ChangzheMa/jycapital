@@ -1,0 +1,66 @@
+{
+  "computed_at": "2026-10-23T04:13:23.068896+08:00",
+  "scope": "metadata-only analytical budget for a proposed coordinate representation; not an implemented or benchmarked loader",
+  "representation": {
+    "retained_parent_fp16_channels": 52,
+    "new_quantity_fp16_channels": 20,
+    "new_anchor_fp32_channels": 1,
+    "network_channels": 112,
+    "field_availability_flags_derived_at_batch_time": 36,
+    "avoids_loading_all_72_parent_channels_simultaneously": true
+  },
+  "rows": [
+    {
+      "split": "train",
+      "source_manifest": "outputs/preprocessing/resident-cache/c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b/manifest.json",
+      "source_manifest_sha256": "be95393b030f706260d25c7e5ea1071e0bb5b8ceaece331040c7736db914d63e",
+      "unique_bar_slots": 287644416,
+      "original_feature_bytes": 41420795904,
+      "original_resident_array_bytes": 41596706984,
+      "retained_52_fp16_channels_bytes": 29915019264,
+      "new_20_quantity_fp16_channels_bytes": 11505776640,
+      "new_price_anchor_fp32_bytes": 1150577664,
+      "additional_side_cache_bytes_before_metadata_and_overflows": 12656354304,
+      "extra_resident_bytes_before_new_overflows": 1150577664,
+      "planned_resident_array_bytes_before_new_overflows": 42747284648
+    },
+    {
+      "split": "validation",
+      "source_manifest": "outputs/preprocessing/evaluation-cache/b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c/data/manifest.json",
+      "source_manifest_sha256": "f579b25d6eeefe2bda0ef9b13c3adaaac8f740fd5e2abd52463834d7e9360ce6",
+      "unique_bar_slots": 35338216,
+      "original_feature_bytes": 5088703104,
+      "original_resident_array_bytes": 5109467004,
+      "retained_52_fp16_channels_bytes": 3675174464,
+      "new_20_quantity_fp16_channels_bytes": 1413528640,
+      "new_price_anchor_fp32_bytes": 141352864,
+      "additional_side_cache_bytes_before_metadata_and_overflows": 1554881504,
+      "extra_resident_bytes_before_new_overflows": 141352864,
+      "planned_resident_array_bytes_before_new_overflows": 5250819868
+    },
+    {
+      "split": "test",
+      "source_manifest": "outputs/preprocessing/evaluation-cache/749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5/data/manifest.json",
+      "source_manifest_sha256": "4d4c789de7f7a7dadf52c1198dee799f7c4981aed47f1befc526d5d805713132",
+      "unique_bar_slots": 37706216,
+      "original_feature_bytes": 5429695104,
+      "original_resident_array_bytes": 5451844956,
+      "retained_52_fp16_channels_bytes": 3921446464,
+      "new_20_quantity_fp16_channels_bytes": 1508248640,
+      "new_price_anchor_fp32_bytes": 150824864,
+      "additional_side_cache_bytes_before_metadata_and_overflows": 1659073504,
+      "extra_resident_bytes_before_new_overflows": 150824864,
+      "planned_resident_array_bytes_before_new_overflows": 5602669820
+    }
+  ],
+  "total_additional_side_cache_bytes_before_metadata_and_overflows": 15870309312,
+  "one_64_stock_day_float32_input_batch_bytes": 26836992,
+  "cache_arrays_loaded": false,
+  "cache_arrays_built": false,
+  "model_created": false,
+  "limitations": [
+    "Requires a compact parent-array reader; loading both the full parent and the entire side cache would exceed this estimate.",
+    "Excludes new overflow records, buffers, framework memory and page-cache peaks; this is not a peak-RAM measurement.",
+    "Retained input arrays must remain immutable; this does not authorize deletion of old caches."
+  ]
+}

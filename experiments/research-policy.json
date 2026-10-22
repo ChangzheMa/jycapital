@@ -95,16 +95,17 @@
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
     "in_progress_delivery": "v1601 fast 已交付；v1901 已实现完整截面潜在收益结构，等待一次正式训练及双集评估；阶段性候选交付不代表达到双集 IC 0.25。",
-    "active_direction_note": "docs/ic-target-research-20261023.md",
+    "active_direction_note": "docs/causal-normalization-research-20261023.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v1601共同价格坐标的验证/测试IC为0.105526/0.116259，仍是当前最优，已交付fast。v1801已完成双集评估，IC为0.093363/0.098977，仅接近父v1102；开盘测试IC下降，未晋级，不自动并入后续主方案。v1701仍待完整结果。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
     "latest_candidate": "v1901-latent-factor-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "优先检验跨股票联合收益结构与纯历史先验预测，结合可学习的因果输入归一化；保留已有官方标签直接监督。v1801正式结果不支持自动加入其盘前模块，v1701待完整结果；不以单时点补强或单纯扩宽作为达到0.25的主要路径。",
+    "next_design_hypothesis": "v1901已发布检验联合收益学习；下一独立方向为数量共同坐标、FP32已闭合Bar价格参考、逐字段缺失标志与前缀因果归一化的组合。固定样本已支持关系和精度差异，但不是IC改善证据；目标112通道，紧凑复用父缓存以控制额外内存，不叠加尚未评测的v1901后验分支。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
-    "next_supervision_direction_note": "docs/future-supervision-research-20261022.md"
+    "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
+    "next_input_normalization_note": "docs/causal-normalization-research-20261023.md"
   },
   "legacy_runs": [
     {
