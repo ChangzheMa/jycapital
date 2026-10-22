@@ -67,6 +67,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 持续研究与串行调度 | [研究 session 与训练 session 的交接约定](continuous-research.md)、[训练监控 session 提示词](training-session-prompt.md)；候选通过各版本的 `experiment.json` 发布 |
 | 文献与组合改进 | [2026-10-21 文献质量筛选及下一轮方向](research-directions-20261021.md)；联合考虑容量、监督和重复计算，区分论文证据与本地假设 |
 | 后续优先级：遗漏的大方向 | [研究缺口与文献质量地图](research-gap-map-20261022.md)、[输入精度审计](../experiments/input-precision-audit-20261022.json)；优先交易路径目标、市场联合表示，独立核查输入表达和表征学习，停止自动扩展局部组合 |
+| 决策代理与市场时空新方向 | [组合诊断与局限](portfolio-diagnostics.md)、[v1501：完整市场时空 Transformer](../solutions/v1501/README.md)、[论文质量与机制](market-space-time-research-20261022.md)；本地换手代理尚不匹配平台排序，先检验完整市场时空表示 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |

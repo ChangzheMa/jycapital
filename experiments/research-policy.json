@@ -70,7 +70,10 @@
     "next_design_priority": "missing_major_directions",
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
-    "in_progress_delivery": "完成已评估 v1401 的共享 fast 材料，不继续扩展该等权组合线。"
+    "in_progress_delivery": "完成已评估 v1401 的共享 fast 材料，不继续扩展该等权组合线。",
+    "active_direction_note": "docs/market-space-time-research-20261022.md",
+    "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
+    "evidence_update": "本地换手代理与暂按附件名对应的平台排序很弱；保留决策目标研究，先检验完整市场时空表示。"
   },
   "legacy_runs": [
     {

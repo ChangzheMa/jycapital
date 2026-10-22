@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "solution_id": "v1501",
+  "status": "passed",
+  "checked_at": "2026-10-22T13:11:56+08:00",
+  "scope": "完整市场时空 Transformer 的 CPU 因果性、成员、分块、无标签上下文、精确恢复、全局缓存及日内部分请求；未正式训练。",
+  "parameters": 3141398,
+  "checks": [
+    "test_default_architecture_and_cache_target_contract",
+    "test_all_stock_outputs_are_causal_at_every_prediction_clock",
+    "test_future_members_do_not_affect_prior_market_outputs",
+    "test_stock_permutation_and_encoding_chunk_size_preserve_market_context",
+    "test_unlabelled_stocks_remain_in_training_context",
+    "test_standalone_loss_masks_labels_without_removing_input_members",
+    "test_encoder_recomputation_matches_retained_graph_with_dropout",
+    "test_interrupted_full_market_training_restores_exact_state",
+    "test_complete_calendar_resident_full_synthetic_entrypoint",
+    "test_intraday_subrequest_keeps_earlier_exited_stock_context"
+  ],
+  "unit_tests_passed": 8,
+  "unit_tests_seconds": 4.929,
+  "entrypoint_tests_passed": 1,
+  "entrypoint_seconds": 11.456,
+  "prediction_tests_passed": 1,
+  "prediction_seconds": 0.297,
+  "entrypoint_modes": [
+    "global_shuffled_complete_day_stock_days"
+  ],
+  "synthetic_entrypoint": {
+    "training_dates": 3,
+    "context_stock_days": 17,
+    "supervised_stock_days": 16,
+    "supervised_labels": 112
+  },
+  "causality": "三频八时点的未来输入梯度为零；未来才进入的股票不影响此前其他股票输出。",
+  "market_semantics": "股票置换和编码块大小保持输出一致；无标签股票保留上下文，成员只依赖当前股票池。",
+  "resume": "日期游标、原始/EMA权重、优化器、RNG、损失历史与累计上下文股票日数精确恢复。",
+  "recomputation": {
+    "dropout_enabled": true,
+    "cpu_precisions": [
+      "float32",
+      "bfloat16_autocast"
+    ],
+    "outputs_bit_exact": true,
+    "gradients_bit_exact": true,
+    "rng_bit_exact": true
+  },
+  "fast_validation": "动态股票池完整整日与10:30—11:30部分请求一致；保留更早退出股票的上下文后再筛选请求键。",
+  "default_model_cpu_gradient_preflight": {
+    "status": "passed",
+    "parameters": 3141398,
+    "train_stock_days": 2,
+    "inference_stock_days": 4
+  },
+  "default_gpu_batch_preflight": "训练session在模型间隙执行1200股票日默认批量预检；本session未运行GPU。",
+  "training_cache_compatibility": "experiments/v1501-input-cache-compatibility.json",
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v1501/config.json": "44c2615c77c0d6e48ff86e0e468b3272a3a189431fb599799b9a33e6dfa0e1bc",
+    "solutions/v1501/model-config.json": "beec409d199542ee016c1b41ad4e86d32ed5a37e207b1fd7f911777f5fe4f262",
+    "solutions/v1501/requirements-inference.txt": "1a99016e2590e59b2c1a9c7f7a6a7fd80703c558f9c53ec19742b48bbb2f75fc",
+    "solutions/v1501/requirements-training.txt": "fa2481cabb4c546fdfb30756b0e5d2a0aca27de74fcbc7a8dd10ce25db493ca1",
+    "solutions/v1501/requirements.txt": "d72c61e0ea921d0067586b0267ca1760ca4f72b0e4eebdb74ddc917150550a0d",
+    "solutions/v1501/v1501_apply.py": "ef1d77d8d9a4bbbc259e3709ccaa24874fe708c72a14be88ed81a74dc9a3194c",
+    "solutions/v1501/v1501_calendar.py": "2fe377e3f157d77e1fcfaa11e31397ba758cc96b0091d73d4d1b4dbb16963425",
+    "solutions/v1501/v1501_data.py": "688a8c2f26e3970089a212cdbb5cac4dc0a9762e5e698539aebda8a692c873d5",
+    "solutions/v1501/v1501_ema.py": "f828910bb69a32098a79c0b207c69df752785cf9ab08c97a4015e15c2136c2a5",
+    "solutions/v1501/v1501_evaluation.py": "1e657b49f61eaacfc201cfe61759f14c996f3a3882be00853c5b423a6d95c73a",
+    "solutions/v1501/v1501_evaluation_cache.py": "154181649900993dc7f6ff7aa3d205289035c272a64677b20c28fe246a4f6603",
+    "solutions/v1501/v1501_fast.py": "6933d7f238b01f8be4881aa7ac90fcee86ebea63a5185ca420142e342699a658",
+    "solutions/v1501/v1501_grouped.py": "78ae352ea0a1df7a3e3946510e085bab23c197f6255a043144b7cc5462af2189",
+    "solutions/v1501/v1501_loss.py": "37c4c47b6868c9bdfd2aaf6f1a768780e428f7634caaea722b278d46eae67e92",
+    "solutions/v1501/v1501_market.py": "8ea8abdebcb1c64ab32d07b8551a214da6e619854f5d9d86e6c6bdb59f574b95",
+    "solutions/v1501/v1501_model.py": "eafe7b0b325491f8a3f5cd060ad3ffa5e6dbe98816a2206443145aa135fba385",
+    "solutions/v1501/v1501_notebook.py": "5133c759b81f457c8ed18ea49112e8600b34bc5bca7e6818245c76f5ae2fd122",
+    "solutions/v1501/v1501_objective.py": "e1b3a5c26ae1c73a201e11b32b04ed25e23862c286188f60a4a9c4e9f3eed1bd",
+    "solutions/v1501/v1501_predict.py": "b7e5c5044ff54d485419f1b479661b3a0ddf02a19ae7015d28d5596ea9258530",
+    "solutions/v1501/v1501_predict_fast.py": "b7e5c5044ff54d485419f1b479661b3a0ddf02a19ae7015d28d5596ea9258530",
+    "solutions/v1501/v1501_prepare.py": "fc0c4bdd409bcf19dc4a572043010488fb428f0388753aaedf906f1d7a5b5ab6",
+    "solutions/v1501/v1501_preprocessing.py": "d5b5c2b1a4d03601b7a0d32f58450c008e9a479875e83757744dbf71ca90c7b3",
+    "solutions/v1501/v1501_reproduce.py": "bb6a811307e755e85440a9a8ce03b32e62f08ba0bd8c3dd070425b1b41712bcf",
+    "solutions/v1501/v1501_resident.py": "0accc25fffdfa968523c5e1b26214113601e08a7186d241cec359c361802caf3",
+    "solutions/v1501/v1501_schema.py": "1383e3b7427991336ecea5a0861c53d8b17909999e397dee9afec0c321eaf1d9",
+    "solutions/v1501/v1501_targets.py": "da87a5bdfe12912e78baeabfd5e3cb70d985ba61f39e3dd9cf1e09a24472641c",
+    "solutions/v1501/v1501_temporal.py": "9909ddee83c3741357f28e8402f18dc7c1ba021a912b5691baabbfa74faa8912",
+    "solutions/v1501/v1501_text_artifact.py": "f350db432428f815c7d1f0fa58815424334b7a30c995b0831fdcb1273b6689e5",
+    "solutions/v1501/v1501_train.py": "b2af17b76ee8c42a998c0cf5430861b4d6ec54a2e28b7264acb9052d951b3d36"
+  },
+  "test_files": {
+    "tests/test_v1501.py": "f45acf7bed1a6f7550e4cfebbd134c566d544e47ff4175a9fbdcc8ddb9214100",
+    "tests/test_v1501_entrypoint.py": "de8fddbcf554796ee87657b93c14319139e7e8da2d728e637a601004d9f3751a",
+    "tests/test_v1501_predict.py": "d9eb260a10d563b8792c85a0a7eea88d3e840f9e65b0f27fb51074c795ed6cc5"
+  },
+  "preflight_script_sha256": "21969a66e8eeb938c01289fbc28bbd08ffce35138190c028e71a38e82071f966",
+  "formal_training_performed": false,
+  "cpu_test_environment": {
+    "CUDA_VISIBLE_DEVICES": "-1"
+  },
+  "test_fixture_files": {
+    "tests/test_v1301.py": "84bfdb47092f62fc53d9871c96cfdf7d31be47ebebe062e6dcc7ae60704a1cde",
+    "tests/test_v2_predict.py": "7fb68cf7cd92e373368becbde3173ddeb319ec202f81237c2f2e5ea540e83295"
+  }
+}

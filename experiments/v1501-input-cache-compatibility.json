@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "solution_id": "v1501",
+  "reference_run_id": "v1002-current-temporal-experts-s42",
+  "checked_at": "2026-10-22T13:06:09+08:00",
+  "same_training_cache_key": true,
+  "cache_key": "dbcd47ff50672ccee5adc5dec94833d43d5c4226fb540909fa080c71467b960b",
+  "cache_format": "jycapital-resident-all-current-fp16-v1",
+  "reference_data_manifest_sha256": "f0c2fb1a69e0918bafae1484c1030d7a5eeff7bd285ee0092986c5e18567c414",
+  "resident_builder_sha256": "0accc25fffdfa968523c5e1b26214113601e08a7186d241cec359c361802caf3",
+  "array_data_opened": false,
+  "cache_modified": false,
+  "scope": "使用父 v1002 冻结数据清单及协议核对训练缓存身份；正式运行仍须匹配自身数据指纹。"
+}
