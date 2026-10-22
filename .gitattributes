@@ -26,3 +26,8 @@
 /experiments/v1601*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 # v1901 发布指纹绑定源码原始字节，避免新文件检出后换行转换使 ready 校验失效。
 /solutions/v1901/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+# 新共同坐标候选及其实际公共依赖保留发布时字节。
+/solutions/v2001/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/coordinate_inputs.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/coordinate_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/coordinate_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof

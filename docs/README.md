@@ -85,6 +85,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 双集 IC 0.25 目标 | [差距、论文核验与研究决策](ic-target-research-20261023.md)、[冻结结果分解](../experiments/ic-target-gap-20261023.json)；任一单时点完美预测且其他时点不变仍不足达标，优先联合收益结构与因果先验学习 |
 | 条件潜在收益结构候选 | [v1901：完整截面历史先验与训练后验](../solutions/v1901/README.md)、[缓存身份与父权重核对](../experiments/v1901-input-cache-compatibility.json)；264 万参数，本地 v1601 EMA 初始化，输入缓存复用，正式效果待评估 |
 | 因果归一化与盘口数量表达 | [数量共同坐标、价格路径及文献边界](causal-normalization-research-20261023.md)、[固定训练样本诊断](../experiments/quantity-coordinate-audit-20261023.json)、[输入容量估算](../experiments/coordinate-input-budget-20261023.json)；独立于 v1901 的输入学习研究，尚无新模型效果 |
+| 因果输入归一化候选 | [v2001：112 通道与小型单向归一化](../solutions/v2001/README.md)、[基础缓存复用与旁路预算](../experiments/v2001-input-cache-compatibility.json)；258 万参数，紧凑常驻和流式输入通过合成验证，正式效果待评估 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |

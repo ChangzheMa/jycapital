@@ -1,0 +1,103 @@
+{
+  "checked_at": "2026-10-23T06:10:14.202450+08:00",
+  "solution_id": "v2001",
+  "base_source_run": "v1601-price-geometry-s42",
+  "base_input_keys_identical": true,
+  "base_retained_fp16_channels": 52,
+  "side_quantity_fp16_channels": 20,
+  "side_reference_fp32_channels": 1,
+  "model_input_channels": 112,
+  "reserve_gib": 2.0,
+  "parameters": 2584290,
+  "coordinate_parameters": {
+    "bar1m": {
+      "book_volume": {
+        "center": 8.866948145829053,
+        "scale": 2.9655842850548813,
+        "observations": 4245212910
+      },
+      "book_order_count": {
+        "center": 2.03417556109412,
+        "scale": 1.2611676773983684,
+        "observations": 4245212910
+      },
+      "price_anchor": {
+        "center": 2.570965831436596,
+        "scale": 1.0322756269305917,
+        "observations": 422524893
+      }
+    },
+    "bar5m": {
+      "book_volume": {
+        "center": 9.114648124399274,
+        "scale": 2.628361199510678,
+        "observations": 832554570
+      },
+      "book_order_count": {
+        "center": 2.108132191924487,
+        "scale": 1.2211971918751758,
+        "observations": 832554570
+      },
+      "price_anchor": {
+        "center": 2.5721654563994245,
+        "scale": 1.0329179969850113,
+        "observations": 83063524
+      }
+    },
+    "bar30m": {
+      "book_volume": {
+        "center": 8.816516336298571,
+        "scale": 3.056830891638897,
+        "observations": 152921930
+      },
+      "book_order_count": {
+        "center": 1.9888618041270667,
+        "scale": 1.2727944803225137,
+        "observations": 152921930
+      },
+      "price_anchor": {
+        "center": 2.570947126310444,
+        "scale": 1.0321498026217533,
+        "observations": 15236705
+      }
+    }
+  },
+  "rows": [
+    {
+      "split": "train",
+      "base_cache_key": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+      "coordinate_cache_key": "bf49b5e3b68fa5299b52acca9194708aacbef22597a566195c56e89632a3926c",
+      "source_manifest_sha256": "be95393b030f706260d25c7e5ea1071e0bb5b8ceaece331040c7736db914d63e",
+      "unique_bar_slots": 287644416,
+      "side_numeric_and_pointer_bytes_before_overflows": 12679804664,
+      "compact_resident_array_bytes_before_new_overflows": 42770735008,
+      "parent_arrays_rewritten": false
+    },
+    {
+      "split": "validation",
+      "base_cache_key": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+      "coordinate_cache_key": "3c08c0c92b7b78f50d8e64300e77f8fa4583cb46dd77579ce6ed1ad90f135d5d",
+      "source_manifest_sha256": "f579b25d6eeefe2bda0ef9b13c3adaaac8f740fd5e2abd52463834d7e9360ce6",
+      "unique_bar_slots": 35338216,
+      "side_numeric_and_pointer_bytes_before_overflows": 1557918976,
+      "compact_resident_array_bytes_before_new_overflows": 5253857340,
+      "parent_arrays_rewritten": false
+    },
+    {
+      "split": "test",
+      "base_cache_key": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5",
+      "coordinate_cache_key": "6875254bef7186d15af086e9ef93b3c0750a47315ca9522b8d04485bfbec4a62",
+      "source_manifest_sha256": "4d4c789de7f7a7dadf52c1198dee799f7c4981aed47f1befc526d5d805713132",
+      "unique_bar_slots": 37706216,
+      "side_numeric_and_pointer_bytes_before_overflows": 1662302976,
+      "compact_resident_array_bytes_before_new_overflows": 5605899292,
+      "parent_arrays_rewritten": false
+    }
+  ],
+  "full_arrays_read_or_built": false,
+  "scope": "base cache identity and shape-only budget; actual new side caches are constructed by the training session",
+  "limitations": [
+    "Array-byte estimates exclude buffers, framework memory and page-cache peaks.",
+    "Source inputs remain immutable; no old cache deletion is authorized by this record."
+  ]
+}

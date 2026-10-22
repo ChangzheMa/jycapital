@@ -19,6 +19,8 @@
 
 用户于 2026-10-23 将本地目标明确为验证集和测试集 IC 均达到 0.25，checkpoint 仍只按验证 IC 选择。v1901 是完整截面潜在收益结构新系列：从已完成 v1601 的最佳 EMA 精确初始化，全部参数继续训练，复用相同几何输入缓存；首次运行由训练入口验证父权重并保存 initialization.json / initialization-state.pt。后验只用于训练，验证与测试必须使用纯历史先验；后验训练高分不能当作正式收益效果。默认完整市场训练／推理 GPU 批量预检均为1200股票日，内部64股票编码块，主机预留2GiB。模型主监督已改为半MSE，日志为 train_primary_mse_loss，并额外记录后验NLL、KL、先验／后验相关性；不要套用旧版 Huber 主监督核验。完整方案和 CPU 检查见 solutions/v1901/README.md，正式训练仍由你串行调度。
 
+v2001 是另一个输入学习系列，从 seed42 重新初始化，不继承父权重。输入112通道，参数2,584,290，64/128股票日，预留2GiB；目标仍沿用v1601的Huber、排名和专家训练。新增 common/coordinate_inputs.py、coordinate_resident.py、coordinate_evaluation_cache.py 及目录内字节保留的 v1601_data.py / v1601_schema.py 必须进入冻结依赖。resident-cache.json 的 path 指向坐标旁路，base_cache_path 指向只读基础缓存；不能假设 targets.npy 也在旁路目录。训练只紧凑驻留父52通道，再加20数量FP16通道及FP32价格中心；评估支持stream映射。基础缓存键与v1601相同，初次新增旁路预计14.81GiB，训练数组约39.83GiB，实际峰值和构建时间另记；不重复生成整套预处理Parquet，不修改或删除父缓存。源码已核验原目标及完整入口；正式结果仍要与届时最优比较，不能把输入关系审计当作提分证据。
+
 1. 接管当前 v201／v301 的真实状态和已有控制器，保留在训进程、checkpoint、优化器、随机状态与早停计数。先防止旧控制器与新扫描控制器重复拉起任务。已经完成的 v201 不重训；v301 若仍在运行则等待其完成训练、验证及测试。不要在本任务之外再启动第二个 GPU 训练。
 
 2. 在每版完成后、启动下一版前扫描 solutions/*/experiment.json。使用 .venv-training/Scripts/python.exe scripts/research-queue.py status 查看队列，使用 next 获取下一个可执行候选。只启动 status=ready、代码指纹与实现检查相符、没有完成或正在运行的同一 run_id 的候选；draft 不启动，retired 不启动。按 priority 升序、版本序排序。没有 ready 候选时保持后台监控，每小时扫描；后续新增 ready 候选自动接入，不在 v301 结束后退出整个任务。
