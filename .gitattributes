@@ -35,3 +35,7 @@
 /scripts/audit-temporal-sensitivity.py -text
 /scripts/audit-quantity-supervision.py -text
 /solutions/v2101/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+# 这些既有依赖已参与模型发布／输入缓存指纹，Git保存当前冻结的原始字节。
+/common/geometry_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/geometry_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/evaluation/protocols/local-v2-ic.json -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
