@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-22T14:05:13.446513+08:00",
+  "generated_at": "2026-10-22T14:41:55.203657+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
@@ -92,7 +92,7 @@
       "run_id": "v1201-student-mixture-s42",
       "model_sha256": "97e199e29a3382fefba467b356480406de2c254496a67f8f147e92d02d77f7db",
       "summary_file": "experiments/v1201-gru.json",
-      "summary_content_sha256": "8d458f9559f51a0187ff4c810b6841a4590cc23ec3b3d2af53c4ccb7f208f7d3",
+      "summary_content_sha256": "00f68e1ce8a5fbac9c4973d3667c66392836893697e9236ca69442024f6f08b5",
       "parameters": 2419092,
       "epochs_completed": 8,
       "metrics": {

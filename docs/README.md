@@ -68,6 +68,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 持续研究与串行调度 | [研究 session 与训练 session 的交接约定](continuous-research.md)、[训练监控 session 提示词](training-session-prompt.md)；候选通过各版本的 `experiment.json` 发布 |
 | 磁盘与缓存保留 | [预处理组成、可清理资料及增长控制](storage-retention.md)；保护活跃依赖、正式权重和预测，跳过 Windows 目录联接 |
 | 原始输入结构研究 | [价格共同坐标审计及表征论文筛选](raw-input-research-20261022.md)；仅训练期行情诊断，不重算标签、不使用 exposure |
+| 共同价格坐标候选 | [v1601：保留长期与数量视图，替换价格第二视图](../solutions/v1601/README.md)；共享缓存实现、无额外整套预处理 Parquet，正式训练由训练 session 执行 |
 | 文献与组合改进 | [2026-10-21 文献质量筛选及下一轮方向](research-directions-20261021.md)；联合考虑容量、监督和重复计算，区分论文证据与本地假设 |
 | 后续优先级：遗漏的大方向 | [研究缺口与文献质量地图](research-gap-map-20261022.md)、[输入精度审计](../experiments/input-precision-audit-20261022.json)；优先交易路径目标、市场联合表示，独立核查输入表达和表征学习，停止自动扩展局部组合 |
 | 决策代理与市场时空新方向 | [组合诊断与局限](portfolio-diagnostics.md)、[v1501：完整市场时空 Transformer](../solutions/v1501/README.md)、[论文质量与机制](market-space-time-research-20261022.md)；本地换手代理尚不匹配平台排序，先检验完整市场时空表示 |

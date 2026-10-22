@@ -30,6 +30,8 @@
    v1401 是 additional_training=false 的已完成冻结组合，使用专用 materialize／提交核验入口，并已退出普通训练调度。不能套用100轮上限、单模型 data 字段或训练梯度预检；其本地指标可作为已完成组合参照，但须保留双主干及零新增训练的类别说明。
    v1501 为 patch_transformer 家族的完整市场时空模型，默认 GPU 预检为1200股票日，编码块64。训练保留无标签股票作为上下文，calendar-day-training.json 区分 context_stock_days 与 supervised_stock_days；EMA累计按全部上下文股票日计算。损失只有主Huber、排名Huber和负稳定化相关性，不再要求专家／路由统计。父 v1301 仅是工程代码来源、无父权重；评估必须完整股票池联合解码，不能将编码小块独立预测。保持原模型和配置执行一次正式运行。
 
+   v1601 是共同价格坐标输入系列，网络／目标与父 v1102 相同，但输入不相同。三频原始价格的 bytes/SHA256 必须对应旧预处理来源；data-manifest 新增 raw/ 行情指纹，不能因完整输入清单与父版不同而误判标签不可比。只比较官方标签、股票池和评估器的对应指纹。共享 common/price_geometry.py、geometry_resident.py、geometry_evaluation_cache.py 必须进入冻结执行及复现依赖；训练缓存为 jycapital-resident-price-geometry-fp16-v1，旧缓存保持只读并跳转新键。预计新增约38.7GiB训练及9.85GiB双集输入，不生成额外整套预处理Parquet；单月价格索引会增加构建期内存，进入训练前释放。仍执行完整GPU默认批量预检和一次正式训练，不擅自更改输入或标签。vwap_return 直接使用已提供字段，exposure 不读取、不恢复。
+
 6. 正常进度留在后台日志，仅每小时、用户询问、版本完成或异常时报告。一个候选完整结束后自动扫描并继续下一候选。原运行中断只能沿原配置和原状态恢复；改变模型、损失、数据或另开种子属于新的尝试，不能擅自改参数或重试覆盖失败。无法恢复的候选标记 needs_attention，记录原因；允许调度其他独立且 ready 的候选，不让失败版本无限重试。
 
 7. 每个候选完整完成后，把实际结果保存在 outputs/checks/continuous-research/<run_id>.json，包含 run_id、solution_id、状态、父版本、源码/配置/权重指纹、最佳与完成轮次、参数量、训练/验证/测试耗时、资源、验证与测试全部指标、逐月产物、异常与局限。可使用 scripts/research-queue.py record --run-dir outputs/runs/<run_id> 生成基础交接记录。分析 session 会据此决定后续结构和平台候选；你不修改研究方案，不自动导出、提交平台或 Git 推送。

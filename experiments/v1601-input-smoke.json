@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-22T14:38:30+08:00",
+  "scope": "只读2020年6月首4096条训练预处理及对应原始月份的价格列，无模型训练或预测；索引耗时不是全量缓存构建耗时。",
+  "rows": 4096,
+  "raw_month_rows": 8001817,
+  "input_columns": 72,
+  "unchanged_z_and_quantity_c": true,
+  "raw_price_join_complete": true,
+  "finite_or_missing_values_only": true,
+  "month_index_reported_bytes": 750986066,
+  "source_load_and_transform_seconds": 2.1472917000064626,
+  "available_memory_before": 10641428480,
+  "labels_read": false,
+  "exposure_read": false,
+  "cache_written": false,
+  "geometry_source_sha256": "7cc91d1f829dead205df12254dd666950eb68d344e60589c024f2d7cd541eb7c"
+}
