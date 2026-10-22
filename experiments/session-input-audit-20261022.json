@@ -1,0 +1,1942 @@
+{
+  "checked_at": "2026-10-22T17:31:15+08:00",
+  "script_sha256": "4f833e01ec6f8025ae617b0b11ee8b59677e5b96bfe2a591fc220d478b95ca8e",
+  "versions_fixed_before_analysis": [
+    "v1002",
+    "v1101",
+    "v1102",
+    "v1301",
+    "v1401"
+  ],
+  "source_files": {
+    "solutions/v1102/v1102_data.py": "f735cc2f2401388a994352fa061362a74285cca6b93754117d0eeaf5e0a4452b",
+    "solutions/v1102/v1102_schema.py": "bd34b0d538845673008b5311b7e9fe09e77c05d5756280ce3a409b9696db94d8"
+  },
+  "source_scope": "冻结验证/测试截面指标；原始行情抽样限2020—2023各年六月首五个交易日，首日09:30股票池确定随机64股，每日再匹配当时09:30成员。",
+  "raw_time_interval": "各交易日09:00至09:30闭区间；未读取之后的原始行情作为该时点输入证据。",
+  "label_table_read": false,
+  "exposure_read": false,
+  "cache_modified": false,
+  "new_model_constructed": false,
+  "formal_training_performed": false,
+  "current_grid_first_bar": {
+    "bar1m": "09:31",
+    "bar5m": "09:35",
+    "bar30m": "10:00"
+  },
+  "clock_results": [
+    {
+      "solution_id": "v1002",
+      "run_id": "v1002-current-temporal-experts-s42",
+      "split": "validation",
+      "cross_sections_sha256": "0e11779c27820bb5a4a4f7ed8adfa16acce805718381d81bb1512b7b105429ab",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 117,
+          "ic_mean": 0.03256902552853079,
+          "rank_ic_mean": 0.04587522872683694
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 117,
+          "ic_mean": 0.10919080589792853,
+          "rank_ic_mean": 0.11385828514997488
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 117,
+          "ic_mean": 0.08533299045360884,
+          "rank_ic_mean": 0.08217224009885858
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 117,
+          "ic_mean": 0.07530820071937037,
+          "rank_ic_mean": 0.08521716513496472
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 117,
+          "ic_mean": 0.10733394525064563,
+          "rank_ic_mean": 0.08966831726332815
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 117,
+          "ic_mean": 0.10420550312608555,
+          "rank_ic_mean": 0.09893484932303546
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 117,
+          "ic_mean": 0.05825019754849306,
+          "rank_ic_mean": 0.06347464440246472
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 117,
+          "ic_mean": 0.1605415872101365,
+          "rank_ic_mean": 0.13390547962074356
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.1000233186008955,
+      "other_clock_rank_ic_mean": 0.09531871157048144,
+      "monthly": [
+        {
+          "month": "2024-01",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.03607599790499616,
+          "other_ic": 0.09882266808161995,
+          "opening_rank_ic": 0.05483914408143491,
+          "other_rank_ic": 0.08875396359114615
+        },
+        {
+          "month": "2024-02",
+          "opening_sections": 15,
+          "other_sections": 105,
+          "opening_ic": 0.09474409159359518,
+          "other_ic": 0.0822094757111279,
+          "opening_rank_ic": 0.059475964127667535,
+          "other_rank_ic": 0.06969115536240902
+        },
+        {
+          "month": "2024-03",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.02602871544288296,
+          "other_ic": 0.11828885163087294,
+          "opening_rank_ic": 0.0637962033156917,
+          "other_rank_ic": 0.12484912952782914
+        },
+        {
+          "month": "2024-04",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.023609395360810338,
+          "other_ic": 0.10685573716635728,
+          "opening_rank_ic": 0.06973112208506733,
+          "other_rank_ic": 0.09423930575021891
+        },
+        {
+          "month": "2024-05",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.045698428905282716,
+          "other_ic": 0.10913523577157346,
+          "opening_rank_ic": 0.05635650644807294,
+          "other_rank_ic": 0.11385080816907056
+        },
+        {
+          "month": "2024-06",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.01773772897884969,
+          "other_ic": 0.0785053736755405,
+          "opening_rank_ic": -0.03119324794521004,
+          "other_rank_ic": 0.07214214346498818
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1002",
+      "run_id": "v1002-current-temporal-experts-s42",
+      "split": "test",
+      "cross_sections_sha256": "404f5b2eef8f4432bbce52df3564c591d7a12150202d90ec8ffa46e2aaa44c46",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 125,
+          "ic_mean": 0.023503900986398773,
+          "rank_ic_mean": 0.035128375134206136
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 125,
+          "ic_mean": 0.0875805111137162,
+          "rank_ic_mean": 0.0913871464910681
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 125,
+          "ic_mean": 0.096957304744887,
+          "rank_ic_mean": 0.09568292527203823
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08288222797069383,
+          "rank_ic_mean": 0.08234578444281711
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 125,
+          "ic_mean": 0.13129549968103607,
+          "rank_ic_mean": 0.12680652425287967
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 125,
+          "ic_mean": 0.10961742606584986,
+          "rank_ic_mean": 0.10328743915734834
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08819471568051088,
+          "rank_ic_mean": 0.06728650403089659
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 125,
+          "ic_mean": 0.16098428966320796,
+          "rank_ic_mean": 0.11619403393902572
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.10821599641712883,
+      "other_clock_rank_ic_mean": 0.09757005108372482,
+      "monthly": [
+        {
+          "month": "2024-07",
+          "opening_sections": 23,
+          "other_sections": 161,
+          "opening_ic": 0.03205395118975636,
+          "other_ic": 0.09084783195788093,
+          "opening_rank_ic": 0.04362375787729144,
+          "other_rank_ic": 0.07712594351957112
+        },
+        {
+          "month": "2024-08",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.03405171686069231,
+          "other_ic": 0.09975265266185512,
+          "opening_rank_ic": 0.04662671030065193,
+          "other_rank_ic": 0.0838243403901159
+        },
+        {
+          "month": "2024-09",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.00855348266849289,
+          "other_ic": 0.09570455419367974,
+          "opening_rank_ic": 0.010796330585804268,
+          "other_rank_ic": 0.06980274495662285
+        },
+        {
+          "month": "2024-10",
+          "opening_sections": 18,
+          "other_sections": 126,
+          "opening_ic": 0.009639174967408445,
+          "other_ic": 0.08866463446375379,
+          "opening_rank_ic": 0.015633438407975372,
+          "other_rank_ic": 0.09345662518731149
+        },
+        {
+          "month": "2024-11",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.041721501029212724,
+          "other_ic": 0.13883567759472323,
+          "opening_rank_ic": 0.060104065172341035,
+          "other_rank_ic": 0.12549706962137339
+        },
+        {
+          "month": "2024-12",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.025657657939762036,
+          "other_ic": 0.13241099450147084,
+          "opening_rank_ic": 0.027872513313214622,
+          "other_rank_ic": 0.13337792392439246
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1101",
+      "run_id": "v1101-structured-fields-s42",
+      "split": "validation",
+      "cross_sections_sha256": "7b8ea8ff844657d3eb648c7eda87f15f41506805d8e85bda0836e76c29a80132",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 117,
+          "ic_mean": 0.025835391163077193,
+          "rank_ic_mean": 0.03783185312855297
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 117,
+          "ic_mean": 0.10557074785696037,
+          "rank_ic_mean": 0.10566185999338623
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 117,
+          "ic_mean": 0.08869682077135221,
+          "rank_ic_mean": 0.08328960496268761
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 117,
+          "ic_mean": 0.07757243079663377,
+          "rank_ic_mean": 0.08872083433087853
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 117,
+          "ic_mean": 0.10643182313928633,
+          "rank_ic_mean": 0.09303699690590533
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 117,
+          "ic_mean": 0.10034458474442554,
+          "rank_ic_mean": 0.09907833102261764
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 117,
+          "ic_mean": 0.057342034242573885,
+          "rank_ic_mean": 0.06725136640465458
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 117,
+          "ic_mean": 0.15817005006270984,
+          "rank_ic_mean": 0.13290932483665627
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.09916121308770598,
+      "other_clock_rank_ic_mean": 0.09570690263668374,
+      "monthly": [
+        {
+          "month": "2024-01",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.023996223074408216,
+          "other_ic": 0.0988925387881047,
+          "opening_rank_ic": 0.05359916003062508,
+          "other_rank_ic": 0.0906153431642726
+        },
+        {
+          "month": "2024-02",
+          "opening_sections": 15,
+          "other_sections": 105,
+          "opening_ic": 0.07787759899490428,
+          "other_ic": 0.08089044284041097,
+          "opening_rank_ic": 0.0539922917141354,
+          "other_rank_ic": 0.06941592129290335
+        },
+        {
+          "month": "2024-03",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.013734362384777835,
+          "other_ic": 0.11830815029221217,
+          "opening_rank_ic": 0.04425136891018089,
+          "other_rank_ic": 0.12560517439318244
+        },
+        {
+          "month": "2024-04",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.026901832500943596,
+          "other_ic": 0.10891734543101403,
+          "opening_rank_ic": 0.06470277279132183,
+          "other_rank_ic": 0.09588226840332262
+        },
+        {
+          "month": "2024-05",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.054279831167106427,
+          "other_ic": 0.10283227094964799,
+          "opening_rank_ic": 0.05625808054279034,
+          "other_rank_ic": 0.10934930718572347
+        },
+        {
+          "month": "2024-06",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.030810263680097247,
+          "other_ic": 0.07860031324039138,
+          "opening_rank_ic": -0.047959731270585615,
+          "other_rank_ic": 0.07476795081298412
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1101",
+      "run_id": "v1101-structured-fields-s42",
+      "split": "test",
+      "cross_sections_sha256": "3d4d4a4c370f858832908e4d1899bfda52be93153da0d97fe0c4e45ae04c34ad",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 125,
+          "ic_mean": 0.01498809111536691,
+          "rank_ic_mean": 0.031311781065267594
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08504559917322117,
+          "rank_ic_mean": 0.09600957976851723
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 125,
+          "ic_mean": 0.09995333869318214,
+          "rank_ic_mean": 0.09659528880370946
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 125,
+          "ic_mean": 0.0847104213691014,
+          "rank_ic_mean": 0.08627493080000048
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 125,
+          "ic_mean": 0.12931858116998998,
+          "rank_ic_mean": 0.12416323487012725
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 125,
+          "ic_mean": 0.11284146682506316,
+          "rank_ic_mean": 0.10283626488600778
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 125,
+          "ic_mean": 0.09175816083483392,
+          "rank_ic_mean": 0.07155414629954272
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 125,
+          "ic_mean": 0.15900886445533144,
+          "rank_ic_mean": 0.12032062334238641
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.10894806178867474,
+      "other_clock_rank_ic_mean": 0.09967915268147018,
+      "monthly": [
+        {
+          "month": "2024-07",
+          "opening_sections": 23,
+          "other_sections": 161,
+          "opening_ic": 0.026155218009779668,
+          "other_ic": 0.09379092555189503,
+          "opening_rank_ic": 0.0418356204805775,
+          "other_rank_ic": 0.08115343454410988
+        },
+        {
+          "month": "2024-08",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.029005631325743075,
+          "other_ic": 0.10140989228843944,
+          "opening_rank_ic": 0.0424930266594882,
+          "other_rank_ic": 0.08448856885377588
+        },
+        {
+          "month": "2024-09",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.0045220305818135685,
+          "other_ic": 0.09326359751431698,
+          "opening_rank_ic": 0.011837015169328322,
+          "other_rank_ic": 0.07250054915203571
+        },
+        {
+          "month": "2024-10",
+          "opening_sections": 18,
+          "other_sections": 126,
+          "opening_ic": -0.027405516425204366,
+          "other_ic": 0.09134752108409208,
+          "opening_rank_ic": -0.01657196614971995,
+          "other_rank_ic": 0.09741240082195086
+        },
+        {
+          "month": "2024-11",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.04127175601752711,
+          "other_ic": 0.13925538023903583,
+          "opening_rank_ic": 0.06016141287850764,
+          "other_rank_ic": 0.1276101458994299
+        },
+        {
+          "month": "2024-12",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.01574220392589324,
+          "other_ic": 0.13134873128362076,
+          "opening_rank_ic": 0.03758678216479485,
+          "other_rank_ic": 0.132903175605198
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1102",
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "split": "validation",
+      "cross_sections_sha256": "4e9ae9a07b7c9f0af7f66068bc35e24ae62677aa5dd9a092f8c633f54495fbec",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 117,
+          "ic_mean": 0.030020458858653596,
+          "rank_ic_mean": 0.04253323295074707
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 117,
+          "ic_mean": 0.10800993441926497,
+          "rank_ic_mean": 0.11166057434583951
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 117,
+          "ic_mean": 0.08865033240428731,
+          "rank_ic_mean": 0.08469468620947186
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 117,
+          "ic_mean": 0.07753909172808164,
+          "rank_ic_mean": 0.09021312968076248
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 117,
+          "ic_mean": 0.10898938090164204,
+          "rank_ic_mean": 0.09304628260259093
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 117,
+          "ic_mean": 0.10401438869982513,
+          "rank_ic_mean": 0.0995131119700589
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 117,
+          "ic_mean": 0.058237845344558094,
+          "rank_ic_mean": 0.06281107722445312
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 117,
+          "ic_mean": 0.16433293810494404,
+          "rank_ic_mean": 0.1360780449723983
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.10139627308608617,
+      "other_clock_rank_ic_mean": 0.09685955814365359,
+      "monthly": [
+        {
+          "month": "2024-01",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.012854815858351186,
+          "other_ic": 0.1011679252763794,
+          "opening_rank_ic": 0.034899903179703366,
+          "other_rank_ic": 0.09091652520271137
+        },
+        {
+          "month": "2024-02",
+          "opening_sections": 15,
+          "other_sections": 105,
+          "opening_ic": 0.08924305749104564,
+          "other_ic": 0.08290808353889043,
+          "opening_rank_ic": 0.05896886398369365,
+          "other_rank_ic": 0.07042536849079684
+        },
+        {
+          "month": "2024-03",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.02613129445093703,
+          "other_ic": 0.1226901205498116,
+          "opening_rank_ic": 0.06869868717330926,
+          "other_rank_ic": 0.12787456768455147
+        },
+        {
+          "month": "2024-04",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.03275035655159006,
+          "other_ic": 0.10785884624290032,
+          "opening_rank_ic": 0.07335743838000626,
+          "other_rank_ic": 0.09478900297789639
+        },
+        {
+          "month": "2024-05",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.05760412282101431,
+          "other_ic": 0.10716692105561987,
+          "opening_rank_ic": 0.06495938116443556,
+          "other_rank_ic": 0.11453953043367002
+        },
+        {
+          "month": "2024-06",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.024468678721510803,
+          "other_ic": 0.0798442349679964,
+          "opening_rank_ic": -0.04657638926314746,
+          "other_rank_ic": 0.07389934901994526
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1102",
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "split": "test",
+      "cross_sections_sha256": "2c99b7c9798c400f695333696a2af61e7bdf2e178209b80103ddda8af4d28d8c",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 125,
+          "ic_mean": 0.02296475014131751,
+          "rank_ic_mean": 0.031664522709595494
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 125,
+          "ic_mean": 0.0901308512880488,
+          "rank_ic_mean": 0.09471563153239801
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 125,
+          "ic_mean": 0.09748086446057531,
+          "rank_ic_mean": 0.09572548528683213
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08467790158455915,
+          "rank_ic_mean": 0.08248259974231753
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 125,
+          "ic_mean": 0.1298749209075129,
+          "rank_ic_mean": 0.12374177876913656
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 125,
+          "ic_mean": 0.11018394196962035,
+          "rank_ic_mean": 0.09728350570469346
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08412838448002619,
+          "rank_ic_mean": 0.06419012636005582
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 125,
+          "ic_mean": 0.1722745140217785,
+          "rank_ic_mean": 0.12336686172271287
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.10982162553030302,
+      "other_clock_rank_ic_mean": 0.09735799844544947,
+      "monthly": [
+        {
+          "month": "2024-07",
+          "opening_sections": 23,
+          "other_sections": 161,
+          "opening_ic": 0.03113905121355947,
+          "other_ic": 0.09232164077364216,
+          "opening_rank_ic": 0.03921626700339159,
+          "other_rank_ic": 0.07800311001684858
+        },
+        {
+          "month": "2024-08",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.040017456768878835,
+          "other_ic": 0.1021839533098203,
+          "opening_rank_ic": 0.04144165093911082,
+          "other_rank_ic": 0.07788341314528725
+        },
+        {
+          "month": "2024-09",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.0017763113201303094,
+          "other_ic": 0.09701320815077838,
+          "opening_rank_ic": -0.0008790185632290895,
+          "other_rank_ic": 0.0687946212191623
+        },
+        {
+          "month": "2024-10",
+          "opening_sections": 18,
+          "other_sections": 126,
+          "opening_ic": -0.008750064819913313,
+          "other_ic": 0.09008443871418942,
+          "opening_rank_ic": 0.003186559296369928,
+          "other_rank_ic": 0.09462354310555772
+        },
+        {
+          "month": "2024-11",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.04692033626299058,
+          "other_ic": 0.1404567801618453,
+          "opening_rank_ic": 0.06889417199333293,
+          "other_rank_ic": 0.12805664409951506
+        },
+        {
+          "month": "2024-12",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.021815252779799992,
+          "other_ic": 0.13372251116177786,
+          "opening_rank_ic": 0.029860934112167926,
+          "other_rank_ic": 0.13466964004288223
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1301",
+      "run_id": "v1301-complete-cross-section-s42",
+      "split": "validation",
+      "cross_sections_sha256": "4c1b5c9f6531d1182172e5246029ce84cb7fc99b20236def05c99f37fba5b705",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 117,
+          "ic_mean": 0.03363467807297519,
+          "rank_ic_mean": 0.03300728931282821
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 117,
+          "ic_mean": 0.10960330455730381,
+          "rank_ic_mean": 0.11114837572286607
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 117,
+          "ic_mean": 0.08366973483193536,
+          "rank_ic_mean": 0.07680336392104423
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 117,
+          "ic_mean": 0.07218519781053713,
+          "rank_ic_mean": 0.07459319758595614
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 117,
+          "ic_mean": 0.09798318631713307,
+          "rank_ic_mean": 0.08189694234859568
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 117,
+          "ic_mean": 0.09213546121778714,
+          "rank_ic_mean": 0.09174536003276342
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 117,
+          "ic_mean": 0.051815466870957734,
+          "rank_ic_mean": 0.05467220997093799
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 117,
+          "ic_mean": 0.14604290039524512,
+          "rank_ic_mean": 0.11976701541964616
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.09334789314298561,
+      "other_clock_rank_ic_mean": 0.08723235214311566,
+      "monthly": [
+        {
+          "month": "2024-01",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.03327898794392017,
+          "other_ic": 0.08660126639115805,
+          "opening_rank_ic": 0.04694765616035004,
+          "other_rank_ic": 0.07571206310722012
+        },
+        {
+          "month": "2024-02",
+          "opening_sections": 15,
+          "other_sections": 105,
+          "opening_ic": 0.09236971222029006,
+          "other_ic": 0.07727073935091516,
+          "opening_rank_ic": 0.04584475167424416,
+          "other_rank_ic": 0.06872766773126975
+        },
+        {
+          "month": "2024-03",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.025067750444065735,
+          "other_ic": 0.11191622209520781,
+          "opening_rank_ic": 0.03282709864539056,
+          "other_rank_ic": 0.11387666311955491
+        },
+        {
+          "month": "2024-04",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.018564783259724917,
+          "other_ic": 0.10405196588586857,
+          "opening_rank_ic": 0.05901878267575118,
+          "other_rank_ic": 0.08895942721291532
+        },
+        {
+          "month": "2024-05",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.05937030840619306,
+          "other_ic": 0.10027356157340095,
+          "opening_rank_ic": 0.046798589117283004,
+          "other_rank_ic": 0.10372980517139609
+        },
+        {
+          "month": "2024-06",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.014081614535591438,
+          "other_ic": 0.07477175440396623,
+          "opening_rank_ic": -0.03496754570812357,
+          "other_rank_ic": 0.06654790648525073
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1301",
+      "run_id": "v1301-complete-cross-section-s42",
+      "split": "test",
+      "cross_sections_sha256": "6745fbd3868c0f94f28e2aa4d289114450724b451c93240caeb1bc9000cf27ec",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 125,
+          "ic_mean": 0.024960866630573408,
+          "rank_ic_mean": 0.019865131724094605
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 125,
+          "ic_mean": 0.0797230531092177,
+          "rank_ic_mean": 0.0873053322104002
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 125,
+          "ic_mean": 0.10135918137055364,
+          "rank_ic_mean": 0.09017906852800105
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08189852118455616,
+          "rank_ic_mean": 0.07736134034535727
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 125,
+          "ic_mean": 0.11754035318001516,
+          "rank_ic_mean": 0.11238155089248536
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 125,
+          "ic_mean": 0.09757137373280025,
+          "rank_ic_mean": 0.09027361119528522
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 125,
+          "ic_mean": 0.07633478825547574,
+          "rank_ic_mean": 0.062013688453046514
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 125,
+          "ic_mean": 0.1477441093633387,
+          "rank_ic_mean": 0.1054131362717994
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.10031019717085103,
+      "other_clock_rank_ic_mean": 0.08927538969948215,
+      "monthly": [
+        {
+          "month": "2024-07",
+          "opening_sections": 23,
+          "other_sections": 161,
+          "opening_ic": 0.03983004693019025,
+          "other_ic": 0.08541962921013262,
+          "opening_rank_ic": 0.031326592564504645,
+          "other_rank_ic": 0.07206684639179227
+        },
+        {
+          "month": "2024-08",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.027694280700389692,
+          "other_ic": 0.08955163658892618,
+          "opening_rank_ic": 0.025153599193285622,
+          "other_rank_ic": 0.07320720466027592
+        },
+        {
+          "month": "2024-09",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": 0.014669890717772874,
+          "other_ic": 0.09215742723610809,
+          "opening_rank_ic": 0.009014938278096173,
+          "other_rank_ic": 0.06492846740387055
+        },
+        {
+          "month": "2024-10",
+          "opening_sections": 18,
+          "other_sections": 126,
+          "opening_ic": 0.0009270458944745798,
+          "other_ic": 0.0878289435283343,
+          "opening_rank_ic": 0.0016093007516266638,
+          "other_rank_ic": 0.08566644336462689
+        },
+        {
+          "month": "2024-11",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.03344087480100392,
+          "other_ic": 0.12379744290200881,
+          "opening_rank_ic": 0.029966314357492023,
+          "other_rank_ic": 0.11493640371483796
+        },
+        {
+          "month": "2024-12",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.0271395433390644,
+          "other_ic": 0.12146948943766812,
+          "opening_rank_ic": 0.017259400543431613,
+          "other_rank_ic": 0.12281938198407065
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1401",
+      "run_id": "v1401-frozen-equal-ensemble-s42",
+      "split": "validation",
+      "cross_sections_sha256": "d5191a88a4dd7cc9cecf7ee965c4670eaf686a92690dbfa6aa2406452ae74f32",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 117,
+          "ic_mean": 0.031130045492151474,
+          "rank_ic_mean": 0.04463181268275925
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 117,
+          "ic_mean": 0.10960710368823766,
+          "rank_ic_mean": 0.11259709772413372
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 117,
+          "ic_mean": 0.08892954230188434,
+          "rank_ic_mean": 0.08469612643969304
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 117,
+          "ic_mean": 0.07830487407817642,
+          "rank_ic_mean": 0.08921039339039935
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 117,
+          "ic_mean": 0.1085287626074572,
+          "rank_ic_mean": 0.09303380268409489
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 117,
+          "ic_mean": 0.10450051987868954,
+          "rank_ic_mean": 0.10135131647922295
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 117,
+          "ic_mean": 0.05908542798417256,
+          "rank_ic_mean": 0.06705316806511806
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 117,
+          "ic_mean": 0.164413259204091,
+          "rank_ic_mean": 0.13744557369676638
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.10190992710610124,
+      "other_clock_rank_ic_mean": 0.09791249692563264,
+      "monthly": [
+        {
+          "month": "2024-01",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.031223216672082454,
+          "other_ic": 0.10114658710175087,
+          "opening_rank_ic": 0.05724659306331061,
+          "other_rank_ic": 0.09222097852750133
+        },
+        {
+          "month": "2024-02",
+          "opening_sections": 15,
+          "other_sections": 105,
+          "opening_ic": 0.09513814557372072,
+          "other_ic": 0.08407001191139801,
+          "opening_rank_ic": 0.06345430563306316,
+          "other_rank_ic": 0.07114664899187251
+        },
+        {
+          "month": "2024-03",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.02075260401615197,
+          "other_ic": 0.12055313509761957,
+          "opening_rank_ic": 0.0560168461264717,
+          "other_rank_ic": 0.12778728296549874
+        },
+        {
+          "month": "2024-04",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.026475804979950456,
+          "other_ic": 0.1102222824342434,
+          "opening_rank_ic": 0.0720520495925184,
+          "other_rank_ic": 0.0973167575407205
+        },
+        {
+          "month": "2024-05",
+          "opening_sections": 20,
+          "other_sections": 140,
+          "opening_ic": 0.05208807193602982,
+          "other_ic": 0.10828695031471348,
+          "opening_rank_ic": 0.05844516375630695,
+          "other_rank_ic": 0.11464787601816506
+        },
+        {
+          "month": "2024-06",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.025202623708878914,
+          "other_ic": 0.08080978339343192,
+          "opening_rank_ic": -0.040821872823071675,
+          "other_rank_ic": 0.07562501391382719
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    },
+    {
+      "solution_id": "v1401",
+      "run_id": "v1401-frozen-equal-ensemble-s42",
+      "split": "test",
+      "cross_sections_sha256": "ec6944ed4c8ea649cc14bf49248d238c950b5eabbab7deabebfe9dc7a327cfa1",
+      "clock_metrics": [
+        {
+          "clock": "09:30",
+          "cross_sections": 125,
+          "ic_mean": 0.020306667322999686,
+          "rank_ic_mean": 0.03500400095114166
+        },
+        {
+          "clock": "10:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08843511142768626,
+          "rank_ic_mean": 0.09580693658541968
+        },
+        {
+          "clock": "10:30",
+          "cross_sections": 125,
+          "ic_mean": 0.10061496134741219,
+          "rank_ic_mean": 0.09833794003806619
+        },
+        {
+          "clock": "11:00",
+          "cross_sections": 125,
+          "ic_mean": 0.08599414246735075,
+          "rank_ic_mean": 0.08618957164745147
+        },
+        {
+          "clock": "11:30",
+          "cross_sections": 125,
+          "ic_mean": 0.1326724018207999,
+          "rank_ic_mean": 0.12905963364507078
+        },
+        {
+          "clock": "13:30",
+          "cross_sections": 125,
+          "ic_mean": 0.11384253877283121,
+          "rank_ic_mean": 0.1066093162471441
+        },
+        {
+          "clock": "14:00",
+          "cross_sections": 125,
+          "ic_mean": 0.09233567292765466,
+          "rank_ic_mean": 0.07204696856048583
+        },
+        {
+          "clock": "14:30",
+          "cross_sections": 125,
+          "ic_mean": 0.16563146521925567,
+          "rank_ic_mean": 0.12202094439885722
+        }
+      ],
+      "opening_fraction": 0.125,
+      "other_clock_ic_mean": 0.11136089914042724,
+      "other_clock_rank_ic_mean": 0.10143875873178503,
+      "monthly": [
+        {
+          "month": "2024-07",
+          "opening_sections": 23,
+          "other_sections": 161,
+          "opening_ic": 0.03055132745185214,
+          "other_ic": 0.0949752795712278,
+          "opening_rank_ic": 0.04538473220100342,
+          "other_rank_ic": 0.08190115059780075
+        },
+        {
+          "month": "2024-08",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.033316483719648474,
+          "other_ic": 0.10319979431518689,
+          "opening_rank_ic": 0.048173746383084984,
+          "other_rank_ic": 0.0868368967299636
+        },
+        {
+          "month": "2024-09",
+          "opening_sections": 19,
+          "other_sections": 133,
+          "opening_ic": -0.0065849234025256165,
+          "other_ic": 0.09726493339249409,
+          "opening_rank_ic": 0.011837958785327207,
+          "other_rank_ic": 0.07383426720419776
+        },
+        {
+          "month": "2024-10",
+          "opening_sections": 18,
+          "other_sections": 126,
+          "opening_ic": -0.010018594237012186,
+          "other_ic": 0.09218046437427203,
+          "opening_rank_ic": -0.0021891423565427704,
+          "other_rank_ic": 0.09801230261693822
+        },
+        {
+          "month": "2024-11",
+          "opening_sections": 21,
+          "other_sections": 147,
+          "opening_ic": 0.04433131896378874,
+          "other_ic": 0.1424037219371506,
+          "opening_rank_ic": 0.06382648482439664,
+          "other_rank_ic": 0.12959913080353586
+        },
+        {
+          "month": "2024-12",
+          "opening_sections": 22,
+          "other_sections": 154,
+          "opening_ic": 0.021690035673851728,
+          "other_ic": 0.13488751061848214,
+          "opening_rank_ic": 0.03390709191027191,
+          "other_rank_ic": 0.1362296535820734
+        }
+      ],
+      "frozen_mean_reconstructed": true
+    }
+  ],
+  "input_samples": [
+    {
+      "month": "2020-06",
+      "frequency": "bar1m",
+      "dates": [
+        "2020-06-01",
+        "2020-06-02",
+        "2020-06-03",
+        "2020-06-04",
+        "2020-06-05"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "ef8a9a1a31e7552006a064595d069d8ffdd2a5cdb601579791350567cb1ea100",
+      "raw_sample_sha256": "556ceb428ebd26351ec1aa9123859299f4b10f5b70688f2b80f8d011cd1d563d",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2020-06.parquet",
+        "bytes": 490655979,
+        "mtime_ns": 1790692260404215700
+      },
+      "processed_record_sha256": "6ef07d7b1fdd2f668ca06f29cafeb6ca23841dd8f4a2b4392d0092f575aa7858",
+      "raw_rows": 3199,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 316,
+      "both_best_quotes_stock_days": 315,
+      "positive_volume_stock_days": 185,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 3199,
+      "processed_matching_rows": 3199,
+      "processed_any_finite_price_rows": 3034,
+      "by_clock": [
+        {
+          "clock": "09:16",
+          "rows": 319,
+          "any_price_rows": 295,
+          "both_best_quotes_rows": 295,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:17",
+          "rows": 320,
+          "any_price_rows": 301,
+          "both_best_quotes_rows": 301,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:18",
+          "rows": 320,
+          "any_price_rows": 302,
+          "both_best_quotes_rows": 301,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:19",
+          "rows": 320,
+          "any_price_rows": 305,
+          "both_best_quotes_rows": 302,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:20",
+          "rows": 320,
+          "any_price_rows": 300,
+          "both_best_quotes_rows": 299,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:21",
+          "rows": 320,
+          "any_price_rows": 301,
+          "both_best_quotes_rows": 301,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:22",
+          "rows": 320,
+          "any_price_rows": 304,
+          "both_best_quotes_rows": 304,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:23",
+          "rows": 320,
+          "any_price_rows": 305,
+          "both_best_quotes_rows": 305,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:24",
+          "rows": 320,
+          "any_price_rows": 306,
+          "both_best_quotes_rows": 306,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 315,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 185
+        }
+      ]
+    },
+    {
+      "month": "2020-06",
+      "frequency": "bar5m",
+      "dates": [
+        "2020-06-01",
+        "2020-06-02",
+        "2020-06-03",
+        "2020-06-04",
+        "2020-06-05"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "ef8a9a1a31e7552006a064595d069d8ffdd2a5cdb601579791350567cb1ea100",
+      "raw_sample_sha256": "6c1e0dc13d26be63ec6549ced6c40bd999f10a51c63f6ccbc569d4ce72d096fa",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2020-06.parquet",
+        "bytes": 105689163,
+        "mtime_ns": 1790694993302231100
+      },
+      "processed_record_sha256": "d0182ad9e6469b04fa1d38102098c14ef150389b7d9a246344b52307c20af1ae",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 315,
+      "both_best_quotes_stock_days": 315,
+      "positive_volume_stock_days": 185,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 315,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 315,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 185
+        }
+      ]
+    },
+    {
+      "month": "2020-06",
+      "frequency": "bar30m",
+      "dates": [
+        "2020-06-01",
+        "2020-06-02",
+        "2020-06-03",
+        "2020-06-04",
+        "2020-06-05"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "ef8a9a1a31e7552006a064595d069d8ffdd2a5cdb601579791350567cb1ea100",
+      "raw_sample_sha256": "6c1e0dc13d26be63ec6549ced6c40bd999f10a51c63f6ccbc569d4ce72d096fa",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2020-06.parquet",
+        "bytes": 20341726,
+        "mtime_ns": 1790694832644648100
+      },
+      "processed_record_sha256": "52a473a308051ac35e2c509dc1b962f86610506524c576b2bcf7d270d9d14a20",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 315,
+      "both_best_quotes_stock_days": 315,
+      "positive_volume_stock_days": 185,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 315,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 315,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 185
+        }
+      ]
+    },
+    {
+      "month": "2021-06",
+      "frequency": "bar1m",
+      "dates": [
+        "2021-06-01",
+        "2021-06-02",
+        "2021-06-03",
+        "2021-06-04",
+        "2021-06-07"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "30f5514f2d3878edfdff62a19f66dec8daf23fac75be2f219c7385b0ab9daeed",
+      "raw_sample_sha256": "f4a65fd046cfd39ea8b556269ab9423bb7a56cb4ddfc87da401ec8148d448880",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2021-06.parquet",
+        "bytes": 552855027,
+        "mtime_ns": 1790692785601856000
+      },
+      "processed_record_sha256": "c202816388d1883c692f1b300ff9aef0db6be5e9b86e25567ee2106f6f5c3583",
+      "raw_rows": 3200,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 317,
+      "both_best_quotes_stock_days": 317,
+      "positive_volume_stock_days": 150,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 3200,
+      "processed_matching_rows": 3200,
+      "processed_any_finite_price_rows": 2984,
+      "by_clock": [
+        {
+          "clock": "09:16",
+          "rows": 320,
+          "any_price_rows": 279,
+          "both_best_quotes_rows": 278,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:17",
+          "rows": 320,
+          "any_price_rows": 287,
+          "both_best_quotes_rows": 287,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:18",
+          "rows": 320,
+          "any_price_rows": 297,
+          "both_best_quotes_rows": 296,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:19",
+          "rows": 320,
+          "any_price_rows": 294,
+          "both_best_quotes_rows": 294,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:20",
+          "rows": 320,
+          "any_price_rows": 293,
+          "both_best_quotes_rows": 293,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:21",
+          "rows": 320,
+          "any_price_rows": 298,
+          "both_best_quotes_rows": 298,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:22",
+          "rows": 320,
+          "any_price_rows": 303,
+          "both_best_quotes_rows": 303,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:23",
+          "rows": 320,
+          "any_price_rows": 307,
+          "both_best_quotes_rows": 307,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:24",
+          "rows": 320,
+          "any_price_rows": 310,
+          "both_best_quotes_rows": 310,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 316,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 150
+        }
+      ]
+    },
+    {
+      "month": "2021-06",
+      "frequency": "bar5m",
+      "dates": [
+        "2021-06-01",
+        "2021-06-02",
+        "2021-06-03",
+        "2021-06-04",
+        "2021-06-07"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "30f5514f2d3878edfdff62a19f66dec8daf23fac75be2f219c7385b0ab9daeed",
+      "raw_sample_sha256": "202a1fdd2df4327688524319e89a93281502f708a7ed085f36ce444007144355",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2021-06.parquet",
+        "bytes": 122195363,
+        "mtime_ns": 1790695108578508600
+      },
+      "processed_record_sha256": "f6393bb66c2cd4afc362ede7495d90330b5528a67b5591e776001a2e3e94f65a",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 316,
+      "both_best_quotes_stock_days": 315,
+      "positive_volume_stock_days": 150,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 316,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 316,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 150
+        }
+      ]
+    },
+    {
+      "month": "2021-06",
+      "frequency": "bar30m",
+      "dates": [
+        "2021-06-01",
+        "2021-06-02",
+        "2021-06-03",
+        "2021-06-04",
+        "2021-06-07"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "30f5514f2d3878edfdff62a19f66dec8daf23fac75be2f219c7385b0ab9daeed",
+      "raw_sample_sha256": "202a1fdd2df4327688524319e89a93281502f708a7ed085f36ce444007144355",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2021-06.parquet",
+        "bytes": 23062344,
+        "mtime_ns": 1790694855419881700
+      },
+      "processed_record_sha256": "bdf6238423b1c3ea192907878a33c1faa2a18dda1e5e6d2efcac682a3299e6c9",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 316,
+      "both_best_quotes_stock_days": 315,
+      "positive_volume_stock_days": 150,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 316,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 316,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 150
+        }
+      ]
+    },
+    {
+      "month": "2022-06",
+      "frequency": "bar1m",
+      "dates": [
+        "2022-06-01",
+        "2022-06-02",
+        "2022-06-06",
+        "2022-06-07",
+        "2022-06-08"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "e20cabd5a529db77cd6a3563e444a6d1647e2e5e8aa474497b1ecab20d02f829",
+      "raw_sample_sha256": "9cc62e65912796f8e583aa59dfb13656b5b4ac7aa5815f122566d24c918d46e4",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2022-06.parquet",
+        "bytes": 592206488,
+        "mtime_ns": 1790693348146596900
+      },
+      "processed_record_sha256": "36d89e018585471f298df0113a06fbd410af99fd70faa3bed645564715d3bc96",
+      "raw_rows": 3132,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 314,
+      "both_best_quotes_stock_days": 314,
+      "positive_volume_stock_days": 148,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 3132,
+      "processed_matching_rows": 3132,
+      "processed_any_finite_price_rows": 2864,
+      "by_clock": [
+        {
+          "clock": "09:16",
+          "rows": 320,
+          "any_price_rows": 279,
+          "both_best_quotes_rows": 279,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:17",
+          "rows": 301,
+          "any_price_rows": 267,
+          "both_best_quotes_rows": 262,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:18",
+          "rows": 310,
+          "any_price_rows": 279,
+          "both_best_quotes_rows": 278,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:19",
+          "rows": 316,
+          "any_price_rows": 285,
+          "both_best_quotes_rows": 284,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:20",
+          "rows": 311,
+          "any_price_rows": 276,
+          "both_best_quotes_rows": 272,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:21",
+          "rows": 314,
+          "any_price_rows": 285,
+          "both_best_quotes_rows": 285,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:22",
+          "rows": 311,
+          "any_price_rows": 287,
+          "both_best_quotes_rows": 287,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:23",
+          "rows": 311,
+          "any_price_rows": 290,
+          "both_best_quotes_rows": 290,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:24",
+          "rows": 318,
+          "any_price_rows": 302,
+          "both_best_quotes_rows": 302,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 314,
+          "both_best_quotes_rows": 314,
+          "positive_volume_rows": 148
+        }
+      ]
+    },
+    {
+      "month": "2022-06",
+      "frequency": "bar5m",
+      "dates": [
+        "2022-06-01",
+        "2022-06-02",
+        "2022-06-06",
+        "2022-06-07",
+        "2022-06-08"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "e20cabd5a529db77cd6a3563e444a6d1647e2e5e8aa474497b1ecab20d02f829",
+      "raw_sample_sha256": "894ba69b92365faab46c4da50684e0ab8e5b81e0ab09dc5cce011a5d295f2961",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2022-06.parquet",
+        "bytes": 128502047,
+        "mtime_ns": 1790695230799371400
+      },
+      "processed_record_sha256": "8ab73d517fce6ef2b7e0d232636e692f4ec6d196352e5d6cfda29a36afee0c95",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 314,
+      "both_best_quotes_stock_days": 314,
+      "positive_volume_stock_days": 148,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 314,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 314,
+          "both_best_quotes_rows": 314,
+          "positive_volume_rows": 148
+        }
+      ]
+    },
+    {
+      "month": "2022-06",
+      "frequency": "bar30m",
+      "dates": [
+        "2022-06-01",
+        "2022-06-02",
+        "2022-06-06",
+        "2022-06-07",
+        "2022-06-08"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "e20cabd5a529db77cd6a3563e444a6d1647e2e5e8aa474497b1ecab20d02f829",
+      "raw_sample_sha256": "894ba69b92365faab46c4da50684e0ab8e5b81e0ab09dc5cce011a5d295f2961",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2022-06.parquet",
+        "bytes": 24223350,
+        "mtime_ns": 1790694879150401600
+      },
+      "processed_record_sha256": "47e3cdb770ecbacec6aca2010c54fc3274bad8f2981cdd7c015fed190e6f3139",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 314,
+      "both_best_quotes_stock_days": 314,
+      "positive_volume_stock_days": 148,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 314,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 314,
+          "both_best_quotes_rows": 314,
+          "positive_volume_rows": 148
+        }
+      ]
+    },
+    {
+      "month": "2023-06",
+      "frequency": "bar1m",
+      "dates": [
+        "2023-06-01",
+        "2023-06-02",
+        "2023-06-05",
+        "2023-06-06",
+        "2023-06-07"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "33a6cdfebf58a148b390d26039e2e5c8345c85e0df79f900cd6c2f94ce770e38",
+      "raw_sample_sha256": "f651ce99f78786681b2a91b560865fed286a8ae53d254a45d045e81939e59fe1",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2023-06.parquet",
+        "bytes": 575315461,
+        "mtime_ns": 1790693931365856700
+      },
+      "processed_record_sha256": "572f1cdb7dc14324b3d4873b0a3d6bc982df3bcb51a902b58e04955db2156d1f",
+      "raw_rows": 3145,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 318,
+      "both_best_quotes_stock_days": 317,
+      "positive_volume_stock_days": 139,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 3145,
+      "processed_matching_rows": 3145,
+      "processed_any_finite_price_rows": 2960,
+      "by_clock": [
+        {
+          "clock": "09:16",
+          "rows": 320,
+          "any_price_rows": 297,
+          "both_best_quotes_rows": 297,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:17",
+          "rows": 308,
+          "any_price_rows": 284,
+          "both_best_quotes_rows": 283,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:18",
+          "rows": 314,
+          "any_price_rows": 291,
+          "both_best_quotes_rows": 291,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:19",
+          "rows": 314,
+          "any_price_rows": 293,
+          "both_best_quotes_rows": 291,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:20",
+          "rows": 310,
+          "any_price_rows": 286,
+          "both_best_quotes_rows": 285,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:21",
+          "rows": 318,
+          "any_price_rows": 299,
+          "both_best_quotes_rows": 299,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:22",
+          "rows": 311,
+          "any_price_rows": 294,
+          "both_best_quotes_rows": 294,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:23",
+          "rows": 315,
+          "any_price_rows": 299,
+          "both_best_quotes_rows": 299,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:24",
+          "rows": 315,
+          "any_price_rows": 302,
+          "both_best_quotes_rows": 302,
+          "positive_volume_rows": 0
+        },
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 315,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 139
+        }
+      ]
+    },
+    {
+      "month": "2023-06",
+      "frequency": "bar5m",
+      "dates": [
+        "2023-06-01",
+        "2023-06-02",
+        "2023-06-05",
+        "2023-06-06",
+        "2023-06-07"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "33a6cdfebf58a148b390d26039e2e5c8345c85e0df79f900cd6c2f94ce770e38",
+      "raw_sample_sha256": "63975a30b81234aee4e2a2749b5a8fdc3fd240e554db0a4697aba9b2f3071aa8",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2023-06.parquet",
+        "bytes": 122986340,
+        "mtime_ns": 1790695363207137400
+      },
+      "processed_record_sha256": "1f7ee359d9b5e138d49fe6ba636769df0e399dada5b47f31bcf621ba0486bff3",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 315,
+      "both_best_quotes_stock_days": 315,
+      "positive_volume_stock_days": 139,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 315,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 315,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 139
+        }
+      ]
+    },
+    {
+      "month": "2023-06",
+      "frequency": "bar30m",
+      "dates": [
+        "2023-06-01",
+        "2023-06-02",
+        "2023-06-05",
+        "2023-06-06",
+        "2023-06-07"
+      ],
+      "stocks_selected": 64,
+      "eligible_stock_days": 320,
+      "stock_selection_sha256": "33a6cdfebf58a148b390d26039e2e5c8345c85e0df79f900cd6c2f94ce770e38",
+      "raw_sample_sha256": "63975a30b81234aee4e2a2749b5a8fdc3fd240e554db0a4697aba9b2f3071aa8",
+      "raw_sample_hash_method": "pandas.hash_pandas_object(sorted date/instrument, original 36 fields, index=False) then sha256",
+      "pandas_version": "2.3.3",
+      "raw_source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2023-06.parquet",
+        "bytes": 23166377,
+        "mtime_ns": 1790694903981565900
+      },
+      "processed_record_sha256": "da53e66c40f8ee81dcfb31776862b21d8c66b6d797247d2e6ff63858d176ec4f",
+      "raw_rows": 320,
+      "observed_stock_days": 320,
+      "any_price_stock_days": 315,
+      "both_best_quotes_stock_days": 315,
+      "positive_volume_stock_days": 139,
+      "current_grid_admitted_rows": 0,
+      "current_grid_omitted_rows": 320,
+      "processed_matching_rows": 320,
+      "processed_any_finite_price_rows": 315,
+      "by_clock": [
+        {
+          "clock": "09:25",
+          "rows": 320,
+          "any_price_rows": 315,
+          "both_best_quotes_rows": 315,
+          "positive_volume_rows": 139
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "盘前观测存在且未直接进入固定网格，不等于具有未来收益预测价值，也不是归一化实现错误。",
+    "原始输入覆盖仅为20个训练日及每年64股的抽样，不外推为全量或平台覆盖。",
+    "只比较原始字段可用性，不将其解释为已核实的逐笔委托含义；零成交量不自动判定价格或盘口无效。",
+    "分时点结果来自已观察研究区间，不用于事后挑时点、更换模型输出或缩减覆盖。",
+    "未重算或反推vwap_return；所有正式标签、股票池及横向评估口径不变。"
+  ]
+}

@@ -86,7 +86,8 @@
     "latest_candidate": "v1701-long-history-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "长期状态条件化短期信号已落实为v1701；未评测积压达到暂停阈值，后续先分析正式结果，不构造更多候选。"
+    "next_design_hypothesis": "构造仍暂停；恢复后优先结合正式结果核查盘前信息与交易阶段建模。训练期存在当前规则网格未直接纳入的09:16—09:25行情，近期五版09:30表现较弱，但尚无因果或预测收益证明；未创建新候选。",
+    "next_session_input_direction_note": "docs/session-input-research-20261022.md"
   },
   "legacy_runs": [
     {
