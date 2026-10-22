@@ -1,0 +1,809 @@
+{
+  "computed_at": "2026-10-23T07:33:46+08:00",
+  "script_sha256": "6234c9661699af8f5cf19792887d955e329a0b6ebd19b9951beb50541e58ed10",
+  "reader_script_sha256": "a394b408781624f001adc3fa7af71b9402cb5ddaf1d210c17428ee1194cb8d19",
+  "run_id": "v1601-price-geometry-s42",
+  "model_sha256": "24314ff62d4bdd5821be14ebe7a225c5f95d64c06402caee30d99333c37c0d5b",
+  "best_epoch": 4,
+  "training_cache_manifest_sha256": "be95393b030f706260d25c7e5ea1071e0bb5b8ceaece331040c7736db914d63e",
+  "model_training_performed": false,
+  "weight_updates": 0,
+  "exposure_read": false,
+  "provided_return_formula_changed": false,
+  "train_device": "cpu_float32_single_thread",
+  "train_input_mode": "read_only_mmap_batch16",
+  "train_target_source": "existing_frozen_cross_section_zscore_of_provided_vwap_return",
+  "sampling": "训练期每年均匀随机8个交易日、共32日；每日期从当日成员并集随机128只。验证和测试分别均匀随机32日、各128只，复用冻结预测。全部选择不看标签或预测。",
+  "training_date_selection": [
+    {
+      "day": "2020-03-18",
+      "stock_days": 128,
+      "stock_indices_sha256": "8c51fb107ac0e88d63a24f3d843a9ba8a499bfb1c0bdaf1a183ce2380706d8c7",
+      "model_inputs_sha256": "7c299028aa0b857dd48b707c6df6023a6107e88c13e5524246664185e78e7bce",
+      "selected_targets_sha256": "18cf5561873de59c7a98a2a8b57d7203c8c7d9a35d12383052009ff36743a65e"
+    },
+    {
+      "day": "2020-03-25",
+      "stock_days": 128,
+      "stock_indices_sha256": "66ff21879756dfa469482f8d0daf49e87b8ef5c684bf6b73e4b51ae7b1269154",
+      "model_inputs_sha256": "90e3c8820c462c85a262eb72b3b72939ce939e03953d829e8c6ae28a1bb8bb66",
+      "selected_targets_sha256": "5671d4b4e407fc6f3a8a220b5615e0b28f2125151b4c119a0c04a1e6ffc67f01"
+    },
+    {
+      "day": "2020-06-29",
+      "stock_days": 128,
+      "stock_indices_sha256": "d5074db6cdcc670917416df0b3505c319410f44d839411548096715d7725cea3",
+      "model_inputs_sha256": "c1db3e2c50a473038fea7a221da4a3e91f3dd28659df9d625564b58e900f8c15",
+      "selected_targets_sha256": "2d30c3fe7adcf38dacc46f5287fbcaf5e8809f7350c38bf1117e356030ae6173"
+    },
+    {
+      "day": "2020-07-24",
+      "stock_days": 128,
+      "stock_indices_sha256": "e672513435eadc2226ce75247d2433114e77434217d054eaa058e1f79c189e31",
+      "model_inputs_sha256": "c8078787b4061535419776e8a563b45baf5434baa38b791e946f59cd7707a71b",
+      "selected_targets_sha256": "87cfe0a2e908a0ff0a10367ac62eaa9ca8e3eecb12a3e555c413e773c2477a80"
+    },
+    {
+      "day": "2020-11-18",
+      "stock_days": 128,
+      "stock_indices_sha256": "a07beb2d6c5d8584a4fea3933d0297bfff20b76e8fa510854380171008d913b8",
+      "model_inputs_sha256": "7864942a6e5378d075cb33e7e3676e1d0f2eff6ea290284428ccd030707518ec",
+      "selected_targets_sha256": "a1aedcf4517195f72e4dbea3545226e3aab886ba0fb69459e67f91af88ca0651"
+    },
+    {
+      "day": "2020-11-24",
+      "stock_days": 128,
+      "stock_indices_sha256": "c0d6af97059eaad7f69ac7b1137400bc7c0f78b8f658e2f8daf85c72bb8bc02e",
+      "model_inputs_sha256": "d6dda1e22b08043a7ca99dcfaa7e6223e7c41a11c494471e6e4a7cae76a5fa15",
+      "selected_targets_sha256": "19c9a1e51c289e68be513be521cda9c70b7db792cf1513d28b67aeb72ed81e68"
+    },
+    {
+      "day": "2020-12-10",
+      "stock_days": 128,
+      "stock_indices_sha256": "705f69bd96298c765c180cea32ca92660fb425ff637af6e1bc19974da0fc803b",
+      "model_inputs_sha256": "331ba9d85b2d84b69539ab02c68862bcabf6d0d699e438567b0dfbfc81bda8f9",
+      "selected_targets_sha256": "ae49df68a9316e42ad99878a3a0e35c8c646224032b286064c5fda9ed1d653e1"
+    },
+    {
+      "day": "2020-12-17",
+      "stock_days": 128,
+      "stock_indices_sha256": "bf6b5c8d2bbfbc95cbfd023d4a4bb806073e8419ac1d7e403b1fc4c105ffe019",
+      "model_inputs_sha256": "5039048aad38cab5693fd749550b731bd7c332870fa5737daf8a25d5567cfd38",
+      "selected_targets_sha256": "f3815305816ea90b8c898b47486808794fc099ae0d58ec1f949d3fcf05de7d74"
+    },
+    {
+      "day": "2021-01-20",
+      "stock_days": 128,
+      "stock_indices_sha256": "5f49dea6a1690ae68c842da991ca1fcf3449ed6f02a214cfaebdb7ca18d3d268",
+      "model_inputs_sha256": "83ee6c2dc0d2ff08fd36a85db0c61eb228727a3efbd79b8d5ade9c82ae2c7665",
+      "selected_targets_sha256": "b598673973e770f1cf8f01d4b8ebbcd465379c67dc883e0e442a6d35d9e9996a"
+    },
+    {
+      "day": "2021-05-11",
+      "stock_days": 128,
+      "stock_indices_sha256": "7510166a26e0e8b10bbb615ff104016f594431dc298c19458830696f5a04b9ad",
+      "model_inputs_sha256": "0fa2b7f20875b15be94128abc90641fb7f6b3804436785216fee9a2cc19d7dad",
+      "selected_targets_sha256": "70fbc372d7efd56343890124a854ff41a1da9d3dc2d9b85b2893eee4cb64f9cd"
+    },
+    {
+      "day": "2021-05-31",
+      "stock_days": 128,
+      "stock_indices_sha256": "9b60139587fbe00fc5022b8d0c1a23ef0e10bf3c87faf213f6afd1fca065bdc1",
+      "model_inputs_sha256": "298220e4e93fe58cb33c1a00bb10b3db903524f0bf283eac3f0c99f9b44d78fb",
+      "selected_targets_sha256": "583d6e9c21e07a3014dced2f458341b2beed9946286129dfc00edf28b581dae6"
+    },
+    {
+      "day": "2021-06-08",
+      "stock_days": 128,
+      "stock_indices_sha256": "baa69b1b24b65745869036350da59522ffb3e9f7edde28630443259cd0f183cb",
+      "model_inputs_sha256": "6076f9cafc75614a67b51c17eae2f0f6fc5e00fc4a49a4810b9f192035b323dd",
+      "selected_targets_sha256": "cb6a84154aafb6ddbc66e8e1c26f3026292ee5bc12f98587a041cd8a472f9ecb"
+    },
+    {
+      "day": "2021-08-18",
+      "stock_days": 128,
+      "stock_indices_sha256": "3f4f24f0a8002fe53ec07da5d9a86fac5f1a9444b06cb7f9aae8ec86404abd85",
+      "model_inputs_sha256": "2b28938ef0ad843bfb29fe5720cb3b76f0b672d2b39e48afd379de41de368a0b",
+      "selected_targets_sha256": "b4f804b661d9e47d17204da6fac4f192ff6165dfe736d9dc90ec6ca670adc64d"
+    },
+    {
+      "day": "2021-08-26",
+      "stock_days": 128,
+      "stock_indices_sha256": "3d5fbbac018f6724bb372b2add1217711d16fb56e3b83dfb0645706c2d801f86",
+      "model_inputs_sha256": "e08649248a4ccd9a3d66acb09ede00b678bf2dc7c9316255486ec25ec14e4929",
+      "selected_targets_sha256": "20439523c8f86d4be5b6831d40e7549722b366b37038330f1e6813000bacc12f"
+    },
+    {
+      "day": "2021-11-25",
+      "stock_days": 128,
+      "stock_indices_sha256": "7ee429ab82b1d8187c9b3b570970b02808da79f9ef20b27740c8db17ed38c587",
+      "model_inputs_sha256": "a6cb5b082b50de97a1c5fa8e1f54d7085fab9bf0e6d03b65528033650a6fc327",
+      "selected_targets_sha256": "7cd2df63418052b3cbd14f56605440276bc40b09ba9eac103f97114c41ee348d"
+    },
+    {
+      "day": "2021-12-02",
+      "stock_days": 128,
+      "stock_indices_sha256": "81962430802719fe4fb699edf2fd13aff9895040d9a7c7045c746c63c42298c5",
+      "model_inputs_sha256": "c3f5af0b27013e3d1522a3a6f57773954ed931aa70d684440dd9989462b8f3a9",
+      "selected_targets_sha256": "7bd69dd71967a14de401948f6a907539b5c51f29bb271d1c2c618b992b2ba4e1"
+    },
+    {
+      "day": "2022-02-28",
+      "stock_days": 128,
+      "stock_indices_sha256": "a125226f6619f999d78e59074ec3923f663e6c077c3f521cd58b72f76cd3fdc3",
+      "model_inputs_sha256": "d4fd847c16652b75e6c3c10c7130bb738fbb27a0d35f466b3c93ee14dfcdb8cb",
+      "selected_targets_sha256": "fe85b7b2470801a3e0cfe396861b58e5b71ee69e9c4c5c7acb2c7193b13960e4"
+    },
+    {
+      "day": "2022-05-06",
+      "stock_days": 128,
+      "stock_indices_sha256": "3cbfc04571be662652d98cfcb0902227c37b9e6e7840493db1f9a60294dfab62",
+      "model_inputs_sha256": "5b5def0b656a1a4620a622423b63c80cfc9e4c221dcad1ace91a360f23eeeb48",
+      "selected_targets_sha256": "8a535a826c776c1081c85a4901ce9d2f7ad16aea2fb014d239e0d45f31a0a16f"
+    },
+    {
+      "day": "2022-06-23",
+      "stock_days": 128,
+      "stock_indices_sha256": "fd2ace5426ba68fab8337878a0741bd5b92c210ac4bbd6114ff7db08a925feff",
+      "model_inputs_sha256": "7da8b1875272a7a8102f8882955b433e7cfa00a1e25ffc0c97cef58334828fc4",
+      "selected_targets_sha256": "2c2d50e76d6b1d7ee1ad9ac155cd67ad80ca4a7c011ec0ba5f7c0918851e6589"
+    },
+    {
+      "day": "2022-07-07",
+      "stock_days": 128,
+      "stock_indices_sha256": "9407c5eced88d2ec252b32805ccb6db6ab62c37c615a1a9516576ac078733abc",
+      "model_inputs_sha256": "8de75609f3854d16d4044851520a48fabe049c587ee6fc692b5d8cd461a95b45",
+      "selected_targets_sha256": "9efb56640ac84cc532247e9b635cf55f638687e31281a00b80d4565a7316a71d"
+    },
+    {
+      "day": "2022-08-11",
+      "stock_days": 128,
+      "stock_indices_sha256": "61884901efb9d9116879a0b27918d5f3cefd92a0aaa52100ccd513d7fe811cb1",
+      "model_inputs_sha256": "7aab917b2766fb03cacd7ef036c27bc517dc39f9e937def9bfed960e531d4acb",
+      "selected_targets_sha256": "8ef9593dd776b60096f16e7aeddd4678b2895b2194af0be453a20c6b5c7d2092"
+    },
+    {
+      "day": "2022-10-17",
+      "stock_days": 128,
+      "stock_indices_sha256": "7d50621ba9b1c8f47ac4a37ae8930b347cdab507d77f563e03a8da7d40ebdab5",
+      "model_inputs_sha256": "e8997c1ccad8358a37bafca38a131f08aaaae942677186c28345b421fdc46b82",
+      "selected_targets_sha256": "2d033f3fd7d7364ea9398b928f5ea5d244b532353fd45eead4852a29d8aac83d"
+    },
+    {
+      "day": "2022-11-07",
+      "stock_days": 128,
+      "stock_indices_sha256": "0c4e1b604f1d49b2b218220f37229c681cdccd09aea30518a52963f972ace55f",
+      "model_inputs_sha256": "497b7c4ef65eba767cedd4650792e01f6eea29d41cf70296d0ec84bed753ef7f",
+      "selected_targets_sha256": "4853a6e4ef2b19c0dbfac0f2a754638b1b6929eba8c609c6fea4ae8eb0d82f29"
+    },
+    {
+      "day": "2022-11-21",
+      "stock_days": 128,
+      "stock_indices_sha256": "edad3a75717537e06f88194399022390f4863ade5634d1ee32c4b6327530649a",
+      "model_inputs_sha256": "345abab6499e6b3b11d57dd452a0aa293c48f78c6c9b0e0d6c35d58ce4354181",
+      "selected_targets_sha256": "6c24b38d048b01d1591a20223eea2e227fe5e867230155860056d36fa7fbd34f"
+    },
+    {
+      "day": "2023-01-17",
+      "stock_days": 128,
+      "stock_indices_sha256": "217f45a40aa257665d91e76e07038c038c3895d87aa0e1f8cc47eb44d45dcad4",
+      "model_inputs_sha256": "a543ab1aca18ed04b394f618d68cce55b947de9fdc934f871918bcb3ca01ccb1",
+      "selected_targets_sha256": "12a7c6c775ceb248a7a1b3f7f40e57bfd67fb9a299c59b416944dfa5312f1d7a"
+    },
+    {
+      "day": "2023-04-18",
+      "stock_days": 128,
+      "stock_indices_sha256": "faaa5a6bf25e936cde97c0219cfa3fd304b52e325e904fef71aac40f7931986b",
+      "model_inputs_sha256": "5a55b89b42fb4ac08d682b4d93da0bc0b1bdcf662d02e30c7a1e4938e9a79de3",
+      "selected_targets_sha256": "ca115e517dcc2c091860a67bfcd559f401ee7be8ad5dd3c0e2eb933503773603"
+    },
+    {
+      "day": "2023-05-30",
+      "stock_days": 128,
+      "stock_indices_sha256": "b9fc7719defdf53d7e55c0b8c6d5c625f036cb4b5ae4abbde33313a716c59bb1",
+      "model_inputs_sha256": "d81a37d4058118a1cd575df07f9ad733329d5353cc735e0fd552ceaf3976590e",
+      "selected_targets_sha256": "b1940d99621596733f768d58888265b31de4289f7ff40f627b88f88fb36f5127"
+    },
+    {
+      "day": "2023-07-27",
+      "stock_days": 128,
+      "stock_indices_sha256": "d22f5da66a6e71e167d731298d9486ce7fc39b57fdee42f72d1b93abe78ab639",
+      "model_inputs_sha256": "d40276de53a2947a54a07366379647c8a36c15508765fcc6087aa0d13f041f47",
+      "selected_targets_sha256": "3e17af290806068b243568467d5e0385a058363483d7bfebe21d6f362e1d17dc"
+    },
+    {
+      "day": "2023-07-31",
+      "stock_days": 128,
+      "stock_indices_sha256": "14b921bc5693abd0669b4817c768042897e5bbf408dd55ecb33c870bd419f32b",
+      "model_inputs_sha256": "cb380d7581766b4420f50f96c4dc53d17dc4cfa66ac3af13183d35ed1048eed4",
+      "selected_targets_sha256": "d2510b1f1949a06879298f32281fd0db699e142972d40b768f3e692bd3571bcd"
+    },
+    {
+      "day": "2023-08-15",
+      "stock_days": 128,
+      "stock_indices_sha256": "671a54cf4326b8c61649d256b9ce309097a6c22b62b985a2bfdb024a4ac52374",
+      "model_inputs_sha256": "ce8936ae8ade159e67d621e600e3b3d721b1ed44fa1ce3d6e3656a0b402b5b1c",
+      "selected_targets_sha256": "62e297f1c465b43f9e1f806503a8cc454f6a294ab918afdc68d744fccc2cd67a"
+    },
+    {
+      "day": "2023-08-29",
+      "stock_days": 128,
+      "stock_indices_sha256": "37224096eec0adecca065e7b0c8cfa0b83523108be23a18b7ca5f41e0eae030f",
+      "model_inputs_sha256": "8ebd9789b31f78a2963438016406bc05192d8cedcce1878402f8659655c24376",
+      "selected_targets_sha256": "40c3c0d880b2525b2bc6687c12826e8d115f76ee62bbe77a26ff02fc4094a3ac"
+    },
+    {
+      "day": "2023-09-26",
+      "stock_days": 128,
+      "stock_indices_sha256": "22f32c2115959d1cd7d7f0a9a82c89beefb23768fd287708f517f56f7f43277f",
+      "model_inputs_sha256": "8ef706a86c54aa35fa42b6cf5b03b7135e5dd6ff0d71cb38866380f1e4a973eb",
+      "selected_targets_sha256": "5d460c1e760ba2ba25e67143302c6ab91d64c78093e7c310fb84c487c878a152"
+    }
+  ],
+  "results": [
+    {
+      "split": "train",
+      "sampled_sections": 256,
+      "finite_label_rows": 32720,
+      "defined_sections": 256,
+      "undefined_sections": 0,
+      "ic_mean": 0.1557787734900632,
+      "rank_ic_mean": 0.14616347487303094,
+      "ic_day_resampling_95pct_interval": [
+        0.13537673347968335,
+        0.17658889587299942
+      ],
+      "rank_ic_day_resampling_95pct_interval": [
+        0.12693700177108555,
+        0.16526395128616533
+      ],
+      "by_year": [
+        {
+          "year": "2020",
+          "ic": 0.16341195427995028,
+          "rank_ic": 0.16547269146997975
+        },
+        {
+          "year": "2021",
+          "ic": 0.15767502730281205,
+          "rank_ic": 0.15763030217380167
+        },
+        {
+          "year": "2022",
+          "ic": 0.15719712745763215,
+          "rank_ic": 0.14095187479290378
+        },
+        {
+          "year": "2023",
+          "ic": 0.14483098491985835,
+          "rank_ic": 0.12059903105543857
+        }
+      ],
+      "by_clock": [
+        {
+          "clock": "09:30",
+          "ic": 0.06919456156260992,
+          "rank_ic": 0.09232733336794019
+        },
+        {
+          "clock": "10:00",
+          "ic": 0.14812367357202136,
+          "rank_ic": 0.15881648997409117
+        },
+        {
+          "clock": "10:30",
+          "ic": 0.12873761627532582,
+          "rank_ic": 0.13984987091911474
+        },
+        {
+          "clock": "11:00",
+          "ic": 0.19277131786942464,
+          "rank_ic": 0.1585023245186648
+        },
+        {
+          "clock": "11:30",
+          "ic": 0.14439867719067173,
+          "rank_ic": 0.13995513488911632
+        },
+        {
+          "clock": "13:30",
+          "ic": 0.13485774111190607,
+          "rank_ic": 0.12004431637406152
+        },
+        {
+          "clock": "14:00",
+          "ic": 0.16391797422768545,
+          "rank_ic": 0.1500680164570635
+        },
+        {
+          "clock": "14:30",
+          "ic": 0.26422862611086073,
+          "rank_ic": 0.20974431248419528
+        }
+      ]
+    },
+    {
+      "split": "validation",
+      "source_keys_sha256": "c56e47a167e0da78a23406e64e78f458403890d6633840e2687568a9c077fe75",
+      "predictions_sha256": "3c471f672a41d309884f1a1f942b36fa62f75465a0b38213d0e867bbdd03298e",
+      "date_selection": [
+        {
+          "day": "2024-01-08",
+          "stock_days": 128,
+          "stocks_sha256": "837d8116dfc3662f5e095a76777c4a036d236b4b83899dd863a9c2bcf7d3b7cf"
+        },
+        {
+          "day": "2024-01-10",
+          "stock_days": 128,
+          "stocks_sha256": "7e23961ce7bbe555e45503ba158a3237fad4f95b8a916aee30e8660769b1a979"
+        },
+        {
+          "day": "2024-01-23",
+          "stock_days": 128,
+          "stocks_sha256": "032a046ea2fc81b69b9426014f86d6a330947f45833f7ceb763578c1212fe2ba"
+        },
+        {
+          "day": "2024-01-25",
+          "stock_days": 128,
+          "stocks_sha256": "e525424ce5fa2bc810261ff5a8aca9f124fe67f4190fd67664985336c73e185e"
+        },
+        {
+          "day": "2024-01-26",
+          "stock_days": 128,
+          "stocks_sha256": "84aa6efdfce96f5cb5ef078be3372c942018696dd49c58bf59e826f3a03d671c"
+        },
+        {
+          "day": "2024-02-01",
+          "stock_days": 128,
+          "stocks_sha256": "fbda90012ce2759c3691af8bcd18403de6e8196dff8524e17bfcb9c2adbaf9a8"
+        },
+        {
+          "day": "2024-02-05",
+          "stock_days": 128,
+          "stocks_sha256": "4ce9bb798d05d4a412510c43050d549630d122db39c9a2621d94fb6b0d1a42af"
+        },
+        {
+          "day": "2024-02-06",
+          "stock_days": 128,
+          "stocks_sha256": "aeaa58b2b2a438d1861651d0b21b7e5c34d59e19e8552027afd877d0ced3c63f"
+        },
+        {
+          "day": "2024-02-07",
+          "stock_days": 128,
+          "stocks_sha256": "5ba11adaec3aeb5a43855cf831011d11e7b9148191bcd450dcd773d47498750b"
+        },
+        {
+          "day": "2024-02-23",
+          "stock_days": 128,
+          "stocks_sha256": "ed5427289e227040a649de389b61ee54c630cc40b29826b3c674418537d579c7"
+        },
+        {
+          "day": "2024-02-26",
+          "stock_days": 128,
+          "stocks_sha256": "9791d58a7863c544caf4151846910120656a398034b839185180c8e4b3868d61"
+        },
+        {
+          "day": "2024-03-01",
+          "stock_days": 128,
+          "stocks_sha256": "c4bc8ef162c474e6e386ef95650b7ceaaa65304d526a4a610f7c2172f6ba2d32"
+        },
+        {
+          "day": "2024-03-04",
+          "stock_days": 128,
+          "stocks_sha256": "fcb2d9c4f893f00106776888b18910d8424f3f52ff9d56bf3b32d28a95a56f2a"
+        },
+        {
+          "day": "2024-03-14",
+          "stock_days": 128,
+          "stocks_sha256": "478b61b051fb1a74f389d8c45ad956dfe93e48feaba129c1bd7c8df38fd9de0c"
+        },
+        {
+          "day": "2024-03-18",
+          "stock_days": 128,
+          "stocks_sha256": "d2f7d2bfedd715fd4bb5bfde469f7b580f2b23de648ca90f33f6a364489db4b6"
+        },
+        {
+          "day": "2024-03-20",
+          "stock_days": 128,
+          "stocks_sha256": "39728b57b10c2bbbdb3331f95d931e129bd7d8362e2a32f5499fc188f71cfbd1"
+        },
+        {
+          "day": "2024-03-22",
+          "stock_days": 128,
+          "stocks_sha256": "c763bce7d5b716842ffe172404960734d97f09d182910f9148f37933abcf914f"
+        },
+        {
+          "day": "2024-04-09",
+          "stock_days": 128,
+          "stocks_sha256": "e2b45c9bd0de811aaa88afc737151e883fb408141acf10478708da60d9eaff7e"
+        },
+        {
+          "day": "2024-04-10",
+          "stock_days": 128,
+          "stocks_sha256": "0b4dc93e228eb69c52d12bd6e57afee4201ed2e9e5ddb80f127256e7d5f25768"
+        },
+        {
+          "day": "2024-04-11",
+          "stock_days": 128,
+          "stocks_sha256": "3a30efa8ad72b841b62678972096a7d20dd1d4ead84fa459007d9b337421dbea"
+        },
+        {
+          "day": "2024-04-16",
+          "stock_days": 128,
+          "stocks_sha256": "dcc0dac633dbfab3d057d23a175846f1c81d98de4629d50f65f9fc61c79fdd5f"
+        },
+        {
+          "day": "2024-04-24",
+          "stock_days": 128,
+          "stocks_sha256": "c3fd16af730778076bef1c54d213f3732d9f845dae0c802921b5ea64295706e4"
+        },
+        {
+          "day": "2024-05-10",
+          "stock_days": 128,
+          "stocks_sha256": "c54cc753bb251cf46154c5f505b391e875c50882b61abb80c3ee8a1c5889bdc5"
+        },
+        {
+          "day": "2024-05-16",
+          "stock_days": 128,
+          "stocks_sha256": "7247cda7e8dd3d6ca82482afb7c328525311a43140ce3911680d9c492e5a8e5d"
+        },
+        {
+          "day": "2024-05-21",
+          "stock_days": 128,
+          "stocks_sha256": "c47bc726178730825b18774e4f0603289e556d9518bfcb71591c65a175d1443e"
+        },
+        {
+          "day": "2024-05-30",
+          "stock_days": 128,
+          "stocks_sha256": "30e7e797e7c5eee9e75d0ae5395e39cb532b489b1e87d990bffbf44ca9ba7eba"
+        },
+        {
+          "day": "2024-05-31",
+          "stock_days": 128,
+          "stocks_sha256": "4dda68fd140893cb8fbaeadb5b3a2829ab5228c8bdc4070d1cf4f505ff05b6b0"
+        },
+        {
+          "day": "2024-06-05",
+          "stock_days": 128,
+          "stocks_sha256": "37770946967cf99cd31856819cd27b1e813dc0696d0c9b74375d8fdbbf9f806d"
+        },
+        {
+          "day": "2024-06-07",
+          "stock_days": 128,
+          "stocks_sha256": "a71d6a89359e1769c3aac47c38d48224d2b044c44216c05aed4269224fd2cb6e"
+        },
+        {
+          "day": "2024-06-19",
+          "stock_days": 128,
+          "stocks_sha256": "c095347528f559aceddc56a7d0d5b5c8a6cf12291e6336905e26aba5b17a9c2b"
+        },
+        {
+          "day": "2024-06-24",
+          "stock_days": 128,
+          "stocks_sha256": "4f1012485d9ed1395edabfcf27669b4b7f817fc1d2e94a7e15674eb381ba6d38"
+        },
+        {
+          "day": "2024-06-27",
+          "stock_days": 128,
+          "stocks_sha256": "886c78c10d8a0b598a6c2d43a58440f221712a991a9ab6d2c8e064f494a85904"
+        }
+      ],
+      "sampled_sections": 256,
+      "finite_label_rows": 32720,
+      "defined_sections": 256,
+      "undefined_sections": 0,
+      "ic_mean": 0.13298551599280897,
+      "rank_ic_mean": 0.12325652667269697,
+      "ic_day_resampling_95pct_interval": [
+        0.11474688633180156,
+        0.15018896914493665
+      ],
+      "rank_ic_day_resampling_95pct_interval": [
+        0.11027353123338632,
+        0.13552542211275614
+      ],
+      "by_year": [
+        {
+          "year": "2024",
+          "ic": 0.13298551599280897,
+          "rank_ic": 0.12325652667269697
+        }
+      ],
+      "by_clock": [
+        {
+          "clock": "09:30",
+          "ic": 0.04408012607243259,
+          "rank_ic": 0.05739582362569867
+        },
+        {
+          "clock": "10:00",
+          "ic": 0.15140130844674038,
+          "rank_ic": 0.14860374014385555
+        },
+        {
+          "clock": "10:30",
+          "ic": 0.1375665061535617,
+          "rank_ic": 0.12541946277200453
+        },
+        {
+          "clock": "11:00",
+          "ic": 0.15036944902517296,
+          "rank_ic": 0.16818255946113567
+        },
+        {
+          "clock": "11:30",
+          "ic": 0.1652567361178122,
+          "rank_ic": 0.12818071320527158
+        },
+        {
+          "clock": "13:30",
+          "ic": 0.10360614950212241,
+          "rank_ic": 0.09054603329698249
+        },
+        {
+          "clock": "14:00",
+          "ic": 0.0652603335415353,
+          "rank_ic": 0.10809632334066889
+        },
+        {
+          "clock": "14:30",
+          "ic": 0.24634351908309426,
+          "rank_ic": 0.15962755753595845
+        }
+      ],
+      "full_universe_context": {
+        "cross_sections_sha256": "19e4b5a69bf879ac49cca0195fa858cd2c9bad5ef29b7edac91b0b3340f64f8b",
+        "selected_dates_sections": 256,
+        "same_selected_dates_full_universe_ic": 0.11504069821433818,
+        "same_selected_dates_full_universe_rank_ic": 0.11432927959756578,
+        "all_dates_formal_ic": 0.10552600428647893,
+        "all_dates_formal_rank_ic": 0.10263980376862289
+      }
+    },
+    {
+      "split": "test",
+      "source_keys_sha256": "b230ab280ff587b61775ebd2ea179dd9371326deaef0b37f03f2f74994a493d5",
+      "predictions_sha256": "62d831f8e75b8e28bf54a164c7dea1d977b0ef11d8821725218b07557882514c",
+      "date_selection": [
+        {
+          "day": "2024-07-15",
+          "stock_days": 128,
+          "stocks_sha256": "52d7bfebf877e2cb5e2d0006753496686d937bd17c6e61754edeee17212b440d"
+        },
+        {
+          "day": "2024-07-16",
+          "stock_days": 128,
+          "stocks_sha256": "03700940cb086add50287424d1a125455bcc2eaf9858b3fd07d0bfa64d87749b"
+        },
+        {
+          "day": "2024-07-19",
+          "stock_days": 128,
+          "stocks_sha256": "20060cbccb54129e0d3ac715b81d3b3fc329ae0dbe9bb780c5a1e4713407819a"
+        },
+        {
+          "day": "2024-07-24",
+          "stock_days": 128,
+          "stocks_sha256": "c6463f2b43bb97b99d75e0a9bbc6c5dbb4aae510bdf827c388c21e9a69491b38"
+        },
+        {
+          "day": "2024-07-31",
+          "stock_days": 128,
+          "stocks_sha256": "943f00476d649df500fdd8dcc16f1868009d0b7f2b20c53d158288f791d58082"
+        },
+        {
+          "day": "2024-08-02",
+          "stock_days": 128,
+          "stocks_sha256": "69d369d490980ed8228d4a56f18514e1a3582f50a0bc0e9fea9ee5a4ef9e78cd"
+        },
+        {
+          "day": "2024-08-05",
+          "stock_days": 128,
+          "stocks_sha256": "3bc811ab461cade47e36ee25f43797d5f0152c6fc74cecb0fd08827a58a566a3"
+        },
+        {
+          "day": "2024-08-09",
+          "stock_days": 128,
+          "stocks_sha256": "2ecc267a900f9e69c5b909157aa5a352c40a0c8ce46cdb3964ed93ffeab4e049"
+        },
+        {
+          "day": "2024-08-13",
+          "stock_days": 128,
+          "stocks_sha256": "4cd280a38479e5b0b120bdb0adc0294f46e0c46836c5f698a9a5decacbcefe14"
+        },
+        {
+          "day": "2024-08-15",
+          "stock_days": 128,
+          "stocks_sha256": "d4db970cb3aabe6ab9832cec70714c0004f2c4ebc1800e2c7890be1766f8ebf1"
+        },
+        {
+          "day": "2024-08-16",
+          "stock_days": 128,
+          "stocks_sha256": "5ce61b0b69bf5b81cabc79bec3d34956ff7d110fbfd7d65ab990384e359dee6b"
+        },
+        {
+          "day": "2024-08-20",
+          "stock_days": 128,
+          "stocks_sha256": "3c7a06896382dec8a5188c05165e8426b533a241ae7946b894a9239e673abc34"
+        },
+        {
+          "day": "2024-08-22",
+          "stock_days": 128,
+          "stocks_sha256": "cc97a27ef3c0d5a7ba8f6988e0a006a9c2d9aa402786b4147b80034713d44186"
+        },
+        {
+          "day": "2024-08-28",
+          "stock_days": 128,
+          "stocks_sha256": "57aa0289c66d94281d4456ed450856177d38b76ce4567c6ce9a11a627f0136ec"
+        },
+        {
+          "day": "2024-08-29",
+          "stock_days": 128,
+          "stocks_sha256": "8707109b597cee8135c5ee0c68db74218a444b3433abdd2ce1c073eb93dc56fa"
+        },
+        {
+          "day": "2024-08-30",
+          "stock_days": 128,
+          "stocks_sha256": "6a8b177094dac59c87c0897c2bd299f455360753b0adc1ce982658746fd63d93"
+        },
+        {
+          "day": "2024-09-24",
+          "stock_days": 128,
+          "stocks_sha256": "fa9763300173f48780cf9ca6ba3853b286b95536f811e556d30e74b2e88880b9"
+        },
+        {
+          "day": "2024-09-30",
+          "stock_days": 128,
+          "stocks_sha256": "5f34a557726d1fefdacdb7670b4d564471525e42345e4e5e09ef301313d8ff78"
+        },
+        {
+          "day": "2024-10-08",
+          "stock_days": 128,
+          "stocks_sha256": "39396415af46b190e8b69bf7791ede8636ba4210a6f89e6ae6e351e01453f2ea"
+        },
+        {
+          "day": "2024-10-16",
+          "stock_days": 128,
+          "stocks_sha256": "2b63d35881a919c5b9540be62d54f9f2d06b928921488d3299d8f0b24f7e0c86"
+        },
+        {
+          "day": "2024-10-25",
+          "stock_days": 128,
+          "stocks_sha256": "59bb3113406961bcdd5a6025a15d54a4c295eb37de791a883a79232186de4252"
+        },
+        {
+          "day": "2024-11-04",
+          "stock_days": 128,
+          "stocks_sha256": "e8f67e940ec0392ad0bf6eac94df6279d5d90a0e6a578144bb90f69fe924403c"
+        },
+        {
+          "day": "2024-11-13",
+          "stock_days": 128,
+          "stocks_sha256": "574e82b51aeabf8a6a9d8c6b6b9b514f35d5593ee68b6e4d870fb24b8291cd45"
+        },
+        {
+          "day": "2024-11-15",
+          "stock_days": 128,
+          "stocks_sha256": "0c25619fdb6ab9253088021848920b2e3073d9419438a6a01e9ebbcc93d5f8c2"
+        },
+        {
+          "day": "2024-11-20",
+          "stock_days": 128,
+          "stocks_sha256": "ff94ebbf5cbe4e4fe60898542190ed124e7ce6c0450261a25fd2960d11946fc3"
+        },
+        {
+          "day": "2024-11-21",
+          "stock_days": 128,
+          "stocks_sha256": "95d0b3c236ab887be156143850d245bcc9237b6ecc40981045fcfda683cdd2da"
+        },
+        {
+          "day": "2024-11-22",
+          "stock_days": 128,
+          "stocks_sha256": "d00fb1fceb5715d52892796558a472206e8a03157a941bfd7c579863796d3228"
+        },
+        {
+          "day": "2024-12-10",
+          "stock_days": 128,
+          "stocks_sha256": "0be39aecc682fbd5322151087909211420666f3d4ffee8dd1859ffb67e0282c0"
+        },
+        {
+          "day": "2024-12-13",
+          "stock_days": 128,
+          "stocks_sha256": "800cf7329e7f8ee57604cc5899de13cd7d5f82885a764055aa6daca8e7566fba"
+        },
+        {
+          "day": "2024-12-20",
+          "stock_days": 128,
+          "stocks_sha256": "bd00513f1330294c3f05f33a7d4f101f6d6ef955bfb5cadd1e66e036042eeb2a"
+        },
+        {
+          "day": "2024-12-23",
+          "stock_days": 128,
+          "stocks_sha256": "6f66a07ab388f43de937feed6acc1627fad183713e82a398b9f3a6d3a58f5b52"
+        },
+        {
+          "day": "2024-12-26",
+          "stock_days": 128,
+          "stocks_sha256": "6a4eb8baf3dc5a1af96841b42cffadee0d23fd70cd0ca4a9db12d978b7a34d58"
+        }
+      ],
+      "sampled_sections": 256,
+      "finite_label_rows": 32744,
+      "defined_sections": 256,
+      "undefined_sections": 0,
+      "ic_mean": 0.09488517762145593,
+      "rank_ic_mean": 0.08579237884514299,
+      "ic_day_resampling_95pct_interval": [
+        0.06730690147437163,
+        0.1205768842430467
+      ],
+      "rank_ic_day_resampling_95pct_interval": [
+        0.06235837553621056,
+        0.10713464884279374
+      ],
+      "by_year": [
+        {
+          "year": "2024",
+          "ic": 0.09488517762145593,
+          "rank_ic": 0.08579237884514299
+        }
+      ],
+      "by_clock": [
+        {
+          "clock": "09:30",
+          "ic": -0.008584343095739598,
+          "rank_ic": 0.0059938129667839474
+        },
+        {
+          "clock": "10:00",
+          "ic": 0.06449152264966403,
+          "rank_ic": 0.0897058973301484
+        },
+        {
+          "clock": "10:30",
+          "ic": 0.11234920602721844,
+          "rank_ic": 0.0776349177283072
+        },
+        {
+          "clock": "11:00",
+          "ic": 0.048255731651230815,
+          "rank_ic": 0.060333660429528424
+        },
+        {
+          "clock": "11:30",
+          "ic": 0.13370195741447236,
+          "rank_ic": 0.10757630303025348
+        },
+        {
+          "clock": "13:30",
+          "ic": 0.11309205192890848,
+          "rank_ic": 0.0837438853823323
+        },
+        {
+          "clock": "14:00",
+          "ic": 0.11789017093953184,
+          "rank_ic": 0.12210874706931618
+        },
+        {
+          "clock": "14:30",
+          "ic": 0.17788512345636104,
+          "rank_ic": 0.13924180682447396
+        }
+      ],
+      "full_universe_context": {
+        "cross_sections_sha256": "7c8f9fea68649c55c69b5f1c843c10065c3f46e424463fb472027acfb62f8ae5",
+        "selected_dates_sections": 256,
+        "same_selected_dates_full_universe_ic": 0.10530328372555983,
+        "same_selected_dates_full_universe_rank_ic": 0.09663927702259661,
+        "all_dates_formal_ic": 0.11625947902475746,
+        "all_dates_formal_rank_ic": 0.10419601366217873
+      }
+    }
+  ],
+  "limitations": [
+    "本次是128股票截面的抽样诊断，不能代替1000股票完整协议IC。",
+    "训练期使用已拟合过的数据，所得相关性不代表泛化；冻结权重仍由原验证IC选择。",
+    "训练用CPU FP32新推理，留出复用原正式冻结预测；未进行新的留出模型选择。",
+    "日期重采样区间只反映所选样本变化，不保证时间相关样本的总体置信覆盖。",
+    "当前训练样本分数不是最优可达分数或任务可预测性上限。"
+  ]
+}

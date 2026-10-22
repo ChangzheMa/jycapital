@@ -1,0 +1,67 @@
+{
+  "checked_at": "2026-10-23T07:45:41+08:00",
+  "paper": "Towards Financial World Modeling",
+  "arxiv_version": "2610.09048v2",
+  "paper_url": "https://arxiv.org/html/2610.09048v2",
+  "official_listing": "https://neurips.cc/Downloads/2026",
+  "official_poster_url": "https://neurips.cc/virtual/2026/poster/153065",
+  "publication_evidence": "官方2026下载目录含同名poster条目；实际读arXiv v2，未核对最终会议PDF。",
+  "author_repository": "https://github.com/fin-ai-lab/tfwm",
+  "commit": "e739329a630c14cdb1ed2834a2461bfbfe17e8b5",
+  "files_read": [
+    {
+      "path": "README.md",
+      "sha256": "d973ab18e5e574be4503d23f8cd0a6812f8818c48dcdd7c94a8d5e4492687d68",
+      "bytes": 9915,
+      "url": "https://raw.githubusercontent.com/fin-ai-lab/tfwm/e739329a630c14cdb1ed2834a2461bfbfe17e8b5/README.md"
+    },
+    {
+      "path": "scripts/experiments/sample_sweep_months.py",
+      "sha256": "3a96343717cb98f357a14380b2837728e44b509a36986549f5c5e2823aef7285",
+      "bytes": 6184,
+      "url": "https://raw.githubusercontent.com/fin-ai-lab/tfwm/e739329a630c14cdb1ed2834a2461bfbfe17e8b5/scripts/experiments/sample_sweep_months.py"
+    },
+    {
+      "path": "market_jepa/modeling/modes/supervised.py",
+      "sha256": "5e512a9dd8e66dc832c0f4e38965048f487683a0b293f175d41ed24bb302e5cb",
+      "bytes": 54162,
+      "url": "https://raw.githubusercontent.com/fin-ai-lab/tfwm/e739329a630c14cdb1ed2834a2461bfbfe17e8b5/market_jepa/modeling/modes/supervised.py"
+    },
+    {
+      "path": "market_jepa/eval/head_probe.py",
+      "sha256": "14b71051798e2af2f58397acb54cb275cfe95f2a8a2648ff67194987812f0e88",
+      "bytes": 17660,
+      "url": "https://raw.githubusercontent.com/fin-ai-lab/tfwm/e739329a630c14cdb1ed2834a2461bfbfe17e8b5/market_jepa/eval/head_probe.py"
+    },
+    {
+      "path": "scripts/sweeps/supervised_multihead.sh",
+      "sha256": "aa42367b65b191f6bf108c2f371e7120bd48cab31a4bdf316f383dd5fb123c72",
+      "bytes": 8099,
+      "url": "https://raw.githubusercontent.com/fin-ai-lab/tfwm/e739329a630c14cdb1ed2834a2461bfbfe17e8b5/scripts/sweeps/supervised_multihead.sh"
+    }
+  ],
+  "external_code_executed": false,
+  "external_weights_loaded": false,
+  "paper_scope_read": [
+    "数据来源、动态股票池与归一化",
+    "32月评测与5月调参说明",
+    "监督/自监督方法、15分钟Rank IC及任务差异",
+    "规模与年代退化实验",
+    "附录评测与超参数方法"
+  ],
+  "code_scope_read": [
+    "固定跨月采样清单及历史缺失月份处理",
+    "默认pairwise同截面配对",
+    "公开代码记录的早期多任务跨截面配对修复",
+    "探针按时间留出或固定配方两种路径",
+    "多任务扫描脚本"
+  ],
+  "limitations": [
+    "未逐运行核对所有表格、选模和修复后checkpoint对应关系；不声称独立复现。",
+    "当前作者README说明公开的是样例数据，完整托管仍在准备；本轮没有下载数据。",
+    "非本项目原始分钟输入、官方标签和Pearson IC任务；没有IC0.25可达证据。",
+    "选择跨月实验不等于完整历史在线选参，未核验每个调参日期对每个早期评测月的信息边界。",
+    "可选corr分支不能直接等同逐截面Pearson均值；当前默认pairwise，不据此断言默认论文结果错误。"
+  ],
+  "local_action": "保留共同类型归一化与多任务机制线索，继续v2001/v2101；不直接添加大型SSL候选或移植其外部权重、行业及收益公式。"
+}

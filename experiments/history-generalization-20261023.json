@@ -1,0 +1,2303 @@
+{
+  "computed_at": "2026-10-23T07:19:56+08:00",
+  "script_sha256": "24360e8e833db65da67fe4a11acd5c7869f7a08c69eb730ef60d4a617355a912",
+  "versions_fixed_before_analysis": [
+    "v1102",
+    "v1601",
+    "v1901"
+  ],
+  "bands": [
+    "no_supervised_day",
+    "1_59_days",
+    "60_251_days",
+    "252_plus_days"
+  ],
+  "training_history": {
+    "cache_key": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+    "manifest_sha256": "be95393b030f706260d25c7e5ea1071e0bb5b8ceaece331040c7736db914d63e",
+    "source_arrays": {
+      "targets.npy": "e7de68d257ceec4a7a1ae74bcc5b367a2ac8c0eed41b66b9bf6772f8d564dd6e",
+      "sample_day.npy": "66c665dffe87c493dae195e05f79c7fa52ae4606f6cfdb61aba6262184c22818",
+      "sample_stock.npy": "1e047307dac1ddc76288932a7388d2af9ebcbef0901b3df4cd9cb48e20013a46",
+      "days.npy": "797f2af5064588c8dac5264197223528ad1f0f811659e38aea5d95c4cd82e269"
+    },
+    "stocks": 1764,
+    "calendar_days": 970,
+    "supervised_stock_days": 967872,
+    "uses_provided_label_validity_only": true
+  },
+  "source_hashes": {
+    "cpt_jyc_2026_instruments.parquet": "5913b48d9bd2c203708c2fc4301278dee6630baf8f0b7c012e4245bf01405a20",
+    "cpt_jyc_2026_vwap.parquet": "df2bdd9ec58cd6ce3b946af55e6f508b20d55e7dae6ab91290c48d34366f4448"
+  },
+  "method": "监督天数仅按2020—2023已有合法收益标签的有限性计算；固定分组后，在完整截面中心化和分母不变的条件下分解IC及Rank IC。",
+  "oracle_method": "指定短历史股票可获得未来标签，其余股票保持原预测分数的正向仿射关系。用总标签方差减去其余股票正向线性回归残差，再开方；这是事后理想上界，不是可部署结果。",
+  "formal_metrics_modified": false,
+  "model_training_performed": false,
+  "official_return_recomputed": false,
+  "exposure_read": false,
+  "results": [
+    {
+      "solution_id": "v1102",
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "split": "validation",
+      "predictions_sha256": "fe91e44a8f15c2bb26989dff64622e7fd86ad4331de4d36be3e612f6ae5cb05a",
+      "ic_mean": 0.0924742963076571,
+      "rank_ic_mean": 0.09006876749454029,
+      "evaluated_rows": 935224,
+      "contributions_match_frozen_sections": true,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.0004540582083428886,
+          "rank_ic": 0.0006619988433391176,
+          "factor_variance_share": 0.009144366918989672,
+          "label_variance_share": 0.00928584936486025,
+          "sample_fraction": 0.007431671604461628
+        },
+        "1_59_days": {
+          "ic": 0.008094962272256359,
+          "rank_ic": 0.007891501465265035,
+          "factor_variance_share": 0.08656227928927043,
+          "label_variance_share": 0.09560515141682506,
+          "sample_fraction": 0.0854728662615928
+        },
+        "60_251_days": {
+          "ic": 0.0169878002459905,
+          "rank_ic": 0.015837014602774688,
+          "factor_variance_share": 0.18400602355018228,
+          "label_variance_share": 0.19753662040284808,
+          "sample_fraction": 0.18122721060757957
+        },
+        "252_plus_days": {
+          "ic": 0.06693747558106736,
+          "rank_ic": 0.06567825258316144,
+          "factor_variance_share": 0.7202873302415576,
+          "label_variance_share": 0.6975723788154666,
+          "sample_fraction": 0.7258682515263659
+        }
+      },
+      "unique_instruments_by_band": {
+        "no_supervised_day": 80,
+        "1_59_days": 86,
+        "60_251_days": 189,
+        "252_plus_days": 748
+      },
+      "monthly": [
+        {
+          "month": "2024-01",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-01",
+          "band": "1_59_days",
+          "ic": 0.009293022879245778,
+          "rank_ic": 0.007843748478535974,
+          "factor_variance_share": 0.10005436915452419,
+          "label_variance_share": 0.10143185378122385,
+          "sample_fraction": 0.08609399842330297
+        },
+        {
+          "month": "2024-01",
+          "band": "60_251_days",
+          "ic": 0.01725357913118442,
+          "rank_ic": 0.015033283060232895,
+          "factor_variance_share": 0.19379285564822207,
+          "label_variance_share": 0.2025624085966928,
+          "sample_fraction": 0.18197106166413288
+        },
+        {
+          "month": "2024-01",
+          "band": "252_plus_days",
+          "ic": 0.06358218458869568,
+          "rank_ic": 0.061037415911066505,
+          "factor_variance_share": 0.7061527751972537,
+          "label_variance_share": 0.6960057376220834,
+          "sample_fraction": 0.7319349399125641
+        },
+        {
+          "month": "2024-02",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-02",
+          "band": "1_59_days",
+          "ic": 0.009922505865197256,
+          "rank_ic": 0.00686666476500942,
+          "factor_variance_share": 0.10055519965293945,
+          "label_variance_share": 0.10666754340128844,
+          "sample_fraction": 0.08601147814481148
+        },
+        {
+          "month": "2024-02",
+          "band": "60_251_days",
+          "ic": 0.01925750753534245,
+          "rank_ic": 0.014776607519821952,
+          "factor_variance_share": 0.21516189843189484,
+          "label_variance_share": 0.2069175406140146,
+          "sample_fraction": 0.1820242909576243
+        },
+        {
+          "month": "2024-02",
+          "band": "252_plus_days",
+          "ic": 0.05451994188237013,
+          "rank_ic": 0.04735003314257757,
+          "factor_variance_share": 0.6842829019151657,
+          "label_variance_share": 0.686414915984697,
+          "sample_fraction": 0.7319642308975642
+        },
+        {
+          "month": "2024-03",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-03",
+          "band": "1_59_days",
+          "ic": 0.01135875861492346,
+          "rank_ic": 0.011106822040574647,
+          "factor_variance_share": 0.1071530646594856,
+          "label_variance_share": 0.11270028589085787,
+          "sample_fraction": 0.08605744003940732
+        },
+        {
+          "month": "2024-03",
+          "band": "60_251_days",
+          "ic": 0.019430086448129498,
+          "rank_ic": 0.020345238839456832,
+          "factor_variance_share": 0.18291459029040502,
+          "label_variance_share": 0.19667480955352193,
+          "sample_fraction": 0.18212155915316433
+        },
+        {
+          "month": "2024-03",
+          "band": "252_plus_days",
+          "ic": 0.07983142222439932,
+          "rank_ic": 0.08902552174061469,
+          "factor_variance_share": 0.7099323450501094,
+          "label_variance_share": 0.6906249045556202,
+          "sample_fraction": 0.7318210008074283
+        },
+        {
+          "month": "2024-04",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-04",
+          "band": "1_59_days",
+          "ic": 0.007078411560381852,
+          "rank_ic": 0.007919949823522968,
+          "factor_variance_share": 0.07926748698869814,
+          "label_variance_share": 0.0880688565941604,
+          "sample_fraction": 0.0860475989581281
+        },
+        {
+          "month": "2024-04",
+          "band": "60_251_days",
+          "ic": 0.015697494566131513,
+          "rank_ic": 0.01540082148572243,
+          "factor_variance_share": 0.18275241139855797,
+          "label_variance_share": 0.1978486366871744,
+          "sample_fraction": 0.18199992622721628
+        },
+        {
+          "month": "2024-04",
+          "band": "252_plus_days",
+          "ic": 0.07569437890497319,
+          "rank_ic": 0.06878928609391473,
+          "factor_variance_share": 0.737980101612744,
+          "label_variance_share": 0.7140825067186651,
+          "sample_fraction": 0.7319524748146555
+        },
+        {
+          "month": "2024-05",
+          "band": "no_supervised_day",
+          "ic": 0.00026711570884490796,
+          "rank_ic": 0.00042151383533330436,
+          "factor_variance_share": 0.0011215212315662949,
+          "label_variance_share": 0.002017039072836996,
+          "sample_fraction": 0.0021028543573633754
+        },
+        {
+          "month": "2024-05",
+          "band": "1_59_days",
+          "ic": 0.007730373281027399,
+          "rank_ic": 0.008786185555148701,
+          "factor_variance_share": 0.06493582417322362,
+          "label_variance_share": 0.08431783750088406,
+          "sample_fraction": 0.08610765073690926
+        },
+        {
+          "month": "2024-05",
+          "band": "60_251_days",
+          "ic": 0.018871394059794468,
+          "rank_ic": 0.020041084264170388,
+          "factor_variance_share": 0.17016659496637118,
+          "label_variance_share": 0.18883155401680313,
+          "sample_fraction": 0.18112636684780972
+        },
+        {
+          "month": "2024-05",
+          "band": "252_plus_days",
+          "ic": 0.07410268822662743,
+          "rank_ic": 0.07909322812036332,
+          "factor_variance_share": 0.7637760596288389,
+          "label_variance_share": 0.7248335694094757,
+          "sample_fraction": 0.7306631280579177
+        },
+        {
+          "month": "2024-06",
+          "band": "no_supervised_day",
+          "ic": 0.0025148682210115684,
+          "rank_ic": 0.0036328204191584564,
+          "factor_variance_share": 0.05512950025739293,
+          "label_variance_share": 0.05505808390694259,
+          "sample_fraction": 0.043549920556565425
+        },
+        {
+          "month": "2024-06",
+          "band": "1_59_days",
+          "ic": 0.0031114140416342267,
+          "rank_ic": 0.004230382263556606,
+          "factor_variance_share": 0.06757799892438869,
+          "label_variance_share": 0.08104467873438816,
+          "sample_fraction": 0.08240915686280098
+        },
+        {
+          "month": "2024-06",
+          "band": "60_251_days",
+          "ic": 0.011564299312392388,
+          "rank_ic": 0.008655854619775557,
+          "factor_variance_share": 0.16517089111762795,
+          "label_variance_share": 0.19409861442590803,
+          "sample_fraction": 0.1780409113891869
+        },
+        {
+          "month": "2024-06",
+          "band": "252_plus_days",
+          "ic": 0.04961453918176982,
+          "rank_ic": 0.042320824432068034,
+          "factor_variance_share": 0.7121216097005905,
+          "label_variance_share": 0.6697986229327612,
+          "sample_fraction": 0.6960000111914466
+        }
+      ],
+      "restricted_oracle_ceiling": {
+        "days_lt_1": 0.13205779138395257,
+        "days_lt_60": 0.3446153610210684,
+        "days_lt_252": 0.5611044609119138
+      },
+      "oracle_by_month": [
+        {
+          "month": "2024-01",
+          "days_lt_1": 0.10253812359824983,
+          "days_lt_60": 0.3385599193769507,
+          "days_lt_252": 0.5620070052919759
+        },
+        {
+          "month": "2024-02",
+          "days_lt_1": 0.09701346827132569,
+          "days_lt_60": 0.3437041988374249,
+          "days_lt_252": 0.5680744325690957
+        },
+        {
+          "month": "2024-03",
+          "days_lt_1": 0.12364425219821544,
+          "days_lt_60": 0.36148761539537916,
+          "days_lt_252": 0.5709286607064198
+        },
+        {
+          "month": "2024-04",
+          "days_lt_1": 0.11073657798283787,
+          "days_lt_60": 0.3230893751429137,
+          "days_lt_252": 0.5483263152069668
+        },
+        {
+          "month": "2024-05",
+          "days_lt_1": 0.12755725708691468,
+          "days_lt_60": 0.32174878815453944,
+          "days_lt_252": 0.5371598783977384
+        },
+        {
+          "month": "2024-06",
+          "days_lt_1": 0.23038499216492067,
+          "days_lt_60": 0.3804269916504573,
+          "days_lt_252": 0.5823539776213207
+        }
+      ],
+      "oracle_by_clock": [
+        {
+          "clock": "09:30",
+          "days_lt_1": 0.094398062408436,
+          "days_lt_60": 0.32044732052347596,
+          "days_lt_252": 0.5517362185006586
+        },
+        {
+          "clock": "10:00",
+          "days_lt_1": 0.1451107078272551,
+          "days_lt_60": 0.34599766262160553,
+          "days_lt_252": 0.5593229938118595
+        },
+        {
+          "clock": "10:30",
+          "days_lt_1": 0.12535143080220942,
+          "days_lt_60": 0.34281947362554693,
+          "days_lt_252": 0.5652756720712576
+        },
+        {
+          "clock": "11:00",
+          "days_lt_1": 0.11709275697059675,
+          "days_lt_60": 0.33342111419955955,
+          "days_lt_252": 0.562603601506021
+        },
+        {
+          "clock": "11:30",
+          "days_lt_1": 0.14211514063761468,
+          "days_lt_60": 0.3457912813867909,
+          "days_lt_252": 0.5500521932339358
+        },
+        {
+          "clock": "13:30",
+          "days_lt_1": 0.13744678637049967,
+          "days_lt_60": 0.35523218716435745,
+          "days_lt_252": 0.5656979938021313
+        },
+        {
+          "clock": "14:00",
+          "days_lt_1": 0.10829559155797383,
+          "days_lt_60": 0.34531582043945014,
+          "days_lt_252": 0.5577206706219934
+        },
+        {
+          "clock": "14:30",
+          "days_lt_1": 0.18665185449703506,
+          "days_lt_60": 0.3678980282077609,
+          "days_lt_252": 0.5764263437474538
+        }
+      ]
+    },
+    {
+      "solution_id": "v1601",
+      "run_id": "v1601-price-geometry-s42",
+      "split": "validation",
+      "predictions_sha256": "3c471f672a41d309884f1a1f942b36fa62f75465a0b38213d0e867bbdd03298e",
+      "ic_mean": 0.10552600428647893,
+      "rank_ic_mean": 0.10263980376862289,
+      "evaluated_rows": 935224,
+      "contributions_match_frozen_sections": true,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.000642976261226809,
+          "rank_ic": 0.000690989906714451,
+          "factor_variance_share": 0.009871391327656543,
+          "label_variance_share": 0.00928584936486025,
+          "sample_fraction": 0.007431671604461628
+        },
+        "1_59_days": {
+          "ic": 0.009896606587378903,
+          "rank_ic": 0.009342976838780315,
+          "factor_variance_share": 0.09408036451541707,
+          "label_variance_share": 0.09560515141682506,
+          "sample_fraction": 0.0854728662615928
+        },
+        "60_251_days": {
+          "ic": 0.02084211852815096,
+          "rank_ic": 0.018683919940895802,
+          "factor_variance_share": 0.19283091022201732,
+          "label_variance_share": 0.19753662040284808,
+          "sample_fraction": 0.18122721060757957
+        },
+        "252_plus_days": {
+          "ic": 0.07414430290972227,
+          "rank_ic": 0.07392191708223231,
+          "factor_variance_share": 0.703217333934909,
+          "label_variance_share": 0.6975723788154666,
+          "sample_fraction": 0.7258682515263659
+        }
+      },
+      "unique_instruments_by_band": {
+        "no_supervised_day": 80,
+        "1_59_days": 86,
+        "60_251_days": 189,
+        "252_plus_days": 748
+      },
+      "monthly": [
+        {
+          "month": "2024-01",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-01",
+          "band": "1_59_days",
+          "ic": 0.010500537211608945,
+          "rank_ic": 0.008616780726092624,
+          "factor_variance_share": 0.10179863853077001,
+          "label_variance_share": 0.10143185378122385,
+          "sample_fraction": 0.08609399842330297
+        },
+        {
+          "month": "2024-01",
+          "band": "60_251_days",
+          "ic": 0.020657473738236478,
+          "rank_ic": 0.017459772105446553,
+          "factor_variance_share": 0.19645947276342704,
+          "label_variance_share": 0.2025624085966928,
+          "sample_fraction": 0.18197106166413288
+        },
+        {
+          "month": "2024-01",
+          "band": "252_plus_days",
+          "ic": 0.06846913441119805,
+          "rank_ic": 0.0648341175548218,
+          "factor_variance_share": 0.7017418887058029,
+          "label_variance_share": 0.6960057376220834,
+          "sample_fraction": 0.7319349399125641
+        },
+        {
+          "month": "2024-02",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-02",
+          "band": "1_59_days",
+          "ic": 0.011986408636189796,
+          "rank_ic": 0.00778787711554696,
+          "factor_variance_share": 0.11600700669071158,
+          "label_variance_share": 0.10666754340128844,
+          "sample_fraction": 0.08601147814481148
+        },
+        {
+          "month": "2024-02",
+          "band": "60_251_days",
+          "ic": 0.022773386594324478,
+          "rank_ic": 0.018348446469759676,
+          "factor_variance_share": 0.2158897347124745,
+          "label_variance_share": 0.2069175406140146,
+          "sample_fraction": 0.1820242909576243
+        },
+        {
+          "month": "2024-02",
+          "band": "252_plus_days",
+          "ic": 0.058362274674712514,
+          "rank_ic": 0.05720388783687604,
+          "factor_variance_share": 0.6681032585968139,
+          "label_variance_share": 0.686414915984697,
+          "sample_fraction": 0.7319642308975642
+        },
+        {
+          "month": "2024-03",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-03",
+          "band": "1_59_days",
+          "ic": 0.014055812879425542,
+          "rank_ic": 0.01310216114568368,
+          "factor_variance_share": 0.11770881174159467,
+          "label_variance_share": 0.11270028589085787,
+          "sample_fraction": 0.08605744003940732
+        },
+        {
+          "month": "2024-03",
+          "band": "60_251_days",
+          "ic": 0.02291036389615951,
+          "rank_ic": 0.022677883989885874,
+          "factor_variance_share": 0.18552415447505066,
+          "label_variance_share": 0.19667480955352193,
+          "sample_fraction": 0.18212155915316433
+        },
+        {
+          "month": "2024-03",
+          "band": "252_plus_days",
+          "ic": 0.08816109027477045,
+          "rank_ic": 0.09731803649222173,
+          "factor_variance_share": 0.6967670337833547,
+          "label_variance_share": 0.6906249045556202,
+          "sample_fraction": 0.7318210008074283
+        },
+        {
+          "month": "2024-04",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-04",
+          "band": "1_59_days",
+          "ic": 0.00964285272361713,
+          "rank_ic": 0.01043952791529235,
+          "factor_variance_share": 0.07802451767042945,
+          "label_variance_share": 0.0880688565941604,
+          "sample_fraction": 0.0860475989581281
+        },
+        {
+          "month": "2024-04",
+          "band": "60_251_days",
+          "ic": 0.0197450684862277,
+          "rank_ic": 0.01957288633709877,
+          "factor_variance_share": 0.1979762162111975,
+          "label_variance_share": 0.1978486366871744,
+          "sample_fraction": 0.18199992622721628
+        },
+        {
+          "month": "2024-04",
+          "band": "252_plus_days",
+          "ic": 0.08621739683641802,
+          "rank_ic": 0.07944931668566155,
+          "factor_variance_share": 0.723999266118373,
+          "label_variance_share": 0.7140825067186651,
+          "sample_fraction": 0.7319524748146555
+        },
+        {
+          "month": "2024-05",
+          "band": "no_supervised_day",
+          "ic": 0.0002207051177747005,
+          "rank_ic": 0.0002952585151228631,
+          "factor_variance_share": 0.0014619764647001124,
+          "label_variance_share": 0.002017039072836996,
+          "sample_fraction": 0.0021028543573633754
+        },
+        {
+          "month": "2024-05",
+          "band": "1_59_days",
+          "ic": 0.008825553183214927,
+          "rank_ic": 0.010130607715831085,
+          "factor_variance_share": 0.07700285798180291,
+          "label_variance_share": 0.08431783750088406,
+          "sample_fraction": 0.08610765073690926
+        },
+        {
+          "month": "2024-05",
+          "band": "60_251_days",
+          "ic": 0.024120079016878945,
+          "rank_ic": 0.021418521356860655,
+          "factor_variance_share": 0.1814804504733515,
+          "label_variance_share": 0.18883155401680313,
+          "sample_fraction": 0.18112636684780972
+        },
+        {
+          "month": "2024-05",
+          "band": "252_plus_days",
+          "ic": 0.07994251563966095,
+          "rank_ic": 0.08531319238667812,
+          "factor_variance_share": 0.7400547150801454,
+          "label_variance_share": 0.7248335694094757,
+          "sample_fraction": 0.7306631280579177
+        },
+        {
+          "month": "2024-06",
+          "band": "no_supervised_day",
+          "ic": 0.003727058958318034,
+          "rank_ic": 0.0039442446727965,
+          "factor_variance_share": 0.05924806610746386,
+          "label_variance_share": 0.05505808390694259,
+          "sample_fraction": 0.043549920556565425
+        },
+        {
+          "month": "2024-06",
+          "band": "1_59_days",
+          "ic": 0.00434499125897423,
+          "rank_ic": 0.005273308460433096,
+          "factor_variance_share": 0.07659447056042357,
+          "label_variance_share": 0.08104467873438816,
+          "sample_fraction": 0.08240915686280098
+        },
+        {
+          "month": "2024-06",
+          "band": "60_251_days",
+          "ic": 0.014949581829268964,
+          "rank_ic": 0.012137538529041977,
+          "factor_variance_share": 0.18503271035928795,
+          "label_variance_share": 0.19409861442590803,
+          "sample_fraction": 0.1780409113891869
+        },
+        {
+          "month": "2024-06",
+          "band": "252_plus_days",
+          "ic": 0.058870906209405306,
+          "rank_ic": 0.053975076162026944,
+          "factor_variance_share": 0.6791247529728246,
+          "label_variance_share": 0.6697986229327612,
+          "sample_fraction": 0.6960000111914466
+        }
+      ],
+      "restricted_oracle_ceiling": {
+        "days_lt_1": 0.14381543013385026,
+        "days_lt_60": 0.349658412146378,
+        "days_lt_252": 0.5633823271173725
+      },
+      "oracle_by_month": [
+        {
+          "month": "2024-01",
+          "days_lt_1": 0.11118653079833676,
+          "days_lt_60": 0.3422420772885042,
+          "days_lt_252": 0.5635248683507885
+        },
+        {
+          "month": "2024-02",
+          "days_lt_1": 0.1045125382620713,
+          "days_lt_60": 0.3452960188346295,
+          "days_lt_252": 0.5687986619840161
+        },
+        {
+          "month": "2024-03",
+          "days_lt_1": 0.13823649163417645,
+          "days_lt_60": 0.3680186528974783,
+          "days_lt_252": 0.5740040745748444
+        },
+        {
+          "month": "2024-04",
+          "days_lt_1": 0.12674720636706463,
+          "days_lt_60": 0.3288144537288802,
+          "days_lt_252": 0.550940373488901
+        },
+        {
+          "month": "2024-05",
+          "days_lt_1": 0.14020222096845367,
+          "days_lt_60": 0.32792941845452356,
+          "days_lt_252": 0.5399502802006938
+        },
+        {
+          "month": "2024-06",
+          "days_lt_1": 0.24056098437568071,
+          "days_lt_60": 0.38621047809181946,
+          "days_lt_252": 0.5849635052311248
+        }
+      ],
+      "oracle_by_clock": [
+        {
+          "clock": "09:30",
+          "days_lt_1": 0.09591190302001934,
+          "days_lt_60": 0.3201849713948908,
+          "days_lt_252": 0.5516335559914204
+        },
+        {
+          "clock": "10:00",
+          "days_lt_1": 0.16012013818853318,
+          "days_lt_60": 0.3533532681506249,
+          "days_lt_252": 0.562121107877511
+        },
+        {
+          "clock": "10:30",
+          "days_lt_1": 0.13931301188907025,
+          "days_lt_60": 0.34848525867340724,
+          "days_lt_252": 0.5679741520148367
+        },
+        {
+          "clock": "11:00",
+          "days_lt_1": 0.13420125319167722,
+          "days_lt_60": 0.34097217748670616,
+          "days_lt_252": 0.5659587323472791
+        },
+        {
+          "clock": "11:30",
+          "days_lt_1": 0.1517857034949871,
+          "days_lt_60": 0.3492433577906859,
+          "days_lt_252": 0.5515567716693356
+        },
+        {
+          "clock": "13:30",
+          "days_lt_1": 0.14242897499936497,
+          "days_lt_60": 0.3572884464758063,
+          "days_lt_252": 0.5665699757757406
+        },
+        {
+          "clock": "14:00",
+          "days_lt_1": 0.11744252779435718,
+          "days_lt_60": 0.34884321669438895,
+          "days_lt_252": 0.5588914738913208
+        },
+        {
+          "clock": "14:30",
+          "days_lt_1": 0.20931992849279296,
+          "days_lt_60": 0.37889660050451357,
+          "days_lt_252": 0.5823528473715364
+        }
+      ]
+    },
+    {
+      "solution_id": "v1901",
+      "run_id": "v1901-latent-factor-s42",
+      "split": "validation",
+      "predictions_sha256": "dbf78017a03ea0a05445867a03f19db40f9ad1927fefcc37d830a8b64b76de0a",
+      "ic_mean": 0.10437696208188822,
+      "rank_ic_mean": 0.09834313921227102,
+      "evaluated_rows": 935224,
+      "contributions_match_frozen_sections": true,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.0006550268484432388,
+          "rank_ic": 0.0006452741506810272,
+          "factor_variance_share": 0.010498870086924857,
+          "label_variance_share": 0.00928584936486025,
+          "sample_fraction": 0.007431671604461628
+        },
+        "1_59_days": {
+          "ic": 0.009646953193397072,
+          "rank_ic": 0.008876981663288638,
+          "factor_variance_share": 0.09525431417273819,
+          "label_variance_share": 0.09560515141682506,
+          "sample_fraction": 0.0854728662615928
+        },
+        "60_251_days": {
+          "ic": 0.020857437734598416,
+          "rank_ic": 0.01793303893640314,
+          "factor_variance_share": 0.19513969706409676,
+          "label_variance_share": 0.19753662040284808,
+          "sample_fraction": 0.18122721060757957
+        },
+        "252_plus_days": {
+          "ic": 0.0732175443054495,
+          "rank_ic": 0.07088784446189822,
+          "factor_variance_share": 0.6991071186762401,
+          "label_variance_share": 0.6975723788154666,
+          "sample_fraction": 0.7258682515263659
+        }
+      },
+      "unique_instruments_by_band": {
+        "no_supervised_day": 80,
+        "1_59_days": 86,
+        "60_251_days": 189,
+        "252_plus_days": 748
+      },
+      "monthly": [
+        {
+          "month": "2024-01",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-01",
+          "band": "1_59_days",
+          "ic": 0.010100540755979456,
+          "rank_ic": 0.007825745366482768,
+          "factor_variance_share": 0.1041299324127166,
+          "label_variance_share": 0.10143185378122385,
+          "sample_fraction": 0.08609399842330297
+        },
+        {
+          "month": "2024-01",
+          "band": "60_251_days",
+          "ic": 0.020084115493401566,
+          "rank_ic": 0.01602024235024184,
+          "factor_variance_share": 0.19906619303407938,
+          "label_variance_share": 0.2025624085966928,
+          "sample_fraction": 0.18197106166413288
+        },
+        {
+          "month": "2024-01",
+          "band": "252_plus_days",
+          "ic": 0.06485125749888572,
+          "rank_ic": 0.06061326916638207,
+          "factor_variance_share": 0.696803874553204,
+          "label_variance_share": 0.6960057376220834,
+          "sample_fraction": 0.7319349399125641
+        },
+        {
+          "month": "2024-02",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-02",
+          "band": "1_59_days",
+          "ic": 0.011919076129828867,
+          "rank_ic": 0.007564461702944316,
+          "factor_variance_share": 0.11775605864724525,
+          "label_variance_share": 0.10666754340128844,
+          "sample_fraction": 0.08601147814481148
+        },
+        {
+          "month": "2024-02",
+          "band": "60_251_days",
+          "ic": 0.022781764248164815,
+          "rank_ic": 0.017716300929479716,
+          "factor_variance_share": 0.21676490037207505,
+          "label_variance_share": 0.2069175406140146,
+          "sample_fraction": 0.1820242909576243
+        },
+        {
+          "month": "2024-02",
+          "band": "252_plus_days",
+          "ic": 0.05773896374243391,
+          "rank_ic": 0.05403553822695075,
+          "factor_variance_share": 0.6654790409806797,
+          "label_variance_share": 0.686414915984697,
+          "sample_fraction": 0.7319642308975642
+        },
+        {
+          "month": "2024-03",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-03",
+          "band": "1_59_days",
+          "ic": 0.013994305202752003,
+          "rank_ic": 0.012589909237734807,
+          "factor_variance_share": 0.12150792088506845,
+          "label_variance_share": 0.11270028589085787,
+          "sample_fraction": 0.08605744003940732
+        },
+        {
+          "month": "2024-03",
+          "band": "60_251_days",
+          "ic": 0.02356252538517376,
+          "rank_ic": 0.02188341314786098,
+          "factor_variance_share": 0.1829227076524052,
+          "label_variance_share": 0.19667480955352193,
+          "sample_fraction": 0.18212155915316433
+        },
+        {
+          "month": "2024-03",
+          "band": "252_plus_days",
+          "ic": 0.08769683626169225,
+          "rank_ic": 0.09314058736483187,
+          "factor_variance_share": 0.6955693714625264,
+          "label_variance_share": 0.6906249045556202,
+          "sample_fraction": 0.7318210008074283
+        },
+        {
+          "month": "2024-04",
+          "band": "no_supervised_day",
+          "ic": 0.0,
+          "rank_ic": 0.0,
+          "factor_variance_share": 0.0,
+          "label_variance_share": 0.0,
+          "sample_fraction": 0.0
+        },
+        {
+          "month": "2024-04",
+          "band": "1_59_days",
+          "ic": 0.009436971340528687,
+          "rank_ic": 0.00988306749332091,
+          "factor_variance_share": 0.07806924055890314,
+          "label_variance_share": 0.0880688565941604,
+          "sample_fraction": 0.0860475989581281
+        },
+        {
+          "month": "2024-04",
+          "band": "60_251_days",
+          "ic": 0.01938549502735145,
+          "rank_ic": 0.01859190374350041,
+          "factor_variance_share": 0.20386214384318774,
+          "label_variance_share": 0.1978486366871744,
+          "sample_fraction": 0.18199992622721628
+        },
+        {
+          "month": "2024-04",
+          "band": "252_plus_days",
+          "ic": 0.08551197784417609,
+          "rank_ic": 0.07621792730245623,
+          "factor_variance_share": 0.7180686155979091,
+          "label_variance_share": 0.7140825067186651,
+          "sample_fraction": 0.7319524748146555
+        },
+        {
+          "month": "2024-05",
+          "band": "no_supervised_day",
+          "ic": 0.0002141079500688723,
+          "rank_ic": 0.0002715989989141332,
+          "factor_variance_share": 0.0015435033753002465,
+          "label_variance_share": 0.002017039072836996,
+          "sample_fraction": 0.0021028543573633754
+        },
+        {
+          "month": "2024-05",
+          "band": "1_59_days",
+          "ic": 0.008543433507419963,
+          "rank_ic": 0.00970877181060038,
+          "factor_variance_share": 0.07653686028533138,
+          "label_variance_share": 0.08431783750088406,
+          "sample_fraction": 0.08610765073690926
+        },
+        {
+          "month": "2024-05",
+          "band": "60_251_days",
+          "ic": 0.024187770350354867,
+          "rank_ic": 0.020905706571067946,
+          "factor_variance_share": 0.1863697275808124,
+          "label_variance_share": 0.18883155401680313,
+          "sample_fraction": 0.18112636684780972
+        },
+        {
+          "month": "2024-05",
+          "band": "252_plus_days",
+          "ic": 0.0806315201421139,
+          "rank_ic": 0.08222850103525715,
+          "factor_variance_share": 0.735549908758556,
+          "label_variance_share": 0.7248335694094757,
+          "sample_fraction": 0.7306631280579177
+        },
+        {
+          "month": "2024-06",
+          "band": "no_supervised_day",
+          "ic": 0.00380820959297271,
+          "rank_ic": 0.003687636613231448,
+          "factor_variance_share": 0.06302619645601071,
+          "label_variance_share": 0.05505808390694259,
+          "sample_fraction": 0.043549920556565425
+        },
+        {
+          "month": "2024-06",
+          "band": "1_59_days",
+          "ic": 0.003905630464826916,
+          "rank_ic": 0.005092034259322542,
+          "factor_variance_share": 0.07598773736583134,
+          "label_variance_share": 0.08104467873438816,
+          "sample_fraction": 0.08240915686280098
+        },
+        {
+          "month": "2024-06",
+          "band": "60_251_days",
+          "ic": 0.015287624722522776,
+          "rank_ic": 0.012130096185010708,
+          "factor_variance_share": 0.18707371131515457,
+          "label_variance_share": 0.19409861442590803,
+          "sample_fraction": 0.1780409113891869
+        },
+        {
+          "month": "2024-06",
+          "band": "252_plus_days",
+          "ic": 0.05837563375811887,
+          "rank_ic": 0.05394588976640458,
+          "factor_variance_share": 0.6739123548630034,
+          "label_variance_share": 0.6697986229327612,
+          "sample_fraction": 0.6960000111914466
+        }
+      ],
+      "restricted_oracle_ceiling": {
+        "days_lt_1": 0.14191219742589517,
+        "days_lt_60": 0.3487565936826298,
+        "days_lt_252": 0.5629086564048824
+      },
+      "oracle_by_month": [
+        {
+          "month": "2024-01",
+          "days_lt_1": 0.10536571184693799,
+          "days_lt_60": 0.3402603446239207,
+          "days_lt_252": 0.5624708827840383
+        },
+        {
+          "month": "2024-02",
+          "days_lt_1": 0.10564387351771194,
+          "days_lt_60": 0.3456170069444674,
+          "days_lt_252": 0.5686638457792407
+        },
+        {
+          "month": "2024-03",
+          "days_lt_1": 0.13726808742259994,
+          "days_lt_60": 0.3670007682219181,
+          "days_lt_252": 0.5733750290703247
+        },
+        {
+          "month": "2024-04",
+          "days_lt_1": 0.12562971028178044,
+          "days_lt_60": 0.32857049216120904,
+          "days_lt_252": 0.5508318116702882
+        },
+        {
+          "month": "2024-05",
+          "days_lt_1": 0.13923342987879825,
+          "days_lt_60": 0.3272439643723016,
+          "days_lt_252": 0.5397751351694344
+        },
+        {
+          "month": "2024-06",
+          "days_lt_1": 0.23795424717606561,
+          "days_lt_60": 0.38480176377073294,
+          "days_lt_252": 0.5843674286401328
+        }
+      ],
+      "oracle_by_clock": [
+        {
+          "clock": "09:30",
+          "days_lt_1": 0.09838656750963058,
+          "days_lt_60": 0.3211168560011345,
+          "days_lt_252": 0.551515319337057
+        },
+        {
+          "clock": "10:00",
+          "days_lt_1": 0.15782066981310042,
+          "days_lt_60": 0.3529046975709374,
+          "days_lt_252": 0.561875020728758
+        },
+        {
+          "clock": "10:30",
+          "days_lt_1": 0.1345266980441633,
+          "days_lt_60": 0.34656468035853,
+          "days_lt_252": 0.56717924028917
+        },
+        {
+          "clock": "11:00",
+          "days_lt_1": 0.13047952219121817,
+          "days_lt_60": 0.3393242873759678,
+          "days_lt_252": 0.5654123870008181
+        },
+        {
+          "clock": "11:30",
+          "days_lt_1": 0.15170441734288037,
+          "days_lt_60": 0.34862933055943524,
+          "days_lt_252": 0.5512134426313741
+        },
+        {
+          "clock": "13:30",
+          "days_lt_1": 0.140775500578468,
+          "days_lt_60": 0.3558796095549069,
+          "days_lt_252": 0.5658114493449348
+        },
+        {
+          "clock": "14:00",
+          "days_lt_1": 0.11615625334435947,
+          "days_lt_60": 0.34836470745530995,
+          "days_lt_252": 0.5586141359195566
+        },
+        {
+          "clock": "14:30",
+          "days_lt_1": 0.205447950583341,
+          "days_lt_60": 0.3772685805848164,
+          "days_lt_252": 0.5816482559873911
+        }
+      ]
+    },
+    {
+      "solution_id": "v1102",
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "split": "test",
+      "predictions_sha256": "b98d9748593669192c0511814685692c2994aec38cb88279b3ba62341eb6e795",
+      "ic_mean": 0.09896451610667985,
+      "rank_ic_mean": 0.08914631397846773,
+      "evaluated_rows": 998539,
+      "contributions_match_frozen_sections": true,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.007443706476227485,
+          "rank_ic": 0.007214895296669843,
+          "factor_variance_share": 0.09543848758934373,
+          "label_variance_share": 0.11108021265902113,
+          "sample_fraction": 0.08835678414921774
+        },
+        "1_59_days": {
+          "ic": 0.00731217082778029,
+          "rank_ic": 0.0068580757996810245,
+          "factor_variance_share": 0.06502404507220001,
+          "label_variance_share": 0.08044216538197861,
+          "sample_fraction": 0.07860814491924914
+        },
+        "60_251_days": {
+          "ic": 0.01520055349535369,
+          "rank_ic": 0.013307958810269032,
+          "factor_variance_share": 0.15987104891265316,
+          "label_variance_share": 0.1831639665262591,
+          "sample_fraction": 0.17267150992386715
+        },
+        "252_plus_days": {
+          "ic": 0.06900808530731836,
+          "rank_ic": 0.06176538407184783,
+          "factor_variance_share": 0.6796664184258031,
+          "label_variance_share": 0.6253136554327411,
+          "sample_fraction": 0.6603635610076659
+        }
+      },
+      "unique_instruments_by_band": {
+        "no_supervised_day": 149,
+        "1_59_days": 79,
+        "60_251_days": 182,
+        "252_plus_days": 692
+      },
+      "monthly": [
+        {
+          "month": "2024-07",
+          "band": "no_supervised_day",
+          "ic": 0.007646719818350252,
+          "rank_ic": 0.006188241910833142,
+          "factor_variance_share": 0.09637518150979456,
+          "label_variance_share": 0.10041724573993054,
+          "sample_fraction": 0.08011846299909059
+        },
+        {
+          "month": "2024-07",
+          "band": "1_59_days",
+          "ic": 0.005094230744544814,
+          "rank_ic": 0.005025598089058713,
+          "factor_variance_share": 0.06027956633375594,
+          "label_variance_share": 0.07746833569534212,
+          "sample_fraction": 0.07911698221160196
+        },
+        {
+          "month": "2024-07",
+          "band": "60_251_days",
+          "ic": 0.0116474583323899,
+          "rank_ic": 0.009158248949075545,
+          "factor_variance_share": 0.1438281424892456,
+          "label_variance_share": 0.19661665997203046,
+          "sample_fraction": 0.17482344019750085
+        },
+        {
+          "month": "2024-07",
+          "band": "252_plus_days",
+          "ic": 0.060285408183346864,
+          "rank_ic": 0.05278266569119906,
+          "factor_variance_share": 0.6995171096672038,
+          "label_variance_share": 0.625497758592697,
+          "sample_fraction": 0.6659411145918065
+        },
+        {
+          "month": "2024-08",
+          "band": "no_supervised_day",
+          "ic": 0.004760186090952899,
+          "rank_ic": 0.004646601426916979,
+          "factor_variance_share": 0.07416821438690908,
+          "label_variance_share": 0.09214162321763891,
+          "sample_fraction": 0.08115929109678896
+        },
+        {
+          "month": "2024-08",
+          "band": "1_59_days",
+          "ic": 0.007478769598227097,
+          "rank_ic": 0.00596170688402858,
+          "factor_variance_share": 0.06185934936968078,
+          "label_variance_share": 0.07772681645987216,
+          "sample_fraction": 0.07911155935958299
+        },
+        {
+          "month": "2024-08",
+          "band": "60_251_days",
+          "ic": 0.013900557372036926,
+          "rank_ic": 0.01033748031465407,
+          "factor_variance_share": 0.16040774828159662,
+          "label_variance_share": 0.19931125423455362,
+          "sample_fraction": 0.17379007392182186
+        },
+        {
+          "month": "2024-08",
+          "band": "252_plus_days",
+          "ic": 0.0682736281809857,
+          "rank_ic": 0.052382404243915576,
+          "factor_variance_share": 0.7035646879618135,
+          "label_variance_share": 0.6308203060879353,
+          "sample_fraction": 0.6659390756218062
+        },
+        {
+          "month": "2024-09",
+          "band": "no_supervised_day",
+          "ic": 0.004327591047627297,
+          "rank_ic": 0.0041491856053345365,
+          "factor_variance_share": 0.07943290136702814,
+          "label_variance_share": 0.09083411005335769,
+          "sample_fraction": 0.08241859780047134
+        },
+        {
+          "month": "2024-09",
+          "band": "1_59_days",
+          "ic": 0.002685732553193402,
+          "rank_ic": 0.003953380410498008,
+          "factor_variance_share": 0.05333257383588522,
+          "label_variance_share": 0.0729963474838626,
+          "sample_fraction": 0.07892758793750546
+        },
+        {
+          "month": "2024-09",
+          "band": "60_251_days",
+          "ic": 0.012659576907217893,
+          "rank_ic": 0.007938835033153522,
+          "factor_variance_share": 0.16509270820626445,
+          "label_variance_share": 0.18005680649634784,
+          "sample_fraction": 0.17395720956620409
+        },
+        {
+          "month": "2024-09",
+          "band": "252_plus_days",
+          "ic": 0.06499161770887621,
+          "rank_ic": 0.04404401519737731,
+          "factor_variance_share": 0.7021418165908222,
+          "label_variance_share": 0.6561127359664319,
+          "sample_fraction": 0.6646966046958191
+        },
+        {
+          "month": "2024-10",
+          "band": "no_supervised_day",
+          "ic": 0.004629410749767404,
+          "rank_ic": 0.006601230016658927,
+          "factor_variance_share": 0.08597133345692551,
+          "label_variance_share": 0.10598647888165051,
+          "sample_fraction": 0.08307854135587381
+        },
+        {
+          "month": "2024-10",
+          "band": "1_59_days",
+          "ic": 0.004768566979352391,
+          "rank_ic": 0.006375721126273445,
+          "factor_variance_share": 0.05963099397479394,
+          "label_variance_share": 0.07554190141335031,
+          "sample_fraction": 0.07907475623028952
+        },
+        {
+          "month": "2024-10",
+          "band": "60_251_days",
+          "ic": 0.01455153176049551,
+          "rank_ic": 0.016108358890382254,
+          "factor_variance_share": 0.15525259999615848,
+          "label_variance_share": 0.17450307531105938,
+          "sample_fraction": 0.17410898607358194
+        },
+        {
+          "month": "2024-10",
+          "band": "252_plus_days",
+          "ic": 0.05378061628281127,
+          "rank_ic": 0.05410861009609464,
+          "factor_variance_share": 0.699145072572122,
+          "label_variance_share": 0.6439685443939398,
+          "sample_fraction": 0.6637377163402548
+        },
+        {
+          "month": "2024-11",
+          "band": "no_supervised_day",
+          "ic": 0.008651742342472141,
+          "rank_ic": 0.00856055608551746,
+          "factor_variance_share": 0.0825859996839402,
+          "label_variance_share": 0.10365375273123055,
+          "sample_fraction": 0.0830871028486259
+        },
+        {
+          "month": "2024-11",
+          "band": "1_59_days",
+          "ic": 0.009962405376223282,
+          "rank_ic": 0.009615271732246947,
+          "factor_variance_share": 0.07083440208688284,
+          "label_variance_share": 0.08117860784915554,
+          "sample_fraction": 0.07908290512098126
+        },
+        {
+          "month": "2024-11",
+          "band": "60_251_days",
+          "ic": 0.021631758946499643,
+          "rank_ic": 0.017926539515885097,
+          "factor_variance_share": 0.18696647299824068,
+          "label_variance_share": 0.19193797907791904,
+          "sample_fraction": 0.17375321862563012
+        },
+        {
+          "month": "2024-11",
+          "band": "252_plus_days",
+          "ic": 0.08851881800929337,
+          "rank_ic": 0.08455896775259279,
+          "factor_variance_share": 0.6596131252309363,
+          "label_variance_share": 0.6232296603416949,
+          "sample_fraction": 0.6640767734047627
+        },
+        {
+          "month": "2024-12",
+          "band": "no_supervised_day",
+          "ic": 0.013755656686944052,
+          "rank_ic": 0.012721762370241411,
+          "factor_variance_share": 0.14956663344862509,
+          "label_variance_share": 0.16990821369690165,
+          "sample_fraction": 0.11864421377763407
+        },
+        {
+          "month": "2024-12",
+          "band": "1_59_days",
+          "ic": 0.013011249006695586,
+          "rank_ic": 0.00994160240970813,
+          "factor_variance_share": 0.08211230381649945,
+          "label_variance_share": 0.09600333623505955,
+          "sample_fraction": 0.07646192852863867
+        },
+        {
+          "month": "2024-12",
+          "band": "60_251_days",
+          "ic": 0.016801768740312705,
+          "rank_ic": 0.018553859229187144,
+          "factor_variance_share": 0.14951178117367891,
+          "label_variance_share": 0.15434694561816065,
+          "sample_fraction": 0.1659841667018277
+        },
+        {
+          "month": "2024-12",
+          "band": "252_plus_days",
+          "ic": 0.07616542943007826,
+          "rank_ic": 0.08035132779240625,
+          "factor_variance_share": 0.6188092815611965,
+          "label_variance_share": 0.5797415044498782,
+          "sample_fraction": 0.6389096909918995
+        }
+      ],
+      "restricted_oracle_ceiling": {
+        "days_lt_1": 0.35503882234079265,
+        "days_lt_60": 0.4535254163035379,
+        "days_lt_252": 0.6235041364979148
+      },
+      "oracle_by_month": [
+        {
+          "month": "2024-07",
+          "days_lt_1": 0.3352772851441971,
+          "days_lt_60": 0.43520417013636664,
+          "days_lt_252": 0.6206188432587785
+        },
+        {
+          "month": "2024-08",
+          "days_lt_1": 0.3280903761089059,
+          "days_lt_60": 0.4297506642732868,
+          "days_lt_252": 0.6179491971164075
+        },
+        {
+          "month": "2024-09",
+          "days_lt_1": 0.32298686040555413,
+          "days_lt_60": 0.42071491186153326,
+          "days_lt_252": 0.5972346746813006
+        },
+        {
+          "month": "2024-10",
+          "days_lt_1": 0.34995964916881106,
+          "days_lt_60": 0.44501113356923017,
+          "days_lt_252": 0.6095289391000298
+        },
+        {
+          "month": "2024-11",
+          "days_lt_1": 0.3573199087653355,
+          "days_lt_60": 0.45584212833953197,
+          "days_lt_252": 0.629985527316877
+        },
+        {
+          "month": "2024-12",
+          "days_lt_1": 0.4323065837759296,
+          "days_lt_60": 0.5295453675476381,
+          "days_lt_252": 0.6600102515603097
+        }
+      ],
+      "oracle_by_clock": [
+        {
+          "clock": "09:30",
+          "days_lt_1": 0.33227771764973807,
+          "days_lt_60": 0.4316969616681414,
+          "days_lt_252": 0.6067339964483295
+        },
+        {
+          "clock": "10:00",
+          "days_lt_1": 0.34626666310680493,
+          "days_lt_60": 0.44523390864522594,
+          "days_lt_252": 0.6198611014626254
+        },
+        {
+          "clock": "10:30",
+          "days_lt_1": 0.35423618533633044,
+          "days_lt_60": 0.45185049435385327,
+          "days_lt_252": 0.6216500338504479
+        },
+        {
+          "clock": "11:00",
+          "days_lt_1": 0.3489033237662634,
+          "days_lt_60": 0.44246167721453794,
+          "days_lt_252": 0.6155799326316147
+        },
+        {
+          "clock": "11:30",
+          "days_lt_1": 0.3640661502281514,
+          "days_lt_60": 0.4553876586249999,
+          "days_lt_252": 0.6246270689794436
+        },
+        {
+          "clock": "13:30",
+          "days_lt_1": 0.3560623102385566,
+          "days_lt_60": 0.4577355846617049,
+          "days_lt_252": 0.6289711272921064
+        },
+        {
+          "clock": "14:00",
+          "days_lt_1": 0.35055388292953077,
+          "days_lt_60": 0.4592878668324066,
+          "days_lt_252": 0.627053911579023
+        },
+        {
+          "clock": "14:30",
+          "days_lt_1": 0.387944345470966,
+          "days_lt_60": 0.4845491784274327,
+          "days_lt_252": 0.6435559197397279
+        }
+      ]
+    },
+    {
+      "solution_id": "v1601",
+      "run_id": "v1601-price-geometry-s42",
+      "split": "test",
+      "predictions_sha256": "62d831f8e75b8e28bf54a164c7dea1d977b0ef11d8821725218b07557882514c",
+      "ic_mean": 0.11625947902475746,
+      "rank_ic_mean": 0.10419601366217873,
+      "evaluated_rows": 998539,
+      "contributions_match_frozen_sections": true,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.01004177561235773,
+          "rank_ic": 0.009116848622442162,
+          "factor_variance_share": 0.10386514837659232,
+          "label_variance_share": 0.11108021265902113,
+          "sample_fraction": 0.08835678414921774
+        },
+        "1_59_days": {
+          "ic": 0.008954144978269135,
+          "rank_ic": 0.008238007556132396,
+          "factor_variance_share": 0.07190013721331068,
+          "label_variance_share": 0.08044216538197861,
+          "sample_fraction": 0.07860814491924914
+        },
+        "60_251_days": {
+          "ic": 0.019869052465270758,
+          "rank_ic": 0.016363750762401107,
+          "factor_variance_share": 0.1685282702228274,
+          "label_variance_share": 0.1831639665262591,
+          "sample_fraction": 0.17267150992386715
+        },
+        "252_plus_days": {
+          "ic": 0.07739450596885981,
+          "rank_ic": 0.07047740672120306,
+          "factor_variance_share": 0.6557064441872696,
+          "label_variance_share": 0.6253136554327411,
+          "sample_fraction": 0.6603635610076659
+        }
+      },
+      "unique_instruments_by_band": {
+        "no_supervised_day": 149,
+        "1_59_days": 79,
+        "60_251_days": 182,
+        "252_plus_days": 692
+      },
+      "monthly": [
+        {
+          "month": "2024-07",
+          "band": "no_supervised_day",
+          "ic": 0.009787737349586989,
+          "rank_ic": 0.008747956335270216,
+          "factor_variance_share": 0.09838392929499756,
+          "label_variance_share": 0.10041724573993054,
+          "sample_fraction": 0.08011846299909059
+        },
+        {
+          "month": "2024-07",
+          "band": "1_59_days",
+          "ic": 0.007126889982761753,
+          "rank_ic": 0.007210073895353879,
+          "factor_variance_share": 0.06668908872714602,
+          "label_variance_share": 0.07746833569534212,
+          "sample_fraction": 0.07911698221160196
+        },
+        {
+          "month": "2024-07",
+          "band": "60_251_days",
+          "ic": 0.019324373418662506,
+          "rank_ic": 0.014267219331205627,
+          "factor_variance_share": 0.17144937896543266,
+          "label_variance_share": 0.19661665997203046,
+          "sample_fraction": 0.17482344019750085
+        },
+        {
+          "month": "2024-07",
+          "band": "252_plus_days",
+          "ic": 0.0678705742001597,
+          "rank_ic": 0.06447537097101827,
+          "factor_variance_share": 0.6634776030124238,
+          "label_variance_share": 0.625497758592697,
+          "sample_fraction": 0.6659411145918065
+        },
+        {
+          "month": "2024-08",
+          "band": "no_supervised_day",
+          "ic": 0.00698365524680138,
+          "rank_ic": 0.006960817946906789,
+          "factor_variance_share": 0.07829567062722219,
+          "label_variance_share": 0.09214162321763891,
+          "sample_fraction": 0.08115929109678896
+        },
+        {
+          "month": "2024-08",
+          "band": "1_59_days",
+          "ic": 0.007905512615498121,
+          "rank_ic": 0.007633257550254924,
+          "factor_variance_share": 0.0696164523987639,
+          "label_variance_share": 0.07772681645987216,
+          "sample_fraction": 0.07911155935958299
+        },
+        {
+          "month": "2024-08",
+          "band": "60_251_days",
+          "ic": 0.02167733760276753,
+          "rank_ic": 0.015877473138011952,
+          "factor_variance_share": 0.189111554823477,
+          "label_variance_share": 0.19931125423455362,
+          "sample_fraction": 0.17379007392182186
+        },
+        {
+          "month": "2024-08",
+          "band": "252_plus_days",
+          "ic": 0.07888441081117491,
+          "rank_ic": 0.06691311624195578,
+          "factor_variance_share": 0.6629763221505369,
+          "label_variance_share": 0.6308203060879353,
+          "sample_fraction": 0.6659390756218062
+        },
+        {
+          "month": "2024-09",
+          "band": "no_supervised_day",
+          "ic": 0.007179984325585981,
+          "rank_ic": 0.005652406706201381,
+          "factor_variance_share": 0.0811904764665608,
+          "label_variance_share": 0.09083411005335769,
+          "sample_fraction": 0.08241859780047134
+        },
+        {
+          "month": "2024-09",
+          "band": "1_59_days",
+          "ic": 0.0047982469750936655,
+          "rank_ic": 0.004810325936121941,
+          "factor_variance_share": 0.06646524842922012,
+          "label_variance_share": 0.0729963474838626,
+          "sample_fraction": 0.07892758793750546
+        },
+        {
+          "month": "2024-09",
+          "band": "60_251_days",
+          "ic": 0.0160924365945517,
+          "rank_ic": 0.008890704911054004,
+          "factor_variance_share": 0.16556619120993304,
+          "label_variance_share": 0.18005680649634784,
+          "sample_fraction": 0.17395720956620409
+        },
+        {
+          "month": "2024-09",
+          "band": "252_plus_days",
+          "ic": 0.07094416899657191,
+          "rank_ic": 0.050516266620062235,
+          "factor_variance_share": 0.686778083894286,
+          "label_variance_share": 0.6561127359664319,
+          "sample_fraction": 0.6646966046958191
+        },
+        {
+          "month": "2024-10",
+          "band": "no_supervised_day",
+          "ic": 0.006645280086739983,
+          "rank_ic": 0.007915465303982832,
+          "factor_variance_share": 0.09841036902589263,
+          "label_variance_share": 0.10598647888165051,
+          "sample_fraction": 0.08307854135587381
+        },
+        {
+          "month": "2024-10",
+          "band": "1_59_days",
+          "ic": 0.005990771088482042,
+          "rank_ic": 0.007385519011649157,
+          "factor_variance_share": 0.06258066815574316,
+          "label_variance_share": 0.07554190141335031,
+          "sample_fraction": 0.07907475623028952
+        },
+        {
+          "month": "2024-10",
+          "band": "60_251_days",
+          "ic": 0.015073693288598021,
+          "rank_ic": 0.016258008308877487,
+          "factor_variance_share": 0.15556170122189997,
+          "label_variance_share": 0.17450307531105938,
+          "sample_fraction": 0.17410898607358194
+        },
+        {
+          "month": "2024-10",
+          "band": "252_plus_days",
+          "ic": 0.06139381495470767,
+          "rank_ic": 0.05676968354625205,
+          "factor_variance_share": 0.6834472615964642,
+          "label_variance_share": 0.6439685443939398,
+          "sample_fraction": 0.6637377163402548
+        },
+        {
+          "month": "2024-11",
+          "band": "no_supervised_day",
+          "ic": 0.012413090924529621,
+          "rank_ic": 0.010378028808981773,
+          "factor_variance_share": 0.09169763481932014,
+          "label_variance_share": 0.10365375273123055,
+          "sample_fraction": 0.0830871028486259
+        },
+        {
+          "month": "2024-11",
+          "band": "1_59_days",
+          "ic": 0.010839409894569305,
+          "rank_ic": 0.010471409902869537,
+          "factor_variance_share": 0.07779239857983274,
+          "label_variance_share": 0.08117860784915554,
+          "sample_fraction": 0.07908290512098126
+        },
+        {
+          "month": "2024-11",
+          "band": "60_251_days",
+          "ic": 0.02613929637615559,
+          "rank_ic": 0.021345458621100908,
+          "factor_variance_share": 0.1807867796755128,
+          "label_variance_share": 0.19193797907791904,
+          "sample_fraction": 0.17375321862563012
+        },
+        {
+          "month": "2024-11",
+          "band": "252_plus_days",
+          "ic": 0.09847894384701113,
+          "rank_ic": 0.0922888191524326,
+          "factor_variance_share": 0.6497231869253343,
+          "label_variance_share": 0.6232296603416949,
+          "sample_fraction": 0.6640767734047627
+        },
+        {
+          "month": "2024-12",
+          "band": "no_supervised_day",
+          "ic": 0.01635245108690954,
+          "rank_ic": 0.014429653608362342,
+          "factor_variance_share": 0.1708251087706255,
+          "label_variance_share": 0.16990821369690165,
+          "sample_fraction": 0.11864421377763407
+        },
+        {
+          "month": "2024-12",
+          "band": "1_59_days",
+          "ic": 0.016127281601534142,
+          "rank_ic": 0.011443292539160904,
+          "factor_variance_share": 0.08632609277416471,
+          "label_variance_share": 0.09600333623505955,
+          "sample_fraction": 0.07646192852863867
+        },
+        {
+          "month": "2024-12",
+          "band": "60_251_days",
+          "ic": 0.019830070176282157,
+          "rank_ic": 0.020827100806054825,
+          "factor_variance_share": 0.14635696488014935,
+          "label_variance_share": 0.15434694561816065,
+          "sample_fraction": 0.1659841667018277
+        },
+        {
+          "month": "2024-12",
+          "band": "252_plus_days",
+          "ic": 0.0843976045795963,
+          "rank_ic": 0.08795114448541508,
+          "factor_variance_share": 0.5964918335750604,
+          "label_variance_share": 0.5797415044498782,
+          "sample_fraction": 0.6389096909918995
+        }
+      ],
+      "restricted_oracle_ceiling": {
+        "days_lt_1": 0.36337005220628216,
+        "days_lt_60": 0.4596281104074454,
+        "days_lt_252": 0.62675574750655
+      },
+      "oracle_by_month": [
+        {
+          "month": "2024-07",
+          "days_lt_1": 0.34322379464185415,
+          "days_lt_60": 0.4409009171607951,
+          "days_lt_252": 0.6230936865815588
+        },
+        {
+          "month": "2024-08",
+          "days_lt_1": 0.3367179360676091,
+          "days_lt_60": 0.4364048010449476,
+          "days_lt_252": 0.6210096969791871
+        },
+        {
+          "month": "2024-09",
+          "days_lt_1": 0.3287222970955064,
+          "days_lt_60": 0.4252309264713555,
+          "days_lt_252": 0.5999526204507818
+        },
+        {
+          "month": "2024-10",
+          "days_lt_1": 0.35975014343483475,
+          "days_lt_60": 0.45176709767808493,
+          "days_lt_252": 0.6134251583357152
+        },
+        {
+          "month": "2024-11",
+          "days_lt_1": 0.3665506389803631,
+          "days_lt_60": 0.46294208656877867,
+          "days_lt_252": 0.6339917942342767
+        },
+        {
+          "month": "2024-12",
+          "days_lt_1": 0.44093295501390684,
+          "days_lt_60": 0.5354049047335411,
+          "days_lt_252": 0.6634781816306018
+        }
+      ],
+      "oracle_by_clock": [
+        {
+          "clock": "09:30",
+          "days_lt_1": 0.3336068960040469,
+          "days_lt_60": 0.4326646960030299,
+          "days_lt_252": 0.6068954187847456
+        },
+        {
+          "clock": "10:00",
+          "days_lt_1": 0.35261861140051015,
+          "days_lt_60": 0.4493572698528605,
+          "days_lt_252": 0.6221962048274056
+        },
+        {
+          "clock": "10:30",
+          "days_lt_1": 0.36158976002506465,
+          "days_lt_60": 0.4573549047279543,
+          "days_lt_252": 0.625172457018628
+        },
+        {
+          "clock": "11:00",
+          "days_lt_1": 0.35710591002472436,
+          "days_lt_60": 0.44811431485495395,
+          "days_lt_252": 0.6183578134983464
+        },
+        {
+          "clock": "11:30",
+          "days_lt_1": 0.37664661450080095,
+          "days_lt_60": 0.46457323745556245,
+          "days_lt_252": 0.6294501900150751
+        },
+        {
+          "clock": "13:30",
+          "days_lt_1": 0.3648262748209699,
+          "days_lt_60": 0.4645974624065467,
+          "days_lt_252": 0.632936671975113
+        },
+        {
+          "clock": "14:00",
+          "days_lt_1": 0.35579325093719183,
+          "days_lt_60": 0.4630397992244277,
+          "days_lt_252": 0.6283583029660194
+        },
+        {
+          "clock": "14:30",
+          "days_lt_1": 0.4047730999369483,
+          "days_lt_60": 0.4973231987342277,
+          "days_lt_252": 0.6506789209670666
+        }
+      ]
+    },
+    {
+      "solution_id": "v1901",
+      "run_id": "v1901-latent-factor-s42",
+      "split": "test",
+      "predictions_sha256": "6660257272f49398cc3e38b296fd0a965d2edf2f71aaeb358b96126a64fb3a7d",
+      "ic_mean": 0.11601685665030831,
+      "rank_ic_mean": 0.10012244062537973,
+      "evaluated_rows": 998539,
+      "contributions_match_frozen_sections": true,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.010290065685515116,
+          "rank_ic": 0.008869502276004663,
+          "factor_variance_share": 0.10787172941399449,
+          "label_variance_share": 0.11108021265902113,
+          "sample_fraction": 0.08835678414921774
+        },
+        "1_59_days": {
+          "ic": 0.00858218295128913,
+          "rank_ic": 0.007806549813493412,
+          "factor_variance_share": 0.07273286408871439,
+          "label_variance_share": 0.08044216538197861,
+          "sample_fraction": 0.07860814491924914
+        },
+        "60_251_days": {
+          "ic": 0.02031598561598463,
+          "rank_ic": 0.015759638806324833,
+          "factor_variance_share": 0.1736728445641777,
+          "label_variance_share": 0.1831639665262591,
+          "sample_fraction": 0.17267150992386715
+        },
+        "252_plus_days": {
+          "ic": 0.07682862239751945,
+          "rank_ic": 0.06768674972955681,
+          "factor_variance_share": 0.6457225619331134,
+          "label_variance_share": 0.6253136554327411,
+          "sample_fraction": 0.6603635610076659
+        }
+      },
+      "unique_instruments_by_band": {
+        "no_supervised_day": 149,
+        "1_59_days": 79,
+        "60_251_days": 182,
+        "252_plus_days": 692
+      },
+      "monthly": [
+        {
+          "month": "2024-07",
+          "band": "no_supervised_day",
+          "ic": 0.010229978899267658,
+          "rank_ic": 0.008560266840574631,
+          "factor_variance_share": 0.10134893896033033,
+          "label_variance_share": 0.10041724573993054,
+          "sample_fraction": 0.08011846299909059
+        },
+        {
+          "month": "2024-07",
+          "band": "1_59_days",
+          "ic": 0.00649715270186486,
+          "rank_ic": 0.006485021407212129,
+          "factor_variance_share": 0.0694626280474351,
+          "label_variance_share": 0.07746833569534212,
+          "sample_fraction": 0.07911698221160196
+        },
+        {
+          "month": "2024-07",
+          "band": "60_251_days",
+          "ic": 0.019130330009842336,
+          "rank_ic": 0.013110170938787809,
+          "factor_variance_share": 0.1819439502618525,
+          "label_variance_share": 0.19661665997203046,
+          "sample_fraction": 0.17482344019750085
+        },
+        {
+          "month": "2024-07",
+          "band": "252_plus_days",
+          "ic": 0.06749402141884671,
+          "rank_ic": 0.06141775819522799,
+          "factor_variance_share": 0.647244482730382,
+          "label_variance_share": 0.625497758592697,
+          "sample_fraction": 0.6659411145918065
+        },
+        {
+          "month": "2024-08",
+          "band": "no_supervised_day",
+          "ic": 0.006497538889041981,
+          "rank_ic": 0.006369176502137138,
+          "factor_variance_share": 0.08264683551315083,
+          "label_variance_share": 0.09214162321763891,
+          "sample_fraction": 0.08115929109678896
+        },
+        {
+          "month": "2024-08",
+          "band": "1_59_days",
+          "ic": 0.00671946995839116,
+          "rank_ic": 0.007074694058180936,
+          "factor_variance_share": 0.06976215295148198,
+          "label_variance_share": 0.07772681645987216,
+          "sample_fraction": 0.07911155935958299
+        },
+        {
+          "month": "2024-08",
+          "band": "60_251_days",
+          "ic": 0.021934589781062247,
+          "rank_ic": 0.014646730116026086,
+          "factor_variance_share": 0.19431503477745526,
+          "label_variance_share": 0.19931125423455362,
+          "sample_fraction": 0.17379007392182186
+        },
+        {
+          "month": "2024-08",
+          "band": "252_plus_days",
+          "ic": 0.0749059045595532,
+          "rank_ic": 0.06313511790038019,
+          "factor_variance_share": 0.6532759767579118,
+          "label_variance_share": 0.6308203060879353,
+          "sample_fraction": 0.6659390756218062
+        },
+        {
+          "month": "2024-09",
+          "band": "no_supervised_day",
+          "ic": 0.006925398387576064,
+          "rank_ic": 0.005351893162695587,
+          "factor_variance_share": 0.08473951879143386,
+          "label_variance_share": 0.09083411005335769,
+          "sample_fraction": 0.08241859780047134
+        },
+        {
+          "month": "2024-09",
+          "band": "1_59_days",
+          "ic": 0.004788277431493353,
+          "rank_ic": 0.004509840120712633,
+          "factor_variance_share": 0.06814306162136359,
+          "label_variance_share": 0.0729963474838626,
+          "sample_fraction": 0.07892758793750546
+        },
+        {
+          "month": "2024-09",
+          "band": "60_251_days",
+          "ic": 0.018382065806206816,
+          "rank_ic": 0.00943987315154114,
+          "factor_variance_share": 0.1761248641774961,
+          "label_variance_share": 0.18005680649634784,
+          "sample_fraction": 0.17395720956620409
+        },
+        {
+          "month": "2024-09",
+          "band": "252_plus_days",
+          "ic": 0.07289788411237393,
+          "rank_ic": 0.05046915572340684,
+          "factor_variance_share": 0.6709925554097065,
+          "label_variance_share": 0.6561127359664319,
+          "sample_fraction": 0.6646966046958191
+        },
+        {
+          "month": "2024-10",
+          "band": "no_supervised_day",
+          "ic": 0.007673426986495407,
+          "rank_ic": 0.008329186902506792,
+          "factor_variance_share": 0.10127530944101786,
+          "label_variance_share": 0.10598647888165051,
+          "sample_fraction": 0.08307854135587381
+        },
+        {
+          "month": "2024-10",
+          "band": "1_59_days",
+          "ic": 0.005679168916119168,
+          "rank_ic": 0.007286762216139644,
+          "factor_variance_share": 0.060459707081916864,
+          "label_variance_share": 0.07554190141335031,
+          "sample_fraction": 0.07907475623028952
+        },
+        {
+          "month": "2024-10",
+          "band": "60_251_days",
+          "ic": 0.016291910087963705,
+          "rank_ic": 0.016071817387486198,
+          "factor_variance_share": 0.15663286109903993,
+          "label_variance_share": 0.17450307531105938,
+          "sample_fraction": 0.17410898607358194
+        },
+        {
+          "month": "2024-10",
+          "band": "252_plus_days",
+          "ic": 0.06618933245143732,
+          "rank_ic": 0.05674001370430125,
+          "factor_variance_share": 0.6816321223780253,
+          "label_variance_share": 0.6439685443939398,
+          "sample_fraction": 0.6637377163402548
+        },
+        {
+          "month": "2024-11",
+          "band": "no_supervised_day",
+          "ic": 0.01258861540521514,
+          "rank_ic": 0.01014291874049476,
+          "factor_variance_share": 0.09428592203936005,
+          "label_variance_share": 0.10365375273123055,
+          "sample_fraction": 0.0830871028486259
+        },
+        {
+          "month": "2024-11",
+          "band": "1_59_days",
+          "ic": 0.01056325289598036,
+          "rank_ic": 0.010162293781456092,
+          "factor_variance_share": 0.07516604236158722,
+          "label_variance_share": 0.08117860784915554,
+          "sample_fraction": 0.07908290512098126
+        },
+        {
+          "month": "2024-11",
+          "band": "60_251_days",
+          "ic": 0.026279303154085866,
+          "rank_ic": 0.021336105740777586,
+          "factor_variance_share": 0.1858628057257122,
+          "label_variance_share": 0.19193797907791904,
+          "sample_fraction": 0.17375321862563012
+        },
+        {
+          "month": "2024-11",
+          "band": "252_plus_days",
+          "ic": 0.09612227890587552,
+          "rank_ic": 0.0887771412693843,
+          "factor_variance_share": 0.6446852298733405,
+          "label_variance_share": 0.6232296603416949,
+          "sample_fraction": 0.6640767734047627
+        },
+        {
+          "month": "2024-12",
+          "band": "no_supervised_day",
+          "ic": 0.016998075537133152,
+          "rank_ic": 0.01395759710152823,
+          "factor_variance_share": 0.1782590640713759,
+          "label_variance_share": 0.16990821369690165,
+          "sample_fraction": 0.11864421377763407
+        },
+        {
+          "month": "2024-12",
+          "band": "1_59_days",
+          "ic": 0.01638542705361535,
+          "rank_ic": 0.010943777883917516,
+          "factor_variance_share": 0.0908054733269066,
+          "label_variance_share": 0.09600333623505955,
+          "sample_fraction": 0.07646192852863867
+        },
+        {
+          "month": "2024-12",
+          "band": "60_251_days",
+          "ic": 0.019207301747784372,
+          "rank_ic": 0.019522015147070363,
+          "factor_variance_share": 0.14457186863638577,
+          "label_variance_share": 0.15434694561816065,
+          "sample_fraction": 0.1659841667018277
+        },
+        {
+          "month": "2024-12",
+          "band": "252_plus_days",
+          "ic": 0.08219317124826925,
+          "rank_ic": 0.08248675053712595,
+          "factor_variance_share": 0.5863635939653318,
+          "label_variance_share": 0.5797415044498782,
+          "sample_fraction": 0.6389096909918995
+        }
+      ],
+      "restricted_oracle_ceiling": {
+        "days_lt_1": 0.36145671453254863,
+        "days_lt_60": 0.4583089482991172,
+        "days_lt_252": 0.6259951728424599
+      },
+      "oracle_by_month": [
+        {
+          "month": "2024-07",
+          "days_lt_1": 0.3416687271254625,
+          "days_lt_60": 0.4399741545444869,
+          "days_lt_252": 0.6226506019558312
+        },
+        {
+          "month": "2024-08",
+          "days_lt_1": 0.3339027966585947,
+          "days_lt_60": 0.4344127548157435,
+          "days_lt_252": 0.6199425481375609
+        },
+        {
+          "month": "2024-09",
+          "days_lt_1": 0.3282251076286639,
+          "days_lt_60": 0.4249439970288986,
+          "days_lt_252": 0.5995445766653774
+        },
+        {
+          "month": "2024-10",
+          "days_lt_1": 0.3589371109901315,
+          "days_lt_60": 0.4513762661946326,
+          "days_lt_252": 0.613207987414075
+        },
+        {
+          "month": "2024-11",
+          "days_lt_1": 0.3630490931158804,
+          "days_lt_60": 0.4603641138142946,
+          "days_lt_252": 0.6325039233850774
+        },
+        {
+          "month": "2024-12",
+          "days_lt_1": 0.4389395939996997,
+          "days_lt_60": 0.5338989659894297,
+          "days_lt_252": 0.6626374354597675
+        }
+      ],
+      "oracle_by_clock": [
+        {
+          "clock": "09:30",
+          "days_lt_1": 0.33445981095851485,
+          "days_lt_60": 0.4334457448450673,
+          "days_lt_252": 0.6075194661455894
+        },
+        {
+          "clock": "10:00",
+          "days_lt_1": 0.35022656842750266,
+          "days_lt_60": 0.4478710906715005,
+          "days_lt_252": 0.6212882147265807
+        },
+        {
+          "clock": "10:30",
+          "days_lt_1": 0.36175029851304846,
+          "days_lt_60": 0.4575906931292265,
+          "days_lt_252": 0.6253609374878436
+        },
+        {
+          "clock": "11:00",
+          "days_lt_1": 0.35455900182598055,
+          "days_lt_60": 0.4464266689393498,
+          "days_lt_252": 0.6173082224283409
+        },
+        {
+          "clock": "11:30",
+          "days_lt_1": 0.3734748999536229,
+          "days_lt_60": 0.4622292085266084,
+          "days_lt_252": 0.6280219819171542
+        },
+        {
+          "clock": "13:30",
+          "days_lt_1": 0.361758789551006,
+          "days_lt_60": 0.46249690087575945,
+          "days_lt_252": 0.6316152260520845
+        },
+        {
+          "clock": "14:00",
+          "days_lt_1": 0.35264864264494084,
+          "days_lt_60": 0.46056348341286835,
+          "days_lt_252": 0.6268548703507134
+        },
+        {
+          "clock": "14:30",
+          "days_lt_1": 0.40277570438577304,
+          "days_lt_60": 0.4958477959925575,
+          "days_lt_252": 0.6499924636313724
+        }
+      ]
+    }
+  ],
+  "deltas": [
+    {
+      "solution_id": "v1601",
+      "reference": "v1102",
+      "split": "validation",
+      "ic_delta": 0.013051707978821825,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.00018891805288392044,
+          "rank_ic": 2.8991063375333323e-05,
+          "factor_variance_share": 0.0007270244086668709
+        },
+        "1_59_days": {
+          "ic": 0.0018016443151225442,
+          "rank_ic": 0.0014514753735152802,
+          "factor_variance_share": 0.007518085226146637
+        },
+        "60_251_days": {
+          "ic": 0.0038543182821604606,
+          "rank_ic": 0.0028469053381211147,
+          "factor_variance_share": 0.008824886671835036
+        },
+        "252_plus_days": {
+          "ic": 0.007206827328654908,
+          "rank_ic": 0.008243664499070866,
+          "factor_variance_share": -0.017069996306648516
+        }
+      }
+    },
+    {
+      "solution_id": "v1901",
+      "reference": "v1102",
+      "split": "validation",
+      "ic_delta": 0.011902665774231116,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.0002009686401003502,
+          "rank_ic": -1.672469265809047e-05,
+          "factor_variance_share": 0.0013545031679351848
+        },
+        "1_59_days": {
+          "ic": 0.0015519909211407137,
+          "rank_ic": 0.000985480198023603,
+          "factor_variance_share": 0.008692034883467759
+        },
+        "60_251_days": {
+          "ic": 0.0038696374886079167,
+          "rank_ic": 0.002096024333628453,
+          "factor_variance_share": 0.011133673513914477
+        },
+        "252_plus_days": {
+          "ic": 0.006280068724382137,
+          "rank_ic": 0.005209591878736777,
+          "factor_variance_share": -0.021180211565317464
+        }
+      }
+    },
+    {
+      "solution_id": "v1601",
+      "reference": "v1102",
+      "split": "test",
+      "ic_delta": 0.01729496291807761,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.002598069136130245,
+          "rank_ic": 0.0019019533257723193,
+          "factor_variance_share": 0.008426660787248588
+        },
+        "1_59_days": {
+          "ic": 0.0016419741504888445,
+          "rank_ic": 0.0013799317564513712,
+          "factor_variance_share": 0.006876092141110665
+        },
+        "60_251_days": {
+          "ic": 0.004668498969917067,
+          "rank_ic": 0.003055791952132075,
+          "factor_variance_share": 0.00865722131017424
+        },
+        "252_plus_days": {
+          "ic": 0.008386420661541452,
+          "rank_ic": 0.008712022649355229,
+          "factor_variance_share": -0.023959974238533466
+        }
+      }
+    },
+    {
+      "solution_id": "v1901",
+      "reference": "v1102",
+      "split": "test",
+      "ic_delta": 0.01705234054362846,
+      "bands": {
+        "no_supervised_day": {
+          "ic": 0.002846359209287631,
+          "rank_ic": 0.0016546069793348201,
+          "factor_variance_share": 0.012433241824650762
+        },
+        "1_59_days": {
+          "ic": 0.0012700121235088395,
+          "rank_ic": 0.0009484740138123874,
+          "factor_variance_share": 0.007708819016514379
+        },
+        "60_251_days": {
+          "ic": 0.005115432120630939,
+          "rank_ic": 0.0024516799960558004,
+          "factor_variance_share": 0.013801795651524534
+        },
+        "252_plus_days": {
+          "ic": 0.007820537090201085,
+          "rank_ic": 0.0059213656577089754,
+          "factor_variance_share": -0.03394385649268972
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "分组依据训练期信息，但贡献和上界使用已观察验证/测试标签，只用于结果诊断。",
+    "贡献是全截面IC的加法分解，不是子组自身的IC。",
+    "理想上界允许未来真值和逐截面理想校准，不能成为推理方法，也不是整个任务的可预测性上限。",
+    "不同监督历史组的成分、波动和数量不同，贡献差不能直接归因为历史长短。"
+  ]
+}

@@ -39,3 +39,6 @@
 /common/geometry_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /common/geometry_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /evaluation/protocols/local-v2-ic.json -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/analyze-history-generalization.py -text
+/scripts/analyze-frozen-fit-gap.py -text
+/scripts/analyze-clock-gradient-alignment.py -text

@@ -79,6 +79,8 @@ v1901 归档后的[时间利用与数量状态研究](temporal-liquidity-researc
 
 ## 复核
 
+[补充诊断](generalization-and-phase-research-20261023.md)显示，单独修复零监督历史股票也不能达到验证 0.25；冻结最佳权重的训练抽样 IC 为 0.155779，当前没有“训练已够强、只需泛化修补”的证据。跨时点梯度差异尚不能排除股票抽样噪声，不直接拆成八个模型。抽样结果不替代本文上方的完整正式指标。
+
 ```powershell
 .venv-training/Scripts/python.exe scripts/analyze-ic-target-gap.py --run v1601-price-geometry-s42 --target 0.25
 ```
