@@ -78,6 +78,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 后续优先级：遗漏的大方向 | [研究缺口与文献质量地图](research-gap-map-20261022.md)、[输入精度审计](../experiments/input-precision-audit-20261022.json)；优先交易路径目标、市场联合表示，独立核查输入表达和表征学习，停止自动扩展局部组合 |
 | 决策代理与市场时空方向 | [组合诊断与局限](portfolio-diagnostics.md)、[v1501 冻结结果](../solutions/v1501/README.md#冻结结果)、[比较摘要](../experiments/v1501-patch-transformer.json)、[论文质量与机制](market-space-time-research-20261022.md)；完整市场时空组合未改善，不自动扩展局部参数 |
 | IC 与排序改善来自哪些样本 | [已完成模型的标签幅度贡献分解](ic-contributions-20261022.md)、[聚合结果](../experiments/ic-contributions-20261022.json)；v1201 的外侧幅度样本抵消多数样本贡献退化，v1401 的 IC 增量分布于全部四档 |
+| 未来状态与多时点监督 | [论文质量与训练标签关系](future-supervision-research-20261022.md)、[标签转移诊断](../experiments/label-transition-diagnostics-20261022.json)；直接使用已有标签，区分辅助监督、因果预测与正式评估 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |

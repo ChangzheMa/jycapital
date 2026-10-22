@@ -87,7 +87,8 @@
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
     "next_design_hypothesis": "盘前信息与交易阶段方向已落实为v1801，复用父v1102短期缓存和平台查询。正式结果未产生；后续继续依据已完成实验及遗漏机制决定新方向，不自动扫描层数或小权重。",
-    "next_session_input_direction_note": "docs/session-input-research-20261022.md"
+    "next_session_input_direction_note": "docs/session-input-research-20261022.md",
+    "next_supervision_direction_note": "docs/future-supervision-research-20261022.md"
   },
   "legacy_runs": [
     {
