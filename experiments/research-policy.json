@@ -79,14 +79,14 @@
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
     "in_progress_delivery": "完成已评估 v1401 的共享 fast 材料，不继续扩展该等权组合线。",
-    "active_direction_note": "docs/long-context-research-20261022.md",
+    "active_direction_note": "docs/session-input-research-20261022.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
-    "evidence_update": "v1201 分布辅助监督未改善；v1301 完整日期目标联合方案也退化，双集各六个月 IC／Rank IC 均低于父 v1002，训练及逐轮验证约为父版1.98倍。继续检验已发布的 v1501 市场时空表示、v1601 价格共同坐标和 v1701 长期状态；不自动扩展失败方向的小权重扫描。",
+    "evidence_update": "v1201 分布辅助监督、v1301 完整日期目标及 v1501 完整市场时空组合均未改善。v1501 双集各六个月 IC／Rank IC 均低于 v1102 和 v1401；下一方向优先检验已发现的盘前信息覆盖缺口，既有 v1601、v1701 保持冻结。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
     "latest_candidate": "v1701-long-history-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "构造仍暂停；恢复后优先结合正式结果核查盘前信息与交易阶段建模。训练期存在当前规则网格未直接纳入的09:16—09:25行情，近期五版09:30表现较弱，但尚无因果或预测收益证明；未创建新候选。",
+    "next_design_hypothesis": "v1501 已完成且未评测数降为2，构造容量恢复。优先检验盘前原始序列与交易阶段组织；现有09:16—09:25行情未直接进入规则网格，但尚无正式预测收益证明。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md"
   },
   "legacy_runs": [
