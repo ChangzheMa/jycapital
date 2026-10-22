@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "solution_id": "v1301",
+  "checked_at": "2026-10-22T11:10:47+08:00",
+  "reference_run_id": "v1002-current-temporal-experts-s42",
+  "cache_key": "dbcd47ff50672ccee5adc5dec94833d43d5c4226fb540909fa080c71467b960b",
+  "reference_data_manifest_sha256": "f0c2fb1a69e0918bafae1484c1030d7a5eeff7bd285ee0092986c5e18567c414",
+  "cache_manifest_sha256": "2bd3853f8454c9d0a318031ff82db1cc1308389f90ebab42548d92d593c67791",
+  "scope": "只读真实训练日期、股票、时钟索引及既有标准化目标；不读取价格窗口、不启动训练。",
+  "index_and_target_arrays_opened": true,
+  "price_arrays_opened": false,
+  "cache_modified": false,
+  "array_file_sha256": {
+    "days": "797f2af5064588c8dac5264197223528ad1f0f811659e38aea5d95c4cd82e269",
+    "sample_day": "66c665dffe87c493dae195e05f79c7fa52ae4606f6cfdb61aba6262184c22818",
+    "sample_stock": "1e047307dac1ddc76288932a7388d2af9ebcbef0901b3df4cd9cb48e20013a46",
+    "sample_clock": "f3e76bd2998c3e375cc454e7a6e8ccff72e5a364da78960fd9cc74a7c900f32b",
+    "targets": "e7de68d257ceec4a7a1ae74bcc5b367a2ac8c0eed41b66b9bf6772f8d564dd6e"
+  },
+  "training_dates": 970,
+  "sample_rows": 7760000,
+  "stock_day_groups": 970000,
+  "all_stock_days_have_eight_distinct_clocks": true,
+  "eligible_stock_day_groups": 967872,
+  "eligible_sample_rows": 7742958,
+  "minimum_eligible_stocks_per_day": 990,
+  "maximum_eligible_stocks_per_day": 1000,
+  "optimizer_steps_per_full_epoch": 970,
+  "microbatch_stock_days": 64,
+  "maximum_microbatches_per_day": 16,
+  "maximum_float32_input_bytes_per_day": 280800000,
+  "input_memory_note": "仅输入张量估算，不含异步预取、掩码、网络激活、优化器或 CUDA 工作区；峰值显存须 GPU 预检。"
+}
