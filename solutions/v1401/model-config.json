@@ -1,0 +1,65 @@
+{
+  "solution_id": "v1401",
+  "seed": 42,
+  "parent_solution_id": "v1002",
+  "parent_run_id": "v1002-current-temporal-experts-s42",
+  "model": {
+    "family": "hierarchical_gru",
+    "composition": "frozen_cross_section_standardized_equal_mean",
+    "components": [
+      {
+        "solution_id": "v1002",
+        "run_id": "v1002-current-temporal-experts-s42",
+        "weight": 0.5,
+        "model_sha256": "5f61413f1651eac718a239da255659e62628a5ab6d455705bf86a84fcc4c29eb",
+        "config_sha256": "663c86e8f461914111984188c016525837cb8dd09ebbdf8ddd8ced443a099832",
+        "selected_epoch": 4,
+        "weight_source": "ema",
+        "prediction_sha256": {
+          "validation": "3766245165116f40caefdc086c033e11f47993eee41fad572f744ee7562cd7db",
+          "test": "8b821de1d89a6f53cfbd02affb8b6a36dc2c2b966e812d0260472e2c6f1c4c43"
+        }
+      },
+      {
+        "solution_id": "v1101",
+        "run_id": "v1101-structured-fields-s42",
+        "weight": 0.5,
+        "model_sha256": "fae2ed405cc228d50bb39b4ea6f06a08d5b23978fb7bda677cdb72770db46dde",
+        "config_sha256": "b900489bf28c08619f5e6b043e4dd8a96aef26d7c8506f78236a5930132eaecf",
+        "selected_epoch": 5,
+        "weight_source": "ema",
+        "prediction_sha256": {
+          "validation": "9d1ea661f3b7d8791add21c4d727d675dc7ac895d5bc1c0f5a58c38731ce157e",
+          "test": "0219108cd7eed2981e3d82a6d4941fbb3c6215bf8cf1d2c2942305f4f0609223"
+        }
+      }
+    ]
+  },
+  "training": {
+    "mode": "none_frozen_components",
+    "epochs": 0,
+    "cpu_threads": 4
+  },
+  "inference": {
+    "stock_day_batch_size": 128,
+    "precision": "float32_network_float64_aggregation"
+  },
+  "references": {
+    "local_best": "v1002-current-temporal-experts-s42",
+    "parent": "v1002-current-temporal-experts-s42",
+    "platform_best": null
+  },
+  "aggregation": {
+    "component_weights": [
+      0.5,
+      0.5
+    ],
+    "centering": "complete_timestamp_cross_section",
+    "std_ddof": 0,
+    "constant_component": "zero",
+    "label_usage": false,
+    "weight_search": false
+  },
+  "declared_at": "2026-10-22T11:29:30+08:00",
+  "research_basis": "docs/frozen-ensemble-research-20261022.md"
+}

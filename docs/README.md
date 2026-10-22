@@ -4,7 +4,7 @@
 
 ## 冻结模型结果
 
-本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-22（UTC+08:00）本次归档，下表 36 个版本完成训练及双集评估，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261022.json)。
+本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-22（UTC+08:00）本次归档，下表 38 个版本完成双集评估，其中 37 个完成训练、v1401 为无需新增训练的冻结组合，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261022.json)。
 
 | 方案 | 参数量 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC | 结果 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -42,12 +42,14 @@
 | [v802](../solutions/v802/README.md) | 2,129,158 | 0.086299 | 0.081775 | 0.089058 | 0.082578 | 联合时序与截面训练；双集 IC／Rank IC 低于 v501、v801，成本明显增加，不导出 |
 | [v901](../solutions/v901/README.md) | 1,564,710 | 0.087905 | 0.088162 | 0.093509 | 0.088342 | 前一本地最优、保留为 IR 对照；当天多频与共享历史组合提高双集 IC／Rank IC，已导出 fast |
 | [v1001](../solutions/v1001/README.md) | 2,418,576 | 0.090725 | 0.087983 | 0.094837 | 0.089666 | 前一本地最优、换手代理较低，可作对照；已导出 fast |
-| [v1002](../solutions/v1002/README.md) | 2,418,576 | **0.091592** | 0.089138 | **0.097627** | 0.089765 | 当前验证 IC 最优；双集 IC／Rank IC 及对应 IR 提高，换手代理和单轮成本增加；已导出 fast |
+| [v1002](../solutions/v1002/README.md) | 2,418,576 | 0.091592 | 0.089138 | 0.097627 | 0.089765 | 前一单模型验证 IC 最优，保留为 IR 对照；已导出 fast |
 | [v1101](../solutions/v1101/README.md) | 2,296,710 | 0.089995 | 0.088473 | 0.097203 | 0.091133 | 字段结构与扩容；验证 IC 未晋级判定保持；已按用户要求导出 fast 平台对照材料 |
+| [v1102](../solutions/v1102/README.md) | 2,518,992 | 0.092474 | 0.090069 | 0.098965 | 0.089146 | 当前单主干验证 IC 最优；低于已冻结组合 v1401，测试 Rank IC 和双集 IR 有代价，不默认导出 |
+| [v1401](../solutions/v1401/README.md) | 4,715,286 | **0.093062** | **0.091252** | **0.099979** | **0.093134** | 当前总体验证 IC 最优；v1002＋v1101 固定组合，新增训练为零、需双网络推理，已导出共享预处理 fast |
 
-v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
+v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401 的组件保持原验证选中的 EMA，组合规则预先固定，没有新的选模 epoch。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
 
-下图聚焦近期完成的全局采样方案；对应[绘图数据与来源指纹](../experiments/figures/local-model-comparison-20261022.json)，可用[绘图脚本](../scripts/plot-local-comparison.py)从冻结摘要重建。
+下图聚焦近期完成方案，包含单模型及单独说明的 v1401 冻结组合；对应[绘图数据与来源指纹](../experiments/figures/local-model-comparison-20261022.json)，可用[绘图脚本](../scripts/plot-local-comparison.py)从冻结摘要重建。
 
 ![近期完成模型的本地 IC、Rank IC 和 IC IR 对比](../experiments/figures/local-model-comparison-20261022.png)
 
@@ -64,6 +66,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 实验与评估 | [开发约定](development.md)、[实验技能](../.agents/skills/jycapital-experiment/SKILL.md)、[查分技能](../.agents/skills/jycapital-scores/SKILL.md) |
 | 持续研究与串行调度 | [研究 session 与训练 session 的交接约定](continuous-research.md)、[训练监控 session 提示词](training-session-prompt.md)；候选通过各版本的 `experiment.json` 发布 |
 | 文献与组合改进 | [2026-10-21 文献质量筛选及下一轮方向](research-directions-20261021.md)；联合考虑容量、监督和重复计算，区分论文证据与本地假设 |
+| 后续优先级：遗漏的大方向 | [研究缺口与文献质量地图](research-gap-map-20261022.md)、[输入精度审计](../experiments/input-precision-audit-20261022.json)；优先交易路径目标、市场联合表示，独立核查输入表达和表征学习，停止自动扩展局部组合 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |
@@ -78,9 +81,10 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 训练分布适应结果 | [v1001：行情条件多分支与时间加权](../solutions/v1001/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1001-gru.json)；约 242 万参数，曾晋级并导出 fast，保留为换手对照 |
 | 时间加权与当天输入组合结果 | [v1002：合并 v1001 训练组合与 v901 当前日输入](../solutions/v1002/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1002-gru.json)；约 242 万参数，成为新的验证 IC 最优并导出 fast |
 | 字段结构编码结果 | [v1101：原始字段结构编码](../solutions/v1101/README.md#冻结结果)、[用户指定平台材料](../solutions/v1101/README.md#用户指定的平台对照材料)、[比较摘要](../experiments/v1101-gru.json)、[论文核验](structured-input-research-20261022.md)；约 230 万参数，原未晋级判定保持 |
-| 字段结构与训练方法组合 | [v1102：字段结构与时间加权多分支](../solutions/v1102/README.md)、[缓存兼容性](../experiments/v1102-input-cache-compatibility.json)；以已完成 v1101、v1001 为依据，约 252 万参数，单个共享时序主干 |
+| 字段结构与训练方法组合 | [v1102 冻结结果](../solutions/v1102/README.md#冻结结果)、[比较摘要](../experiments/v1102-gru.json)、[缓存兼容性](../experiments/v1102-input-cache-compatibility.json)；约 252 万参数，当前单主干验证 IC 最优，未超过 v1401 |
 | 收益分布辅助监督 | [v1201：点预测约束下的 Student-t 混合](../solutions/v1201/README.md)、[论文质量与设计依据](distributional-supervision-research-20261022.md)；以已完成 v1002 为父版，保留 Huber 主监督，联合学习尺度、似然和分支分配，仍按验证 IC 选择 |
 | 完整截面目标与训练组织 | [v1301：整日目标与分块重计算](../solutions/v1301/README.md)、[文献质量与设计依据](cross-sectional-objective-research-20261022.md)、[训练索引审计](../experiments/v1301-calendar-feasibility.json)；以 v1002 为父版，联合点监督与逐时点相关性，保持原推理结构 |
+| 冻结组合与共享预处理 | [v1401：固定等权组合](../solutions/v1401/README.md)、[研究依据](frozen-ensemble-research-20261022.md)、[冻结摘要](../experiments/v1401-gru.json)；复用 v1002 与 v1101，完成双集评估及三文件 fast 材料，无新增训练 |
 | 信号诊断与 v201 结论 | [换手及持续性代理定义与结果](signal-diagnostics.md)、[v201 冻结比较](../experiments/v201-mixer.json)、[全体完成模型汇总](../experiments/completed-models-20261021.json) |
 | v301 冻结结论 | [分层 GRU 结果与平台材料](../solutions/v301/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v301-gru.json)、[信号代理诊断](../experiments/v301-signal-diagnostics.json) |
 | v202 冻结结论 | [Patch Mixer 的效率与效果](../solutions/v202/README.md#冻结结果)、[比较摘要](../experiments/v202-mixer.json)；保留快速结构研究价值，当前不晋级 |
@@ -106,7 +110,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | v7 派生对比实验 | [六组实验代码与执行交接](v7-ablation-experiments.md)；[v7e 冻结结果与平台材料](../solutions/v7e/README.md#冻结结果与平台材料)，其他版本状态以各自运行记录为准 |
 | 缺失数据结论 | [完整样本过滤代价](v2-complete-samples.md)、[逐字段无效值统计](raw-field-validity.md)、[盘口零价格含义](book-price-zero.md) |
 | 冻结实验结果 | [v1](../experiments/v1-baseline.json)、[v2](../experiments/v2-tcn.json)、[v3](../experiments/v3-tcn.json)、[v4](../experiments/v4-tcn.json)、[v5](../experiments/v5-tcn.json)、[v6](../experiments/v6-tcn.json)、[v7](../experiments/v7-tcn.json)、[v7e](../experiments/v7e-tcn.json)、[v101](../experiments/v101-patch-transformer.json)、[运行索引](../experiments/runs.csv) |
-| 平台成绩 | [已查询成绩与版本对应关系](../experiments/platform-scores.json)，公榜／私榜分列，保留来源与查询时间 |
+| 平台成绩 | [历史成绩记录](../experiments/platform-scores.json)、[2026-10-22 用户通知后的未绑定观测](../experiments/platform-score-observations-20261022.json)，公榜／私榜分列；文件名线索不等于本地权重绑定 |
 | 预处理结果 | [训练](../experiments/v2-preprocessing.json)、[验证／测试](../experiments/v2-holdout-preprocessing.json) |
 | 提交清单 | [v2](../experiments/v2-20261011-s42-submission.json)、[v4](../experiments/v4-20261014-s42-submission.json)、[v5](../experiments/v5-20261015-s42-submission.json)、[v6](../experiments/v6-20261015-s42-submission.json)、[v7](../experiments/v7-20261016-no-layernorm-s42-submission.json)、[v7e](../experiments/v7e-zscore-huber-s42-submission.json)、[v101](../experiments/v101-global-fp16-migrated-s42-submission.json) |
 | 接口示例与依赖 | [Mock Notebook](../examples/mock-submission.ipynb)、[本地依赖](../requirements-local.txt) |

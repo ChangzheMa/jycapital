@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "solution_id": "v1401",
+  "status": "passed",
+  "checked_at": "2026-10-22T12:10:55+08:00",
+  "scope": "零训练组合专用检查：完整截面聚合、组件精确恢复、共享 fast 和隔离合成 main；不适用普通训练 GPU 梯度预检。",
+  "unit_tests_passed": 3,
+  "unit_tests_seconds": 0.359,
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "evaluation/signal_diagnostics.py": "cef64a68cd2412126dcde385300453cb6cf3f2eb866a3303bf0aa91b5d678e65",
+    "solutions/v1401/model-config.json": "aca9cc3c55fe98f4c2bb8ccad9b6e2367d1ffeb579c7f3365375ca6ef5bea00a",
+    "solutions/v1401/v1401_combine.py": "325509f731b256604331608a105f3a744aa2b7a78c18e76efa7b9c4a9c9c55a1",
+    "solutions/v1401/v1401_fast.py": "61b66ca8707b7d9704135c3a39d4d9110ad1eccd02ae8338597cccf9e4d7cf82",
+    "solutions/v1401/v1401_materialize.py": "014b64888f528c1b1b84a684c167b60a36a75d62190a0b358da42c8769bb16f7",
+    "solutions/v1401/v1401_model.py": "3e6852bed60e99c8a5c7e2ff003f54dd9eff5d9e8989ef2f6921d7aab1ba5b8e",
+    "solutions/v1401/v1401_notebook.py": "7b53b1707773ac2988a5e1a68d39b08d412f7755620fa8125db73da36128094d",
+    "solutions/v1401/v1401_predict.py": "836be618479ab555010432144760dcc5eb29ae2fcb6fb653109be739acc0f2b6"
+  },
+  "test_files": {
+    "tests/test_v1401.py": "93d5b79bebbbcf5549c38c985eb02ec3f0ae060bd588c38a50f7a7eb14e5db7e"
+  },
+  "checks": [
+    "test_complete_sections_are_independent_of_rows_and_positive_affine_scale",
+    "test_constant_components_and_missing_or_duplicate_member_keys",
+    "test_shared_prediction_aggregates_after_all_stock_batches_and_matches_reference"
+  ],
+  "submission_validation": {
+    "checked_at": "2026-10-22T11:58:24+08:00",
+    "passed": true,
+    "device": "cpu",
+    "weights_bit_exact": true,
+    "scope": "实际双组件文本权重精确恢复、隔离合成窗口及完整合成 main 对照、独立组件训练源码导入；无长行情重推或性能基准。",
+    "synthetic_check": {
+      "synthetic_window_rows": 37,
+      "same_backend_max_abs_difference": 1.0218584339805048e-06,
+      "all_eight_clocks_present": true,
+      "missing_keys_preserved": true,
+      "public_main_synthetic_rows": 24,
+      "public_main_max_abs_difference": 6.512419807647163e-06,
+      "public_main_raw_component_max_abs_differences": [
+        5.960464477539063e-08,
+        2.9802322387695312e-08
+      ],
+      "shared_queries": 15,
+      "separate_component_queries": [
+        15,
+        15
+      ],
+      "labels_queried": false,
+      "notebook_import_without_query": true,
+      "training_guard_verified": true,
+      "isolated_three_file_inference": true,
+      "repository_code_on_import_path": false,
+      "real_market_query_executed": false
+    },
+    "component_training_imports_passed": [
+      "v1002",
+      "v1101"
+    ],
+    "formal_training_performed": false,
+    "market_interval_parity_repeated": false,
+    "speed_benchmark_performed": false,
+    "platform_execution_verified": false,
+    "attachment_bytes": {
+      "v1002-model.json": 41994269,
+      "v1101-model.json": 40277558,
+      "v1401-submission.ipynb": 27908
+    },
+    "logical_review": [
+      "两组件输入、归一化与因果前缀相同，预处理只执行一次。",
+      "两个网络保留独立冻结权重，各自共享股票日编码；全部请求股票计算后按完整时点组合。",
+      "平台仅读取三个提交附件及授权行情，不读取标签、仓库、离线预测或外部权重。"
+    ]
+  },
+  "additional_training": false
+}

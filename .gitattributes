@@ -20,3 +20,5 @@
 /experiments/v1101*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 # v1002 fast 提交清单参与提交索引哈希。
 /experiments/v1002*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# v1401 三文件冻结组合清单参与索引哈希。
+/experiments/v1401*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

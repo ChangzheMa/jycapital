@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "computed_at": "2026-10-22T12:00:45+08:00",
+  "method": {
+    "name": "intraday_decile_turnover_proxy_v1",
+    "tail_fraction": 0.1,
+    "weights": "top +0.5 / k, bottom -0.5 / k; ties at selection boundary share remaining mass equally",
+    "gross_exposure": 1,
+    "turnover": "0.5 * sum(abs(weight_t - weight_previous)); both portfolios must have gross 1",
+    "transitions": "adjacent observed timestamps within the same local trading date; no overnight transition",
+    "stock_changes": "weights align on union with zero for absent names; rank persistence uses the intersection",
+    "rank_persistence": "Pearson correlation of average ranks across consecutive cross-sections",
+    "label_usage": "none in signal/position diagnostics; existing local metrics retain original evaluator",
+    "source_sha256": "cef64a68cd2412126dcde385300453cb6cf3f2eb866a3303bf0aa91b5d678e65"
+  },
+  "results": [
+    {
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "solution_id": "v1102",
+      "split": "validation",
+      "predictions_sha256": "fe91e44a8f15c2bb26989dff64622e7fd86ad4331de4d36be3e612f6ae5cb05a",
+      "summary": {
+        "transitions": 819,
+        "undefined_portfolio_transitions": 0,
+        "undefined_rank_transitions": 0,
+        "minimum_common_stocks": 1000,
+        "rank_autocorrelation_mean": 0.4441692255372358,
+        "one_way_turnover_mean": 0.6415384615384616,
+        "long_retention_mean": 0.3247863247863248,
+        "short_retention_mean": 0.3921367521367521
+      },
+      "monthly": [
+        {
+          "month": "2024-01",
+          "rank_autocorrelation": 0.4345461171384434,
+          "one_way_turnover": 0.6366558441558442,
+          "long_retention": 0.33915584415584416,
+          "short_retention": 0.3875324675324675
+        },
+        {
+          "month": "2024-02",
+          "rank_autocorrelation": 0.43518629538572945,
+          "one_way_turnover": 0.6628095238095238,
+          "long_retention": 0.29895238095238097,
+          "short_retention": 0.37542857142857144
+        },
+        {
+          "month": "2024-03",
+          "rank_autocorrelation": 0.44111804870518606,
+          "one_way_turnover": 0.6495238095238095,
+          "long_retention": 0.30149659863945577,
+          "short_retention": 0.39945578231292517
+        },
+        {
+          "month": "2024-04",
+          "rank_autocorrelation": 0.44875202928981084,
+          "one_way_turnover": 0.637,
+          "long_retention": 0.338,
+          "short_retention": 0.388
+        },
+        {
+          "month": "2024-05",
+          "rank_autocorrelation": 0.43962267365354757,
+          "one_way_turnover": 0.6457142857142858,
+          "long_retention": 0.3218571428571429,
+          "short_retention": 0.38671428571428573
+        },
+        {
+          "month": "2024-06",
+          "rank_autocorrelation": 0.46573775254467414,
+          "one_way_turnover": 0.6219548872180451,
+          "long_retention": 0.34345864661654135,
+          "short_retention": 0.41263157894736846
+        }
+      ],
+      "clock": [
+        {
+          "clock": "10:00",
+          "rank_autocorrelation": 0.25656390720767724,
+          "one_way_turnover": 0.7683333333333334,
+          "long_retention": 0.15940170940170942,
+          "short_retention": 0.30393162393162393
+        },
+        {
+          "clock": "10:30",
+          "rank_autocorrelation": 0.531358988480131,
+          "one_way_turnover": 0.593974358974359,
+          "long_retention": 0.367948717948718,
+          "short_retention": 0.4441025641025641
+        },
+        {
+          "clock": "11:00",
+          "rank_autocorrelation": 0.5314536781794815,
+          "one_way_turnover": 0.5985042735042736,
+          "long_retention": 0.39863247863247864,
+          "short_retention": 0.4043589743589744
+        },
+        {
+          "clock": "11:30",
+          "rank_autocorrelation": 0.49086095149110753,
+          "one_way_turnover": 0.6223076923076923,
+          "long_retention": 0.33487179487179486,
+          "short_retention": 0.4205128205128205
+        },
+        {
+          "clock": "13:30",
+          "rank_autocorrelation": 0.5215559118304965,
+          "one_way_turnover": 0.6055982905982906,
+          "long_retention": 0.3531623931623932,
+          "short_retention": 0.4356410256410257
+        },
+        {
+          "clock": "14:00",
+          "rank_autocorrelation": 0.5972107481442586,
+          "one_way_turnover": 0.5386324786324787,
+          "long_retention": 0.42495726495726494,
+          "short_retention": 0.4977777777777778
+        },
+        {
+          "clock": "14:30",
+          "rank_autocorrelation": 0.18018039342749775,
+          "one_way_turnover": 0.7634188034188035,
+          "long_retention": 0.23452991452991453,
+          "short_retention": 0.23863247863247863
+        }
+      ],
+      "local_metrics": {
+        "protocol_id": "local-v2-ic",
+        "expected_rows": 936000,
+        "predicted_rows": 936000,
+        "valid_label_rows": 935224,
+        "evaluated_rows": 935224,
+        "coverage": 1.0,
+        "min_cross_section_coverage": 1.0,
+        "coverage_violations": 0,
+        "cross_sections": 936,
+        "mse": 0.016423526978983954,
+        "mae": 0.0728893404902864,
+        "zero_prediction_mse": 2.057265373878181e-05,
+        "ic_mean": 0.0924742963076571,
+        "ic_std": 0.11457204275739903,
+        "ic_ir": 0.8071279352456613,
+        "ic_valid_cross_sections": 936,
+        "ic_undefined_cross_sections": 0,
+        "rank_ic_mean": 0.09006876749454029,
+        "rank_ic_std": 0.09931991403727294,
+        "rank_ic_ir": 0.9068550689717586,
+        "rank_ic_valid_cross_sections": 936,
+        "rank_ic_undefined_cross_sections": 0
+      }
+    },
+    {
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "solution_id": "v1102",
+      "split": "test",
+      "predictions_sha256": "b98d9748593669192c0511814685692c2994aec38cb88279b3ba62341eb6e795",
+      "summary": {
+        "transitions": 875,
+        "undefined_portfolio_transitions": 0,
+        "undefined_rank_transitions": 0,
+        "minimum_common_stocks": 1000,
+        "rank_autocorrelation_mean": 0.43782451612912493,
+        "one_way_turnover_mean": 0.6385714285714286,
+        "long_retention_mean": 0.31534857142857137,
+        "short_retention_mean": 0.4075085714285715
+      },
+      "monthly": [
+        {
+          "month": "2024-07",
+          "rank_autocorrelation": 0.4423653026354303,
+          "one_way_turnover": 0.6339440993788821,
+          "long_retention": 0.33024844720496893,
+          "short_retention": 0.4018633540372671
+        },
+        {
+          "month": "2024-08",
+          "rank_autocorrelation": 0.4542502984921004,
+          "one_way_turnover": 0.626525974025974,
+          "long_retention": 0.34805194805194806,
+          "short_retention": 0.3988961038961039
+        },
+        {
+          "month": "2024-09",
+          "rank_autocorrelation": 0.4376292863857751,
+          "one_way_turnover": 0.6299248120300752,
+          "long_retention": 0.3322556390977444,
+          "short_retention": 0.40789473684210525
+        },
+        {
+          "month": "2024-10",
+          "rank_autocorrelation": 0.4145965812130397,
+          "one_way_turnover": 0.652420634920635,
+          "long_retention": 0.2854761904761905,
+          "short_retention": 0.4096825396825397
+        },
+        {
+          "month": "2024-11",
+          "rank_autocorrelation": 0.43000217681152997,
+          "one_way_turnover": 0.6506802721088436,
+          "long_retention": 0.29625850340136056,
+          "short_retention": 0.4023809523809524
+        },
+        {
+          "month": "2024-12",
+          "rank_autocorrelation": 0.4432916078405882,
+          "one_way_turnover": 0.6400324675324676,
+          "long_retention": 0.29512987012987013,
+          "short_retention": 0.4248051948051948
+        }
+      ],
+      "clock": [
+        {
+          "clock": "10:00",
+          "rank_autocorrelation": 0.2366903029360698,
+          "one_way_turnover": 0.7774800000000001,
+          "long_retention": 0.13592,
+          "short_retention": 0.30912
+        },
+        {
+          "clock": "10:30",
+          "rank_autocorrelation": 0.5343891041770927,
+          "one_way_turnover": 0.58408,
+          "long_retention": 0.37160000000000004,
+          "short_retention": 0.46024
+        },
+        {
+          "clock": "11:00",
+          "rank_autocorrelation": 0.5218184312812644,
+          "one_way_turnover": 0.5966800000000001,
+          "long_retention": 0.38832,
+          "short_retention": 0.41831999999999997
+        },
+        {
+          "clock": "11:30",
+          "rank_autocorrelation": 0.4535274630369244,
+          "one_way_turnover": 0.6408400000000001,
+          "long_retention": 0.30248,
+          "short_retention": 0.41584000000000004
+        },
+        {
+          "clock": "13:30",
+          "rank_autocorrelation": 0.5312249006139375,
+          "one_way_turnover": 0.5916800000000001,
+          "long_retention": 0.34752000000000005,
+          "short_retention": 0.46912
+        },
+        {
+          "clock": "14:00",
+          "rank_autocorrelation": 0.6157441470969462,
+          "one_way_turnover": 0.5204,
+          "long_retention": 0.4364,
+          "short_retention": 0.5228
+        },
+        {
+          "clock": "14:30",
+          "rank_autocorrelation": 0.1713772637616395,
+          "one_way_turnover": 0.7588400000000001,
+          "long_retention": 0.2252,
+          "short_retention": 0.25712
+        }
+      ],
+      "local_metrics": {
+        "protocol_id": "local-v2-ic",
+        "expected_rows": 1000000,
+        "predicted_rows": 1000000,
+        "valid_label_rows": 998539,
+        "evaluated_rows": 998539,
+        "coverage": 1.0,
+        "min_cross_section_coverage": 1.0,
+        "coverage_violations": 0,
+        "cross_sections": 1000,
+        "mse": 0.01835790079172434,
+        "mae": 0.07618072790892944,
+        "zero_prediction_mse": 2.20817637455184e-05,
+        "ic_mean": 0.09896451610667985,
+        "ic_std": 0.12254198260722779,
+        "ic_ir": 0.8075968251948513,
+        "ic_valid_cross_sections": 1000,
+        "ic_undefined_cross_sections": 0,
+        "rank_ic_mean": 0.08914631397846773,
+        "rank_ic_std": 0.10379421545551214,
+        "rank_ic_ir": 0.8588755508892234,
+        "rank_ic_valid_cross_sections": 1000,
+        "rank_ic_undefined_cross_sections": 0
+      }
+    }
+  ],
+  "prediction_correlations": [],
+  "limitations": [
+    "仅本地未中性化预测的诊断代理，不是平台换手、BARRA、夏普、成本或综合分。",
+    "不评估组合收益，不据测试期调参或构造按时点手工切换规则。",
+    "单种子；验证和测试均属于持续观察的研究区间。"
+  ]
+}

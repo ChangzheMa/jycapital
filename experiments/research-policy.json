@@ -44,7 +44,7 @@
   "platform_candidate_selection": "仅按本地结果改进及生成候选材料：验证 IC 改善优先，同时比较稳定性、Rank IC、换手代理、互补性及效率；用户同步平台反馈后再纳入分析，不主动查询或等待平台成绩。",
   "evaluation_policy": "训练目标可迭代；用于横向比较的官方标签、股票池、时间划分、覆盖要求保持固定。",
   "research_strategy": {
-    "updated_at": "2026-10-21",
+    "updated_at": "2026-10-22T11:58:11+08:00",
     "basis": "用户要求加大单轮改进力度、合并多个改进、适当扩大规模和训练时间，并在新改进前检索近期论文及鉴别质量。",
     "prefer_coherent_combined_changes": true,
     "literature_review_before_new_design": true,
@@ -65,7 +65,12 @@
     ],
     "cost_ranges_are_estimates_not_user_hard_limits": true,
     "design_note": "docs/research-directions-20261021.md",
-    "existing_ready_candidates_remain_frozen": true
+    "existing_ready_candidates_remain_frozen": true,
+    "latest_user_priority": "2026-10-22：优先发现遗漏的大方向，不继续围绕当前一条或几条路线做局部微调；排行榜头部0.9+且0.5—0.8密集为用户提供的研究背景。",
+    "next_design_priority": "missing_major_directions",
+    "avoid_automatic_refinement_of_current_family": true,
+    "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
+    "in_progress_delivery": "完成已评估 v1401 的共享 fast 材料，不继续扩展该等权组合线。"
   },
   "legacy_runs": [
     {

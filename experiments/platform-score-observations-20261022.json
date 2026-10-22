@@ -1,0 +1,565 @@
+{
+  "source": "bigquant_submissions_api",
+  "endpoint": "https://bigquant.com/bigapis/alphathon/v1/submissions",
+  "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+  "queried_at": "2026-10-22T11:35:35+08:00",
+  "pages_fetched": 1,
+  "total_pages": 1,
+  "total": 12,
+  "returned": 12,
+  "submissions": [
+    {
+      "id": "b6aec48e-52bf-4ff6-9e6c-f4301c563a15",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T10:17:35.672501+08:00",
+      "updated_at": "2026-10-22T11:32:18.333726+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1002-submission.ipynb",
+          "size": 12408
+        },
+        {
+          "name": "v1002-model.json",
+          "size": 41994269
+        }
+      ],
+      "public_score": {
+        "raw": "0.42308",
+        "value": 0.42308,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4857763913116997,
+        "ic_mean": 0.08051151475050629,
+        "turnover": 0.642336860670194,
+        "sharpe_ratio": 42.95033336459083,
+        "stress_stability": 1.202424764819705
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v1002",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "90cfdcf4-1f4d-44da-b743-5cef874ab61f",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T09:52:39.325259+08:00",
+      "updated_at": "2026-10-22T11:32:18.256203+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1101-submission.ipynb",
+          "size": 9156
+        },
+        {
+          "name": "v1101-model.json",
+          "size": 40277558
+        }
+      ],
+      "public_score": {
+        "raw": "0.44308",
+        "value": 0.44308,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4756114818219903,
+        "ic_mean": 0.07967013169636308,
+        "turnover": 0.6338007054673721,
+        "sharpe_ratio": 44.60516037050449,
+        "stress_stability": 1.195819203214037
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v1101",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "ac65d739-6835-41d0-b6db-b9f494c5a053",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T09:52:07.533859+08:00",
+      "updated_at": "2026-10-22T11:32:18.218993+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1001-submission.ipynb",
+          "size": 9283
+        },
+        {
+          "name": "v1001-model.json",
+          "size": 42023924
+        }
+      ],
+      "public_score": {
+        "raw": "0.43436",
+        "value": 0.43436,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.477602208507934,
+        "ic_mean": 0.07917551518219312,
+        "turnover": 0.6186507936507936,
+        "sharpe_ratio": 41.6713433761114,
+        "stress_stability": 1.2235464476800677
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v1001",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "04b53a49-7b19-472b-945a-63f942501e35",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T09:51:31.876399+08:00",
+      "updated_at": "2026-10-22T11:32:18.167393+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v901-model.json",
+          "size": 30498868
+        },
+        {
+          "name": "v901-submission.ipynb",
+          "size": 8875
+        }
+      ],
+      "public_score": {
+        "raw": "0.44000",
+        "value": 0.44,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4666549070255863,
+        "ic_mean": 0.07753456321648339,
+        "turnover": 0.6337889476778364,
+        "sharpe_ratio": 44.83595749352717,
+        "stress_stability": 1.20232354943687
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v901",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "a2227dba-066c-4f0b-bb0e-bf4e6a74eb37",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-21T17:28:44.541636+08:00",
+      "updated_at": "2026-10-22T11:32:17.698277+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v501-model.json",
+          "size": 15281251
+        },
+        {
+          "name": "v501-submission.ipynb",
+          "size": 8853
+        }
+      ],
+      "public_score": {
+        "raw": "0.35949",
+        "value": 0.35949,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.3694095873619063,
+        "ic_mean": 0.07268578557137917,
+        "turnover": 0.617254556143445,
+        "sharpe_ratio": 40.31443546573449,
+        "stress_stability": 1.1159147041544135
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v501",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "69ba04f6-45e2-41cb-bdc5-fe393a82058f",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-21T14:43:38.387021+08:00",
+      "updated_at": "2026-10-22T11:32:17.319338+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v303-model.json",
+          "size": 15278129
+        },
+        {
+          "name": "v303-submission.ipynb",
+          "size": 8509
+        }
+      ],
+      "public_score": {
+        "raw": "0.34564",
+        "value": 0.34564,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.3741551686338396,
+        "ic_mean": 0.07240311400526576,
+        "turnover": 0.6367225161669606,
+        "sharpe_ratio": 41.22305995978623,
+        "stress_stability": 1.1142953494962773
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v303",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "c4ad5583-6c12-4296-87db-ab89672bebea",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-19T16:09:07.239855+08:00",
+      "updated_at": "2026-10-22T11:32:09.235969+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v7e-submission.ipynb",
+          "size": 7342
+        },
+        {
+          "name": "v7e-model.json",
+          "size": 44707826
+        }
+      ],
+      "public_score": {
+        "raw": "0.36821",
+        "value": 0.36821,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4322315423908765,
+        "ic_mean": 0.07216794075826705,
+        "turnover": 0.6291563786008232,
+        "sharpe_ratio": 36.274662354635325,
+        "stress_stability": 1.217428697242544
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v7e",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "4a69f92f-7e4f-4ab8-86b6-6cf1e68715be",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-16T12:35:26.918797+08:00",
+      "updated_at": "2026-10-22T11:32:04.567103+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v7-model.json",
+          "size": 45131559
+        },
+        {
+          "name": "v7-submission.ipynb",
+          "size": 6684
+        }
+      ],
+      "public_score": {
+        "raw": "0.30000",
+        "value": 0.3,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.2939684502727045,
+        "ic_mean": 0.06887717882609064,
+        "turnover": 0.631331569664903,
+        "sharpe_ratio": 36.902480827177754,
+        "stress_stability": 1.0515822759788207
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v7",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "10f68d9e-d4ff-412e-b0a6-7f0f05acb08e",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-15T18:33:33.959220+08:00",
+      "updated_at": "2026-10-22T11:32:03.232224+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v6-model.json",
+          "size": 45132066
+        },
+        {
+          "name": "v6-submission.ipynb",
+          "size": 6511
+        }
+      ],
+      "public_score": {
+        "raw": "0.31436",
+        "value": 0.31436,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.149796326247802,
+        "ic_mean": 0.06120078548087402,
+        "turnover": 0.5700881834215168,
+        "sharpe_ratio": 34.84898503004809,
+        "stress_stability": 0.9722944088018692
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v6",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "4ef73a7f-ebd7-4741-96ab-150f68366a2d",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-15T11:40:17.692107+08:00",
+      "updated_at": "2026-10-22T11:32:02.638306+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v5-model.json",
+          "size": 45161652
+        },
+        {
+          "name": "v5-submission.ipynb",
+          "size": 6400
+        }
+      ],
+      "public_score": {
+        "raw": "0.30308",
+        "value": 0.30308,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.165872178976218,
+        "ic_mean": 0.060543749726706855,
+        "turnover": 0.5810464432686655,
+        "sharpe_ratio": 33.726411629039625,
+        "stress_stability": 0.9861270388677992
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v5",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "93ca2fa9-cdb4-46da-9e31-41131a036dbc",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-15T02:00:30.751606+08:00",
+      "updated_at": "2026-10-22T11:31:56.943628+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v4-model.json",
+          "size": 45745236
+        },
+        {
+          "name": "v4-submission.ipynb",
+          "size": 6421
+        }
+      ],
+      "public_score": {
+        "raw": "0.28923",
+        "value": 0.28923,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.1367561212508066,
+        "ic_mean": 0.05995444126311849,
+        "turnover": 0.5801058201058201,
+        "sharpe_ratio": 31.869809150814376,
+        "stress_stability": 0.9156311294410936
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v4",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    },
+    {
+      "id": "50590be6-c2c1-4d5a-bb0d-d3ec480956ec",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-12T22:14:17.732601+08:00",
+      "updated_at": "2026-10-22T11:31:54.561160+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v2-submission.ipynb",
+          "size": 6234
+        },
+        {
+          "name": "v2-model.json",
+          "size": 37616184
+        }
+      ],
+      "public_score": {
+        "raw": "0.20769",
+        "value": 0.20769,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 0.6062349878537006,
+        "ic_mean": 0.035767368496122824,
+        "turnover": 0.5651087595532039,
+        "sharpe_ratio": 18.45889050798737,
+        "stress_stability": 0.5549764960695285
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": [],
+      "binding": {
+        "status": "unconfirmed",
+        "candidate_solution_id": "v2",
+        "run_id": null,
+        "model_sha256": null,
+        "basis": "attachment_file_names_only; matching sizes do not prove equal content"
+      }
+    }
+  ],
+  "observation_scope": "用户通知成绩已出后查询的未绑定平台观测；不是本地 run/权重回填，不更新平台最优运行。"
+}
