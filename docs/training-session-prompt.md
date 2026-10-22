@@ -34,6 +34,8 @@
 
    v1701 增加过去252个已完成交易日的历史分支，2863057参数；短期输入及目标保持v1102。目录内v1102_resident.py、v1102_evaluation_cache.py为字节相同的输入兼容模块，必须完整冻结，短期缓存身份不变。common/long_history.py提供无标签的独立FP32旁路缓存和预取，模型输入按原精度处理；三套旁路数值预计共4.192GiB，以mmap读取，不再复制三频训练数据。训练/评测仍64/128股票日批量，GPU预检通过trainer.preflight_inputs提供long30m；不能只传短期三频。正常记录新增long_context_cache_ready构建/校验时间，不能把这部分算作纯模型速度。保留原样本、标签、EMA及早停，缺历史不删样本。
 
+   v1801 为盘前阶段系列，2956338参数；父版v1102的主干、目标、64/128股票日批量及短期缓存保持。common/preopen_context.py提供当前及前一交易日的09:16—09:25十槽输入，额外键为preopen1m；默认形状[股票日,75,20]，GPU预检通过trainer.preflight_inputs取得。短期评测使用short_store的原加载身份，目录内v1102_resident.py及v1102_evaluation_cache.py也必须冻结。三套盘前FP32 mmap数值预计共3.259GiB，不构建新的整套短期缓存；独立记录preopen_context_cache_ready耗时，检查它来自正确股票池、日期和预处理记录。当前日盘前允许使用，09:25之后数据不属于该分支；缺失和零成交量不能用于删样本。正式训练仍只用已提供vwap_return，不新增标签或读取exposure。
+
 6. 正常进度留在后台日志，仅每小时、用户询问、版本完成或异常时报告。一个候选完整结束后自动扫描并继续下一候选。原运行中断只能沿原配置和原状态恢复；改变模型、损失、数据或另开种子属于新的尝试，不能擅自改参数或重试覆盖失败。无法恢复的候选标记 needs_attention，记录原因；允许调度其他独立且 ready 的候选，不让失败版本无限重试。
 
 7. 每个候选完整完成后，把实际结果保存在 outputs/checks/continuous-research/<run_id>.json，包含 run_id、solution_id、状态、父版本、源码/配置/权重指纹、最佳与完成轮次、参数量、训练/验证/测试耗时、资源、验证与测试全部指标、逐月产物、异常与局限。可使用 scripts/research-queue.py record --run-dir outputs/runs/<run_id> 生成基础交接记录。分析 session 会据此决定后续结构和平台候选；你不修改研究方案，不自动导出、提交平台或 Git 推送。

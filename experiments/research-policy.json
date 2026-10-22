@@ -83,10 +83,10 @@
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v1201 分布辅助监督、v1301 完整日期目标及 v1501 完整市场时空组合均未改善。v1501 双集各六个月 IC／Rank IC 均低于 v1102 和 v1401；下一方向优先检验已发现的盘前信息覆盖缺口，既有 v1601、v1701 保持冻结。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
-    "latest_candidate": "v1701-long-history-s42",
+    "latest_candidate": "v1801-preopen-phase-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "v1501 已完成且未评测数降为2，构造容量恢复。优先检验盘前原始序列与交易阶段组织；现有09:16—09:25行情未直接进入规则网格，但尚无正式预测收益证明。",
+    "next_design_hypothesis": "盘前信息与交易阶段方向已落实为v1801，复用父v1102短期缓存和平台查询。正式结果未产生；后续继续依据已完成实验及遗漏机制决定新方向，不自动扫描层数或小权重。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md"
   },
   "legacy_runs": [

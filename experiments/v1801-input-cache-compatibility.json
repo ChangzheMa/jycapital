@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-10-22T19:26:18+08:00",
+  "solution_id": "v1801",
+  "parent_run_id": "v1102-structured-temporal-experts-s42",
+  "scope": "只读父版冻结元数据、源码及股票池键，确认短期缓存身份并计算盘前数值容量；未读取行情数值或标签。",
+  "short_data_config_identical": true,
+  "short_resident_builder_sha256": "0accc25fffdfa968523c5e1b26214113601e08a7186d241cec359c361802caf3",
+  "short_training_cache_key": "dbcd47ff50672ccee5adc5dec94833d43d5c4226fb540909fa080c71467b960b",
+  "short_evaluation_cache_keys": {
+    "validation": "02d6be41154b6e1f541d01037d0ff49f9c035f543ff360a9af7a69103121f996",
+    "test": "00d1181d2a649af929592826b0697eaf808f38ad2d7ae06a288e25a0ac4a0cfe"
+  },
+  "short_evaluation_cache_present": {
+    "validation": true,
+    "test": true
+  },
+  "preopen_cache_keys": {
+    "train": "2ff7e82cf59a3ec85ae315a9d138e1c0970efa823e64587a665eaf6c5eabce37",
+    "validation": "4ff471e0d05e1406243f312ab324209f842959178767c54368eeeadb1d35dcb2",
+    "test": "27d2dc671abc508c8813cd2055a4fc4a6380a769746afa0317aa6195c083c9a0"
+  },
+  "preopen_context_capacity": [
+    {
+      "split": "train",
+      "days": 970,
+      "stocks": 1764,
+      "prediction_rows": 7760000,
+      "blocks_including_zero": 970820,
+      "fp32_values_bytes": 2795961600,
+      "map_bytes": 6844320
+    },
+    {
+      "split": "validation",
+      "days": 118,
+      "stocks": 1103,
+      "prediction_rows": 936000,
+      "blocks_including_zero": 118104,
+      "fp32_values_bytes": 340139520,
+      "map_bytes": 520616
+    },
+    {
+      "split": "test",
+      "days": 126,
+      "stocks": 1103,
+      "prediction_rows": 1000000,
+      "blocks_including_zero": 126104,
+      "fp32_values_bytes": 363179520,
+      "map_bytes": 555912
+    }
+  ],
+  "preopen_fp32_values_total_bytes": 3499280640,
+  "preopen_batch_cpu_bytes": 384000,
+  "new_cache_built": false,
+  "labels_read": false,
+  "exposure_read": false,
+  "limitations": [
+    "容量不含所有元数据、构建缓冲、框架及模型激活。",
+    "正式运行仍须独立核对完整数据清单。",
+    "短期评测缓存若被授权清理，按相同身份重建，另需约9.85GiB。"
+  ]
+}

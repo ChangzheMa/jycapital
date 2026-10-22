@@ -73,6 +73,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 共同价格坐标候选 | [v1601：保留长期与数量视图，替换价格第二视图](../solutions/v1601/README.md)；共享缓存实现、无额外整套预处理 Parquet，正式训练由训练 session 执行 |
 | 长期历史状态研究 | [长期上下文的反面证据与容量](long-context-research-20261022.md)、[v1701 条件历史读出](../solutions/v1701/README.md)；复用短期缓存、只增加历史 30 分钟旁路 |
 | 盘前信息与交易阶段研究 | [日内效果与盘前输入覆盖](session-input-research-20261022.md)、[只读审计结果](../experiments/session-input-audit-20261022.json)；近期模型开盘时点较弱，训练期存在未纳入规则网格的盘前行情，尚无新模型效果证据 |
+| 盘前阶段候选 | [v1801：当前与前日盘前序列的条件读出](../solutions/v1801/README.md)、[缓存兼容性与容量](../experiments/v1801-input-cache-compatibility.json)；约 296 万参数，复用短期缓存和平台查询，正式效果待评估 |
 | 文献与组合改进 | [2026-10-21 文献质量筛选及下一轮方向](research-directions-20261021.md)；联合考虑容量、监督和重复计算，区分论文证据与本地假设 |
 | 后续优先级：遗漏的大方向 | [研究缺口与文献质量地图](research-gap-map-20261022.md)、[输入精度审计](../experiments/input-precision-audit-20261022.json)；优先交易路径目标、市场联合表示，独立核查输入表达和表征学习，停止自动扩展局部组合 |
 | 决策代理与市场时空方向 | [组合诊断与局限](portfolio-diagnostics.md)、[v1501 冻结结果](../solutions/v1501/README.md#冻结结果)、[比较摘要](../experiments/v1501-patch-transformer.json)、[论文质量与机制](market-space-time-research-20261022.md)；完整市场时空组合未改善，不自动扩展局部参数 |
