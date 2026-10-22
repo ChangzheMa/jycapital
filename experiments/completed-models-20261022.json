@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-22T08:10:01+08:00",
+  "checked_at": "2026-10-22T10:01:35+08:00",
   "source": "本地运行的冻结产物",
-  "completed_count": 35,
+  "completed_count": 36,
   "protocol_compatibility": "local-v1 仅协议标识和选模指标不同；评估器、标签与股票池指纹一致，保留原先选出的权重。",
   "runs": [
     {
@@ -2977,6 +2977,95 @@
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "fae2ed405cc228d50bb39b4ea6f06a08d5b23978fb7bda677cdb72770db46dde"
+    },
+    {
+      "run_id": "v1002-current-temporal-experts-s42",
+      "solution_id": "v1002",
+      "parent_run_id": "v1001-temporal-experts-s42",
+      "parent_solution_id": "v1001",
+      "selection": {
+        "best_epoch": 4,
+        "best_validation_metric": 0.09159153196684991,
+        "evaluation_weights": "ema",
+        "ema_decay": 0.9999,
+        "ema_warmup_epochs": 1,
+        "best_validation_ic": 0.09159153196684991,
+        "epochs_completed": 8,
+        "selection_metric": "ic_mean",
+        "patience_epochs": 4,
+        "early_stopping": {
+          "mode": "best_epoch_fraction",
+          "fraction": 0.6,
+          "minimum": 4,
+          "maximum": 12,
+          "rounding": "ceil",
+          "improvement": "strict"
+        },
+        "stale_epochs": 4,
+        "model_sha256": "5f61413f1651eac718a239da255659e62628a5ab6d455705bf86a84fcc4c29eb",
+        "selected_at": "2026-10-22T09:44:26+08:00",
+        "optimizer_steps": 120984,
+        "training_seconds_this_session": 5884.841,
+        "stop_reason": "early_stopping"
+      },
+      "parameters": 2418576,
+      "metrics": {
+        "validation": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 936000,
+          "predicted_rows": 936000,
+          "valid_label_rows": 935224,
+          "evaluated_rows": 935224,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 936,
+          "mse": 0.016143750449720343,
+          "mae": 0.07213457455014126,
+          "zero_prediction_mse": 2.057265373878181e-05,
+          "ic_mean": 0.09159153196684991,
+          "ic_std": 0.11094312696989266,
+          "ic_ir": 0.8255719346337308,
+          "ic_valid_cross_sections": 936,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08913827621502586,
+          "rank_ic_std": 0.09637914130981608,
+          "rank_ic_ir": 0.9248710354088542,
+          "rank_ic_valid_cross_sections": 936,
+          "rank_ic_undefined_cross_sections": 0
+        },
+        "test": {
+          "protocol_id": "local-v2-ic",
+          "expected_rows": 1000000,
+          "predicted_rows": 1000000,
+          "valid_label_rows": 998539,
+          "evaluated_rows": 998539,
+          "coverage": 1.0,
+          "min_cross_section_coverage": 1.0,
+          "coverage_violations": 0,
+          "cross_sections": 1000,
+          "mse": 0.017962317264763612,
+          "mae": 0.07569856412345465,
+          "zero_prediction_mse": 2.20817637455184e-05,
+          "ic_mean": 0.09762698448828758,
+          "ic_std": 0.12044240631031117,
+          "ic_ir": 0.8105698605585702,
+          "ic_valid_cross_sections": 1000,
+          "ic_undefined_cross_sections": 0,
+          "rank_ic_mean": 0.08976484159003498,
+          "rank_ic_std": 0.10332506074184018,
+          "rank_ic_ir": 0.8687615661249337,
+          "rank_ic_valid_cross_sections": 1000,
+          "rank_ic_undefined_cross_sections": 0
+        }
+      },
+      "run_path": "outputs/runs/v1002-current-temporal-experts-s42",
+      "selected_at": "2026-10-22T09:44:26+08:00",
+      "seed": 42,
+      "config_sha256": "663c86e8f461914111984188c016525837cb8dd09ebbdf8ddd8ced443a099832",
+      "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+      "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+      "model_sha256": "5f61413f1651eac718a239da255659e62628a5ab6d455705bf86a84fcc4c29eb"
     }
   ]
 }

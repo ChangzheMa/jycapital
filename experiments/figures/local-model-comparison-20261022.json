@@ -1,8 +1,29 @@
 {
-  "generated_at": "2026-10-22T09:44:29.277701+08:00",
+  "generated_at": "2026-10-22T10:01:36.118706+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
+    {
+      "solution_id": "v1002",
+      "run_id": "v1002-current-temporal-experts-s42",
+      "model_sha256": "5f61413f1651eac718a239da255659e62628a5ab6d455705bf86a84fcc4c29eb",
+      "summary_file": "experiments/v1002-gru.json",
+      "summary_content_sha256": "edc72f33eec2e9270fc3cb6075320aff8351ddb8d5ecbdd16173968d5017429f",
+      "parameters": 2418576,
+      "epochs_completed": 8,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.09159153196684991,
+          "rank_ic_mean": 0.08913827621502586,
+          "ic_ir": 0.8255719346337308
+        },
+        "test": {
+          "ic_mean": 0.09762698448828758,
+          "rank_ic_mean": 0.08976484159003498,
+          "ic_ir": 0.8105698605585702
+        }
+      }
+    },
     {
       "solution_id": "v1001",
       "run_id": "v1001-temporal-experts-s42",
@@ -403,5 +424,5 @@
       }
     }
   ],
-  "image_sha256": "974d0f4d48fa1bb395f580b5c358a7542f321c3079a09354d9005dd8313e45f7"
+  "image_sha256": "cd8a7b0c2805df325a9ffca880c0a8573778b454a364f33a1648cb4dd83765f2"
 }
