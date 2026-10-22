@@ -42,7 +42,7 @@
 | [v802](../solutions/v802/README.md) | 2,129,158 | 0.086299 | 0.081775 | 0.089058 | 0.082578 | 联合时序与截面训练；双集 IC／Rank IC 低于 v501、v801，成本明显增加，不导出 |
 | [v901](../solutions/v901/README.md) | 1,564,710 | 0.087905 | 0.088162 | 0.093509 | 0.088342 | 前一本地最优、保留为 IR 对照；当天多频与共享历史组合提高双集 IC／Rank IC，已导出 fast |
 | [v1001](../solutions/v1001/README.md) | 2,418,576 | **0.090725** | 0.087983 | 0.094837 | 0.089666 | 当前验证 IC 最优；双集 IC 和换手代理改善，验证 Rank IC 略低、双集 Rank IC IR／测试 IC IR 较低；已导出 fast |
-| [v1101](../solutions/v1101/README.md) | 2,296,710 | 0.089995 | 0.088473 | **0.097203** | 0.091133 | 字段结构与扩容；相对父 v901 双集 IC 改善，但验证 IC 低于 v1001、换手代理较高，不默认导出 |
+| [v1101](../solutions/v1101/README.md) | 2,296,710 | 0.089995 | 0.088473 | **0.097203** | 0.091133 | 字段结构与扩容；验证 IC 低于 v1001，原未晋级判定保持；已按用户要求导出 fast 平台对照材料 |
 
 v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
 
@@ -76,7 +76,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 当天多频输入结果 | [v901：因果当天多频与共享历史](../solutions/v901/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v901-gru.json)；约 156 万参数，成为新的验证 IC 最优并导出 fast |
 | 训练分布适应结果 | [v1001：行情条件多分支与时间加权](../solutions/v1001/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1001-gru.json)；约 242 万参数，成为新的验证 IC 最优并导出 fast |
 | 时间加权与当天输入组合 | [v1002：合并 v1001 训练组合与 v901 当前日输入](../solutions/v1002/README.md)、[训练缓存兼容性](../experiments/v1002-input-cache-compatibility.json)；参数量保持约 242 万，重新初始化，一次正式训练 |
-| 字段结构编码结果 | [v1101：原始字段结构编码](../solutions/v1101/README.md#冻结结果)、[比较摘要](../experiments/v1101-gru.json)、[论文与适用性核验](structured-input-research-20261022.md)；约 230 万参数，相对父版改善，未超过当前验证最优 |
+| 字段结构编码结果 | [v1101：原始字段结构编码](../solutions/v1101/README.md#冻结结果)、[用户指定平台材料](../solutions/v1101/README.md#用户指定的平台对照材料)、[比较摘要](../experiments/v1101-gru.json)、[论文核验](structured-input-research-20261022.md)；约 230 万参数，原未晋级判定保持 |
 | 字段结构与训练方法组合 | [v1102：字段结构与时间加权多分支](../solutions/v1102/README.md)、[缓存兼容性](../experiments/v1102-input-cache-compatibility.json)；以已完成 v1101、v1001 为依据，约 252 万参数，单个共享时序主干 |
 | 信号诊断与 v201 结论 | [换手及持续性代理定义与结果](signal-diagnostics.md)、[v201 冻结比较](../experiments/v201-mixer.json)、[全体完成模型汇总](../experiments/completed-models-20261021.json) |
 | v301 冻结结论 | [分层 GRU 结果与平台材料](../solutions/v301/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v301-gru.json)、[信号代理诊断](../experiments/v301-signal-diagnostics.json) |

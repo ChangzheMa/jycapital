@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-22T08:10:02.432333+08:00",
+  "generated_at": "2026-10-22T09:44:29.277701+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
@@ -29,7 +29,7 @@
       "run_id": "v1101-structured-fields-s42",
       "model_sha256": "fae2ed405cc228d50bb39b4ea6f06a08d5b23978fb7bda677cdb72770db46dde",
       "summary_file": "experiments/v1101-gru.json",
-      "summary_content_sha256": "e1aadec9107e7bf6b83055c97734b174818c6a774bc66210761e77d22d5cb742",
+      "summary_content_sha256": "91aaf3b8d95d6a585400d1aa8d079f8aef828211d1f081fff32e8ad5a5721fc9",
       "parameters": 2296710,
       "epochs_completed": 9,
       "metrics": {

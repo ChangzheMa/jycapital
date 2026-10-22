@@ -848,7 +848,7 @@
     "input_cache_format": "jycapital-resident-all-current-fp16-v1",
     "cost_scope": "从头训练与完整双集评估；复用相同输入契约的 v901 缓存，不包含此前缓存构建成本。"
   },
-  "exported": false,
+  "exported": true,
   "run_path": "outputs/runs/v1101-structured-fields-s42",
   "limitations": [
     "仅一个种子，未进行统计显著性或消融验证",
@@ -929,9 +929,108 @@
   "analysis": {
     "validation_best": "v1001-temporal-experts-s42",
     "parent": "v901-current-multifrequency-s42",
-    "conclusion": "验证 IC 低于当前最优 v1001，不默认导出；相对父 v901 双集 IC／Rank IC 提高，但验证 IR 较低、单轮成本增加。",
+    "conclusion": "验证 IC 低于当前最优 v1001，原未晋级判定保持；按用户 2026-10-22 的明确要求，已导出同一第5轮 EMA 的 fast 材料用于平台对照。",
     "research_implication": "字段结构与扩容组合相对父版有验证增益，可以与已完成的时间加权分支组合继续验证；不单独归因于字段结构，也不根据测试最高分晋级。",
     "turnover_proxy": "相对 v1001 双集换手代理均较高；相对父 v901 验证略高、测试略低，不能把相关性改善等同于平台净收益提高。",
     "platform_feedback": "仅使用用户同步结果，不主动查询平台。"
+  },
+  "submission_directory": "submissions/v1101-structured-fields-s42-fast",
+  "submission_validation": {
+    "checked_at": "2026-10-22T09:41:51+08:00",
+    "passed": true,
+    "device": "cpu",
+    "scope": "简化转换核验：逻辑审查、实际文本权重精确恢复、隔离合成窗口 fast／逐样本对照及独立复现源码导入；未重跑长行情区间或性能基准。",
+    "weights_bit_exact": true,
+    "normalization_precision": "unchanged",
+    "model_sha256": "fae2ed405cc228d50bb39b4ea6f06a08d5b23978fb7bda677cdb72770db46dde",
+    "tensor_sha256": "c9c401f6946423f4b66cebbfe0d3f10e227d1f139b2a230dbf21ba79a81c72fb",
+    "synthetic_check": {
+      "synthetic_rows": 21,
+      "same_backend_max_abs_difference": 4.470348358154297e-08,
+      "inference_device": "cpu",
+      "all_clocks_present": true,
+      "missing_requested_keys_preserved": true,
+      "current_day_coarse_inputs_present": true,
+      "notebook_import_without_query": true,
+      "isolated_two_file_model_inference": true,
+      "repository_code_on_import_path": false,
+      "public_main_market_query_executed": false
+    },
+    "standalone_training_sources_import_passed": true,
+    "formal_training_performed": false,
+    "market_interval_parity_repeated": false,
+    "speed_benchmark_performed": false,
+    "logical_review": [
+      "归一化和股票池处理沿用既有 fast 路径；只用冻结源码。",
+      "Calendar 和 WindowBlock 按每频 include_today 取窗，超过预测时点的 Bar 全部置零。",
+      "字段结构编码只在同一 Bar 内交互；三频历史与当天前缀共享，跨频交互在同一时点内，最终仅取收益主头。",
+      "完整股票日只编码一次历史和当前序列；具体速度倍数未测量。"
+    ],
+    "prior_evidence": [
+      "experiments/readiness/v1101.json",
+      "tests/test_v1101.py",
+      "tests/test_v1101_entrypoint.py",
+      "docs/v303-inference-fast.md"
+    ],
+    "attachment_bytes": {
+      "v1101-model.json": 40277558,
+      "v1101-submission.ipynb": 9198
+    },
+    "platform_execution_verified": false
+  },
+  "submission_validations": [
+    {
+      "checked_at": "2026-10-22T09:41:51+08:00",
+      "passed": true,
+      "device": "cpu",
+      "scope": "简化转换核验：逻辑审查、实际文本权重精确恢复、隔离合成窗口 fast／逐样本对照及独立复现源码导入；未重跑长行情区间或性能基准。",
+      "weights_bit_exact": true,
+      "normalization_precision": "unchanged",
+      "model_sha256": "fae2ed405cc228d50bb39b4ea6f06a08d5b23978fb7bda677cdb72770db46dde",
+      "tensor_sha256": "c9c401f6946423f4b66cebbfe0d3f10e227d1f139b2a230dbf21ba79a81c72fb",
+      "synthetic_check": {
+        "synthetic_rows": 21,
+        "same_backend_max_abs_difference": 4.470348358154297e-08,
+        "inference_device": "cpu",
+        "all_clocks_present": true,
+        "missing_requested_keys_preserved": true,
+        "current_day_coarse_inputs_present": true,
+        "notebook_import_without_query": true,
+        "isolated_two_file_model_inference": true,
+        "repository_code_on_import_path": false,
+        "public_main_market_query_executed": false
+      },
+      "standalone_training_sources_import_passed": true,
+      "formal_training_performed": false,
+      "market_interval_parity_repeated": false,
+      "speed_benchmark_performed": false,
+      "logical_review": [
+        "归一化和股票池处理沿用既有 fast 路径；只用冻结源码。",
+        "Calendar 和 WindowBlock 按每频 include_today 取窗，超过预测时点的 Bar 全部置零。",
+        "字段结构编码只在同一 Bar 内交互；三频历史与当天前缀共享，跨频交互在同一时点内，最终仅取收益主头。",
+        "完整股票日只编码一次历史和当前序列；具体速度倍数未测量。"
+      ],
+      "prior_evidence": [
+        "experiments/readiness/v1101.json",
+        "tests/test_v1101.py",
+        "tests/test_v1101_entrypoint.py",
+        "docs/v303-inference-fast.md"
+      ],
+      "attachment_bytes": {
+        "v1101-model.json": 40277558,
+        "v1101-submission.ipynb": 9198
+      },
+      "platform_execution_verified": false
+    }
+  ],
+  "submission_manifest_sha256": "9a4d4397717c11b81d8e863bebc66d7c759923165b2c2c23d967d4a9e7e13938",
+  "submission_manifest_path": "experiments/v1101-structured-fields-s42-fast-submission.json",
+  "export_purpose": "user_requested_platform_test",
+  "export_reason": "用户于2026-10-22明确要求为v1101生成平台提交材料，用于评测字段结构方案；保留验证IC未晋级的原判定和第5轮EMA权重。",
+  "export_request": {
+    "date": "2026-10-22",
+    "timezone": "UTC+08:00",
+    "source": "user",
+    "instruction": "把 v1101 也生成一份提交"
   }
 }
