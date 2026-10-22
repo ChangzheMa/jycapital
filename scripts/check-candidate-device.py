@@ -66,6 +66,8 @@ def main():
     targets = torch.linspace(-2, 2, train_batch, dtype=torch.float64, device=device)
     if grouped:
         targets = torch.linspace(-2, 2, train_batch * 16, dtype=torch.float64, device=device).reshape(train_batch, 8, 2)
+    if hasattr(trainer, "preflight_targets"):
+        targets = trainer.preflight_targets(config, train_batch, device)
     elapsed = []
     for _ in range(3):
         if device.type == "cuda":
