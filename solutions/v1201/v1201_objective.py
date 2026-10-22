@@ -1,0 +1,76 @@
+"""时间加权点损失、Student-t 混合辅助监督与近似平衡分配。"""
+
+import torch
+from torch.nn import functional as F
+
+from v1201_density import component_log_prob, mixture_nll, mixture_standard_deviation
+
+
+@torch.no_grad()
+def balanced_assignment(costs, temperature, iterations):
+    if costs.ndim != 2 or min(costs.shape) < 1 or not torch.isfinite(costs).all():
+        raise ValueError("分配代价须为有限的样本×分支矩阵")
+    values = -costs.detach().double() / temperature
+    values -= values.max(dim=1, keepdim=True).values
+    log_column_mass = torch.log(torch.tensor(costs.shape[0] / costs.shape[1],
+                                            dtype=torch.float64, device=costs.device))
+    for _ in range(iterations):
+        values -= torch.logsumexp(values, dim=1, keepdim=True)
+        values -= torch.logsumexp(values, dim=0, keepdim=True)
+        values += log_column_mass
+    # 有限次迭代：行归一化精确到浮点精度，列负载仅近似平衡。
+    return torch.softmax(values, dim=1)
+
+
+def combined_objective(prediction, experts, logits, targets, sample_weights, spec, density_spec):
+    if targets.shape != prediction.shape or targets.ndim != 3 or targets.shape[1:] != (8, 2):
+        raise ValueError("股票日训练要求 [batch, 8, 2] 双头目标")
+    if (experts.ndim != 4 or experts.shape[:2] != targets.shape[:2] or experts.shape[-1] != 3
+            or logits.shape != experts.shape[:-1]):
+        raise ValueError("分支须为 [batch, 8, K, 3]，路由须为 [batch, 8, K]")
+    valid = torch.isfinite(targets[..., 0])
+    if not torch.equal(valid, torch.isfinite(targets[..., 1])) or not valid.any():
+        raise ValueError("双头目标必须共享非空有效样本")
+    if sample_weights is None:
+        # 仅独立合成预检使用单位权重；正式训练入口显式传入日期权重。
+        sample_weights = torch.ones(targets.shape[0], device=targets.device, dtype=torch.float64)
+    if sample_weights.shape != (targets.shape[0],) or not torch.isfinite(sample_weights).all() or (sample_weights <= 0).any():
+        raise ValueError("时间权重须为每个股票日一个有限正数")
+    if not all(torch.isfinite(x).all() for x in (prediction, experts, logits)):
+        raise FloatingPointError("非有限模型输出")
+    weights = sample_weights.double()[:, None].expand(-1, 8)[valid]
+    weights = weights / weights.sum()
+    main_target, rank_target = targets[..., 0][valid].double(), targets[..., 1][valid].double()
+    main = F.huber_loss(prediction[..., 0][valid].double(), main_target, reduction="none", delta=spec["huber_delta"])
+    rank = F.huber_loss(prediction[..., 1][valid].double(), rank_target, reduction="none", delta=spec["auxiliary_rank_huber_delta"])
+    selected_experts = experts[valid].double()
+    cost = F.huber_loss(selected_experts[..., 0], main_target[:, None].expand_as(selected_experts[..., 0]),
+                        reduction="none", delta=spec["huber_delta"])
+    cost += spec["auxiliary_rank_weight"] * F.huber_loss(
+        selected_experts[..., 1], rank_target[:, None].expand_as(selected_experts[..., 1]),
+        reduction="none", delta=spec["auxiliary_rank_huber_delta"])
+    log_density, scales = component_log_prob(selected_experts[..., 0], selected_experts[..., 2], main_target, density_spec)
+    cost = cost - spec["assignment_density_weight"] * log_density
+    assignment = balanced_assignment(cost, spec["assignment_temperature"], spec["assignment_iterations"])
+    log_probability = F.log_softmax(logits[valid].double(), dim=-1)
+    main_loss, rank_loss = (weights * main).sum(), (weights * rank).sum()
+    expert_loss = (weights * (assignment * cost).sum(dim=-1)).sum()
+    router_loss = -(weights * (assignment * log_probability).sum(dim=-1)).sum()
+    density_loss = (weights * mixture_nll(log_density, logits[valid])).sum()
+    loss = (main_loss + spec["auxiliary_rank_weight"] * rank_loss
+            + spec["expert_loss_weight"] * expert_loss + spec["router_loss_weight"] * router_loss
+            + spec["density_loss_weight"] * density_loss)
+    probability = log_probability.exp().detach()
+    with torch.no_grad():
+        density_scale_mean = (weights * (probability * scales).sum(dim=-1)).sum()
+        density_std_mean = (weights * mixture_standard_deviation(
+            selected_experts[..., 0], scales, probability, density_spec["degrees_of_freedom"])).sum()
+        density_scale_floor_fraction = (weights * (probability * (
+            scales <= density_spec["minimum_scale"] * 1.05)).sum(dim=-1)).sum()
+    return loss, {"main_loss": main_loss.detach(), "rank_loss": rank_loss.detach(),
+                  "expert_loss": expert_loss.detach(), "router_loss": router_loss.detach(),
+                  "density_loss": density_loss.detach(), "density_scale_mean": density_scale_mean,
+                  "density_std_mean": density_std_mean, "density_scale_floor_fraction": density_scale_floor_fraction,
+                  "routing_usage": probability.mean(dim=0),
+                  "routing_entropy": -(probability * log_probability.detach()).sum(dim=-1).mean(),
+                  "rows": int(valid.sum())}

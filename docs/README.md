@@ -79,6 +79,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 时间加权与当天输入组合结果 | [v1002：合并 v1001 训练组合与 v901 当前日输入](../solutions/v1002/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1002-gru.json)；约 242 万参数，成为新的验证 IC 最优并导出 fast |
 | 字段结构编码结果 | [v1101：原始字段结构编码](../solutions/v1101/README.md#冻结结果)、[用户指定平台材料](../solutions/v1101/README.md#用户指定的平台对照材料)、[比较摘要](../experiments/v1101-gru.json)、[论文核验](structured-input-research-20261022.md)；约 230 万参数，原未晋级判定保持 |
 | 字段结构与训练方法组合 | [v1102：字段结构与时间加权多分支](../solutions/v1102/README.md)、[缓存兼容性](../experiments/v1102-input-cache-compatibility.json)；以已完成 v1101、v1001 为依据，约 252 万参数，单个共享时序主干 |
+| 收益分布辅助监督 | [v1201：点预测约束下的 Student-t 混合](../solutions/v1201/README.md)、[论文质量与设计依据](distributional-supervision-research-20261022.md)；以已完成 v1002 为父版，保留 Huber 主监督，联合学习尺度、似然和分支分配，仍按验证 IC 选择 |
 | 信号诊断与 v201 结论 | [换手及持续性代理定义与结果](signal-diagnostics.md)、[v201 冻结比较](../experiments/v201-mixer.json)、[全体完成模型汇总](../experiments/completed-models-20261021.json) |
 | v301 冻结结论 | [分层 GRU 结果与平台材料](../solutions/v301/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v301-gru.json)、[信号代理诊断](../experiments/v301-signal-diagnostics.json) |
 | v202 冻结结论 | [Patch Mixer 的效率与效果](../solutions/v202/README.md#冻结结果)、[比较摘要](../experiments/v202-mixer.json)；保留快速结构研究价值，当前不晋级 |
