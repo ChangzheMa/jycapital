@@ -12,7 +12,7 @@
   "construction_pause_when_unevaluated_gt": 3,
   "construction_resume_when_unevaluated_lt": 3,
   "capacity_check_seconds": 10800,
-  "capacity_check_scope": "仅研究 session；用户于 2026-10-21 改为每 3 小时例行检查，完成、异常及主动询问仍及时处理。",
+  "capacity_check_scope": "仅研究 session；用户于 2026-10-21 改为每 3 小时例行检查，完整结果及主动询问仍及时处理，训练异常由监控 session 负责。",
   "daily_platform_submission_limit": 5,
   "platform_submission_actor": "user",
   "platform_inference": {
@@ -100,6 +100,16 @@
       "run_id": "v301-global-fp16-s42"
     }
   ],
+  "new_model_memory_reserve": {
+    "updated_at": "2026-10-22",
+    "basis": "用户要求后续新增模型的内存预留从 8 G 改为 2 G，已有模型由调度 session 调整。",
+    "scope": "本次要求之后新增的模型版本",
+    "config_field": "training.resident_cache.memory_reserve_gib",
+    "memory_reserve_gib": 2.0,
+    "new_models_owner": "design_session",
+    "existing_models_adjustment_owner": "training_session",
+    "readiness_requirement": "新版本显式设置预留值，训练、验证和测试的加载器统一使用该配置，发布 ready 前核对。"
+  },
   "training_incident_responsibility": {
     "updated_at": "2026-10-22",
     "basis": "用户明确要求：除非专门指定，研究session不处理训练异常；没有结果时继续等待。",

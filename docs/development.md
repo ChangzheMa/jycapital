@@ -40,6 +40,12 @@ x=\min\left(12,\max\left(4,\left\lceil0.6e_{\text{best}}\right\rceil\right)\righ
 
 逐轮与选模记录保存策略、实际耐心和无提升计数；断点恢复沿用最佳轮次及计数。源码快照与独立复现材料须包含公共早停模块。历史冻结版本保留原规则。
 
+## 后续新增模型的内存预留
+
+依据用户 2026-10-22 的要求，此后新增模型的主机内存预留从 8 GiB 改为 **2 GiB**。新版本的 `model-config.json` 显式设置 `training.resident_cache.memory_reserve_gib = 2.0`，从父版本复制配置时同步修改此项；训练、验证和测试的加载器统一读取该配置，模型专用加载器也使用相同预留值。发布 ready 前核对生效配置。
+
+已有模型的内存预留由训练调度 session 调整；研究 session 负责后续新增版本，不批量修改已有模型、运行快照或其共享依赖。分工见[持续研究约定](continuous-research.md#待评测数量与容量控制)。
+
 ## 统一指标
 
 [评估器](../evaluation/baseline_evaluation.py)使用原股票池的完整 `(date, instrument)` 键及官方 `vwap_return`；标签仅按有限性和边界过滤，不裁剪评估标签。

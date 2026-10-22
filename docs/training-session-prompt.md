@@ -15,6 +15,8 @@
 
 用户于 2026-10-22 明确：训练异常的监督、诊断、资源调整和原运行恢复由你负责，除非用户专门要求，研究 session 不介入。尚无完整评测结果时，研究 session 继续等待；不要把待恢复状态或未完成验证的中间指标作为正式效果交给研究侧归档。完成后仍按下文提供完整结果，研究侧负责结果分析和改进探索。
 
+用户同日要求后续新增模型的内存预留从 8 GiB 改为 2 GiB，由研究 session 在新版本的 training.resident_cache.memory_reserve_gib 中显式设为 2.0。用户已授权你负责调整已有模型的内存预留；此项按最新授权执行，具体约定见 docs/development.md 的“后续新增模型的内存预留”。
+
 1. 接管当前 v201／v301 的真实状态和已有控制器，保留在训进程、checkpoint、优化器、随机状态与早停计数。先防止旧控制器与新扫描控制器重复拉起任务。已经完成的 v201 不重训；v301 若仍在运行则等待其完成训练、验证及测试。不要在本任务之外再启动第二个 GPU 训练。
 
 2. 在每版完成后、启动下一版前扫描 solutions/*/experiment.json。使用 .venv-training/Scripts/python.exe scripts/research-queue.py status 查看队列，使用 next 获取下一个可执行候选。只启动 status=ready、代码指纹与实现检查相符、没有完成或正在运行的同一 run_id 的候选；draft 不启动，retired 不启动。按 priority 升序、版本序排序。没有 ready 候选时保持后台监控，每小时扫描；后续新增 ready 候选自动接入，不在 v301 结束后退出整个任务。
