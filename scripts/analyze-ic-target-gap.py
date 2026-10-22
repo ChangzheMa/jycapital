@@ -139,9 +139,15 @@ def main():
                                          "clock_effects": compare_clocks(run, reference, split)})
     with (run / "history.csv").open(encoding="utf-8-sig", newline="") as stream:
         rows = list(csv.DictReader(stream))
+    primary_columns = [name for name in ("train_huber_loss", "train_primary_mse_loss")
+                       if rows and name in rows[0]]
+    if rows and len(primary_columns) != 1:
+        raise ValueError("训练主损失列不明确，不能混淆 Huber 与 MSE")
+    primary_column = primary_columns[0] if primary_columns else None
+    report["history_primary_loss_column"] = primary_column
     report["completed_training_history"] = [
         {"epoch": int(row["epoch"]), "train_loss": float(row["train_loss"]),
-         "train_huber_loss": float(row["train_huber_loss"]),
+         primary_column: float(row[primary_column]),
          "validation_ic_mean": float(row["validation_ic_mean"])} for row in rows]
     report["history_sha256"] = sha256(run / "history.csv")
     write_json(args.output, report)
