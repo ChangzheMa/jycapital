@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-10-23T02:45:10.575440+08:00",
+  "solution_id": "v1901",
+  "parent_run_id": "v1601-price-geometry-s42",
+  "input_data_config_identical": true,
+  "target_transform_source_identical": true,
+  "cache_keys": {
+    "train": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+    "validation": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+    "test": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5"
+  },
+  "all_parent_cache_keys_reused": true,
+  "additional_full_input_cache_bytes": 0,
+  "parent_model_sha256": "24314ff62d4bdd5821be14ebe7a225c5f95d64c06402caee30d99333c37c0d5b",
+  "parent_state_sha256": "95a92e7734917d8088ca5e961ef4445c6cf7d9b1ce5ac4ddf7aeda6330dfc48a",
+  "actual_parent_state_loaded_strictly": true,
+  "parameters": 2643973,
+  "encoder_parameters": 2518992,
+  "memory_reserve_gib": 2.0,
+  "formal_training_performed": false,
+  "scope": "readonly cache identity comparison using the parent source manifest; no cache arrays built or loaded"
+}

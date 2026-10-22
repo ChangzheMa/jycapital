@@ -82,6 +82,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | IC 与排序改善来自哪些样本 | [已完成模型的标签幅度贡献分解](ic-contributions-20261022.md)、[聚合结果](../experiments/ic-contributions-20261022.json)；v1201 的外侧幅度样本抵消多数样本贡献退化，v1401 的 IC 增量分布于全部四档 |
 | 未来状态与多时点监督 | [论文质量与训练标签关系](future-supervision-research-20261022.md)、[标签转移诊断](../experiments/label-transition-diagnostics-20261022.json)；直接使用已有标签，区分辅助监督、因果预测与正式评估 |
 | 双集 IC 0.25 目标 | [差距、论文核验与研究决策](ic-target-research-20261023.md)、[冻结结果分解](../experiments/ic-target-gap-20261023.json)；任一单时点完美预测且其他时点不变仍不足达标，优先联合收益结构与因果先验学习 |
+| 条件潜在收益结构候选 | [v1901：完整截面历史先验与训练后验](../solutions/v1901/README.md)、[缓存身份与父权重核对](../experiments/v1901-input-cache-compatibility.json)；264 万参数，本地 v1601 EMA 初始化，输入缓存复用，正式效果待评估 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |

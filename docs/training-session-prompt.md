@@ -17,6 +17,8 @@
 
 用户同日要求后续新增模型的内存预留从 8 GiB 改为 2 GiB，由研究 session 在新版本的 training.resident_cache.memory_reserve_gib 中显式设为 2.0。用户已授权你负责调整已有模型的内存预留；此项按最新授权执行，具体约定见 docs/development.md 的“后续新增模型的内存预留”。
 
+用户于 2026-10-23 将本地目标明确为验证集和测试集 IC 均达到 0.25，checkpoint 仍只按验证 IC 选择。v1901 是完整截面潜在收益结构新系列：从已完成 v1601 的最佳 EMA 精确初始化，全部参数继续训练，复用相同几何输入缓存；首次运行由训练入口验证父权重并保存 initialization.json / initialization-state.pt。后验只用于训练，验证与测试必须使用纯历史先验；后验训练高分不能当作正式收益效果。默认完整市场训练／推理 GPU 批量预检均为1200股票日，内部64股票编码块，主机预留2GiB。模型主监督已改为半MSE，日志为 train_primary_mse_loss，并额外记录后验NLL、KL、先验／后验相关性；不要套用旧版 Huber 主监督核验。完整方案和 CPU 检查见 solutions/v1901/README.md，正式训练仍由你串行调度。
+
 1. 接管当前 v201／v301 的真实状态和已有控制器，保留在训进程、checkpoint、优化器、随机状态与早停计数。先防止旧控制器与新扫描控制器重复拉起任务。已经完成的 v201 不重训；v301 若仍在运行则等待其完成训练、验证及测试。不要在本任务之外再启动第二个 GPU 训练。
 
 2. 在每版完成后、启动下一版前扫描 solutions/*/experiment.json。使用 .venv-training/Scripts/python.exe scripts/research-queue.py status 查看队列，使用 next 获取下一个可执行候选。只启动 status=ready、代码指纹与实现检查相符、没有完成或正在运行的同一 run_id 的候选；draft 不启动，retired 不启动。按 priority 升序、版本序排序。没有 ready 候选时保持后台监控，每小时扫描；后续新增 ready 候选自动接入，不在 v301 结束后退出整个任务。

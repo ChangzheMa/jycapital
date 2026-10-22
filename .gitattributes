@@ -24,3 +24,5 @@
 /experiments/v1401*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 # v1601 共同价格坐标 fast 材料清单参与提交索引哈希。
 /experiments/v1601*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# v1901 发布指纹绑定源码原始字节，避免新文件检出后换行转换使 ready 校验失效。
+/solutions/v1901/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
