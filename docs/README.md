@@ -77,6 +77,7 @@ v1—v3 按验证 Rank IC 选模，其余版本按验证 IC 选模。测试期�
 | 训练分布适应结果 | [v1001：行情条件多分支与时间加权](../solutions/v1001/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1001-gru.json)；约 242 万参数，成为新的验证 IC 最优并导出 fast |
 | 时间加权与当天输入组合 | [v1002：合并 v1001 训练组合与 v901 当前日输入](../solutions/v1002/README.md)、[训练缓存兼容性](../experiments/v1002-input-cache-compatibility.json)；参数量保持约 242 万，重新初始化，一次正式训练 |
 | 字段结构编码结果 | [v1101：原始字段结构编码](../solutions/v1101/README.md#冻结结果)、[比较摘要](../experiments/v1101-gru.json)、[论文与适用性核验](structured-input-research-20261022.md)；约 230 万参数，相对父版改善，未超过当前验证最优 |
+| 字段结构与训练方法组合 | [v1102：字段结构与时间加权多分支](../solutions/v1102/README.md)、[缓存兼容性](../experiments/v1102-input-cache-compatibility.json)；以已完成 v1101、v1001 为依据，约 252 万参数，单个共享时序主干 |
 | 信号诊断与 v201 结论 | [换手及持续性代理定义与结果](signal-diagnostics.md)、[v201 冻结比较](../experiments/v201-mixer.json)、[全体完成模型汇总](../experiments/completed-models-20261021.json) |
 | v301 冻结结论 | [分层 GRU 结果与平台材料](../solutions/v301/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v301-gru.json)、[信号代理诊断](../experiments/v301-signal-diagnostics.json) |
 | v202 冻结结论 | [Patch Mixer 的效率与效果](../solutions/v202/README.md#冻结结果)、[比较摘要](../experiments/v202-mixer.json)；保留快速结构研究价值，当前不晋级 |
