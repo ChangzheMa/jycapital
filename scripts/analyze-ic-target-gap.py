@@ -72,6 +72,34 @@ def analyze_split(run, split, target):
     }
 
 
+def compare_clocks(run, reference, split):
+    paths = [path / "evaluation" / split / "cross-sections.parquet" for path in (run, reference)]
+    frames = [pd.read_parquet(path).set_index("date").sort_index() for path in paths]
+    if not frames[0].index.equals(frames[1].index):
+        raise ValueError("时点比较的截面日期不一致")
+    delta = frames[0][["ic", "rank_ic"]] - frames[1][["ic", "rank_ic"]]
+    if not np.isfinite(delta.to_numpy()).all():
+        raise ValueError("时点比较存在未定义指标")
+    clock = delta.groupby(delta.index.strftime("%H:%M")).mean()
+    counts = delta.groupby(delta.index.strftime("%H:%M")).size()
+    monthly = delta.groupby([delta.index.strftime("%Y-%m"), delta.index.strftime("%H:%M")]).mean()
+    monthly.index.names = ["month", "clock"]
+    positive = (monthly > 0).groupby("clock").sum()
+    months = monthly.groupby("clock").size()
+    reconstructed = clock.mul(counts, axis=0).sum() / len(delta)
+    if not np.allclose(reconstructed, delta.mean(), atol=1e-12, rtol=0):
+        raise ValueError("时点差值未还原整体差值")
+    return {
+        "source_hashes": [sha256(path) for path in paths],
+        "weighted_clock_deltas_reconstruct_overall_delta": True,
+        "clocks": [{"clock": key, "sections": int(counts[key]),
+                    "ic_delta": float(row.ic), "rank_ic_delta": float(row.rank_ic),
+                    "ic_improved_months": int(positive.loc[key, "ic"]),
+                    "rank_ic_improved_months": int(positive.loc[key, "rank_ic"]),
+                    "months": int(months[key])} for key, row in clock.iterrows()],
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", default="v1601-price-geometry-s42")
@@ -83,7 +111,8 @@ def main():
         raise ValueError("IC 目标必须在 (0, 1] 范围内")
     run = ROOT / "outputs/runs" / args.run
     references = [ROOT / "outputs/runs" / name for name in (
-        "v1102-structured-temporal-experts-s42", "v1401-frozen-equal-ensemble-s42")]
+        "v1601-price-geometry-s42", "v1102-structured-temporal-experts-s42",
+        "v1401-frozen-equal-ensemble-s42") if name != run.name]
     if read_json(run / "manifest.json")["status"] != "complete":
         raise ValueError("只分析已完成运行")
     report = {
@@ -106,7 +135,8 @@ def main():
         for reference in references:
             metrics = read_json(reference / "evaluation" / split / "metrics.json")
             report["references"].append({"run_id": reference.name, "split": split,
-                                         "ic_mean": metrics["ic_mean"], "rank_ic_mean": metrics["rank_ic_mean"]})
+                                         "ic_mean": metrics["ic_mean"], "rank_ic_mean": metrics["rank_ic_mean"],
+                                         "clock_effects": compare_clocks(run, reference, split)})
     with (run / "history.csv").open(encoding="utf-8-sig", newline="") as stream:
         rows = list(csv.DictReader(stream))
     report["completed_training_history"] = [
