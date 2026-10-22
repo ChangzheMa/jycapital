@@ -84,7 +84,9 @@
     "evidence_update": "v1201 分布辅助监督未改善验证 IC 且双集 Rank IC 退化；下一独立方向检验原始价格共同坐标与结构编码。训练期输入审计仅支持几何保留，不构成收益优势证据。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
     "latest_candidate": "v1601-price-geometry-s42",
-    "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。"
+    "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
+    "next_long_context_direction_note": "docs/long-context-research-20261022.md",
+    "next_design_hypothesis": "长期个股状态条件化短期信号；保留短期三频，只追加已完成交易日的30分钟历史与可学习分层读出，尚未创建候选。"
   },
   "legacy_runs": [
     {

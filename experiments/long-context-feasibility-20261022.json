@@ -1,0 +1,79 @@
+{
+  "checked_at": "2026-10-22T15:16:07+08:00",
+  "scope": "只读训练缓存的日期、股票与预测键索引；不读取标签或行情数值，不构建缓存。",
+  "input_cache_key": "dbcd47ff50672ccee5adc5dec94833d43d5c4226fb540909fa080c71467b960b",
+  "cache_manifest_sha256": "2bd3853f8454c9d0a318031ff82db1cc1308389f90ebab42548d92d593c67791",
+  "script_sha256": "03ace3c3336b915e21be715cc032035ccc4d0a9a5ccc798403b224b95b1e107f",
+  "training_days": 970,
+  "training_stocks": 1764,
+  "stock_day_groups": 970000,
+  "sample_rows": 7760000,
+  "windows": [
+    {
+      "previous_trading_days": 20,
+      "blocks_including_zero": 984557,
+      "fp16_values_bytes": 1134209664,
+      "fp32_values_bytes": 2268419328,
+      "map_bytes": 6844320,
+      "training_groups_with_full_calendar_history": 950000,
+      "training_groups_with_shorter_calendar_history": 20000,
+      "full_history_group_fraction": 0.979381443298969,
+      "batch64_fp16_values_bytes": 1474560,
+      "batch64_fp32_75_channel_bytes": 3072000,
+      "daily_tokens": 20,
+      "four_day_patch_tokens": 5
+    },
+    {
+      "previous_trading_days": 60,
+      "blocks_including_zero": 1017227,
+      "fp16_values_bytes": 1171845504,
+      "fp32_values_bytes": 2343691008,
+      "map_bytes": 6844320,
+      "training_groups_with_full_calendar_history": 910000,
+      "training_groups_with_shorter_calendar_history": 60000,
+      "full_history_group_fraction": 0.9381443298969072,
+      "batch64_fp16_values_bytes": 4423680,
+      "batch64_fp32_75_channel_bytes": 9216000,
+      "daily_tokens": 60,
+      "four_day_patch_tokens": 15
+    },
+    {
+      "previous_trading_days": 120,
+      "blocks_including_zero": 1065782,
+      "fp16_values_bytes": 1227780864,
+      "fp32_values_bytes": 2455561728,
+      "map_bytes": 6844320,
+      "training_groups_with_full_calendar_history": 850000,
+      "training_groups_with_shorter_calendar_history": 120000,
+      "full_history_group_fraction": 0.8762886597938144,
+      "batch64_fp16_values_bytes": 8847360,
+      "batch64_fp32_75_channel_bytes": 18432000,
+      "daily_tokens": 120,
+      "four_day_patch_tokens": 30
+    },
+    {
+      "previous_trading_days": 252,
+      "blocks_including_zero": 1157681,
+      "fp16_values_bytes": 1333648512,
+      "fp32_values_bytes": 2667297024,
+      "map_bytes": 6844320,
+      "training_groups_with_full_calendar_history": 718000,
+      "training_groups_with_shorter_calendar_history": 252000,
+      "full_history_group_fraction": 0.7402061855670103,
+      "batch64_fp16_values_bytes": 18579456,
+      "batch64_fp32_75_channel_bytes": 38707200,
+      "daily_tokens": 252,
+      "four_day_patch_tokens": 63
+    }
+  ],
+  "original_training_cache_bytes": 41596706984,
+  "no_label_read": true,
+  "no_exposure_read": true,
+  "new_cache_built": false,
+  "limitations": [
+    "仅日历和股票池需求估算；不保证每个历史股票日有实际行情，正式输入必须保留缺失掩码。",
+    "数值容量未包含极值例外、全部元数据、进程内存及框架开销。",
+    "不足完整历史的训练样本保留，不删除或降低覆盖。",
+    "只估算训练侧，不包含验证/测试额外缓存，也不证明长上下文提高 IC。"
+  ]
+}
