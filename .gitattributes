@@ -49,3 +49,4 @@
 # 设备预检与分析入口的当前字节也记录在新候选验证材料中。
 /scripts/check-candidate-device.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /scripts/assess.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/analyze-price-path-scales.py -text

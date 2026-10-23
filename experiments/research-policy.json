@@ -95,7 +95,7 @@
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
     "in_progress_delivery": "v1601 fast 已交付；v2001、v2101、v2201、v2301均已完成但未晋级，不导出。正在结合完整结果审查下一机制；阶段性候选交付不代表达到双集IC0.25。",
-    "active_direction_note": "docs/direct-state-research-20261023.md",
+    "active_direction_note": "docs/price-path-research-20261023.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v1601验证/测试IC为0.105526/0.116259，仍是最优且已交付fast。v1701至v2301各新方向均未超过它。v2001输入属性、v2101数量辅助、v2201同阶段历史均未转化为收益改善；v2301为0.092152/0.097902，十轮训练及验证25.972分钟，但双集所有月份和时点IC下降。下一方案保留完整因果历史，不自动延长失败版本或扫描相邻参数。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
@@ -106,7 +106,8 @@
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
     "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
     "next_input_normalization_note": "docs/causal-normalization-research-20261023.md",
-    "next_market_conditioning_note": "docs/early-market-context-research-20261023.md"
+    "next_market_conditioning_note": "docs/early-market-context-research-20261023.md",
+    "next_price_path_note": "docs/price-path-research-20261023.md"
   },
   "legacy_runs": [
     {
