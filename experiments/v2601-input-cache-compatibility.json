@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-23T20:18:18+08:00",
+  "solution_id": "v2601",
+  "parent_run_id": "v1601-price-geometry-s42",
+  "base_data_config_identical": true,
+  "provided_label_transform_identical": true,
+  "base_window_loader_identical": true,
+  "market_context_added_in_batch_organization": true,
+  "input_cache_keys": {
+    "train": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+    "validation": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+    "test": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5"
+  },
+  "parent_data_manifest_sha256": "4906d233a778d1a0651519dcb72d95ed3a6c2abaff54885843cda81e672c04b7",
+  "extra_full_input_cache_bytes": 0,
+  "extra_full_target_array_bytes": 0,
+  "market_context_budget": "experiments/v2601-market-context-budget.json",
+  "max_raw_context_tensor_bytes": 43200000,
+  "date_blocked_optimizer_steps_per_full_pass": 15520,
+  "parent_optimizer_steps_per_full_pass": 15123,
+  "model_training_performed": false,
+  "input_numeric_arrays_loaded": false,
+  "scope": "基础窗口、价格数量视图与主标签保持；新增市场条件和日期内小批监督，不把基础缓存相同解释为整体模型信息流相同。"
+}

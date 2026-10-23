@@ -101,6 +101,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 价格历史读取候选 | [v2401：完整GRU历史与价格相对位置读取](../solutions/v2401/README.md)、[输入缓存兼容性](../experiments/v2401-input-cache-compatibility.json)；264.17万参数，17项CPU检查通过，已发布ready，正式效果待评估 |
 | 同日后续收益监督研究 | [标签组织与论文核验](dense-return-supervision-research-20261023.md)、[训练标签覆盖](../experiments/future-label-coverage-20261023.json)；27,100,313个严格后续监督对，保持原标签及主评测，不将重复配对当作新增独立数据 |
 | 同日后续收益监督候选 | [v2501：训练专用条件化后续收益头](../solutions/v2501/README.md)、[缓存复用](../experiments/v2501-input-cache-compatibility.json)；257.02万参数，15项CPU检查通过，已发布ready；推理只执行主预测 |
+| 原始市场条件候选 | [v2601：完整市场条件参与原始特征提取](../solutions/v2601/README.md)、[上下文与更新预算](../experiments/v2601-market-context-budget.json)、[缓存复用](../experiments/v2601-input-cache-compatibility.json)；337.25万参数，完整1000股上下文预检通过，同日多次目标批更新，已发布ready |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |

@@ -58,3 +58,6 @@
 /scripts/analyze-future-label-coverage.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /solutions/v2501/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /tests/test_v2501*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/solutions/v2601/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v2601*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/analyze-market-context-budget.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof

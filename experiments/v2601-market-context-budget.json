@@ -1,0 +1,42 @@
+{
+  "computed_at": "2026-10-23T20:04:13+08:00",
+  "script_sha256": "9096aa72f65a402b9ac1ef23921e6bd423e95faee3b538453e52c0bb8bfd5a04",
+  "temporal_source_sha256": "c4afdb9927031c6eb5e3484cd38c70c70377b3efda84d65b193ad760772ac610",
+  "model_config_sha256": "17e87fd98364429d10a51b32c46fd5fe2ecd0645ba82b9b77a78154a59bbec6d",
+  "base_cache_key": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+  "source_sha256": {
+    "sample_day.npy": "66c665dffe87c493dae195e05f79c7fa52ae4606f6cfdb61aba6262184c22818",
+    "sample_stock.npy": "1e047307dac1ddc76288932a7388d2af9ebcbef0901b3df4cd9cb48e20013a46",
+    "targets.npy": "e7de68d257ceec4a7a1ae74bcc5b367a2ac8c0eed41b66b9bf6772f8d564dd6e",
+    "days.npy": "797f2af5064588c8dac5264197223528ad1f0f811659e38aea5d95c4cd82e269"
+  },
+  "training_dates": 970,
+  "context_stock_days": 970000,
+  "supervised_stock_days": 967872,
+  "minimum_context_stocks": 1000,
+  "maximum_context_stocks": 1000,
+  "target_stock_day_batch_size": 64,
+  "optimizer_steps_per_full_pass": 15520,
+  "parent_globally_mixed_steps_per_full_pass": 15123,
+  "snapshot_features_per_clock": 1350,
+  "maximum_raw_context_tensor_bytes": 43200000,
+  "raw_context_dtype": "float32",
+  "calendar_weighting": {
+    "normalization": "mean_raw_weight_over_training_calendar",
+    "normalizer": 0.6564025948166501,
+    "training_dates": 970,
+    "calendar_sha256": "d87b71fa2b4b9b8d1e8888846ec84e5957f3be4311442b32c43bb8d80047d293",
+    "calendar_raw_weights_sha256": "e3c0bec93de651ce8dc2bc5e09fe41e0e50a7fec490e259e8c24faae97bacf0f"
+  },
+  "model_training_performed": false,
+  "input_numeric_arrays_read": false,
+  "validation_or_test_labels_read": false,
+  "returns_recomputed": false,
+  "exposure_read": false,
+  "scope": "只读取父训练缓存的标签与位置，按当前成员建立完整上下文计数；标签仅判断监督目标资格。",
+  "limitations": [
+    "原始上下文张量大小不是GPU/进程峰值。",
+    "每轮更新数只描述日期内分批，不是耗时或IC改善证据。",
+    "日期顺序、日期归一化和目标批次均为新组合的研究变量。"
+  ]
+}
