@@ -2,16 +2,21 @@
   "schema_version": 1,
   "solution_id": "v2801",
   "status": "passed",
-  "checked_at": "2026-10-24T04:25:05+08:00",
-  "scope": "8项CPU检查，包含1200棵树预算、原生与便携推理、固定历史表示、分块抽样恢复、全流程和平台入口；另验证隔离源码导入及默认宽度CPU预检。",
+  "checked_at": "2026-10-24T04:36:41+08:00",
+  "scope": "11项CPU定向检查及默认CPU/CUDA合成预检；恢复的预测参数严格一致，内部增益统计单独容差检查；无正式训练或全量GPU矩阵峰值证据。",
   "formal_training_performed": false,
-  "gpu_default_batch_pending": true,
-  "unique_tests_passed": 8,
+  "gpu_default_batch_pending": false,
+  "unique_tests_passed": 11,
   "validation_runs": [
     {
       "scope": "完整test_v2801*.py集合",
       "tests": 8,
       "seconds": 19.106
+    },
+    {
+      "scope": "完整test_v2801*.py集合，含预检比较语义回归",
+      "tests": 11,
+      "seconds": 16.329
     }
   ],
   "checks": [
@@ -22,12 +27,16 @@
     "test_complete_cpu_pipeline_matches_direct_model_and_preserves_parent",
     "test_dynamic_pool_partial_request_and_text_tree_state",
     "test_finite_filter_and_fixed_date_weight_normalization",
-    "test_interrupted_tree_updates_resume_to_identical_model_and_selection"
+    "test_interrupted_tree_updates_resume_to_identical_model_and_selection",
+    "test_gain_rounding_is_separate_from_exact_prediction_state",
+    "test_threshold_leaf_topology_missing_direction_and_other_state_are_strict",
+    "test_large_nonfinite_gain_and_count_changes_are_rejected"
   ],
   "test_files": {
     "tests/test_v2801_core.py": "a8fdb213d11b7ea1c413694436b87c25446692e1b12b1e807a4a0923a73d6ec2",
     "tests/test_v2801_entrypoint.py": "eb4d2d3041f6285a6c1652ba719facf4d7056ffb353f0e7f614d76c1e3e12f16",
     "tests/test_v2801_predict.py": "00aa61eb12b0dc85b802c5f3f014f1483e580eddb101c0dd59c3f3b79f7d3bc1",
+    "tests/test_v2801_preflight.py": "8ef54c97b72175be2fab980210b3fb66bc57f5624de196c809af6721f47badb1",
     "tests/test_v2801_training.py": "29554c6b650d084bfdfc74536b808a3d2b0c621786aad3892993e71d74826b19"
   },
   "cpu_preflight": {
@@ -45,24 +54,34 @@
     "maximum_tree_numeric_parameters": 152400,
     "tree_training_rows": 2048,
     "feature_dim": 624,
-    "feature_encoding_seconds": 0.03176549996715039,
+    "feature_encoding_seconds": 0.03244019998237491,
     "step_seconds": [
-      0.0029137999517843127,
-      0.00292480003554374,
-      0.0019240999827161431
+      0.003092800034210086,
+      0.00289939995855093,
+      0.0019351000664755702
     ],
     "step_timing_scope": "three_native_tree_updates_excludes_feature_encoding_and_quantization",
     "native_portable_max_abs_difference": 9.313225746154785e-10,
     "xgboost_version": "3.2.0",
     "block_sampling_resume_tree_model_exact": true,
-    "resume_scope": "four_synthetic_trees_with_matrix_reconstruction_same_device",
+    "block_sampling_resume_prediction_structure_exact": true,
+    "sampling_resume_comparison": {
+      "native_tree_document_exact": true,
+      "prediction_structure_and_other_state_exact": true,
+      "nonpredictive_gain_max_abs_difference": 0.0,
+      "nonpredictive_gain_tolerance": {
+        "rtol": 1e-06,
+        "atol": 1e-07
+      }
+    },
+    "resume_scope": "four_synthetic_trees_with_matrix_reconstruction_same_device_prediction_parameters_exact_gain_statistics_tolerant",
     "xgboost_build_has_cuda": true,
     "cuda_peak_allocated_bytes": null,
     "gpu_memory_scope": "torch_allocator_only_excludes_native_xgboost",
     "full_dataset_matrix_memory_verified": false,
     "formal_training_performed": false,
     "solution_id": "v2801",
-    "checked_at": "2026-10-24T04:23:17+08:00"
+    "checked_at": "2026-10-24T04:35:32+08:00"
   },
   "cpu_preflight_record": "outputs/checks/continuous-research/v2801-cpu-preflight.json",
   "input_cache_compatibility": "experiments/v2801-input-cache-compatibility.json",
@@ -83,7 +102,9 @@
     "same_device_sampled_boosting_resume_model_and_selection_exact_cpu": true,
     "test_stage_resume_does_not_refit_trees": true,
     "parent_artifacts_preserved_in_full_synthetic_pipeline": true,
-    "complete_synthetic_validation_and_test_match_direct_model": true
+    "complete_synthetic_validation_and_test_match_direct_model": true,
+    "same_device_cuda_sampled_boosting_prediction_structure_exact": true,
+    "cuda_native_gain_statistics_bitwise_exact": false
   },
   "numeric_tolerances": {
     "small_tree_native_parity": {
@@ -133,10 +154,10 @@
   },
   "limitations": [
     "无正式收益结果，实现检查不表示IC提升。",
-    "GPU预检由训练session执行；当前CPU检查没有验证全量原生GPU矩阵峰值。",
     "原生与Torch树采用不同浮点归约顺序，按预设容差比较，不声称跨后端逐位一致。",
     "树训练按每25次更新的验证块重建提升器，包含预测缓存重建成本；GPU资源须区分Torch与XGBoost原生分配。",
-    "若最佳为第0块，只保留父预测；不把零树视为新的信号机制收益。"
+    "若最佳为第0块，只保留父预测；不把零树视为新的信号机制收益。",
+    "默认批量CUDA合成预检已通过，但不证明全量原生GPU矩阵峰值；内部增益统计存在浮点末位差异，不声称全部原生统计逐位一致。"
   ],
   "source_files": {
     "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
@@ -194,11 +215,67 @@
     "solutions/v2801/v2801_predict.py": "e09541d07992a78bc5f5a310508fd319754ea8f306021cab17350b7024cce9b3",
     "solutions/v2801/v2801_predict_fast.py": "e09541d07992a78bc5f5a310508fd319754ea8f306021cab17350b7024cce9b3",
     "solutions/v2801/v2801_predict_reference.py": "457ca0455ecf703a5d17df3d4cf07acabca76bf563abbe9d87fbbb7296ac16e9",
-    "solutions/v2801/v2801_preflight.py": "84d9e0028359ab59869022a6be45e075da8b63d5d28d80ff903caee666bccc67",
+    "solutions/v2801/v2801_preflight.py": "5dce819126da0a01f0d501cd8ce7f178ae9100451f55824d39c7aa5668d8ab15",
     "solutions/v2801/v2801_reproduce.py": "12d7508acf27e2eb28dec252dc2079253e0c70b577758d32478d11037a0df175",
     "solutions/v2801/v2801_run.py": "470cd2619a566ddbb16d1de64d7f7389f3e0fce8969f084d3e99bf6ae2dba349",
     "solutions/v2801/v2801_text_artifact.py": "a1dc3cb95007a6f10078b2954111cb3df1dae2abd59ec625d9ef5aff3851397b",
     "solutions/v2801/v2801_train.py": "cfecaa46bcf3550db3995fcffd0b84ceedd75b6db48af1017400bcc94adcccb6",
     "solutions/v2801/v2801_trees.py": "22c44190a47be7ca6b3ee40615335f558310f7436374f445d299dee84956b8d6"
+  },
+  "cuda_preflight": {
+    "status": "passed",
+    "scope": "synthetic_neural_tree_device_preflight",
+    "device": "cuda",
+    "train_batch": 128,
+    "inference_batch": 128,
+    "batch_unit": "stock_day_feature_encoding",
+    "train_target_slots": 1024,
+    "inference_output_slots": 1024,
+    "parameters": 2641752,
+    "frozen_neural_parameters": 2641743,
+    "synthetic_tree_numeric_parameters": 9,
+    "maximum_tree_numeric_parameters": 152400,
+    "tree_training_rows": 2048,
+    "feature_dim": 624,
+    "feature_encoding_seconds": 0.27063689997885376,
+    "step_seconds": [
+      0.025936299934983253,
+      0.0008097999962046742,
+      0.0007121999515220523
+    ],
+    "step_timing_scope": "three_native_tree_updates_excludes_feature_encoding_and_quantization",
+    "native_portable_max_abs_difference": 0.0,
+    "xgboost_version": "3.2.0",
+    "block_sampling_resume_tree_model_exact": false,
+    "block_sampling_resume_prediction_structure_exact": true,
+    "sampling_resume_comparison": {
+      "native_tree_document_exact": false,
+      "prediction_structure_and_other_state_exact": true,
+      "nonpredictive_gain_max_abs_difference": 2.9999999984209325e-08,
+      "nonpredictive_gain_tolerance": {
+        "rtol": 1e-06,
+        "atol": 1e-07
+      }
+    },
+    "resume_scope": "four_synthetic_trees_with_matrix_reconstruction_same_device_prediction_parameters_exact_gain_statistics_tolerant",
+    "xgboost_build_has_cuda": true,
+    "cuda_peak_allocated_bytes": 1157104640,
+    "gpu_memory_scope": "torch_allocator_only_excludes_native_xgboost",
+    "full_dataset_matrix_memory_verified": false,
+    "formal_training_performed": false,
+    "solution_id": "v2801",
+    "checked_at": "2026-10-24T04:35:32+08:00"
+  },
+  "cuda_preflight_record": "outputs/checks/continuous-research/v2801-cuda-preflight.json",
+  "preflight_comparison_contract": {
+    "prediction_parameters": "exact",
+    "other_tree_state": "exact",
+    "gain_statistics": {
+      "rtol": 1e-06,
+      "atol": 1e-07
+    },
+    "gain_scope": "loss_changes only; not read by portable inference",
+    "formal_scheme_changed": false,
+    "implementation_fix_scope": "Only preflight comparison, tests and explanatory README changed before first formal launch; raw failed check and native documents archived under outputs/run-control."
   }
 }

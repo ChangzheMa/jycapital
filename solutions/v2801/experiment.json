@@ -19,7 +19,7 @@
   "training_kind": "boosting_on_frozen_neural_features",
   "checkpoint_format": "jycapital-neural-tree-checkpoint-v1",
   "training_cache_compatibility": "experiments/v2801-input-cache-compatibility.json",
-  "published_at": "2026-10-24T04:25:06+08:00",
+  "published_at": "2026-10-24T04:36:41+08:00",
   "readiness": {
     "report": "experiments/readiness/v2801.json",
     "source_files": {
@@ -78,7 +78,7 @@
       "solutions/v2801/v2801_predict.py": "e09541d07992a78bc5f5a310508fd319754ea8f306021cab17350b7024cce9b3",
       "solutions/v2801/v2801_predict_fast.py": "e09541d07992a78bc5f5a310508fd319754ea8f306021cab17350b7024cce9b3",
       "solutions/v2801/v2801_predict_reference.py": "457ca0455ecf703a5d17df3d4cf07acabca76bf563abbe9d87fbbb7296ac16e9",
-      "solutions/v2801/v2801_preflight.py": "84d9e0028359ab59869022a6be45e075da8b63d5d28d80ff903caee666bccc67",
+      "solutions/v2801/v2801_preflight.py": "5dce819126da0a01f0d501cd8ce7f178ae9100451f55824d39c7aa5668d8ab15",
       "solutions/v2801/v2801_reproduce.py": "12d7508acf27e2eb28dec252dc2079253e0c70b577758d32478d11037a0df175",
       "solutions/v2801/v2801_run.py": "470cd2619a566ddbb16d1de64d7f7389f3e0fce8969f084d3e99bf6ae2dba349",
       "solutions/v2801/v2801_text_artifact.py": "a1dc3cb95007a6f10078b2954111cb3df1dae2abd59ec625d9ef5aff3851397b",

@@ -44,6 +44,7 @@ v2301同时缩短历史并替换预测结构后退步，本版因此保留v2401�
 训练入口是[v2801_train.py](v2801_train.py)，运行逻辑见[v2801_run.py](v2801_run.py)；保持一次正式运行、预留2GiB。它是“固定网络提取表示，再训练树”的新训练类型，不是AdamW／EMA更新网络。
 
 - `scripts/check-candidate-device.py --solution-id v2801 --device cuda`会调用本版合成预检：检查父编码批量、原生树更新、便携推理和同设备分块恢复。GPU检查由训练session在间隙执行。
+- 恢复预检要求树拓扑、阈值、叶值、缺失方向及其他树状态完全一致；不参与预测的增益统计`loss_changes`单独按`rtol=1e-6、atol=1e-7`核验，并记录差异，不能据此声称原生模型全部统计逐位相同。
 - `feature-caches.json`记录三阶段表示来源；`initial-validation.json`记录零树父基准。
 - `history.csv`的epoch表示25棵树的验证块，另有明确的`boosting_rounds`。训练MSE与正式IC口径分开记录。
 - `best.pt`／`last.pt`包含完整配置、父网络和树数值数组、原生模型JSON、实际树训练配置及抽样状态。权重来源标记为`frozen_parent_ema_plus_boosted_trees`，不虚构本版EMA更新。

@@ -1,4 +1,5 @@
 """只用合成数据验证父编码批量、量化树更新和便携推理；不启动正式训练。"""
+import copy
 import json
 import time
 
@@ -8,6 +9,30 @@ import xgboost as xgb
 
 from v2401_train import preflight_inputs
 from v2801_model import MultiFrequencyNeuralTree
+
+
+def compare_resume_models(uninterrupted, resumed):
+    """预测结构严格相同；GPU增益统计的末位舍入单独核验。"""
+    left, right = copy.deepcopy(uninterrupted), copy.deepcopy(resumed)
+    left_trees, right_trees = left['model']['trees'], right['model']['trees']
+    if len(left_trees) != len(right_trees):
+        raise ValueError('同设备分块抽样恢复后树数量不一致')
+    maximum_gain_difference = 0.
+    for first, second in zip(left_trees, right_trees):
+        first_gain, second_gain = first.pop('loss_changes'), second.pop('loss_changes')
+        if len(first_gain) != len(second_gain):
+            raise ValueError('恢复后的增益统计布局不一致')
+        a, b = np.asarray(first_gain, np.float64), np.asarray(second_gain, np.float64)
+        if not np.isfinite(a).all() or not np.isfinite(b).all():
+            raise ValueError('恢复后的增益统计非有限')
+        np.testing.assert_allclose(a, b, rtol=1e-6, atol=1e-7)
+        maximum_gain_difference = max(maximum_gain_difference, float(np.max(np.abs(a-b), initial=0.)))
+    if left != right:
+        raise ValueError('同设备分块抽样恢复后预测结构或其他树状态不一致')
+    return {'native_tree_document_exact': uninterrupted == resumed,
+            'prediction_structure_and_other_state_exact': True,
+            'nonpredictive_gain_max_abs_difference': maximum_gain_difference,
+            'nonpredictive_gain_tolerance': {'rtol':1e-6, 'atol':1e-7}}
 
 
 def run_device_preflight(config, device):
@@ -68,8 +93,7 @@ def run_device_preflight(config, device):
             current.set_param(settings)
             for step in range((block-1)*2,block*2):current.update(current_matrix,step)
         return json.loads(current.save_raw(raw_format='json'))['learner']['gradient_booster']
-    if resume_probe(False)!=resume_probe(True):
-        raise ValueError('同设备分块抽样恢复后树模型不一致')
+    resume_check = compare_resume_models(resume_probe(False),resume_probe(True))
     trees=json.loads(booster.save_raw(raw_format='json'))['learner']['gradient_booster']['model']['trees']
     neural=sum(p.numel() for p in model.encoder.parameters())
     numeric=sum(len(t['split_conditions']) for t in trees)
@@ -81,7 +105,9 @@ def run_device_preflight(config, device):
         'tree_training_rows':len(values),'feature_dim':values.shape[1],'feature_encoding_seconds':encoding_seconds,
         'step_seconds':times,'step_timing_scope':'three_native_tree_updates_excludes_feature_encoding_and_quantization',
         'native_portable_max_abs_difference':difference,'xgboost_version':xgb.__version__,
-        'block_sampling_resume_tree_model_exact':True,'resume_scope':'four_synthetic_trees_with_matrix_reconstruction_same_device',
+        'block_sampling_resume_tree_model_exact':resume_check['native_tree_document_exact'],
+        'block_sampling_resume_prediction_structure_exact':True,'sampling_resume_comparison':resume_check,
+        'resume_scope':'four_synthetic_trees_with_matrix_reconstruction_same_device_prediction_parameters_exact_gain_statistics_tolerant',
         'xgboost_build_has_cuda':bool(xgb.build_info()['USE_CUDA']),
         'cuda_peak_allocated_bytes':torch.cuda.max_memory_allocated() if device.type=='cuda' else None,
         'gpu_memory_scope':'torch_allocator_only_excludes_native_xgboost','full_dataset_matrix_memory_verified':False,
