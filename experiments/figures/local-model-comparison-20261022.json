@@ -1,8 +1,29 @@
 {
-  "generated_at": "2026-10-23T17:25:57.220909+08:00",
+  "generated_at": "2026-10-23T21:24:03.885974+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
+    {
+      "solution_id": "v2401",
+      "run_id": "v2401-price-memory-s42",
+      "model_sha256": "b5e2902a62ed9480f1a0559363fc377f0b172eb278839b1abda10223068d4439",
+      "summary_file": "experiments/v2401-gru.json",
+      "summary_content_sha256": "61d49fcf793a2790d89b431b147b9947d7faf874129b92e6132aa67be5621615",
+      "parameters": 2641743,
+      "epochs_completed": 8,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.10777784778577437,
+          "rank_ic_mean": 0.1041777313786221,
+          "ic_ir": 0.8587900180358099
+        },
+        "test": {
+          "ic_mean": 0.11935175870015119,
+          "rank_ic_mean": 0.10826396603898258,
+          "ic_ir": 0.8546070223242817
+        }
+      }
+    },
     {
       "solution_id": "v1601",
       "run_id": "v1601-price-geometry-s42",
@@ -697,5 +718,5 @@
       }
     }
   ],
-  "image_sha256": "64bf5f900ce3057140cccec989fd7bbb9210553ee9f9e6633b5ef601fbe23928"
+  "image_sha256": "11f36619e2a94003806f944b7aeebe5c6943228872c5d5337a28fbcb01665ffc"
 }

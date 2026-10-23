@@ -61,3 +61,6 @@
 /solutions/v2601/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /tests/test_v2601*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /scripts/analyze-market-context-budget.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/export-v2401.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/verify-v2401-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/experiments/v2401*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
