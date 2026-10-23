@@ -1,0 +1,299 @@
+{
+  "computed_at": "2026-10-23T18:25:42+08:00",
+  "script_sha256": "3fac795c99d71ac64b3f0513ff69668b7fea4c71569de2ca258b0461c06d30f6",
+  "run_id": "v1601-price-geometry-s42",
+  "cache_key": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+  "source_sha256": {
+    "sample_day.npy": "66c665dffe87c493dae195e05f79c7fa52ae4606f6cfdb61aba6262184c22818",
+    "sample_stock.npy": "1e047307dac1ddc76288932a7388d2af9ebcbef0901b3df4cd9cb48e20013a46",
+    "sample_clock.npy": "f3e76bd2998c3e375cc454e7a6e8ccff72e5a364da78960fd9cc74a7c900f32b",
+    "targets.npy": "e7de68d257ceec4a7a1ae74bcc5b367a2ac8c0eed41b66b9bf6772f8d564dd6e",
+    "days.npy": "797f2af5064588c8dac5264197223528ad1f0f811659e38aea5d95c4cd82e269"
+  },
+  "cache_manifest_sha256": "be95393b030f706260d25c7e5ea1071e0bb5b8ceaece331040c7736db914d63e",
+  "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+  "training_interval": {
+    "start": "2020-01-01",
+    "stop": "2024-01-01"
+  },
+  "training_days": 970,
+  "stock_day_groups": 970000,
+  "eligible_stock_day_groups": 967872,
+  "finite_primary_rows": 7742958,
+  "additional_strict_future_supervision_pairs": 27100313,
+  "queries_with_any_strict_future_label": {
+    "09:30": 967872,
+    "10:00": 967872,
+    "10:30": 967872,
+    "11:00": 967869,
+    "11:30": 967869,
+    "13:30": 967869,
+    "14:00": 967867,
+    "14:30": 0
+  },
+  "pairs": [
+    {
+      "query_clock": "09:30",
+      "target_clock": "10:00",
+      "clock_steps_ahead": 1,
+      "valid_pairs": 967872,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 770,
+      "mean_daily_label_correlation": -0.09978023608118876
+    },
+    {
+      "query_clock": "09:30",
+      "target_clock": "10:30",
+      "clock_steps_ahead": 2,
+      "valid_pairs": 967872,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 648,
+      "mean_daily_label_correlation": -0.0423855905249179
+    },
+    {
+      "query_clock": "09:30",
+      "target_clock": "11:00",
+      "clock_steps_ahead": 3,
+      "valid_pairs": 967872,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 542,
+      "mean_daily_label_correlation": -0.016201842601472408
+    },
+    {
+      "query_clock": "09:30",
+      "target_clock": "11:30",
+      "clock_steps_ahead": 4,
+      "valid_pairs": 967869,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 655,
+      "mean_daily_label_correlation": -0.03578518186016489
+    },
+    {
+      "query_clock": "09:30",
+      "target_clock": "13:30",
+      "clock_steps_ahead": 5,
+      "valid_pairs": 967868,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 530,
+      "mean_daily_label_correlation": -0.008467669427863861
+    },
+    {
+      "query_clock": "09:30",
+      "target_clock": "14:00",
+      "clock_steps_ahead": 6,
+      "valid_pairs": 967866,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 555,
+      "mean_daily_label_correlation": -0.011507958502007134
+    },
+    {
+      "query_clock": "09:30",
+      "target_clock": "14:30",
+      "clock_steps_ahead": 7,
+      "valid_pairs": 967867,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 454,
+      "mean_daily_label_correlation": 0.007180741094012198
+    },
+    {
+      "query_clock": "10:00",
+      "target_clock": "10:30",
+      "clock_steps_ahead": 1,
+      "valid_pairs": 967872,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 745,
+      "mean_daily_label_correlation": -0.07132473090064542
+    },
+    {
+      "query_clock": "10:00",
+      "target_clock": "11:00",
+      "clock_steps_ahead": 2,
+      "valid_pairs": 967872,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 580,
+      "mean_daily_label_correlation": -0.024471444958956895
+    },
+    {
+      "query_clock": "10:00",
+      "target_clock": "11:30",
+      "clock_steps_ahead": 3,
+      "valid_pairs": 967869,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 624,
+      "mean_daily_label_correlation": -0.02340512599037623
+    },
+    {
+      "query_clock": "10:00",
+      "target_clock": "13:30",
+      "clock_steps_ahead": 4,
+      "valid_pairs": 967868,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 506,
+      "mean_daily_label_correlation": -0.005504748016154088
+    },
+    {
+      "query_clock": "10:00",
+      "target_clock": "14:00",
+      "clock_steps_ahead": 5,
+      "valid_pairs": 967866,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 524,
+      "mean_daily_label_correlation": -0.004602622518576329
+    },
+    {
+      "query_clock": "10:00",
+      "target_clock": "14:30",
+      "clock_steps_ahead": 6,
+      "valid_pairs": 967867,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 565,
+      "mean_daily_label_correlation": -0.009350994986232515
+    },
+    {
+      "query_clock": "10:30",
+      "target_clock": "11:00",
+      "clock_steps_ahead": 1,
+      "valid_pairs": 967872,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 714,
+      "mean_daily_label_correlation": -0.05224838918528517
+    },
+    {
+      "query_clock": "10:30",
+      "target_clock": "11:30",
+      "clock_steps_ahead": 2,
+      "valid_pairs": 967869,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 603,
+      "mean_daily_label_correlation": -0.02470597295223128
+    },
+    {
+      "query_clock": "10:30",
+      "target_clock": "13:30",
+      "clock_steps_ahead": 3,
+      "valid_pairs": 967868,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 538,
+      "mean_daily_label_correlation": -0.009237659000937188
+    },
+    {
+      "query_clock": "10:30",
+      "target_clock": "14:00",
+      "clock_steps_ahead": 4,
+      "valid_pairs": 967866,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 484,
+      "mean_daily_label_correlation": -0.0007647223312690359
+    },
+    {
+      "query_clock": "10:30",
+      "target_clock": "14:30",
+      "clock_steps_ahead": 5,
+      "valid_pairs": 967867,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 536,
+      "mean_daily_label_correlation": -0.01036234423328601
+    },
+    {
+      "query_clock": "11:00",
+      "target_clock": "11:30",
+      "clock_steps_ahead": 1,
+      "valid_pairs": 967869,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 704,
+      "mean_daily_label_correlation": -0.05650900482836326
+    },
+    {
+      "query_clock": "11:00",
+      "target_clock": "13:30",
+      "clock_steps_ahead": 2,
+      "valid_pairs": 967868,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 582,
+      "mean_daily_label_correlation": -0.018623056227720987
+    },
+    {
+      "query_clock": "11:00",
+      "target_clock": "14:00",
+      "clock_steps_ahead": 3,
+      "valid_pairs": 967866,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 539,
+      "mean_daily_label_correlation": -0.010855560566591434
+    },
+    {
+      "query_clock": "11:00",
+      "target_clock": "14:30",
+      "clock_steps_ahead": 4,
+      "valid_pairs": 967867,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 527,
+      "mean_daily_label_correlation": -0.005282238599543604
+    },
+    {
+      "query_clock": "11:30",
+      "target_clock": "13:30",
+      "clock_steps_ahead": 1,
+      "valid_pairs": 967868,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 750,
+      "mean_daily_label_correlation": -0.06169540006915643
+    },
+    {
+      "query_clock": "11:30",
+      "target_clock": "14:00",
+      "clock_steps_ahead": 2,
+      "valid_pairs": 967866,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 614,
+      "mean_daily_label_correlation": -0.023945898966351763
+    },
+    {
+      "query_clock": "11:30",
+      "target_clock": "14:30",
+      "clock_steps_ahead": 3,
+      "valid_pairs": 967867,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 642,
+      "mean_daily_label_correlation": -0.02610150124624504
+    },
+    {
+      "query_clock": "13:30",
+      "target_clock": "14:00",
+      "clock_steps_ahead": 1,
+      "valid_pairs": 967866,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 692,
+      "mean_daily_label_correlation": -0.04713996681412391
+    },
+    {
+      "query_clock": "13:30",
+      "target_clock": "14:30",
+      "clock_steps_ahead": 2,
+      "valid_pairs": 967867,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 671,
+      "mean_daily_label_correlation": -0.030170190720727314
+    },
+    {
+      "query_clock": "14:00",
+      "target_clock": "14:30",
+      "clock_steps_ahead": 1,
+      "valid_pairs": 967867,
+      "defined_daily_correlations": 970,
+      "negative_daily_correlations": 774,
+      "mean_daily_label_correlation": -0.06074629390781644
+    }
+  ],
+  "input_numeric_arrays_read": false,
+  "validation_or_test_labels_read": false,
+  "returns_recomputed": false,
+  "exposure_read": false,
+  "model_training_performed": false,
+  "method": "读取父缓存中已由官方vwap_return标准化的训练目标。查询须在当时股票池，目标为同日严格后续时点的原有目标；组资格与父训练保持。",
+  "limitations": [
+    "监督对重复利用原有标签，不是新增独立样本。",
+    "标签之间的相关性不是模型预测能力或正式IC。",
+    "后续目标只允许在训练损失中使用，不能进入模型输入、验证选模依据或平台推理。"
+  ]
+}

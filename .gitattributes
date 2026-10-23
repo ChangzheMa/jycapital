@@ -55,3 +55,6 @@
 /common/price_memory_inputs.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /common/price_memory_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /common/price_memory_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/analyze-future-label-coverage.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/solutions/v2501/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v2501*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
