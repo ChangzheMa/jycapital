@@ -81,6 +81,8 @@ v1901 归档后的[时间利用与数量状态研究](temporal-liquidity-researc
 
 [补充诊断](generalization-and-phase-research-20261023.md)显示，单独修复零监督历史股票也不能达到验证 0.25；冻结最佳权重的训练抽样 IC 为 0.155779，当前没有“训练已够强、只需泛化修补”的证据。跨时点梯度差异尚不能排除股票抽样噪声，不直接拆成八个模型。抽样结果不替代本文上方的完整正式指标。
 
+[v2101 完整结果](../solutions/v2101/README.md#冻结结果)进一步区分辅助任务学习与主收益改善：数量任务在训练期优于持续性基准，收益 IC 仍为 0.104543／0.115779，距目标差 0.145457／0.134221。九轮训练及验证耗时约 286.66 分钟，当前不以增加辅助任务权重或延长该版训练作为默认下一步。
+
 ```powershell
 .venv-training/Scripts/python.exe scripts/analyze-ic-target-gap.py --run v1601-price-geometry-s42 --target 0.25
 ```
