@@ -52,3 +52,14 @@ v2001 是另一个输入学习系列，从 seed42 重新初始化，不继承父
 
 请先核对当前进程与 v201／v301 状态，报告接管方式和下一次扫描安排，然后持续执行。后台通知只对本 session 使用；不能把“消息已发送”当成已通过空闲自动唤醒验收。
 ```
+
+
+## v2801阶段训练交接
+
+v2801为新的`neural_boosted_trees`家族，入口`solutions/v2801/v2801_train.py`，详见[方案](../solutions/v2801/README.md)与[预算](../experiments/v2801-input-cache-compatibility.json)。父网络固定为v2401选中EMA，新增训练仅为树；不套用神经优化器／EMA更新的核验逻辑。
+
+- 公共设备预检入口支持`trainer.run_device_preflight`。按experiment.json的GPU预检命令执行，检查默认128股票日编码、原生树更新、便携预测和同设备分块恢复；CPU通过不等于全量GPU矩阵峰值已验证。
+- 特征提取、量化拟合和冻结测试是分开的阶段。`feature-caches.json`给出缓存指纹；拟合前释放原始常驻行情。新缓存预计22.72GiB，主机预留2GiB；9GiB显存估计只涵盖量化数据，原生峰值不能仅从Torch统计推断。
+- epoch是25次提升的验证块，最多48块。`initial-validation.json`记录第0块父基准，`selection.json`给出选中树数及完成提升次数；最佳可为零树，不伪造EMA更新数。
+- 每个验证块用`seed + epoch`重建提升器，正常运行和恢复遵循同一路径。`last.pt`包含模型JSON、实际训练配置和选择状态；已完成选择而只剩测试时，恢复不再次拟合树。
+- 仍保持一次正式运行、完整验证选模和冻结测试、无标签重算及无exposure。完成后核验原始父权重保持、完整预测键、逐截面／月度指标、树数与选择重放，并按新权重来源`frozen_parent_ema_plus_boosted_trees`交接。研究session不接管训练异常。

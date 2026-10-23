@@ -32,6 +32,15 @@ def main():
     model_module = importlib.import_module(args.solution_id + "_model")
     config = read_json(directory / "model-config.json")
     trainer.validate_training(config, read_json(ROOT / "evaluation/protocols/local-v2-ic.json"))
+    if hasattr(trainer, "run_device_preflight"):
+        record = trainer.run_device_preflight(config, torch.device(args.device))
+        if record.get("status") != "passed" or record.get("formal_training_performed") is not False:
+            raise ValueError("自定义设备预检未通过或范围不符")
+        record.update(solution_id=args.solution_id, checked_at=now(), source_files=source_files(ROOT, args.solution_id))
+        path = ROOT / "outputs/checks/continuous-research" / (args.solution_id + "-" + args.device + "-preflight.json")
+        atomic_json(path, record)
+        print(json.dumps({k: v for k, v in record.items() if k != "source_files"}, indent=2))
+        return
     class_names = {"patch_transformer": "MultiFrequencyPatchTransformer", "factorized_mixer": "MultiFrequencyMixer",
                    "hierarchical_gru": "MultiFrequencyGRU", "snapshot_mlp": "MultiFrequencySnapshotMLP"}
     torch.set_num_threads(config["training"]["cpu_threads"] if args.device == "cuda" else 1)

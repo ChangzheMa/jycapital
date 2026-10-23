@@ -147,10 +147,10 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
 
 def result_filename(solution_id, model_family=None):
     """新结果家族在分析入口登记，保留已冻结公共训练依赖。"""
-    if model_family == "snapshot_mlp":
+    if model_family in ("snapshot_mlp", "neural_boosted_trees"):
         if not re.fullmatch(r"[a-z][a-z0-9_-]*", solution_id):
             raise ValueError("非法方案标识")
-        return solution_id + "-snapshot-mlp.json"
+        return solution_id + ("-snapshot-mlp.json" if model_family == "snapshot_mlp" else "-neural-tree.json")
     return experiment_filename(solution_id, model_family)
 
 
