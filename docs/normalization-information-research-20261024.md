@@ -43,3 +43,5 @@
 | **Characteristic Root Analysis and Regularization for Linear Time Series Forecasting**，ICLR 2026，[正式全文](https://proceedings.iclr.cc/paper_files/paper/2026/file/24c53bfa5b53fc2cf05644f5a7a26bb0-Paper-Conference.pdf) | 有理论分析、作者代码及五次重复，但主表明确从验证排名前三的秩中报告最佳测试结果，并在三个正则权重中选择最佳测试MSE。该选择口径不符合本地验证选模要求，不能按其主表增幅预估本地收益；不据会议标签直接采用其算法。 |
 
 论文没有证明本任务IC0.25可达。当前可支持的是一项输入信息检验：保持原有效视图与完整历史，增加可信固定参数下的数量单位恢复，并让模型学习其与现有价量输入的交互。新候选应明确近似误差、缺失规则、缓存复用与所有时点的因果边界，完整评测前不宣称改善。
+
+该假设已落实为[v2901](../solutions/v2901/README.md)：保留全部父77通道，按固定参数生成22个补充数量值和独立标志；10项CPU检查通过并已发布ready。父完整缓存复用，训练参数表约0.89MiB；正式效果仍待评估。

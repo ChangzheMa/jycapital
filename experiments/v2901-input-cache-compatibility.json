@@ -1,0 +1,114 @@
+{
+  "checked_at": "2026-10-24T05:24:07+08:00",
+  "solution_id": "v2901",
+  "parent_run_id": "v2401-price-memory-s42",
+  "config_sha256": "395191d3d349d459a974dab3ac4c4fa3ff6309056cf2a66ab76d8d3ef5c59c96",
+  "parent_data_manifest_sha256": "dc924ad78b08594155ccd6b78cdd2dbe64578cc1410b18b47794f802c186bd5a",
+  "input_cache_keys": {
+    "train": "d35c64fdbaa59d9cf582099f87191eaa0db7ac2ceab01e212dfed0d0784ba5f3",
+    "validation": "925385ed8cfda8fe855018004e5093f64503d2dcb531ca0b79b96f7d08b6f6df",
+    "test": "9921f36afc824e82a2dff4712137b1260e5c1189795dcbd3c1bdf2730290cabe"
+  },
+  "parent_data_config_identical": true,
+  "parent_compatibility_sources_byte_identical": true,
+  "provided_label_transform_unchanged": true,
+  "contract": {
+    "version": "fixed_training_quantity_units_v1",
+    "parent_view": "unchanged_77_price_memory_channels",
+    "fields": [
+      "volume",
+      "amount",
+      "ask_volume1",
+      "ask_volume2",
+      "ask_volume3",
+      "ask_volume4",
+      "ask_volume5",
+      "bid_volume1",
+      "bid_volume2",
+      "bid_volume3",
+      "bid_volume4",
+      "bid_volume5",
+      "ask_num_orders1",
+      "ask_num_orders2",
+      "ask_num_orders3",
+      "ask_num_orders4",
+      "ask_num_orders5",
+      "bid_num_orders1",
+      "bid_num_orders2",
+      "bid_num_orders3",
+      "bid_num_orders4",
+      "bid_num_orders5"
+    ],
+    "inverse": "stored_z_times_fixed_std_plus_fixed_mean_fp32",
+    "statistics": "frozen_training_per_stock_frequency_field",
+    "trust": "count_at_least_preprocessing_minimum_and_std_above_epsilon",
+    "quantity_view": "clamp_reconstructed_log1p_at_zero_divide_10",
+    "untrusted": "new_view_and_flag_zero_parent_unchanged",
+    "network_layout": "77_parent_22_quantity_units_22_validity",
+    "network_channels": 121,
+    "new_full_market_arrays": false
+  },
+  "normalization_policy": {
+    "price_transform": "log",
+    "quantity_transform": "log1p",
+    "fit_group": [
+      "instrument",
+      "frequency",
+      "field"
+    ],
+    "fit_scope": "all_unique_training_bars",
+    "ddof": 0,
+    "min_observations": 30,
+    "scale_epsilon": 1e-08,
+    "fallback": "expanding_then_pooled",
+    "expanding_includes_current_closed_bar": true,
+    "cross_section_universe": "latest_snapshot_at_or_before_bar_end",
+    "min_cross_section_observations": 2,
+    "channels": [
+      "z",
+      "c"
+    ],
+    "clip": null
+  },
+  "normalization_files": {
+    "bar1m": "250f2728a47eddbd9fd7ed7013e31f352beab5266a34f479bee0a96dd48d6742",
+    "bar5m": "8a81bc26a16acc6bbb57df219a9df44ce8e125a233d11dbdfbfc89410975a9e4",
+    "bar30m": "f79327f3f1d560bf7887cac26fdfb19c04cff2cd25d12a4a1d73294f717b1811"
+  },
+  "splits": [
+    {
+      "split": "train",
+      "cache_key": "d35c64fdbaa59d9cf582099f87191eaa0db7ac2ceab01e212dfed0d0784ba5f3",
+      "cache_manifest_sha256": "8fd9241b338df0732c2108d851eb211fdd8c4c45af8e7ead221c6b62d2ce8537",
+      "stocks": 1764,
+      "profile_bytes": 931392,
+      "profiles_sha256": "fb2815e1e161689193933cd4740e91e6aba36af9f5e6e906e3167d09c6d7bd65",
+      "base_resident_array_bytes": 42747284648,
+      "new_full_array_bytes": 0
+    },
+    {
+      "split": "validation",
+      "cache_key": "925385ed8cfda8fe855018004e5093f64503d2dcb531ca0b79b96f7d08b6f6df",
+      "cache_manifest_sha256": "4f794255a245f905534c346ec893d82c3e8b31ca5c5a977219af3c182819c068",
+      "stocks": 1103,
+      "profile_bytes": 582384,
+      "profiles_sha256": "830121fb58ce31c5a66f99854588cb2165b38d007f7f4144247140791b0f143c",
+      "base_resident_array_bytes": 5250819868,
+      "new_full_array_bytes": 0
+    },
+    {
+      "split": "test",
+      "cache_key": "9921f36afc824e82a2dff4712137b1260e5c1189795dcbd3c1bdf2730290cabe",
+      "cache_manifest_sha256": "4780c633f5f76320bcba4ec3edb3721095dcbb77d91f8277befcc1eba4fe2973",
+      "stocks": 1103,
+      "profile_bytes": 582384,
+      "profiles_sha256": "10cd1d75ea78cc5ee20757c84d4c2b749f7f0ceb10c5941a12c72efa501a8cbd",
+      "base_resident_array_bytes": 5602669820,
+      "new_full_array_bytes": 0
+    }
+  ],
+  "new_full_input_array_bytes": 0,
+  "formal_training_performed": false,
+  "input_numeric_arrays_loaded": false,
+  "scope": "?????????????????????????????????????????????????????"
+}

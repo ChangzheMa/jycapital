@@ -74,3 +74,8 @@
 /tests/test_v2801*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /scripts/analyze-neural-tree-budget.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /scripts/analyze-normalization-information.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/solutions/v2901/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v2901*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/quantity_units_inputs.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/quantity_units_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/quantity_units_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
