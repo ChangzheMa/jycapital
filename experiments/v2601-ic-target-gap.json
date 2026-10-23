@@ -1,0 +1,1093 @@
+{
+  "computed_at": "2026-10-24T02:56:12+08:00",
+  "script_sha256": "7f9133b66c6245eede81700cfa085109339bc82eadc715ff12eced15ca2b0e20",
+  "run_id": "v2601-raw-market-s42",
+  "target_ic_mean": 0.25,
+  "protocol_id": "local-v2-ic",
+  "method": "逐截面等权均值按预测时点分解；仅替换一个时点的假设 IC，其余时点保持冻结结果。",
+  "formal_metrics_modified": false,
+  "model_training_performed": false,
+  "raw_market_data_read": false,
+  "label_table_read": false,
+  "exposure_read": false,
+  "results": [
+    {
+      "split": "validation",
+      "ic_mean": 0.10292866230131718,
+      "rank_ic_mean": 0.10093138995090711,
+      "target": 0.25,
+      "absolute_gap": 0.1470713376986828,
+      "target_multiple_of_current": 2.4288666967043713,
+      "coverage": 1.0,
+      "cross_sections": 936,
+      "clock_weighted_mean_reconstructs_frozen_metric": true,
+      "any_single_clock_perfect_ceiling": 0.22439326126332343,
+      "all_single_clock_perfect_scenarios_below_target": true,
+      "fraction_sections_at_or_above_target": 0.11858974358974358,
+      "fraction_negative_sections": 0.19658119658119658,
+      "clocks": [
+        {
+          "clock": "09:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.028283208303949876,
+          "rank_ic_mean": 0.045252030281640446,
+          "gap_to_target": 0.22171679169605013,
+          "overall_if_only_this_clock_reaches_target": 0.13064326126332343,
+          "overall_if_only_this_clock_is_perfect": 0.22439326126332343,
+          "required_this_clock_ic_if_others_fixed": 1.2048539098934126,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.28167382738515
+        },
+        {
+          "clock": "10:00",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.1236957785656098,
+          "rank_ic_mean": 0.12871592492327474,
+          "gap_to_target": 0.12630422143439018,
+          "overall_if_only_this_clock_reaches_target": 0.11871668998061596,
+          "overall_if_only_this_clock_is_perfect": 0.21246668998061596,
+          "required_this_clock_ic_if_others_fixed": 1.3002664801550723,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2680434602049129
+        },
+        {
+          "clock": "10:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.10215067888898222,
+          "rank_ic_mean": 0.09933812105194194,
+          "gap_to_target": 0.14784932111101778,
+          "overall_if_only_this_clock_reaches_target": 0.1214098274401944,
+          "overall_if_only_this_clock_is_perfect": 0.2151598274401944,
+          "required_this_clock_ic_if_others_fixed": 1.2787213804784447,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.27112133158728824
+        },
+        {
+          "clock": "11:00",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.09133742958393117,
+          "rank_ic_mean": 0.0967123969404081,
+          "gap_to_target": 0.15866257041606885,
+          "overall_if_only_this_clock_reaches_target": 0.12276148360332578,
+          "overall_if_only_this_clock_is_perfect": 0.21651148360332578,
+          "required_this_clock_ic_if_others_fixed": 1.2679081311733937,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.27266608148800986
+        },
+        {
+          "clock": "11:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.11819992668377349,
+          "rank_ic_mean": 0.10569661922124754,
+          "gap_to_target": 0.1318000733162265,
+          "overall_if_only_this_clock_reaches_target": 0.11940367146584549,
+          "overall_if_only_this_clock_is_perfect": 0.2131536714658455,
+          "required_this_clock_ic_if_others_fixed": 1.294770628273236,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.26882858190231806
+        },
+        {
+          "clock": "13:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.1100284050530206,
+          "rank_ic_mean": 0.10854303635747908,
+          "gap_to_target": 0.13997159494697942,
+          "overall_if_only_this_clock_reaches_target": 0.12042511166968961,
+          "overall_if_only_this_clock_is_perfect": 0.2141751116696896,
+          "required_this_clock_ic_if_others_fixed": 1.2865991066424831,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2699959421352828
+        },
+        {
+          "clock": "14:00",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.06868258040318487,
+          "rank_ic_mean": 0.07685586477678576,
+          "gap_to_target": 0.18131741959681513,
+          "overall_if_only_this_clock_reaches_target": 0.12559333975091908,
+          "overall_if_only_this_clock_is_perfect": 0.21934333975091908,
+          "required_this_clock_ic_if_others_fixed": 1.2452532819926474,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2759024885138307
+        },
+        {
+          "clock": "14:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.18105129092808553,
+          "rank_ic_mean": 0.14633712605447916,
+          "gap_to_target": 0.06894870907191447,
+          "overall_if_only_this_clock_reaches_target": 0.11154725093530649,
+          "overall_if_only_this_clock_is_perfect": 0.20529725093530649,
+          "required_this_clock_ic_if_others_fixed": 1.3576219925175481,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.25984981558170206
+        }
+      ],
+      "monthly": [
+        {
+          "month": "2024-01",
+          "sections": 176,
+          "ic_mean": 0.10057357600307765,
+          "rank_ic_mean": 0.09408499499818182
+        },
+        {
+          "month": "2024-02",
+          "sections": 120,
+          "ic_mean": 0.08797200257942979,
+          "rank_ic_mean": 0.07614661823691224
+        },
+        {
+          "month": "2024-03",
+          "sections": 168,
+          "ic_mean": 0.12131102289844035,
+          "rank_ic_mean": 0.1297241186033681
+        },
+        {
+          "month": "2024-04",
+          "sections": 160,
+          "ic_mean": 0.1140815442087741,
+          "rank_ic_mean": 0.10953057111120179
+        },
+        {
+          "month": "2024-05",
+          "sections": 160,
+          "ic_mean": 0.11136492800745845,
+          "rank_ic_mean": 0.11676191716411777
+        },
+        {
+          "month": "2024-06",
+          "sections": 152,
+          "ic_mean": 0.07652599227910833,
+          "rank_ic_mean": 0.0708866949771224
+        }
+      ],
+      "source_hashes": {
+        "metrics.json": "bcfb22e0992ba8fce5ac9f9cb10b7465c329e8afa8a2df6f7d3f2112423a7e5f",
+        "cross-sections.parquet": "67739b448fcb63b21487ab34cb8fbfd735545e9184bc08bac056a0f4d9637fd1"
+      }
+    },
+    {
+      "split": "test",
+      "ic_mean": 0.11314363238377803,
+      "rank_ic_mean": 0.1026066725338913,
+      "target": 0.25,
+      "absolute_gap": 0.13685636761622197,
+      "target_multiple_of_current": 2.209580819820345,
+      "coverage": 1.0,
+      "cross_sections": 1000,
+      "clock_weighted_mean_reconstructs_frozen_metric": true,
+      "any_single_clock_perfect_ceiling": 0.23478451912601295,
+      "all_single_clock_perfect_scenarios_below_target": true,
+      "fraction_sections_at_or_above_target": 0.162,
+      "fraction_negative_sections": 0.21,
+      "clocks": [
+        {
+          "clock": "09:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.026872906062120595,
+          "rank_ic_mean": 0.03792044478728987,
+          "gap_to_target": 0.2231270939378794,
+          "overall_if_only_this_clock_reaches_target": 0.14103451912601295,
+          "overall_if_only_this_clock_is_perfect": 0.23478451912601295,
+          "required_this_clock_ic_if_others_fixed": 1.1217238469918964,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.28187529913398274
+        },
+        {
+          "clock": "10:00",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.10257287406507956,
+          "rank_ic_mean": 0.10311140353884682,
+          "gap_to_target": 0.14742712593492044,
+          "overall_if_only_this_clock_reaches_target": 0.1315720231256431,
+          "overall_if_only_this_clock_is_perfect": 0.2253220231256431,
+          "required_this_clock_ic_if_others_fixed": 1.1974238149948553,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2710610179907029
+        },
+        {
+          "clock": "10:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.10834963716650042,
+          "rank_ic_mean": 0.105838176987606,
+          "gap_to_target": 0.14165036283349958,
+          "overall_if_only_this_clock_reaches_target": 0.13084992773796547,
+          "overall_if_only_this_clock_is_perfect": 0.22459992773796547,
+          "required_this_clock_ic_if_others_fixed": 1.2032005780962762,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.27023576611907135
+        },
+        {
+          "clock": "11:00",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.1030795727161892,
+          "rank_ic_mean": 0.10021643663201261,
+          "gap_to_target": 0.1469204272838108,
+          "overall_if_only_this_clock_reaches_target": 0.1315086857942544,
+          "overall_if_only_this_clock_is_perfect": 0.2252586857942544,
+          "required_this_clock_ic_if_others_fixed": 1.1979305136459648,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2709886324691158
+        },
+        {
+          "clock": "11:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.14551513100047028,
+          "rank_ic_mean": 0.1426960745668411,
+          "gap_to_target": 0.10448486899952972,
+          "overall_if_only_this_clock_reaches_target": 0.12620424100871924,
+          "overall_if_only_this_clock_is_perfect": 0.21995424100871924,
+          "required_this_clock_ic_if_others_fixed": 1.240366071930246,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.26492640985707566
+        },
+        {
+          "clock": "13:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.13446823500307153,
+          "rank_ic_mean": 0.12024016582358821,
+          "gap_to_target": 0.11553176499692847,
+          "overall_if_only_this_clock_reaches_target": 0.1275851030083941,
+          "overall_if_only_this_clock_is_perfect": 0.2213351030083941,
+          "required_this_clock_ic_if_others_fixed": 1.2293191759328472,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2665045378567041
+        },
+        {
+          "clock": "14:00",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.09603494575678136,
+          "rank_ic_mean": 0.08230829389877685,
+          "gap_to_target": 0.15396505424321866,
+          "overall_if_only_this_clock_reaches_target": 0.13238926416418034,
+          "overall_if_only_this_clock_is_perfect": 0.22613926416418034,
+          "required_this_clock_ic_if_others_fixed": 1.1908858866865573,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.27199500774903124
+        },
+        {
+          "clock": "14:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.18825575730001126,
+          "rank_ic_mean": 0.1285223840361689,
+          "gap_to_target": 0.06174424269998874,
+          "overall_if_only_this_clock_reaches_target": 0.12086166272127663,
+          "overall_if_only_this_clock_is_perfect": 0.21461166272127663,
+          "required_this_clock_ic_if_others_fixed": 1.283106698229787,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2588206060999984
+        }
+      ],
+      "monthly": [
+        {
+          "month": "2024-07",
+          "sections": 184,
+          "ic_mean": 0.10057388860585453,
+          "rank_ic_mean": 0.09289454937035994
+        },
+        {
+          "month": "2024-08",
+          "sections": 176,
+          "ic_mean": 0.11596372602944022,
+          "rank_ic_mean": 0.10101460707482063
+        },
+        {
+          "month": "2024-09",
+          "sections": 152,
+          "ic_mean": 0.09771809670422651,
+          "rank_ic_mean": 0.06725676244093505
+        },
+        {
+          "month": "2024-10",
+          "sections": 144,
+          "ic_mean": 0.08460292350750671,
+          "rank_ic_mean": 0.08627974231974146
+        },
+        {
+          "month": "2024-11",
+          "sections": 168,
+          "ic_mean": 0.1385788267727746,
+          "rank_ic_mean": 0.12780820752922994
+        },
+        {
+          "month": "2024-12",
+          "sections": 176,
+          "ic_mean": 0.1358591279384647,
+          "rank_ic_mean": 0.13418417587841533
+        }
+      ],
+      "source_hashes": {
+        "metrics.json": "05cfc606fbb5d6669dfd22c6ec0207512d83db9c75f0a1accae6cd7af27e6fd6",
+        "cross-sections.parquet": "0ce0b3e16d9bb82e22c665e0d07423dabce8520e5a242fa37a4fa6f0d4492aa9"
+      }
+    }
+  ],
+  "references": [
+    {
+      "run_id": "v1601-price-geometry-s42",
+      "split": "validation",
+      "ic_mean": 0.10552600428647893,
+      "rank_ic_mean": 0.10263980376862289,
+      "clock_effects": {
+        "source_hashes": [
+          "67739b448fcb63b21487ab34cb8fbfd735545e9184bc08bac056a0f4d9637fd1",
+          "19e4b5a69bf879ac49cca0195fa858cd2c9bad5ef29b7edac91b0b3340f64f8b"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 117,
+            "ic_delta": -0.008874040310783045,
+            "rank_ic_delta": -0.0005694216470316463,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 117,
+            "ic_delta": 0.0006841150057898562,
+            "rank_ic_delta": 2.109019727984259e-05,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 117,
+            "ic_delta": 0.0004322188345109366,
+            "rank_ic_delta": 0.0011001633523110743,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 117,
+            "ic_delta": -0.001364710237970251,
+            "rank_ic_delta": -0.003298604279782976,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 0,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 117,
+            "ic_delta": -0.0010530809255917223,
+            "rank_ic_delta": -0.0011738184165885214,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 117,
+            "ic_delta": 0.00204192441824594,
+            "rank_ic_delta": 0.002723410290872385,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 117,
+            "ic_delta": -0.003450290818033063,
+            "rank_ic_delta": -0.00014797740633688662,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 117,
+            "ic_delta": -0.009194871847462607,
+            "rank_ic_delta": -0.012322152632449575,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 0,
+            "months": 6
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "split": "validation",
+      "ic_mean": 0.0924742963076571,
+      "rank_ic_mean": 0.09006876749454029,
+      "clock_effects": {
+        "source_hashes": [
+          "67739b448fcb63b21487ab34cb8fbfd735545e9184bc08bac056a0f4d9637fd1",
+          "4e9ae9a07b7c9f0af7f66068bc35e24ae62677aa5dd9a092f8c633f54495fbec"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 117,
+            "ic_delta": -0.0017372505547037192,
+            "rank_ic_delta": 0.0027187973308933724,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 117,
+            "ic_delta": 0.01568584414634482,
+            "rank_ic_delta": 0.01705535057743525,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 117,
+            "ic_delta": 0.013500346484694923,
+            "rank_ic_delta": 0.014643434842470073,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 117,
+            "ic_delta": 0.013798337855849495,
+            "rank_ic_delta": 0.006499267259645606,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 117,
+            "ic_delta": 0.009210545782131464,
+            "rank_ic_delta": 0.012650336618656615,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 117,
+            "ic_delta": 0.006014016353195465,
+            "rank_ic_delta": 0.009029924387420157,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 117,
+            "ic_delta": 0.010444735058626767,
+            "rank_ic_delta": 0.01404478755233263,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 117,
+            "ic_delta": 0.016718352823141498,
+            "rank_ic_delta": 0.010259081082080844,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "v1401-frozen-equal-ensemble-s42",
+      "split": "validation",
+      "ic_mean": 0.09306244190435753,
+      "rank_ic_mean": 0.09125241139527344,
+      "clock_effects": {
+        "source_hashes": [
+          "67739b448fcb63b21487ab34cb8fbfd735545e9184bc08bac056a0f4d9637fd1",
+          "d5191a88a4dd7cc9cecf7ee965c4670eaf686a92690dbfa6aa2406452ae74f32"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 117,
+            "ic_delta": -0.0028468371882015937,
+            "rank_ic_delta": 0.0006202175988812038,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 117,
+            "ic_delta": 0.014088674877372132,
+            "rank_ic_delta": 0.016118827199141057,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 117,
+            "ic_delta": 0.013221136587097886,
+            "rank_ic_delta": 0.014641994612248889,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 117,
+            "ic_delta": 0.013032555505754747,
+            "rank_ic_delta": 0.007502003550008767,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 117,
+            "ic_delta": 0.009671164076316298,
+            "rank_ic_delta": 0.012662816537152635,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 117,
+            "ic_delta": 0.005527885174331046,
+            "rank_ic_delta": 0.007191719878256119,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 117,
+            "ic_delta": 0.009597152419012309,
+            "rank_ic_delta": 0.009802696711667698,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 117,
+            "ic_delta": 0.016638031723994594,
+            "rank_ic_delta": 0.008891552357712778,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "v1601-price-geometry-s42",
+      "split": "test",
+      "ic_mean": 0.11625947902475746,
+      "rank_ic_mean": 0.10419601366217873,
+      "clock_effects": {
+        "source_hashes": [
+          "0ce0b3e16d9bb82e22c665e0d07423dabce8520e5a242fa37a4fa6f0d4492aa9",
+          "7c8f9fea68649c55c69b5f1c843c10065c3f46e424463fb472027acfb62f8ae5"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 125,
+            "ic_delta": -0.00236696437976047,
+            "rank_ic_delta": 0.00270331775796824,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 125,
+            "ic_delta": 0.0010954453985632892,
+            "rank_ic_delta": 0.000378808823943548,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 125,
+            "ic_delta": -0.004076291078049068,
+            "rank_ic_delta": -0.001392302431452001,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 125,
+            "ic_delta": -0.005640125250373652,
+            "rank_ic_delta": -0.005412000001353429,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 1,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 125,
+            "ic_delta": -0.0014744770041991875,
+            "rank_ic_delta": -0.0005337546704700295,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 125,
+            "ic_delta": 0.001859410452076633,
+            "rank_ic_delta": 0.002765041759611905,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 125,
+            "ic_delta": 0.0002025906825178024,
+            "rank_ic_delta": -0.0008299343923321787,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 125,
+            "ic_delta": -0.014526361948610707,
+            "rank_ic_delta": -0.01039390587221557,
+            "ic_improved_months": 0,
+            "rank_ic_improved_months": 1,
+            "months": 6
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "v1102-structured-temporal-experts-s42",
+      "split": "test",
+      "ic_mean": 0.09896451610667985,
+      "rank_ic_mean": 0.08914631397846773,
+      "clock_effects": {
+        "source_hashes": [
+          "0ce0b3e16d9bb82e22c665e0d07423dabce8520e5a242fa37a4fa6f0d4492aa9",
+          "2c99b7c9798c400f695333696a2af61e7bdf2e178209b80103ddda8af4d28d8c"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 125,
+            "ic_delta": 0.003908155920803086,
+            "rank_ic_delta": 0.00625592207769437,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 125,
+            "ic_delta": 0.012442022777030768,
+            "rank_ic_delta": 0.00839577200644882,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 125,
+            "ic_delta": 0.010868772705925117,
+            "rank_ic_delta": 0.0101126917007739,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 125,
+            "ic_delta": 0.018401671131630062,
+            "rank_ic_delta": 0.01773383688969507,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 125,
+            "ic_delta": 0.015640210092957376,
+            "rank_ic_delta": 0.018954295797704565,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 125,
+            "ic_delta": 0.024284293033451202,
+            "rank_ic_delta": 0.0229566601188947,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 125,
+            "ic_delta": 0.011906561276755163,
+            "rank_ic_delta": 0.018118167538721034,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 125,
+            "ic_delta": 0.015981243278232728,
+            "rank_ic_delta": 0.00515552231345602,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "v1401-frozen-equal-ensemble-s42",
+      "split": "test",
+      "ic_mean": 0.09997912016324878,
+      "rank_ic_mean": 0.09313441400920462,
+      "clock_effects": {
+        "source_hashes": [
+          "0ce0b3e16d9bb82e22c665e0d07423dabce8520e5a242fa37a4fa6f0d4492aa9",
+          "ec6944ed4c8ea649cc14bf49248d238c950b5eabbab7deabebfe9dc7a327cfa1"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 125,
+            "ic_delta": 0.006566238739120907,
+            "rank_ic_delta": 0.0029164438361482113,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 125,
+            "ic_delta": 0.014137762637393301,
+            "rank_ic_delta": 0.007304466953427133,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 125,
+            "ic_delta": 0.007734675819088256,
+            "rank_ic_delta": 0.007500236949539804,
+            "ic_improved_months": 4,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 125,
+            "ic_delta": 0.017085430248838438,
+            "rank_ic_delta": 0.014026864984561148,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 125,
+            "ic_delta": 0.012842729179670389,
+            "rank_ic_delta": 0.01363644092177034,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 125,
+            "ic_delta": 0.020625696230240312,
+            "rank_ic_delta": 0.013630849576444087,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 6,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 125,
+            "ic_delta": 0.003699272829126714,
+            "rank_ic_delta": 0.010261325338291032,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 125,
+            "ic_delta": 0.022624292080755573,
+            "rank_ic_delta": 0.00650143963731168,
+            "ic_improved_months": 6,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "v2401-price-memory-s42",
+      "split": "validation",
+      "ic_mean": 0.10777784778577437,
+      "rank_ic_mean": 0.1041777313786221,
+      "clock_effects": {
+        "source_hashes": [
+          "67739b448fcb63b21487ab34cb8fbfd735545e9184bc08bac056a0f4d9637fd1",
+          "0a73fba737076cbcd00b9f4bc2e3ca8e24210972047ce0ebb8f7ef5b0df4f2ae"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 117,
+            "ic_delta": -0.009802007191869525,
+            "rank_ic_delta": -0.0016972469143808908,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 117,
+            "ic_delta": -0.005128374639504978,
+            "rank_ic_delta": -0.0008692508767666995,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 117,
+            "ic_delta": 0.001618909439698606,
+            "rank_ic_delta": 0.0037141670037953898,
+            "ic_improved_months": 5,
+            "rank_ic_improved_months": 5,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 117,
+            "ic_delta": -0.003037766083226165,
+            "rank_ic_delta": -0.003834096549922485,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 3,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 117,
+            "ic_delta": -0.003678368564052788,
+            "rank_ic_delta": -0.005218241308666595,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 117,
+            "ic_delta": 0.0020093347685108892,
+            "rank_ic_delta": 0.0024142271636737635,
+            "ic_improved_months": 3,
+            "rank_ic_improved_months": 4,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 117,
+            "ic_delta": -0.007670318910087369,
+            "rank_ic_delta": -0.004003308239953245,
+            "ic_improved_months": 0,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 117,
+            "ic_delta": -0.013104892695126144,
+            "rank_ic_delta": -0.01647698169949922,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 0,
+            "months": 6
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "v2401-price-memory-s42",
+      "split": "test",
+      "ic_mean": 0.11935175870015119,
+      "rank_ic_mean": 0.10826396603898258,
+      "clock_effects": {
+        "source_hashes": [
+          "0ce0b3e16d9bb82e22c665e0d07423dabce8520e5a242fa37a4fa6f0d4492aa9",
+          "760c950bc5b9870b2b870a3dd8060a2b5807af3a3abf3df6a6b4f56298c54acc"
+        ],
+        "weighted_clock_deltas_reconstruct_overall_delta": true,
+        "clocks": [
+          {
+            "clock": "09:30",
+            "sections": 125,
+            "ic_delta": -0.013185563074235223,
+            "rank_ic_delta": -0.006608268413131695,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 1,
+            "months": 6
+          },
+          {
+            "clock": "10:00",
+            "sections": 125,
+            "ic_delta": -0.003815856355668164,
+            "rank_ic_delta": -0.007701776519456292,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 1,
+            "months": 6
+          },
+          {
+            "clock": "10:30",
+            "sections": 125,
+            "ic_delta": -0.006294496606778137,
+            "rank_ic_delta": -0.0037491855749981757,
+            "ic_improved_months": 1,
+            "rank_ic_improved_months": 1,
+            "months": 6
+          },
+          {
+            "clock": "11:00",
+            "sections": 125,
+            "ic_delta": -0.0017854535025097918,
+            "rank_ic_delta": -0.004389597332031606,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "11:30",
+            "sections": 125,
+            "ic_delta": -0.004771200246079541,
+            "rank_ic_delta": -0.005168202839715784,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "13:30",
+            "sections": 125,
+            "ic_delta": -0.000706467603925585,
+            "rank_ic_delta": -0.0029689934024532028,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 2,
+            "months": 6
+          },
+          {
+            "clock": "14:00",
+            "sections": 125,
+            "ic_delta": -0.00713984955311992,
+            "rank_ic_delta": -0.006872590187549559,
+            "ic_improved_months": 0,
+            "rank_ic_improved_months": 1,
+            "months": 6
+          },
+          {
+            "clock": "14:30",
+            "sections": 125,
+            "ic_delta": -0.011966123588668942,
+            "rank_ic_delta": -0.007799733771394084,
+            "ic_improved_months": 2,
+            "rank_ic_improved_months": 1,
+            "months": 6
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "单时点完美预测上界只约束其余时点完全不变的假设，不是整体任务的可预测性上限。",
+    "0.25 是用户指定目标，不能由分解或论文证明可达。",
+    "不使用测试结果选择 checkpoint，不改变已有候选晋级规则。",
+    "训练损失来自不同 batch 中的原始训练权重，不能当作训练集正式 IC 或与 EMA 验证 IC 直接比较。"
+  ],
+  "history_primary_loss_column": "train_huber_loss",
+  "completed_training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.5600197473891471,
+      "train_huber_loss": 0.43594368407439604,
+      "validation_ic_mean": 0.0802124979052315
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5578119224815478,
+      "train_huber_loss": 0.43459763018966496,
+      "validation_ic_mean": 0.09315148196991421
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.5563877848861871,
+      "train_huber_loss": 0.43355431939527544,
+      "validation_ic_mean": 0.09835811589619668
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.5553792659537338,
+      "train_huber_loss": 0.43280281156623174,
+      "validation_ic_mean": 0.1017375894329438
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5541745680411263,
+      "train_huber_loss": 0.4318589683469787,
+      "validation_ic_mean": 0.10292866230131718
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5526874833302001,
+      "train_huber_loss": 0.4306718731831619,
+      "validation_ic_mean": 0.10273803406743502
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.5507120708305331,
+      "train_huber_loss": 0.429070172285624,
+      "validation_ic_mean": 0.10119020346858625
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.5483803950711674,
+      "train_huber_loss": 0.4271049207190023,
+      "validation_ic_mean": 0.09726408258647692
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.5453656641195029,
+      "train_huber_loss": 0.4245275930228556,
+      "validation_ic_mean": 0.09300584025688759
+    }
+  ],
+  "history_sha256": "0a2ceaa48e46d74b0794f98629b13f21c04076e0fb107ee6ca2a22f41c76ed18",
+  "additional_reference_analysis": {
+    "run_id": "v2401-price-memory-s42",
+    "function": "compare_clocks",
+    "source_script": "scripts/analyze-ic-target-gap.py",
+    "source_sha256": "7f9133b66c6245eede81700cfa085109339bc82eadc715ff12eced15ca2b0e20"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-24T01:52:06.093738+08:00",
+  "generated_at": "2026-10-24T03:06:23.553357+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
@@ -126,6 +126,27 @@
           "ic_mean": 0.11368459993714981,
           "rank_ic_mean": 0.10328071347666136,
           "ic_ir": 0.8100506194775556
+        }
+      }
+    },
+    {
+      "solution_id": "v2601",
+      "run_id": "v2601-raw-market-s42",
+      "model_sha256": "3dadbddaa8f2ea6f3741349113f16a8214f74dd9511f290f3e3f7629f826891e",
+      "summary_file": "experiments/v2601-gru.json",
+      "summary_content_sha256": "c692a12debf7fda21384d3862ebc654cb31877239292df6633fe58495398dfcc",
+      "parameters": 3372499,
+      "epochs_completed": 9,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.10292866230131718,
+          "rank_ic_mean": 0.10093138995090711,
+          "ic_ir": 0.8248647090008688
+        },
+        "test": {
+          "ic_mean": 0.11314363238377803,
+          "rank_ic_mean": 0.1026066725338913,
+          "ic_ir": 0.7910310152109876
         }
       }
     },
@@ -739,5 +760,5 @@
       }
     }
   ],
-  "image_sha256": "a16763d70a96152ab82d87a7495c43611f511c28b594dffe1ebf0207672afe9f"
+  "image_sha256": "942eaf0c17a8497d90d4a1de658fd80a09b3f9c7358aaa7bcedea38a471b8465"
 }
