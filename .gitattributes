@@ -64,3 +64,4 @@
 /scripts/export-v2401.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/verify-v2401-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /experiments/v2401*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/audit-unused-market-fields.py -text whitespace=trailing-space,space-before-tab,cr-at-eol

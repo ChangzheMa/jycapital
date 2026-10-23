@@ -1,0 +1,1796 @@
+{
+  "checked_at": "2026-10-23T21:28:39+08:00",
+  "script_sha256": "d0f0ce6458f266fb2ddbbcc8a325dd9b70d2052267c9772f815a40954ea2bce4",
+  "data_manifest_sha256": "4906d233a778d1a0651519dcb72d95ed3a6c2abaff54885843cda81e672c04b7",
+  "source_reference_run": "v1601-price-geometry-s42",
+  "sample_protocol": "复用2020—2023各六月首五交易日、每年固定64股；首日只供前日对照，主诊断为16日、最多1024股票日。",
+  "labels_read": false,
+  "exposure_read": false,
+  "formal_training_performed": false,
+  "new_candidate_created": false,
+  "schema": {
+    "bar1m": {
+      "columns": 42,
+      "used_raw_fields": [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "amount",
+        "ask_price1",
+        "ask_price2",
+        "ask_price3",
+        "ask_price4",
+        "ask_price5",
+        "bid_price1",
+        "bid_price2",
+        "bid_price3",
+        "bid_price4",
+        "bid_price5",
+        "ask_volume1",
+        "ask_volume2",
+        "ask_volume3",
+        "ask_volume4",
+        "ask_volume5",
+        "bid_volume1",
+        "bid_volume2",
+        "bid_volume3",
+        "bid_volume4",
+        "bid_volume5",
+        "ask_num_orders1",
+        "ask_num_orders2",
+        "ask_num_orders3",
+        "ask_num_orders4",
+        "ask_num_orders5",
+        "bid_num_orders1",
+        "bid_num_orders2",
+        "bid_num_orders3",
+        "bid_num_orders4",
+        "bid_num_orders5"
+      ],
+      "unused_raw_fields": [
+        "adjust_factor",
+        "deal_number",
+        "instrument_id",
+        "pre_close"
+      ],
+      "unused_actual_types": {
+        "adjust_factor": "float",
+        "deal_number": "int64",
+        "instrument_id": "int16",
+        "pre_close": "float"
+      }
+    },
+    "bar5m": {
+      "columns": 42,
+      "used_raw_fields": [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "amount",
+        "ask_price1",
+        "ask_price2",
+        "ask_price3",
+        "ask_price4",
+        "ask_price5",
+        "bid_price1",
+        "bid_price2",
+        "bid_price3",
+        "bid_price4",
+        "bid_price5",
+        "ask_volume1",
+        "ask_volume2",
+        "ask_volume3",
+        "ask_volume4",
+        "ask_volume5",
+        "bid_volume1",
+        "bid_volume2",
+        "bid_volume3",
+        "bid_volume4",
+        "bid_volume5",
+        "ask_num_orders1",
+        "ask_num_orders2",
+        "ask_num_orders3",
+        "ask_num_orders4",
+        "ask_num_orders5",
+        "bid_num_orders1",
+        "bid_num_orders2",
+        "bid_num_orders3",
+        "bid_num_orders4",
+        "bid_num_orders5"
+      ],
+      "unused_raw_fields": [
+        "adjust_factor",
+        "deal_number",
+        "instrument_id",
+        "pre_close"
+      ],
+      "unused_actual_types": {
+        "adjust_factor": "float",
+        "deal_number": "int64",
+        "instrument_id": "int16",
+        "pre_close": "float"
+      }
+    },
+    "bar30m": {
+      "columns": 42,
+      "used_raw_fields": [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "amount",
+        "ask_price1",
+        "ask_price2",
+        "ask_price3",
+        "ask_price4",
+        "ask_price5",
+        "bid_price1",
+        "bid_price2",
+        "bid_price3",
+        "bid_price4",
+        "bid_price5",
+        "ask_volume1",
+        "ask_volume2",
+        "ask_volume3",
+        "ask_volume4",
+        "ask_volume5",
+        "bid_volume1",
+        "bid_volume2",
+        "bid_volume3",
+        "bid_volume4",
+        "bid_volume5",
+        "ask_num_orders1",
+        "ask_num_orders2",
+        "ask_num_orders3",
+        "ask_num_orders4",
+        "ask_num_orders5",
+        "bid_num_orders1",
+        "bid_num_orders2",
+        "bid_num_orders3",
+        "bid_num_orders4",
+        "bid_num_orders5"
+      ],
+      "unused_raw_fields": [
+        "adjust_factor",
+        "deal_number",
+        "instrument_id",
+        "pre_close"
+      ],
+      "unused_actual_types": {
+        "adjust_factor": "float",
+        "deal_number": "int64",
+        "instrument_id": "int16",
+        "pre_close": "float"
+      }
+    }
+  },
+  "aggregate": {
+    "bar1m": {
+      "deal_number": {
+        "rows": 245757,
+        "finite_rows": 245757,
+        "zero_rows": 5056,
+        "negative_rows": 0,
+        "noninteger_rows": 0,
+        "quantiles": {
+          "0": 0.0,
+          "0.01": 0.0,
+          "0.5": 32.0,
+          "0.99": 630.0,
+          "1": 7698.0
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 1024,
+        "stock_days_without_finite_values": 0
+      },
+      "pre_close": {
+        "rows": 245757,
+        "finite_rows": 245757,
+        "zero_rows": 0,
+        "negative_rows": 0,
+        "noninteger_rows": 241437,
+        "quantiles": {
+          "0": 1.8799999952316284,
+          "0.01": 2.4000000953674316,
+          "0.5": 12.5600004196167,
+          "0.99": 145.8000030517578,
+          "1": 168.5500030517578
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 0,
+        "stock_days_without_finite_values": 0
+      },
+      "adjust_factor": {
+        "rows": 245757,
+        "finite_rows": 245757,
+        "zero_rows": 0,
+        "negative_rows": 0,
+        "noninteger_rows": 244797,
+        "quantiles": {
+          "0": 1.0,
+          "0.01": 1.0015920400619507,
+          "0.5": 4.325798034667969,
+          "0.99": 140.91871643066406,
+          "1": 535.0809936523438
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 0,
+        "stock_days_without_finite_values": 0
+      },
+      "deal_number_vs_volume": {
+        "valid_rows": 245757,
+        "log1p_pearson_correlation": 0.8370850223519856,
+        "count_zero_volume_positive_rows": 0,
+        "count_positive_volume_zero_rows": 0
+      }
+    },
+    "bar5m": {
+      "deal_number": {
+        "rows": 49152,
+        "finite_rows": 49152,
+        "zero_rows": 6,
+        "negative_rows": 0,
+        "noninteger_rows": 0,
+        "quantiles": {
+          "0": 0.0,
+          "0.01": 11.0,
+          "0.5": 184.0,
+          "0.99": 2978.0,
+          "1": 22256.0
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 1024,
+        "stock_days_without_finite_values": 0
+      },
+      "pre_close": {
+        "rows": 49152,
+        "finite_rows": 49152,
+        "zero_rows": 0,
+        "negative_rows": 0,
+        "noninteger_rows": 48288,
+        "quantiles": {
+          "0": 1.8799999952316284,
+          "0.01": 2.4000000953674316,
+          "0.5": 12.565000057220459,
+          "0.99": 145.8000030517578,
+          "1": 168.5500030517578
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 0,
+        "stock_days_without_finite_values": 0
+      },
+      "adjust_factor": {
+        "rows": 49152,
+        "finite_rows": 49152,
+        "zero_rows": 0,
+        "negative_rows": 0,
+        "noninteger_rows": 48960,
+        "quantiles": {
+          "0": 1.0,
+          "0.01": 1.0015920400619507,
+          "0.5": 4.304968595504761,
+          "0.99": 140.91871643066406,
+          "1": 535.0809936523438
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 0,
+        "stock_days_without_finite_values": 0
+      },
+      "deal_number_vs_volume": {
+        "valid_rows": 49152,
+        "log1p_pearson_correlation": 0.8196762646774439,
+        "count_zero_volume_positive_rows": 0,
+        "count_positive_volume_zero_rows": 0
+      }
+    },
+    "bar30m": {
+      "deal_number": {
+        "rows": 8192,
+        "finite_rows": 8192,
+        "zero_rows": 0,
+        "negative_rows": 0,
+        "noninteger_rows": 0,
+        "quantiles": {
+          "0": 26.0,
+          "0.01": 97.0,
+          "0.5": 1200.5,
+          "0.99": 17070.240000000005,
+          "1": 77710.0
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 1024,
+        "stock_days_without_finite_values": 0
+      },
+      "pre_close": {
+        "rows": 8192,
+        "finite_rows": 8192,
+        "zero_rows": 0,
+        "negative_rows": 0,
+        "noninteger_rows": 8048,
+        "quantiles": {
+          "0": 1.8799999952316284,
+          "0.01": 2.4000000953674316,
+          "0.5": 12.565000057220459,
+          "0.99": 145.8000030517578,
+          "1": 168.5500030517578
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 0,
+        "stock_days_without_finite_values": 0
+      },
+      "adjust_factor": {
+        "rows": 8192,
+        "finite_rows": 8192,
+        "zero_rows": 0,
+        "negative_rows": 0,
+        "noninteger_rows": 8160,
+        "quantiles": {
+          "0": 1.0,
+          "0.01": 1.0015920400619507,
+          "0.5": 4.304968595504761,
+          "0.99": 140.91871643066406,
+          "1": 535.0809936523438
+        },
+        "stock_days": 1024,
+        "stock_days_with_multiple_values": 0,
+        "stock_days_without_finite_values": 0
+      },
+      "deal_number_vs_volume": {
+        "valid_rows": 8192,
+        "log1p_pearson_correlation": 0.8064721272028497,
+        "count_zero_volume_positive_rows": 0,
+        "count_positive_volume_zero_rows": 0
+      }
+    }
+  },
+  "samples": [
+    {
+      "month": "2020-06",
+      "frequency": "bar1m",
+      "rows": 61440,
+      "stock_selection_sha256": "ef8a9a1a31e7552006a064595d069d8ffdd2a5cdb601579791350567cb1ea100",
+      "warmup_date": "2020-06-01",
+      "dates": [
+        "2020-06-02",
+        "2020-06-03",
+        "2020-06-04",
+        "2020-06-05"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 61440,
+          "finite_rows": 61440,
+          "zero_rows": 1617,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 0.0,
+            "0.01": 0.0,
+            "0.5": 27.0,
+            "0.99": 613.0,
+            "1": 5252.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 61440,
+          "finite_rows": 61440,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 60240,
+          "quantiles": {
+            "0": 1.9299999475479126,
+            "0.01": 1.9900000095367432,
+            "0.5": 9.335000038146973,
+            "0.99": 122.30000305175781,
+            "1": 127.97000122070312
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 61440,
+          "finite_rows": 61440,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 61440,
+          "quantiles": {
+            "0": 1.0034990310668945,
+            "0.01": 1.0034990310668945,
+            "0.5": 4.527432918548584,
+            "0.99": 140.91871643066406,
+            "1": 140.91871643066406
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 61440,
+          "log1p_pearson_correlation": 0.8239789155590054,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 8,
+          "adjust_factor_changes": 8,
+          "both": 8,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 61440,
+          "exact_equal_pairs": 59520,
+          "tolerance_equal_pairs": 59520,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 61184,
+          "exact_equal_pairs": 3313,
+          "tolerance_equal_pairs": 3313,
+          "exact_equal_fraction": 0.05414814330543933,
+          "tolerance_equal_fraction": 0.05414814330543933
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 61440,
+          "exact_equal_pairs": 59520,
+          "tolerance_equal_pairs": 59520,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2020-06.parquet",
+        "bytes": 490655979,
+        "expected_full_sha256_from_parent_manifest": "aafb2db5db95ada92c1a448b8836c5f05fe70d648737abca8cfba18090ffbb2b",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "08b9ea60bea9855b29b511da8f84a3d0e4196a82a331be5069710c607a917457"
+      }
+    },
+    {
+      "month": "2020-06",
+      "frequency": "bar5m",
+      "rows": 12288,
+      "stock_selection_sha256": "ef8a9a1a31e7552006a064595d069d8ffdd2a5cdb601579791350567cb1ea100",
+      "warmup_date": "2020-06-01",
+      "dates": [
+        "2020-06-02",
+        "2020-06-03",
+        "2020-06-04",
+        "2020-06-05"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 5,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 0.0,
+            "0.01": 8.0,
+            "0.5": 148.0,
+            "0.99": 3049.2599999999984,
+            "1": 14462.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12048,
+          "quantiles": {
+            "0": 1.9299999475479126,
+            "0.01": 1.9900000095367432,
+            "0.5": 9.335000038146973,
+            "0.99": 122.30000305175781,
+            "1": 127.97000122070312
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12288,
+          "quantiles": {
+            "0": 1.0034990310668945,
+            "0.01": 1.0034990310668945,
+            "0.5": 4.527432918548584,
+            "0.99": 140.91871643066406,
+            "1": 140.91871643066406
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 12288,
+          "log1p_pearson_correlation": 0.8161116402722929,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 8,
+          "adjust_factor_changes": 8,
+          "both": 8,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 11904,
+          "tolerance_equal_pairs": 11904,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 12032,
+          "exact_equal_pairs": 672,
+          "tolerance_equal_pairs": 672,
+          "exact_equal_fraction": 0.05585106382978723,
+          "tolerance_equal_fraction": 0.05585106382978723
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 11904,
+          "tolerance_equal_pairs": 11904,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2020-06.parquet",
+        "bytes": 105689163,
+        "expected_full_sha256_from_parent_manifest": "64e0c8c882ec3313cd1ebecec51a91ab90f060d1a8baf31cbd1b9c8cee0959f4",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "b3bca52620edddfb63889acc8cca377451c78b50fbb71c3a879acbcce1f27847"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 12288,
+        "complete_one_minute_intervals": 12288,
+        "deal_number": {
+          "valid_intervals": 12288,
+          "exact_equal_intervals": 12288,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 12288,
+          "exact_equal_intervals": 12288,
+          "max_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "month": "2020-06",
+      "frequency": "bar30m",
+      "rows": 2048,
+      "stock_selection_sha256": "ef8a9a1a31e7552006a064595d069d8ffdd2a5cdb601579791350567cb1ea100",
+      "warmup_date": "2020-06-01",
+      "dates": [
+        "2020-06-02",
+        "2020-06-03",
+        "2020-06-04",
+        "2020-06-05"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 26.0,
+            "0.01": 82.47,
+            "0.5": 980.0,
+            "0.99": 17326.739999999994,
+            "1": 46161.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2008,
+          "quantiles": {
+            "0": 1.9299999475479126,
+            "0.01": 1.9900000095367432,
+            "0.5": 9.335000038146973,
+            "0.99": 122.30000305175781,
+            "1": 127.97000122070312
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2048,
+          "quantiles": {
+            "0": 1.0034990310668945,
+            "0.01": 1.0034990310668945,
+            "0.5": 4.527432918548584,
+            "0.99": 140.91871643066406,
+            "1": 140.91871643066406
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 2048,
+          "log1p_pearson_correlation": 0.8045567111601117,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 8,
+          "adjust_factor_changes": 8,
+          "both": 8,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 1984,
+          "tolerance_equal_pairs": 1984,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 1792,
+          "exact_equal_pairs": 107,
+          "tolerance_equal_pairs": 107,
+          "exact_equal_fraction": 0.05970982142857143,
+          "tolerance_equal_fraction": 0.05970982142857143
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 1984,
+          "tolerance_equal_pairs": 1984,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2020-06.parquet",
+        "bytes": 20341726,
+        "expected_full_sha256_from_parent_manifest": "d531b235e509c1bb9d7f2ec8eecaacc93124f2a89978750d851e77616c04f89c",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "c1fe30f6d6c1e5164ff7338c47ad042db0d30303fc0efd94a87de4d8238158fc"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 2048,
+        "complete_one_minute_intervals": 2048,
+        "deal_number": {
+          "valid_intervals": 2048,
+          "exact_equal_intervals": 2048,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 2048,
+          "exact_equal_intervals": 2048,
+          "max_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "month": "2021-06",
+      "frequency": "bar1m",
+      "rows": 61439,
+      "stock_selection_sha256": "30f5514f2d3878edfdff62a19f66dec8daf23fac75be2f219c7385b0ab9daeed",
+      "warmup_date": "2021-06-01",
+      "dates": [
+        "2021-06-02",
+        "2021-06-03",
+        "2021-06-04",
+        "2021-06-07"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 61439,
+          "finite_rows": 61439,
+          "zero_rows": 1700,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 0.0,
+            "0.01": 0.0,
+            "0.5": 20.0,
+            "0.99": 349.0,
+            "1": 3413.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 61439,
+          "finite_rows": 61439,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 59999,
+          "quantiles": {
+            "0": 1.8799999952316284,
+            "0.01": 1.899999976158142,
+            "0.5": 13.800000190734863,
+            "0.99": 145.8000030517578,
+            "1": 149.27000427246094
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 61439,
+          "finite_rows": 61439,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 61439,
+          "quantiles": {
+            "0": 1.0041170120239258,
+            "0.01": 1.0041170120239258,
+            "0.5": 3.0672779083251953,
+            "0.99": 290.4032287597656,
+            "1": 290.4032287597656
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 61439,
+          "log1p_pearson_correlation": 0.8097657485183006,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 8,
+          "adjust_factor_changes": 8,
+          "both": 8,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 61439,
+          "exact_equal_pairs": 59519,
+          "tolerance_equal_pairs": 59519,
+          "exact_equal_fraction": 0.9687494913654193,
+          "tolerance_equal_fraction": 0.9687494913654193
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 61182,
+          "exact_equal_pairs": 2598,
+          "tolerance_equal_pairs": 2598,
+          "exact_equal_fraction": 0.04246346964793567,
+          "tolerance_equal_fraction": 0.04246346964793567
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 61439,
+          "exact_equal_pairs": 59519,
+          "tolerance_equal_pairs": 59519,
+          "exact_equal_fraction": 0.9687494913654193,
+          "tolerance_equal_fraction": 0.9687494913654193
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2021-06.parquet",
+        "bytes": 552855027,
+        "expected_full_sha256_from_parent_manifest": "af1eac4dfa3dfef656015571b00a0edfb464ae64421f712d5c3f68d5e0da8e9c",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "7ac096ed255ed7dcbc485f17272ee86ebd348af5d7adcd0f65c68fe392cc42cf"
+      }
+    },
+    {
+      "month": "2021-06",
+      "frequency": "bar5m",
+      "rows": 12288,
+      "stock_selection_sha256": "30f5514f2d3878edfdff62a19f66dec8daf23fac75be2f219c7385b0ab9daeed",
+      "warmup_date": "2021-06-01",
+      "dates": [
+        "2021-06-02",
+        "2021-06-03",
+        "2021-06-04",
+        "2021-06-07"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 1,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 0.0,
+            "0.01": 8.0,
+            "0.5": 113.0,
+            "0.99": 1595.3899999999976,
+            "1": 7517.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12000,
+          "quantiles": {
+            "0": 1.8799999952316284,
+            "0.01": 1.899999976158142,
+            "0.5": 13.800000190734863,
+            "0.99": 145.8000030517578,
+            "1": 149.27000427246094
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12288,
+          "quantiles": {
+            "0": 1.0041170120239258,
+            "0.01": 1.0041170120239258,
+            "0.5": 3.3962124586105347,
+            "0.99": 290.4032287597656,
+            "1": 290.4032287597656
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 12288,
+          "log1p_pearson_correlation": 0.7672064666967303,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 8,
+          "adjust_factor_changes": 8,
+          "both": 8,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 11904,
+          "tolerance_equal_pairs": 11904,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 12032,
+          "exact_equal_pairs": 492,
+          "tolerance_equal_pairs": 492,
+          "exact_equal_fraction": 0.04089095744680851,
+          "tolerance_equal_fraction": 0.04089095744680851
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 11904,
+          "tolerance_equal_pairs": 11904,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2021-06.parquet",
+        "bytes": 122195363,
+        "expected_full_sha256_from_parent_manifest": "da919107b5c43d015185a3937df42a8638edca76db8033b7ac575f0b322012c1",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "6d63ca7b06478dc5f86d7d9f80f1aa1d91b0216ee61e27e87e014e9db0bd8108"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 12288,
+        "complete_one_minute_intervals": 12287,
+        "deal_number": {
+          "valid_intervals": 12287,
+          "exact_equal_intervals": 12287,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 12287,
+          "exact_equal_intervals": 12287,
+          "max_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "month": "2021-06",
+      "frequency": "bar30m",
+      "rows": 2048,
+      "stock_selection_sha256": "30f5514f2d3878edfdff62a19f66dec8daf23fac75be2f219c7385b0ab9daeed",
+      "warmup_date": "2021-06-01",
+      "dates": [
+        "2021-06-02",
+        "2021-06-03",
+        "2021-06-04",
+        "2021-06-07"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 44.0,
+            "0.01": 86.88,
+            "0.5": 716.0,
+            "0.99": 9043.759999999995,
+            "1": 23351.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2000,
+          "quantiles": {
+            "0": 1.8799999952316284,
+            "0.01": 1.899999976158142,
+            "0.5": 13.800000190734863,
+            "0.99": 145.8000030517578,
+            "1": 149.27000427246094
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2048,
+          "quantiles": {
+            "0": 1.0041170120239258,
+            "0.01": 1.0041170120239258,
+            "0.5": 3.3962124586105347,
+            "0.99": 290.4032287597656,
+            "1": 290.4032287597656
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 2048,
+          "log1p_pearson_correlation": 0.7342314287451307,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 8,
+          "adjust_factor_changes": 8,
+          "both": 8,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 1984,
+          "tolerance_equal_pairs": 1984,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 1792,
+          "exact_equal_pairs": 74,
+          "tolerance_equal_pairs": 74,
+          "exact_equal_fraction": 0.041294642857142856,
+          "tolerance_equal_fraction": 0.041294642857142856
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 1984,
+          "tolerance_equal_pairs": 1984,
+          "exact_equal_fraction": 0.96875,
+          "tolerance_equal_fraction": 0.96875
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2021-06.parquet",
+        "bytes": 23062344,
+        "expected_full_sha256_from_parent_manifest": "c96c1fbaffd97b3de7684499aa72c9b4a136dea30dc39a4b54b209f85d0bde82",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "6365292b4e8f0b4fe6f9f63cf64b76237e93f114388a1b05e4ae697ddb012806"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 2048,
+        "complete_one_minute_intervals": 2047,
+        "deal_number": {
+          "valid_intervals": 2047,
+          "exact_equal_intervals": 2047,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 2047,
+          "exact_equal_intervals": 2047,
+          "max_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "month": "2022-06",
+      "frequency": "bar1m",
+      "rows": 61438,
+      "stock_selection_sha256": "e20cabd5a529db77cd6a3563e444a6d1647e2e5e8aa474497b1ecab20d02f829",
+      "warmup_date": "2022-06-01",
+      "dates": [
+        "2022-06-02",
+        "2022-06-06",
+        "2022-06-07",
+        "2022-06-08"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 61438,
+          "finite_rows": 61438,
+          "zero_rows": 863,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 0.0,
+            "0.01": 0.0,
+            "0.5": 42.0,
+            "0.99": 740.0,
+            "1": 7698.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 61438,
+          "finite_rows": 61438,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 60478,
+          "quantiles": {
+            "0": 2.390000104904175,
+            "0.01": 2.4000000953674316,
+            "0.5": 14.920000076293945,
+            "0.99": 157.60000610351562,
+            "1": 168.5500030517578
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 61438,
+          "finite_rows": 61438,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 60478,
+          "quantiles": {
+            "0": 1.0,
+            "0.01": 1.0,
+            "0.5": 3.0471980571746826,
+            "0.99": 535.0809936523438,
+            "1": 535.0809936523438
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 61438,
+          "log1p_pearson_correlation": 0.882764347836627,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 4,
+          "adjust_factor_changes": 4,
+          "both": 4,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 61438,
+          "exact_equal_pairs": 60478,
+          "tolerance_equal_pairs": 60478,
+          "exact_equal_fraction": 0.9843744913571405,
+          "tolerance_equal_fraction": 0.9843744913571405
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 61180,
+          "exact_equal_pairs": 1551,
+          "tolerance_equal_pairs": 1551,
+          "exact_equal_fraction": 0.02535142203334423,
+          "tolerance_equal_fraction": 0.02535142203334423
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 61438,
+          "exact_equal_pairs": 60478,
+          "tolerance_equal_pairs": 60478,
+          "exact_equal_fraction": 0.9843744913571405,
+          "tolerance_equal_fraction": 0.9843744913571405
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2022-06.parquet",
+        "bytes": 592206488,
+        "expected_full_sha256_from_parent_manifest": "a30c92e9d05745818b48e51f5d7b7925cbb6fdbdc833aa8c8a455f58015745f4",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "f00ebc4710825e0156cf0d9215baebbcfc22e0836a500c7ddf553f9402671742"
+      }
+    },
+    {
+      "month": "2022-06",
+      "frequency": "bar5m",
+      "rows": 12288,
+      "stock_selection_sha256": "e20cabd5a529db77cd6a3563e444a6d1647e2e5e8aa474497b1ecab20d02f829",
+      "warmup_date": "2022-06-01",
+      "dates": [
+        "2022-06-02",
+        "2022-06-06",
+        "2022-06-07",
+        "2022-06-08"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 3.0,
+            "0.01": 19.0,
+            "0.5": 242.0,
+            "0.99": 3496.519999999997,
+            "1": 22256.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12096,
+          "quantiles": {
+            "0": 2.390000104904175,
+            "0.01": 2.4000000953674316,
+            "0.5": 14.985000133514404,
+            "0.99": 157.60000610351562,
+            "1": 168.5500030517578
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12096,
+          "quantiles": {
+            "0": 1.0,
+            "0.01": 1.0,
+            "0.5": 3.039170980453491,
+            "0.99": 535.0809936523438,
+            "1": 535.0809936523438
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 12288,
+          "log1p_pearson_correlation": 0.8971836934128883,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 4,
+          "adjust_factor_changes": 4,
+          "both": 4,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 12096,
+          "tolerance_equal_pairs": 12096,
+          "exact_equal_fraction": 0.984375,
+          "tolerance_equal_fraction": 0.984375
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 12032,
+          "exact_equal_pairs": 293,
+          "tolerance_equal_pairs": 293,
+          "exact_equal_fraction": 0.024351728723404256,
+          "tolerance_equal_fraction": 0.024351728723404256
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 12096,
+          "tolerance_equal_pairs": 12096,
+          "exact_equal_fraction": 0.984375,
+          "tolerance_equal_fraction": 0.984375
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2022-06.parquet",
+        "bytes": 128502047,
+        "expected_full_sha256_from_parent_manifest": "d55319cb43241ee88e3cc238cbceae5e0b6270bf971d6d534dde795653bb3e67",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "938695f40730ba99eaeaec7e18869ecb785093dde4c247538062dec0e98fce97"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 12288,
+        "complete_one_minute_intervals": 12286,
+        "deal_number": {
+          "valid_intervals": 12286,
+          "exact_equal_intervals": 12286,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 12286,
+          "exact_equal_intervals": 12286,
+          "max_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "month": "2022-06",
+      "frequency": "bar30m",
+      "rows": 2048,
+      "stock_selection_sha256": "e20cabd5a529db77cd6a3563e444a6d1647e2e5e8aa474497b1ecab20d02f829",
+      "warmup_date": "2022-06-01",
+      "dates": [
+        "2022-06-02",
+        "2022-06-06",
+        "2022-06-07",
+        "2022-06-08"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 85.0,
+            "0.01": 194.41,
+            "0.5": 1544.0,
+            "0.99": 19398.809999999994,
+            "1": 77710.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2016,
+          "quantiles": {
+            "0": 2.390000104904175,
+            "0.01": 2.4000000953674316,
+            "0.5": 14.985000133514404,
+            "0.99": 157.60000610351562,
+            "1": 168.5500030517578
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2016,
+          "quantiles": {
+            "0": 1.0,
+            "0.01": 1.0,
+            "0.5": 3.039170980453491,
+            "0.99": 535.0809936523438,
+            "1": 535.0809936523438
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 2048,
+          "log1p_pearson_correlation": 0.9063778059409747,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 4,
+          "adjust_factor_changes": 4,
+          "both": 4,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 2016,
+          "tolerance_equal_pairs": 2016,
+          "exact_equal_fraction": 0.984375,
+          "tolerance_equal_fraction": 0.984375
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 1792,
+          "exact_equal_pairs": 44,
+          "tolerance_equal_pairs": 44,
+          "exact_equal_fraction": 0.024553571428571428,
+          "tolerance_equal_fraction": 0.024553571428571428
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 2016,
+          "tolerance_equal_pairs": 2016,
+          "exact_equal_fraction": 0.984375,
+          "tolerance_equal_fraction": 0.984375
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2022-06.parquet",
+        "bytes": 24223350,
+        "expected_full_sha256_from_parent_manifest": "58f01f3805808e1808e93e2487ac7abbd9a19008cc43b17f4c81c1b206dee6d2",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "8fd5eaad7374ad86d5de5f5fc18bb67cee1bc822d9b6c5c5d769abe38aa8ae35"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 2048,
+        "complete_one_minute_intervals": 2046,
+        "deal_number": {
+          "valid_intervals": 2046,
+          "exact_equal_intervals": 2046,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 2046,
+          "exact_equal_intervals": 2046,
+          "max_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "month": "2023-06",
+      "frequency": "bar1m",
+      "rows": 61440,
+      "stock_selection_sha256": "33a6cdfebf58a148b390d26039e2e5c8345c85e0df79f900cd6c2f94ce770e38",
+      "warmup_date": "2023-06-01",
+      "dates": [
+        "2023-06-02",
+        "2023-06-05",
+        "2023-06-06",
+        "2023-06-07"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 61440,
+          "finite_rows": 61440,
+          "zero_rows": 876,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 0.0,
+            "0.01": 0.0,
+            "0.5": 45.0,
+            "0.99": 750.0,
+            "1": 5742.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 61440,
+          "finite_rows": 61440,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 60720,
+          "quantiles": {
+            "0": 2.930000066757202,
+            "0.01": 2.9700000286102295,
+            "0.5": 13.180000305175781,
+            "0.99": 96.22000122070312,
+            "1": 98.54000091552734
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 61440,
+          "finite_rows": 61440,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 61440,
+          "quantiles": {
+            "0": 1.0007460117340088,
+            "0.01": 1.0015920400619507,
+            "0.5": 5.000641584396362,
+            "0.99": 24.95825958251953,
+            "1": 24.95825958251953
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 61440,
+          "log1p_pearson_correlation": 0.8834836286376084,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 6,
+          "adjust_factor_changes": 6,
+          "both": 6,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 61440,
+          "exact_equal_pairs": 60000,
+          "tolerance_equal_pairs": 60000,
+          "exact_equal_fraction": 0.9765625,
+          "tolerance_equal_fraction": 0.9765625
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 61184,
+          "exact_equal_pairs": 1721,
+          "tolerance_equal_pairs": 1721,
+          "exact_equal_fraction": 0.02812826882845188,
+          "tolerance_equal_fraction": 0.02812826882845188
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 61440,
+          "exact_equal_pairs": 60000,
+          "tolerance_equal_pairs": 60000,
+          "exact_equal_fraction": 0.9765625,
+          "tolerance_equal_fraction": 0.9765625
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar1m/2023-06.parquet",
+        "bytes": 575315461,
+        "expected_full_sha256_from_parent_manifest": "c810707b93d39a56347d5abf8da1a9a76021bb9093e9291a377d4d7b4306cf68",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "e8027ca06997d23323ded1e8285bcb9c79c223a18c2383653c39cf071b5f8bc3"
+      }
+    },
+    {
+      "month": "2023-06",
+      "frequency": "bar5m",
+      "rows": 12288,
+      "stock_selection_sha256": "33a6cdfebf58a148b390d26039e2e5c8345c85e0df79f900cd6c2f94ce770e38",
+      "warmup_date": "2023-06-01",
+      "dates": [
+        "2023-06-02",
+        "2023-06-05",
+        "2023-06-06",
+        "2023-06-07"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 1.0,
+            "0.01": 17.0,
+            "0.5": 258.0,
+            "0.99": 3527.3899999999976,
+            "1": 18203.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12144,
+          "quantiles": {
+            "0": 2.930000066757202,
+            "0.01": 2.9700000286102295,
+            "0.5": 13.180000305175781,
+            "0.99": 96.22000122070312,
+            "1": 98.54000091552734
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 12288,
+          "finite_rows": 12288,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 12288,
+          "quantiles": {
+            "0": 1.0007460117340088,
+            "0.01": 1.0015920400619507,
+            "0.5": 5.000641584396362,
+            "0.99": 24.95825958251953,
+            "1": 24.95825958251953
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 12288,
+          "log1p_pearson_correlation": 0.8952237645193094,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 6,
+          "adjust_factor_changes": 6,
+          "both": 6,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 12000,
+          "tolerance_equal_pairs": 12000,
+          "exact_equal_fraction": 0.9765625,
+          "tolerance_equal_fraction": 0.9765625
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 12032,
+          "exact_equal_pairs": 327,
+          "tolerance_equal_pairs": 327,
+          "exact_equal_fraction": 0.02717752659574468,
+          "tolerance_equal_fraction": 0.02717752659574468
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 12288,
+          "exact_equal_pairs": 12000,
+          "tolerance_equal_pairs": 12000,
+          "exact_equal_fraction": 0.9765625,
+          "tolerance_equal_fraction": 0.9765625
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar5m/2023-06.parquet",
+        "bytes": 122986340,
+        "expected_full_sha256_from_parent_manifest": "15e36b74ef7a78dccf13895c9b79738aac6236f383f07e88950f364a58086b81",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "604c34b09bdcdea97292d10b113f01c03da824e3a9ae3cf8cd15fc54317dd6cb"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 12288,
+        "complete_one_minute_intervals": 12288,
+        "deal_number": {
+          "valid_intervals": 12288,
+          "exact_equal_intervals": 12288,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 12288,
+          "exact_equal_intervals": 12288,
+          "max_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "month": "2023-06",
+      "frequency": "bar30m",
+      "rows": 2048,
+      "stock_selection_sha256": "33a6cdfebf58a148b390d26039e2e5c8345c85e0df79f900cd6c2f94ce770e38",
+      "warmup_date": "2023-06-01",
+      "dates": [
+        "2023-06-02",
+        "2023-06-05",
+        "2023-06-06",
+        "2023-06-07"
+      ],
+      "quality": {
+        "deal_number": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 0,
+          "quantiles": {
+            "0": 64.0,
+            "0.01": 148.35,
+            "0.5": 1625.0,
+            "0.99": 19900.02999999998,
+            "1": 53524.0
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 256,
+          "stock_days_without_finite_values": 0
+        },
+        "pre_close": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2024,
+          "quantiles": {
+            "0": 2.930000066757202,
+            "0.01": 2.9700000286102295,
+            "0.5": 13.180000305175781,
+            "0.99": 96.22000122070312,
+            "1": 98.54000091552734
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "adjust_factor": {
+          "rows": 2048,
+          "finite_rows": 2048,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "noninteger_rows": 2048,
+          "quantiles": {
+            "0": 1.0007460117340088,
+            "0.01": 1.0015920400619507,
+            "0.5": 5.000641584396362,
+            "0.99": 24.95825958251953,
+            "1": 24.95825958251953
+          },
+          "stock_days": 256,
+          "stock_days_with_multiple_values": 0,
+          "stock_days_without_finite_values": 0
+        },
+        "deal_number_vs_volume": {
+          "valid_rows": 2048,
+          "log1p_pearson_correlation": 0.8969128339484461,
+          "count_zero_volume_positive_rows": 0,
+          "count_positive_volume_zero_rows": 0
+        }
+      },
+      "predecessors": {
+        "day_change_association": {
+          "stock_days_with_valid_comparison": 256,
+          "pre_close_differs_from_previous_close": 6,
+          "adjust_factor_changes": 6,
+          "both": 6,
+          "pre_close_differs_without_factor_change": 0,
+          "factor_changes_without_pre_close_difference": 0
+        },
+        "pre_close_vs_previous_observed_day_close": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 2000,
+          "tolerance_equal_pairs": 2000,
+          "exact_equal_fraction": 0.9765625,
+          "tolerance_equal_fraction": 0.9765625
+        },
+        "pre_close_vs_previous_adjacent_same_day_bar_close": {
+          "valid_pairs": 1792,
+          "exact_equal_pairs": 54,
+          "tolerance_equal_pairs": 54,
+          "exact_equal_fraction": 0.030133928571428572,
+          "tolerance_equal_fraction": 0.030133928571428572
+        },
+        "adjust_factor_vs_previous_observed_day_factor": {
+          "valid_pairs": 2048,
+          "exact_equal_pairs": 2000,
+          "tolerance_equal_pairs": 2000,
+          "exact_equal_fraction": 0.9765625,
+          "tolerance_equal_fraction": 0.9765625
+        }
+      },
+      "source": {
+        "path": "data/cpt_jyc_2026_stock_bar30m/2023-06.parquet",
+        "bytes": 23166377,
+        "expected_full_sha256_from_parent_manifest": "44b816bce694ce5fa2c75612f56b2e4918bbb444d834b79c288cb32e1587102c",
+        "full_file_sha256_recomputed": false,
+        "sample_content_sha256": "3acd58f2fdc7a7a4c42c1285d0f8f710a186ff18cc3842bd196e11e6783e1420"
+      },
+      "coarse_aggregation": {
+        "coarse_rows": 2048,
+        "complete_one_minute_intervals": 2048,
+        "deal_number": {
+          "valid_intervals": 2048,
+          "exact_equal_intervals": 2048,
+          "max_absolute_difference": 0.0
+        },
+        "volume": {
+          "valid_intervals": 2048,
+          "exact_equal_intervals": 2048,
+          "max_absolute_difference": 0.0
+        }
+      }
+    }
+  ],
+  "equality_tolerance": {
+    "rtol": 1e-06,
+    "atol": 1e-08
+  },
+  "limitations": [
+    "只描述固定训练样本的输入属性，未测收益增益；不能以成交量相关性代替收益IC。",
+    "前日对照使用各频率上一有记录日最后非空close，不代表官方pre_close定义；不据此自动复权或更改原价格。",
+    "聚合仅检查完整规则交易槽位；不外推盘前、缺失Bar或盘口聚合规则。",
+    "字段字典保持官方104条不变；instrument_id只作为元数据检查，不把ID数值顺序当连续信号。",
+    "deal_number来自已闭合行情Bar；不读取标签表未来窗口的num_trades。"
+  ]
+}

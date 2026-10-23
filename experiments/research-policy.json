@@ -106,14 +106,15 @@
     "latest_candidate": "v2601-raw-market-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "三个独立机制已实现并发布：价格历史读取、同日后续标签监督、原始市场条件。v2601保留全部父输入和完整GRU，当前成员含无标签股票，原始分支在非线性前受市场条件调制；同日64目标股票日多次更新，日期衰减用全训练日历均值归一化。接下来依据完整正式结果选择后续机制，不把辅助损失、门控变化或速度改进当作IC目标达成。",
+    "next_design_hypothesis": "v2401小幅晋级后继续独立机制：v2501同日后续收益监督、v2601原始市场条件已发布；下一设计优先检查遗漏的成交笔数和日级价格参考，训练样本已确认字段有效性及参考变化关系，但未证明收益增益。不扫描相邻参数、不用未完成候选模块默认堆叠。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
     "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
     "next_input_normalization_note": "docs/causal-normalization-research-20261023.md",
     "next_market_conditioning_note": "docs/early-market-context-research-20261023.md",
     "next_price_path_note": "docs/price-path-research-20261023.md",
     "candidate_preparation_policy": "2026-10-23用户指出候选不足：容量规则内主动准备机制独立的后续候选，不因一个ready版本尚无结果就普遍等待；不为填队列制造微调，draft计入积压，正式训练仍独占交由调度session。",
-    "next_future_return_note": "docs/dense-return-supervision-research-20261023.md"
+    "next_future_return_note": "docs/dense-return-supervision-research-20261023.md",
+    "next_omitted_input_note": "docs/unused-market-fields-research-20261023.md"
   },
   "legacy_runs": [
     {
