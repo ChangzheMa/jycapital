@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "solution_id": "v2401",
+  "status": "passed",
+  "checked_at": "2026-10-23T18:14:45+08:00",
+  "scope": "17项CPU合成检查：父输入保持、因果价格历史读取、fast/参考、缓存/原生一致、价格中心复用与重建、精确恢复。",
+  "formal_training_performed": false,
+  "gpu_default_batch_pending": true,
+  "unique_tests_passed": 17,
+  "validation_runs": [
+    {
+      "scope": "完整test_v2401*.py集合",
+      "tests": 17,
+      "seconds": 26.309
+    }
+  ],
+  "checks": [
+    "test_defaults_and_parent_input_contract",
+    "test_interrupted_group_cursor_restores_raw_ema_optimizer_and_rng",
+    "test_shared_heads_match_reference_and_are_causal",
+    "test_text_roundtrip_preserves_memory_and_prediction",
+    "test_zero_memory_preserves_parent_parameters_and_predictions",
+    "test_duplicate_raw_positions_are_rejected_before_publication",
+    "test_existing_anchor_reuse_reads_no_quantity_and_rejects_mutation",
+    "test_modified_payload_and_parameters_are_rejected",
+    "test_no_label_build_compact_and_stream_match_native_and_preserve_parent",
+    "test_prefetch_order_and_rng_match_direct_batches",
+    "test_grouped_monthly_and_resident_full_synthetic_entrypoints",
+    "test_cpu_bfloat16_gradients_are_finite",
+    "test_every_query_excludes_future_raw_and_anchor_gradients",
+    "test_missing_centers_empty_history_and_int32_lengths",
+    "test_price_translation_and_query_batching_preserve_memory",
+    "test_uniform_attention_has_hand_computable_relative_price_value",
+    "test_intraday_subrequest_keeps_earlier_exited_stock_context"
+  ],
+  "test_files": {
+    "tests/test_v2401.py": "274f12bb7c5ea62873044c25bcf7aa115adcc99c441dcc9af8bca22ac20e1e11",
+    "tests/test_v2401_cache.py": "3b97eb1730145e2ec963e79cdf72bc3795495a4e8c0d3d0989d2872f16e5a0ff",
+    "tests/test_v2401_entrypoint.py": "5c2cd884f687748682349b9cf3bf13ce91015cc41d5de15810d988905e443eb1",
+    "tests/test_v2401_memory.py": "d78b6454be8c24dc422deb91bf51eadd8c8e0afc5fdc3d756aea4db9c28fa7ae",
+    "tests/test_v2401_predict.py": "dc129ca42925ac460a405b1085a1272b1db0482c2708f78e1d6dffd5e195f2a6"
+  },
+  "cpu_preflight": {
+    "solution_id": "v2401",
+    "checked_at": "2026-10-23T18:12:38+08:00",
+    "status": "passed",
+    "scope": "synthetic_device_preflight",
+    "device": "cpu",
+    "train_batch": 2,
+    "inference_batch": 4,
+    "batch_unit": "stock_day",
+    "train_target_slots": 16,
+    "inference_output_slots": 32,
+    "parameters": 2641743,
+    "step_seconds": [
+      0.3114419999765232,
+      0.28378209995571524,
+      0.2835534999612719
+    ],
+    "cuda_peak_allocated_bytes": null,
+    "formal_training_performed": false
+  },
+  "cpu_preflight_record": "outputs/checks/continuous-research/v2401-cpu-preflight.json",
+  "input_cache_compatibility": "experiments/v2401-input-cache-compatibility.json",
+  "model_checks": {
+    "parent_75_channels_preserved": true,
+    "network_channels": 77,
+    "parent_state_and_predictions_exact_when_memory_disabled": true,
+    "future_gradients_zero_all_clocks": true,
+    "noninitial_price_bias_tested": true,
+    "last_valid_anchor_is_query_causal": true,
+    "missing_anchor_and_empty_history_handled": true,
+    "raw_ema_optimizer_rng_resume_exact": true,
+    "text_weights_exact": true,
+    "pure_numeric_inference_preparation_matches_frozen_parent_75_channels": true
+  },
+  "cache_checks": {
+    "synthetic_reused_anchor_has_zero_new_numeric_files": true,
+    "synthetic_reuse_reads_no_quantity_arrays": true,
+    "standalone_price_only_rebuild_matches_native": true,
+    "full_parent_values_and_overflow_preserved": true,
+    "resident_stream_native_equal": true,
+    "actual_full_arrays_loaded_by_research_session": false
+  },
+  "platform_check": {
+    "scope": "四个合成交易日、动态股票池、无自身统计股票及非初始历史读取参数；整日24行、部分9行。",
+    "fast_reference_and_partial_requests_match": true,
+    "rtol": 1e-05,
+    "atol": 2e-06,
+    "labels_or_exposure_queried": false
+  },
+  "limitations": [
+    "实现检查不构成IC增益证据。",
+    "GPU默认64/128股票日批量仍由训练session检查。",
+    "实际旧价格中心仅核对清单资格；正式加载器核验被引用数组。",
+    "没有执行真实全市场平台测速。"
+  ],
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/coordinate_inputs.py": "dbfa175490242cef9053e81dfc0671c7ae55697a7dc343f1c4c9f3c8c5bfd4ed",
+    "common/coordinate_resident.py": "2272c67ad3e30e928a63ccf3b45d0c7680d2023963f57f48998954055e81ba7c",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/geometry_evaluation_cache.py": "babdfa698055e35393d1f3bc74c6ccdf13fbb59f6b7b343b548be3b43e8eaef3",
+    "common/geometry_resident.py": "859a3e97246f60a1106a598981d6f72a237944a713e3afafdbab3fd7b6db60d0",
+    "common/price_geometry.py": "7cc91d1f829dead205df12254dd666950eb68d344e60589c024f2d7cd541eb7c",
+    "common/price_memory_evaluation_cache.py": "ffcf4c06bc13b4e3b761ffabd5e376f291e5ffa84f763d77c6f8db6fc5e59dbc",
+    "common/price_memory_inputs.py": "8431972dac0cd0a28258c94ed4b25b125ba5d0867284eec820ef585c60a538c4",
+    "common/price_memory_resident.py": "e2cf8ecb79f20b261a301c2836c5d73d73af5f819652d60c36320d8f8d47c23b",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v2401/config.json": "ff7c82c7f1abdfd31b84f07d2b47c00a0236594fefeefc8dac0318f126d8ffb0",
+    "solutions/v2401/model-config.json": "b884b12233343e267b73df8e04b1a8db0d796bc1e29dce7aba4235194f64d904",
+    "solutions/v2401/requirements-inference.txt": "1a99016e2590e59b2c1a9c7f7a6a7fd80703c558f9c53ec19742b48bbb2f75fc",
+    "solutions/v2401/requirements-training.txt": "fa2481cabb4c546fdfb30756b0e5d2a0aca27de74fcbc7a8dd10ce25db493ca1",
+    "solutions/v2401/requirements.txt": "d72c61e0ea921d0067586b0267ca1760ca4f72b0e4eebdb74ddc917150550a0d",
+    "solutions/v2401/v1601_data.py": "41b77fe6e9456428b10bd0bac17505b14a253f88faa5cb575aaf8cfbe9fa9992",
+    "solutions/v2401/v1601_schema.py": "c4546a9404da89b51c942bea9462e5b4def225238742d5db6af4929dbb1943c6",
+    "solutions/v2401/v2401_apply.py": "6c7d46b34008cc4dc89a3c3581e87656a2602a9e5b21cf3b47f91782c83a2ded",
+    "solutions/v2401/v2401_data.py": "1e7556e38b54d844656b11ebab479f0154395c90484246ff92a6b0f362e105bd",
+    "solutions/v2401/v2401_ema.py": "14c6527a38f204cd4bd434ca0c92c40837ef34dcb1c0bb93a16fa57c4e257ade",
+    "solutions/v2401/v2401_evaluation.py": "403898b6823c1ae4de5fbffa01977b4bdc660b8adb0d7ce87720d5253e9e2bb5",
+    "solutions/v2401/v2401_evaluation_cache.py": "b23af3ccc2be749835a3072931a2890c1438ac702cca11859f6780954a168148",
+    "solutions/v2401/v2401_fast.py": "8b4234b82134fc1b89b6232f49a635dbfe185da40798254683c900f46f646696",
+    "solutions/v2401/v2401_grouped.py": "f3876836b07e6546015fe7a83db9ce5905db9b0fff8aa5bcbbba30e07b433b1e",
+    "solutions/v2401/v2401_loss.py": "37c4c47b6868c9bdfd2aaf6f1a768780e428f7634caaea722b278d46eae67e92",
+    "solutions/v2401/v2401_model.py": "da54be1da1eecc7c119d0419bbc833cdb315d7e7a7337280249451b07177eba7",
+    "solutions/v2401/v2401_notebook.py": "36b8112a49aea6d8a4551c3819e341d856d66abf2805dd7ec54bc946e5775089",
+    "solutions/v2401/v2401_objective.py": "c440f798bb4370f908ad5546e2339a7c648185c7efd939a057a914e0fb7055dc",
+    "solutions/v2401/v2401_predict.py": "915ad9e13725e8a126485bead709852f0fd284528c3341c1f5d14bfed6645b56",
+    "solutions/v2401/v2401_predict_fast.py": "915ad9e13725e8a126485bead709852f0fd284528c3341c1f5d14bfed6645b56",
+    "solutions/v2401/v2401_predict_reference.py": "13cf6f270ff9caf0eb1d9ce3ad196c4678c36d520a288de353f4353dd8ac37ad",
+    "solutions/v2401/v2401_prepare.py": "8b260d54bb3357347256f864a471335524b915dbc481b412995879fb4d2d1b6f",
+    "solutions/v2401/v2401_preprocessing.py": "d5b5c2b1a4d03601b7a0d32f58450c008e9a479875e83757744dbf71ca90c7b3",
+    "solutions/v2401/v2401_price_memory.py": "906edaeff349b1dd4b3e66d7b43eccacb269c378f3d00e661cde8323fafaffa4",
+    "solutions/v2401/v2401_reproduce.py": "d355b4e9c239de7b1678fd14b0684e9df3ecd6c0ba758fda301a568ad78a5299",
+    "solutions/v2401/v2401_resident.py": "05b13c895f04c2806ea4955a2006760be8b0cbb59ab3ba745b55499077364625",
+    "solutions/v2401/v2401_schema.py": "0bd98b53b2266831033f0387936461d35a9fa34929315a44ac342ded39a91b22",
+    "solutions/v2401/v2401_targets.py": "93e5d28e1497b6cff5d60de7f0ef6d873a016d1c7af2e16fa782cfe911280192",
+    "solutions/v2401/v2401_temporal.py": "9909ddee83c3741357f28e8402f18dc7c1ba021a912b5691baabbfa74faa8912",
+    "solutions/v2401/v2401_text_artifact.py": "e07ce38622a8f774f62a505457cd8dd57167721cb6ee3b12e3a098abf63f38a5",
+    "solutions/v2401/v2401_train.py": "b848208c4cda4bfa44d2e44f5157b84b085cd4e913c2b7c8d59677822d5f5335"
+  },
+  "implementation_fixes": [
+    {
+      "reason": "平台纯数值准备移除训练缓存/psutil依赖；补充与冻结父75通道逐值核对。",
+      "research_variables_changed": false,
+      "formal_run_started_before_fix": false,
+      "complete_cpu_suite_and_preflight_repeated": true
+    }
+  ]
+}

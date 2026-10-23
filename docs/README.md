@@ -98,6 +98,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 原始状态直接预测 | [TabM／TabPack核验与新机制](direct-state-research-20261023.md)、[v2301 原始状态MLP](../solutions/v2301/README.md)、[缓存复用](../experiments/v2301-input-cache-compatibility.json)；近期观测及历史收盘槽位直接进入固定8成员共享参数网络，成本降低但双集IC下降，不导出 |
 | 早期市场条件的证据边界 | [已有交互实验覆盖与新近论文复核](early-market-context-research-20261023.md)；区分晚期交互、原始状态条件化及训练组织，不据论文最大增幅直接新增候选 |
 | 跨 Bar 价格路径与完整历史读取 | [新结果约束、价格尺度与因果查询机制](price-path-research-20261023.md)、[训练统计分析](../experiments/price-path-scale-audit-20261023.json)；保留父输入，区分坐标与收益证据，优先复用已有 FP32 价格中心 |
+| 价格历史读取候选 | [v2401：完整GRU历史与价格相对位置读取](../solutions/v2401/README.md)、[输入缓存兼容性](../experiments/v2401-input-cache-compatibility.json)；264.17万参数，17项CPU检查通过，已发布ready，正式效果待评估 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |

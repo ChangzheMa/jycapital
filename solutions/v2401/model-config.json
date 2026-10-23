@@ -1,0 +1,254 @@
+{
+  "solution_id": "v2401",
+  "parent_run_id": "v1601-price-geometry-s42",
+  "seed": 42,
+  "data": {
+    "window_bars": {
+      "bar1m": 480,
+      "bar5m": 288,
+      "bar30m": 168
+    },
+    "session": "regular_closed_bars",
+    "missing_slots": "preserve_regular_grid",
+    "time_encoding": "prediction_one_hot_only",
+    "normalization": "frozen_parent_geometry_with_fp32_price_memory",
+    "masking": {
+      "mode": "two_group_complete",
+      "groups": {
+        "non_book": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume",
+          "amount"
+        ],
+        "book": [
+          "ask_price1",
+          "ask_price2",
+          "ask_price3",
+          "ask_price4",
+          "ask_price5",
+          "bid_price1",
+          "bid_price2",
+          "bid_price3",
+          "bid_price4",
+          "bid_price5",
+          "ask_volume1",
+          "ask_volume2",
+          "ask_volume3",
+          "ask_volume4",
+          "ask_volume5",
+          "bid_volume1",
+          "bid_volume2",
+          "bid_volume3",
+          "bid_volume4",
+          "bid_volume5",
+          "ask_num_orders1",
+          "ask_num_orders2",
+          "ask_num_orders3",
+          "ask_num_orders4",
+          "ask_num_orders5",
+          "bid_num_orders1",
+          "bid_num_orders2",
+          "bid_num_orders3",
+          "bid_num_orders4",
+          "bid_num_orders5"
+        ]
+      },
+      "value_policy": "keep_finite_fill_missing_zero",
+      "bar_validity": "any_finite_value_in_separate_channel",
+      "drop_incomplete_samples": false
+    },
+    "prediction_clock": {
+      "mode": "one_hot",
+      "times": [
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "13:30",
+        "14:00",
+        "14:30"
+      ],
+      "unknown": "error"
+    },
+    "window_policy": "fixed_trading_days",
+    "trading_day_windows": {
+      "bar1m": {
+        "previous_days": 1,
+        "include_today": true
+      },
+      "bar5m": {
+        "previous_days": 5,
+        "include_today": true
+      },
+      "bar30m": {
+        "previous_days": 20,
+        "include_today": true
+      }
+    },
+    "calendar_source": "universe_trading_dates",
+    "future_slots": "zero_all_channels",
+    "insufficient_history": "left_zero_pad",
+    "input_precision": "price_memory_fp16_with_fp32_anchor",
+    "price_geometry": {
+      "version": "closed_bar_shared_price_center_v1",
+      "price_view": "100_log_price_minus_log_anchor",
+      "anchor": "same_closed_bar_close_else_first_valid_price",
+      "fallback_order": [
+        "close",
+        "open",
+        "high",
+        "low",
+        "ask_price1",
+        "ask_price2",
+        "ask_price3",
+        "ask_price4",
+        "ask_price5",
+        "bid_price1",
+        "bid_price2",
+        "bid_price3",
+        "bid_price4",
+        "bid_price5"
+      ],
+      "long_view": "unchanged_frozen_z",
+      "quantity_view": "unchanged_frozen_cross_section_c",
+      "invalid_price": "nonpositive_or_nonfinite_is_missing"
+    },
+    "price_memory": {
+      "version": "causal_price_memory_v1",
+      "parent_view": "unchanged_75_geometry_channels",
+      "stored_reference": "same_closed_bar_log_close_else_first_valid_price_fp32",
+      "query_reference": "latest_valid_closed_bar_at_query",
+      "distance": "100_log_anchor_difference",
+      "network_layout": "75_parent_1_log_anchor_1_anchor_available",
+      "network_channels": 77
+    }
+  },
+  "model": {
+    "family": "hierarchical_gru",
+    "input_channels": 77,
+    "hidden_dim": 192,
+    "fusion_hidden_dim": 384,
+    "prediction_clock_dim": 8,
+    "dropout": 0.1,
+    "intraday_layers": 1,
+    "interday_layers": 1,
+    "normalization": "none",
+    "pooling": "last_available_state",
+    "recurrent_precision": "float32",
+    "missing_history": "keep_slots_and_flags",
+    "frequency_attention_heads": 4,
+    "frequency_fusion_layers": 2,
+    "frequency_ff_multiplier": 2,
+    "residual_scale_initial": 0.1,
+    "output_heads": 2,
+    "input_projection": "raw_residual_structured_fields",
+    "book_level_dim": 24,
+    "book_mixer_hidden_dim": 16,
+    "book_ff_multiplier": 2,
+    "non_book_dim": 32,
+    "input_residual_scale_initial": 0.1,
+    "expert_count": 4,
+    "expert_hidden_dim": 128,
+    "router_hidden_dim": 64,
+    "price_memory": {
+      "width": 64,
+      "heads": 4,
+      "distance_hidden_dim": 16,
+      "relative_position": "learned_trading_bar_age",
+      "reference": "latest_valid_closed_bar_at_query",
+      "price_unit": "100_log_anchor_difference",
+      "residual_scale_initial": 0.1
+    }
+  },
+  "training": {
+    "epochs": 100,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "early_stopping": {
+      "mode": "best_epoch_fraction",
+      "fraction": 0.6,
+      "minimum": 4,
+      "maximum": 12,
+      "rounding": "ceil",
+      "improvement": "strict"
+    },
+    "cpu_threads": 4,
+    "precision": "bfloat16_autocast_on_supported_cuda",
+    "deterministic": true,
+    "batching": "global_shuffled_stock_days",
+    "batch_size": 512,
+    "loss": "time_weighted_huber_rank_balanced_experts",
+    "loss_reduction": "weighted_mean_samples_per_batch",
+    "loss_precision": "float64",
+    "target_transform": "raw_zscore_and_rank_zscore",
+    "checkpoint_batches": 64,
+    "structural_policy": "finite_nonconstant_labels",
+    "constant_prediction_policy": "allow_huber_gradient",
+    "huber_delta": 2.0,
+    "label_ddof": 0,
+    "resident_cache": {
+      "format": "jycapital-resident-price-memory-v1",
+      "prefetch_batches": 2,
+      "build_batch_rows": 16384,
+      "evaluation_days": 5,
+      "memory_reserve_gib": 2.0
+    },
+    "weight_averaging": {
+      "method": "ema",
+      "decay": 0.9999,
+      "warmup_epochs": 1,
+      "evaluation_weights": "ema",
+      "update_after_optimizer_step": true,
+      "accumulation_dtype": "float32"
+    },
+    "stock_day_batch_size": 64,
+    "auxiliary_rank_weight": 0.2,
+    "auxiliary_rank_huber_delta": 1.0,
+    "expert_loss_weight": 0.1,
+    "router_loss_weight": 0.01,
+    "assignment_temperature": 0.25,
+    "assignment_iterations": 12,
+    "temporal_weighting": {
+      "mode": "training_calendar_age",
+      "half_life_days": 730.0,
+      "floor": 0.25,
+      "anchor": "exclusive_training_stop"
+    }
+  },
+  "inference": {
+    "batch_size": 1024,
+    "precision": "float32",
+    "factor_scale": 1.0,
+    "stock_day_batch_size": 128,
+    "batching": "stock_day_shared_encoding"
+  },
+  "references": {
+    "local_best": "v1601-price-geometry-s42",
+    "platform_best": null,
+    "parent": "v1601-price-geometry-s42"
+  },
+  "execution": {
+    "training_requires_explicit_confirmation": true
+  },
+  "comparison": {
+    "allow_selection_metric_change": true
+  },
+  "experiment": {
+    "parent_solution_id": "v1601",
+    "research_family": "price_relative_complete_history_memory",
+    "changes": [
+      "retain_all_parent_input_views_and_full_causal_gru_history",
+      "query_full_raw_history_with_current_causal_price_reference",
+      "learn_relative_price_and_trading_bar_age_attention",
+      "reuse_fp32_anchors_without_quantity_side_inputs"
+    ],
+    "initialization": "fresh_seed_42_no_parent_weight_transfer",
+    "research_basis": "docs/price-path-research-20261023.md"
+  },
+  "parent_solution_id": "v1601"
+}

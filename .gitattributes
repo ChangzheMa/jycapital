@@ -50,3 +50,8 @@
 /scripts/check-candidate-device.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /scripts/assess.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /scripts/analyze-price-path-scales.py -text
+/solutions/v2401/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v2401*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/price_memory_inputs.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/price_memory_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/price_memory_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof

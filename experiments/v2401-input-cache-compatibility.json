@@ -1,0 +1,60 @@
+{
+  "checked_at": "2026-10-23T18:14:45+08:00",
+  "solution_id": "v2401",
+  "parent_run_id": "v1601-price-geometry-s42",
+  "base_input_data_config_identical": true,
+  "provided_label_transform_unchanged": true,
+  "base_loader_source_bytes_identical": true,
+  "parent_data_manifest_sha256": "4906d233a778d1a0651519dcb72d95ed3a6c2abaff54885843cda81e672c04b7",
+  "input_cache_keys": {
+    "train": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+    "validation": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+    "test": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5"
+  },
+  "price_memory_contract": {
+    "version": "causal_price_memory_v1",
+    "parent_view": "unchanged_75_geometry_channels",
+    "stored_reference": "same_closed_bar_log_close_else_first_valid_price_fp32",
+    "query_reference": "latest_valid_closed_bar_at_query",
+    "distance": "100_log_anchor_difference",
+    "network_layout": "75_parent_1_log_anchor_1_anchor_available",
+    "network_channels": 77
+  },
+  "anchor_sources": [
+    {
+      "split": "train",
+      "base_cache_key": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+      "new_memory_cache_key": "d35c64fdbaa59d9cf582099f87191eaa0db7ac2ceab01e212dfed0d0784ba5f3",
+      "eligible_anchor_source_key": "bf49b5e3b68fa5299b52acca9194708aacbef22597a566195c56e89632a3926c",
+      "anchor_source_manifest_sha256": "9084d5ed69449de4045577267091a919d791714070080cb4eb8d8cf9db9fdb74",
+      "anchor_array_bytes": 1150577664,
+      "estimated_resident_array_bytes": 42747284648,
+      "existing_reference_is_metadata_eligible": true
+    },
+    {
+      "split": "validation",
+      "base_cache_key": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+      "new_memory_cache_key": "925385ed8cfda8fe855018004e5093f64503d2dcb531ca0b79b96f7d08b6f6df",
+      "eligible_anchor_source_key": "3c08c0c92b7b78f50d8e64300e77f8fa4583cb46dd77579ce6ed1ad90f135d5d",
+      "anchor_source_manifest_sha256": "2a3748c1fde88b9617da65a9862ec9771b8e3d17410cd9ef922fbc2c4aef764d",
+      "anchor_array_bytes": 141352864,
+      "estimated_resident_array_bytes": 5250819868,
+      "existing_reference_is_metadata_eligible": true
+    },
+    {
+      "split": "test",
+      "base_cache_key": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5",
+      "new_memory_cache_key": "9921f36afc824e82a2dff4712137b1260e5c1189795dcbd3c1bdf2730290cabe",
+      "eligible_anchor_source_key": "6875254bef7186d15af086e9ef93b3c0750a47315ca9522b8d04485bfbec4a62",
+      "anchor_source_manifest_sha256": "0a703c04896b0bdd0e0204f226c41ce7e3e2f5422e5343f388b694bbc6e4a9a0",
+      "anchor_array_bytes": 150824864,
+      "estimated_resident_array_bytes": 5602669820,
+      "existing_reference_is_metadata_eligible": true
+    }
+  ],
+  "expected_new_numeric_disk_bytes_if_existing_anchors_pass_loading_checks": 0,
+  "standalone_rebuild_array_bytes_all_splits": 1442755392,
+  "model_training_performed": false,
+  "input_arrays_loaded": false,
+  "scope": "真实缓存仅检查冻结清单及源码身份，不读取全量数组。已用合成输入验证旧中心复用、独立重建、父C保留及FP32溢出恢复；正式加载时仍校验引用数组。"
+}

@@ -94,20 +94,21 @@
     "next_design_priority": "major_gains_toward_both_split_ic_0_25",
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
-    "in_progress_delivery": "v1601 fast 已交付；v2001、v2101、v2201、v2301均已完成但未晋级，不导出。正在结合完整结果审查下一机制；阶段性候选交付不代表达到双集IC0.25。",
+    "in_progress_delivery": "v1601 fast 已交付；v2001至v2301均已完成但未晋级。v2401价格历史读取已发布ready，等待训练session正式评估；继续准备机制独立的后续候选，不将阶段交付视为双集IC0.25达成。",
     "active_direction_note": "docs/price-path-research-20261023.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v1601验证/测试IC为0.105526/0.116259，仍是最优且已交付fast。v1701至v2301各新方向均未超过它。v2001输入属性、v2101数量辅助、v2201同阶段历史均未转化为收益改善；v2301为0.092152/0.097902，十轮训练及验证25.972分钟，但双集所有月份和时点IC下降。下一方案保留完整因果历史，不自动延长失败版本或扫描相邻参数。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
-    "latest_candidate": "v2301-direct-state-s42",
+    "latest_candidate": "v2401-price-memory-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "v2301短历史原始状态MLP没有保留v1601收益能力，不能把它当作早期市场条件的已验证基础。继续审查跨Bar价格路径的统一因果坐标及直接学习机制；v1601行内几何已有正向证据，但不等同于跨时间价格路径。v2001同时替换盘口c并引入多个模块，没有单独检验时间坐标。下一设计须保持完整因果历史、已有数量c、原vwap_return、2GiB预留及fast，先完成输入/文献证据与成本检查再登记新系列。",
+    "next_design_hypothesis": "v2401保留全部父75通道和完整历史，以77通道补充FP32价格中心与有效性，增加64维四头价格相对位置读取；已完成17项合成验证并发布ready。后续独立审查同日多个已有收益标签的密集监督、以及在个股压缩前利用原始市场条件的机制，必须区分已有数量辅助及晚期市场交互负结果；不因v2401未评测而普遍停止构造。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
     "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
     "next_input_normalization_note": "docs/causal-normalization-research-20261023.md",
     "next_market_conditioning_note": "docs/early-market-context-research-20261023.md",
-    "next_price_path_note": "docs/price-path-research-20261023.md"
+    "next_price_path_note": "docs/price-path-research-20261023.md",
+    "candidate_preparation_policy": "2026-10-23用户指出候选不足：容量规则内主动准备机制独立的后续候选，不因一个ready版本尚无结果就普遍等待；不为填队列制造微调，draft计入积压，正式训练仍独占交由调度session。"
   },
   "legacy_runs": [
     {
