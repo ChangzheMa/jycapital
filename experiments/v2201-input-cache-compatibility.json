@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-10-23T09:15:40+08:00",
+  "solution_id": "v2201",
+  "parent_run_id": "v1601-price-geometry-s42",
+  "data_config_identical": true,
+  "official_label_transform_identical": true,
+  "reference_loader_identical": true,
+  "input_cache_keys": {
+    "train": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+    "validation": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+    "test": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5"
+  },
+  "parent_data_manifest_sha256": "4906d233a778d1a0651519dcb72d95ed3a6c2abaff54885843cda81e672c04b7",
+  "extra_full_input_cache_bytes": 0,
+  "model_training_performed": false,
+  "input_arrays_loaded": false,
+  "scope": "组织变化仅位于神经网络内；读取父清单和源码核对缓存身份，没有加载、修改或重建全量行情数组。"
+}

@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "solution_id": "v2201",
+  "status": "passed",
+  "checked_at": "2026-10-23T09:20:53+08:00",
+  "scope": "9项CPU合成检查：双轴时间因果性、非零阶段嵌入、前日状态传递、独立阶段参考、精确恢复、月度/全局完整入口和平台fast。",
+  "formal_training_performed": false,
+  "gpu_default_batch_pending": true,
+  "unique_tests_passed": 9,
+  "validation_runs": [
+    {
+      "scope": "完整test_v2201*.py集合",
+      "tests": 9,
+      "seconds": 26.171
+    }
+  ],
+  "checks": [
+    "test_actual_objective_and_bfloat16_gradients",
+    "test_capacity_matched_common_initialization_and_minute_path",
+    "test_default_size_and_contract",
+    "test_exact_raw_ema_optimizer_and_rng_resume",
+    "test_nonzero_phase_all_clock_causality_and_shared_reference",
+    "test_previous_late_phase_carries_into_current_prefix",
+    "test_same_phase_history_matches_independent_phase_sequences",
+    "test_grouped_monthly_and_resident_full_synthetic_entrypoints",
+    "test_public_geometry_fast_reference_and_intraday_subrequest_agree"
+  ],
+  "test_files": {
+    "tests/test_v2201.py": "f852ec4d46594173ca67df83327dd0c65aad00a7daa382669f7fbbde35750c0b",
+    "tests/test_v2201_entrypoint.py": "e553a9347ac5a7a3530712cd0a428d6abd4e9145a94442f968823e9efe7c16a1",
+    "tests/test_v2201_predict.py": "0ecf553e10f94e1edbcd4c7a88137463d4868d544e4afe54af019b90c1e07c8a"
+  },
+  "cpu_preflight": {
+    "solution_id": "v2201",
+    "checked_at": "2026-10-23T09:09:34+08:00",
+    "status": "passed",
+    "scope": "synthetic_device_preflight",
+    "device": "cpu",
+    "train_batch": 2,
+    "inference_batch": 4,
+    "batch_unit": "stock_day",
+    "train_target_slots": 16,
+    "inference_output_slots": 32,
+    "parameters": 4528944,
+    "step_seconds": [
+      0.49591850000433624,
+      0.42489479994401336,
+      0.42118009994737804
+    ],
+    "cuda_peak_allocated_bytes": null,
+    "formal_training_performed": false
+  },
+  "cpu_preflight_record": "outputs/checks/continuous-research/v2201-cpu-preflight.json",
+  "input_cache_compatibility": "experiments/v2201-input-cache-compatibility.json",
+  "causal_checks": {
+    "all_eight_clocks_future_gradients_zero": true,
+    "nonzero_phase_embeddings_tested": true,
+    "independent_same_phase_history_reference": true,
+    "past_days_unaffected_by_current_day": true,
+    "previous_late_phase_carries_into_current_prefix": true,
+    "native_and_cached_inputs_equal": true,
+    "capacity_matched_small_model_common_initial_parameters_equal": true
+  },
+  "platform_check": {
+    "scope": "4个合成交易日，非零阶段嵌入、动态股票池与无自身统计股票；整日24行、部分9行。",
+    "fast_reference_and_partial_requests_match": true,
+    "relative_tolerance_whole": 0.0001,
+    "absolute_tolerance_whole": 2e-07,
+    "relative_tolerance_partial": 1e-05,
+    "absolute_tolerance_partial": 2e-06,
+    "labels_or_exposure_queried": false
+  },
+  "limitations": [
+    "实现验证不构成收益改善证据。",
+    "GPU默认64/128股票日批量由训练session预检。",
+    "没有真实全区间平台速度测试。",
+    "轴组织、阶段嵌入与容量一起改变，正式结果只能归于整体方案。"
+  ],
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/geometry_evaluation_cache.py": "babdfa698055e35393d1f3bc74c6ccdf13fbb59f6b7b343b548be3b43e8eaef3",
+    "common/geometry_resident.py": "859a3e97246f60a1106a598981d6f72a237944a713e3afafdbab3fd7b6db60d0",
+    "common/price_geometry.py": "7cc91d1f829dead205df12254dd666950eb68d344e60589c024f2d7cd541eb7c",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v2201/config.json": "a051ad27496b96e53d191bd341b2d58cd154183da7e1b38bf2a35e06b590464b",
+    "solutions/v2201/model-config.json": "80dfbbf409bd51d8b952814fb853b6211c43c0b329ff3836151bfc78b56520b0",
+    "solutions/v2201/requirements-inference.txt": "1a99016e2590e59b2c1a9c7f7a6a7fd80703c558f9c53ec19742b48bbb2f75fc",
+    "solutions/v2201/requirements-training.txt": "fa2481cabb4c546fdfb30756b0e5d2a0aca27de74fcbc7a8dd10ce25db493ca1",
+    "solutions/v2201/requirements.txt": "d72c61e0ea921d0067586b0267ca1760ca4f72b0e4eebdb74ddc917150550a0d",
+    "solutions/v2201/v2201_apply.py": "97fb6b671ff5d654e85da5e797d6ba385fea08c86acfd08e3630dd586eb2dfe9",
+    "solutions/v2201/v2201_data.py": "ba66877f58bff25e1eb3e4f7bf4141c0fadcf5ea38675c537e7bf437ed74ee02",
+    "solutions/v2201/v2201_ema.py": "14c6527a38f204cd4bd434ca0c92c40837ef34dcb1c0bb93a16fa57c4e257ade",
+    "solutions/v2201/v2201_evaluation.py": "21e3ab258fac93e0c5c57a4872d28ab088a9634b2d30eda9f9c4787477646c8b",
+    "solutions/v2201/v2201_evaluation_cache.py": "4145376387ce5076af3afeb03091915578e6387f812d6f64cd3dac95a7e86d2c",
+    "solutions/v2201/v2201_fast.py": "b1902e09670082ecde13116f6ec2aa04b950de260a149e14fbecba51e7bd5b82",
+    "solutions/v2201/v2201_grouped.py": "a7b10d40c30b20a703f0ceb981d5a6e2530ffd92c37ba12686aae9251e93505f",
+    "solutions/v2201/v2201_loss.py": "37c4c47b6868c9bdfd2aaf6f1a768780e428f7634caaea722b278d46eae67e92",
+    "solutions/v2201/v2201_model.py": "1a57f852d5417e04107008aa01d973cf8560774db3e326937a402c2ca8038768",
+    "solutions/v2201/v2201_notebook.py": "5a6f27043caf8d6445f35e1c5fbe63f205a05c789451f0610ea8a889c9e800e0",
+    "solutions/v2201/v2201_objective.py": "c440f798bb4370f908ad5546e2339a7c648185c7efd939a057a914e0fb7055dc",
+    "solutions/v2201/v2201_predict.py": "9a4da1fc4a1d1d5c105b08f741a9d0646c59c1506087c0eb097f2632d245d090",
+    "solutions/v2201/v2201_predict_fast.py": "9a4da1fc4a1d1d5c105b08f741a9d0646c59c1506087c0eb097f2632d245d090",
+    "solutions/v2201/v2201_predict_reference.py": "80bdcdf52f8045412db4298949b7187e89cd0620f75cd7b6a515e408aee9ffd8",
+    "solutions/v2201/v2201_prepare.py": "38ffad8cfdb7f89c9158f4dd454c772d5161e72d8d4c37e28f9a6b9848eab2ed",
+    "solutions/v2201/v2201_preprocessing.py": "d5b5c2b1a4d03601b7a0d32f58450c008e9a479875e83757744dbf71ca90c7b3",
+    "solutions/v2201/v2201_reproduce.py": "1a1063c2e0b941fbc8fe01356bb396f4dd55a223670dcb59d62dd97868772df4",
+    "solutions/v2201/v2201_resident.py": "2b7ff8960ff9f24a1484f98b2501dc6ea99921b491b554b5d0b0af6516d336f6",
+    "solutions/v2201/v2201_schema.py": "c5147c4e67af7361fb49304f4bf9c45a871fd7cc972701530b5c2fe0f1c1802d",
+    "solutions/v2201/v2201_targets.py": "6d84dc94fb14cc208da1a911bc9344b0899ea71c09a409b91132bbcbe3d7870c",
+    "solutions/v2201/v2201_temporal.py": "9909ddee83c3741357f28e8402f18dc7c1ba021a912b5691baabbfa74faa8912",
+    "solutions/v2201/v2201_text_artifact.py": "6f1a70880b4cffbec440d3a192a5fd3a98c0d5b31f6fcbaccff35cff9dd69320",
+    "solutions/v2201/v2201_train.py": "eda364742c467cfe2cf522e1d8f58ca3aca9b5ef0a05ba52fb8c49c3985a50b3"
+  }
+}

@@ -42,3 +42,5 @@
 /scripts/analyze-history-generalization.py -text
 /scripts/analyze-frozen-fit-gap.py -text
 /scripts/analyze-clock-gradient-alignment.py -text
+/solutions/v2201/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v2201*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
