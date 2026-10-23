@@ -65,3 +65,8 @@
 /scripts/verify-v2401-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /experiments/v2401*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/audit-unused-market-fields.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/solutions/v2701/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v2701*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/trade_reference_inputs.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/trade_reference_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/common/trade_reference_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof

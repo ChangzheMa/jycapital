@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-10-23T21:46:09+08:00",
+  "solution_id": "v2701",
+  "parent_run_id": "v2401-price-memory-s42",
+  "parent_data_config_identical_after_removing_new_contract": true,
+  "base_loader_source_bytes_identical": true,
+  "provided_labels_and_transform_unchanged": true,
+  "parent_data_manifest_sha256": "dc924ad78b08594155ccd6b78cdd2dbe64578cc1410b18b47794f802c186bd5a",
+  "input_cache_keys": {
+    "train": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+    "validation": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+    "test": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5"
+  },
+  "reference_contract": {
+    "version": "closed_bar_trade_reference_v1",
+    "parent_view": "unchanged_77_price_memory_channels",
+    "extra_fields": [
+      "deal_number",
+      "pre_close",
+      "adjust_factor"
+    ],
+    "transforms": [
+      "log1p_nonnegative",
+      "log_positive",
+      "log_positive"
+    ],
+    "fit_statistics": false,
+    "extra_storage_dtype": "float32",
+    "network_layout": "77_parent_3_values_3_validity",
+    "network_channels": 83,
+    "day_reference": "provided_pre_close_on_same_observed_bar",
+    "adjustment": "provided_factor_as_input_only_no_price_rescaling"
+  },
+  "cache_layouts": [
+    {
+      "split": "train",
+      "base_cache_key": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+      "new_cache_key": "12914bcd1f1228de64608877c999ae0781e3f82e22f5daf4e91eb0daf67fbeba",
+      "reusable_anchor_cache_key": "bf49b5e3b68fa5299b52acca9194708aacbef22597a566195c56e89632a3926c",
+      "referenced_anchor_array_bytes": 1150577664,
+      "estimated_new_reference_array_bytes": 3451732992,
+      "estimated_total_resident_array_bytes": 46199017640
+    },
+    {
+      "split": "validation",
+      "base_cache_key": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+      "new_cache_key": "10a9148c7fecf305c655671b540027bf6f409b135a2c8054e2d6aae49e95dcd7",
+      "reusable_anchor_cache_key": "3c08c0c92b7b78f50d8e64300e77f8fa4583cb46dd77579ce6ed1ad90f135d5d",
+      "referenced_anchor_array_bytes": 141352864,
+      "estimated_new_reference_array_bytes": 424058592,
+      "estimated_total_resident_array_bytes": 5674878460
+    },
+    {
+      "split": "test",
+      "base_cache_key": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5",
+      "new_cache_key": "a1c70b26e09f6d56ed3817781728886780b63964c80f4d6477a408c97346feb7",
+      "reusable_anchor_cache_key": "6875254bef7186d15af086e9ef93b3c0750a47315ca9522b8d04485bfbec4a62",
+      "referenced_anchor_array_bytes": 150824864,
+      "estimated_new_reference_array_bytes": 452474592,
+      "estimated_total_resident_array_bytes": 6055144412
+    }
+  ],
+  "estimated_new_reference_array_bytes": 4328266176,
+  "full_parent_input_cache_duplicated": false,
+  "formal_training_performed": false,
+  "input_numeric_arrays_loaded": false,
+  "scope": "直接重建基础缓存身份并与冻结父版比较；这里只计算布局预算，不构建真实旁路、不读取价格或标签数值。实际来源、布局和数组指纹由正式加载器校验。"
+}
