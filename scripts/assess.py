@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import re
 from pathlib import Path
 import sys
 
@@ -144,9 +145,18 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
     return result
 
 
+def result_filename(solution_id, model_family=None):
+    """新结果家族在分析入口登记，保留已冻结公共训练依赖。"""
+    if model_family == "snapshot_mlp":
+        if not re.fullmatch(r"[a-z][a-z0-9_-]*", solution_id):
+            raise ValueError("非法方案标识")
+        return solution_id + "-snapshot-mlp.json"
+    return experiment_filename(solution_id, model_family)
+
+
 def record(result):
     config = read_json(ROOT / result["run_path"] / "config.json")
-    experiment = ROOT / "experiments" / experiment_filename(
+    experiment = ROOT / "experiments" / result_filename(
         result["solution_id"], config.get("model", {}).get("family"))
     write_json(experiment, result)
     path = ROOT / "experiments/runs.csv"

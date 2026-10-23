@@ -33,7 +33,7 @@ def main():
     config = read_json(directory / "model-config.json")
     trainer.validate_training(config, read_json(ROOT / "evaluation/protocols/local-v2-ic.json"))
     class_names = {"patch_transformer": "MultiFrequencyPatchTransformer", "factorized_mixer": "MultiFrequencyMixer",
-                   "hierarchical_gru": "MultiFrequencyGRU"}
+                   "hierarchical_gru": "MultiFrequencyGRU", "snapshot_mlp": "MultiFrequencySnapshotMLP"}
     torch.set_num_threads(config["training"]["cpu_threads"] if args.device == "cuda" else 1)
     torch.manual_seed(config["seed"])
     torch.use_deterministic_algorithms(config["training"]["deterministic"])

@@ -92,6 +92,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 数量状态联合学习结果 | [v2101：任务专属表示与收益优先梯度](../solutions/v2101/README.md#冻结结果)、[父输入缓存复用](../experiments/v2101-input-cache-compatibility.json)；辅助任务在训练期学到数量状态，未提高正式收益 IC，不导出 |
 | 泛化、拟合与时点差异 | [监督历史分解、冻结训练抽样与梯度噪声](generalization-and-phase-research-20261023.md)；只修零监督股票无法令验证 IC 达到 0.25，当前训练抽样约 0.156，分时梯度冲突尚不能排除抽样噪声 |
 | 跨日同阶段历史组织 | [新近文献与双轴组织依据](phase-aligned-history-research-20261023.md)、[v2201 共享双轴编码](../solutions/v2201/README.md)、[缓存复用核对](../experiments/v2201-input-cache-compatibility.json)；452.89 万参数，固定已有行情窗口，正式收益效果待评估 |
+| 原始状态直接预测 | [TabM／TabPack核验与新机制](direct-state-research-20261023.md)、[v2301 原始状态MLP](../solutions/v2301/README.md)、[缓存复用](../experiments/v2301-input-cache-compatibility.json)；近期观测及历史收盘槽位直接进入固定8成员共享参数网络，正式收益效果待评估 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |

@@ -44,3 +44,8 @@
 /scripts/analyze-clock-gradient-alignment.py -text
 /solutions/v2201/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /tests/test_v2201*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/solutions/v2301/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v2301*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+# 设备预检与分析入口的当前字节也记录在新候选验证材料中。
+/scripts/check-candidate-device.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/assess.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
