@@ -73,3 +73,4 @@
 /solutions/v2801/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /tests/test_v2801*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /scripts/analyze-neural-tree-budget.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/analyze-normalization-information.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
