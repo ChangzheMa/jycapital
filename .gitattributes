@@ -98,3 +98,8 @@
 /scripts/export-v3101.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/verify-v3101-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /experiments/v3101*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/solutions/v3201/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v3201*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/export-v3201.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/verify-v3201-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/experiments/v3201*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

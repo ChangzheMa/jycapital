@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-24T17:54:31+08:00",
+  "solution_id": "v3201",
+  "structural_parent": "v2401-price-memory-s42",
+  "same_snapshot_reference_solution": "v3001",
+  "data_snapshot_id": "jycapital-raw-20261024",
+  "config_sha256": "b3b1f8722a64bc7194778119f48aebd185d39379a8a5e3512b9f9b281e54655a",
+  "data_configuration_identical": true,
+  "provided_target_transform_unchanged": true,
+  "data_manifest_function_semantics_unchanged": true,
+  "base_loader_bytes_identical": true,
+  "reference_data_manifest_sha256": "42142a303a5f727c054eb4eae5c2aaf77cd2de3c0fbe9a5dd301ac92586807c4",
+  "computed_keys": {
+    "v3001": {
+      "train": "a07a7561bfe1aa710398efb829eba4af61d1e1476a7b2f15cfb82d8ee644ef29",
+      "validation": "1a0f81ef97f9f34b758458d1ec78d9303aa2352ede6c95cc58f096a7ce0a3b9e",
+      "test": "dff18c6e1e4914213e9d9ba33f11babcedac9f953fd8040ac2f0016ebebec20a"
+    },
+    "v3201": {
+      "train": "a07a7561bfe1aa710398efb829eba4af61d1e1476a7b2f15cfb82d8ee644ef29",
+      "validation": "1a0f81ef97f9f34b758458d1ec78d9303aa2352ede6c95cc58f096a7ce0a3b9e",
+      "test": "dff18c6e1e4914213e9d9ba33f11babcedac9f953fd8040ac2f0016ebebec20a"
+    }
+  },
+  "new_full_input_or_target_arrays": false,
+  "expected_additional_full_numeric_array_bytes": 0,
+  "model_training_performed": false,
+  "input_arrays_loaded": false,
+  "cache_build_completion_verified": false,
+  "scope": "仅比较同一新来源清单下的缓存键与输入语义，不加载数组，不判断在训缓存完成状态或调度来源验收。"
+}

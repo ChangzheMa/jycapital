@@ -94,6 +94,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 归一化信息研究 | [固定参数与数量绝对尺度](normalization-information-research-20261024.md)；[v2901冻结结果](../solutions/v2901/README.md#冻结结果)未超过旧快照最优，新增完整行情数组为零但训练成本增加，不导出 |
 | 关联状态研究 | [新近论文质量与矩阵记忆机制](associative-state-research-20261024.md)；[v3001](../solutions/v3001/README.md)已发布ready，替换分层GRU、保留价格输入及完整历史，323.67万参数，复用父缓存 |
 | 分阶段表征研究 | [预训练与收益微调分离](representation-pretraining-research-20261024.md)；[v3101](../solutions/v3101/README.md)保持264.17万参数推理网络，增加固定两轮训练期遮挡表征学习，正式效果待评估 |
+| 盘口时空组织研究 | [持续字段节点与论文适用边界](field-grid-research-20261024.md)；[v3201](../solutions/v3201/README.md)交替进行节点时间递推与同Bar交互，235.24万参数，保留完整历史和原监督，正式效果待评估 |
 | 近期改进的增益来源 | [预测差正交分解与标签幅度贡献](prediction-update-research-20261024.md)；v1601／v2401四档贡献均改善，v2801的净IC增益来自最外侧约1%抵消其余下降，不修改冻结选模和晋级规则 |
 | 共同价格坐标结果 | [v1601 冻结结果与 fast 材料](../solutions/v1601/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1601-gru.json)；参数量与父版相同，双集 IC／Rank IC 改善，新输入缓存可复用 |
 | 长期历史状态研究 | [长期上下文依据与正式结论](long-context-research-20261022.md)、[v1701 冻结结果](../solutions/v1701/README.md#冻结结果)、[比较摘要](../experiments/v1701-gru.json)；父版 IC 小幅改善，但耗时增加且未超过 v1601，不导出 |

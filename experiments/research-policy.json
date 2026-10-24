@@ -99,15 +99,15 @@
     "next_design_priority": "major_gains_toward_both_split_ic_0_25",
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
-    "in_progress_delivery": "v2901已沿旧快照完成并归档，未晋级；v3001已使用修订数据启动。v3101分阶段表征预训练已发布ready，后续新运行继续绑定新数据。",
-    "active_direction_note": "docs/representation-pretraining-research-20261024.md",
+    "in_progress_delivery": "旧快照结果已归档；v3001使用修订数据在训，v3101分阶段表征预训练和v3201持续字段节点均已ready，正式训练由监控session串行执行。",
+    "active_direction_note": "docs/field-grid-research-20261024.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v2401验证/测试IC为0.107778/0.119352，较父版v1601提高0.002252/0.003092，十二个月IC同向提高；验证Rank IC IR下降，八轮训练及验证156.39分钟、增加30.98%。此前v1701至v2301均未超过v1601；不因本次小幅晋级停止探索遗漏的大方向。 v2501完整双集IC为0.106972/0.118160，较父版提高0.001446/0.001901但未超过v2401；后续查询训练Huber优于零基准1.281%，八轮训练及验证149.25分钟，不自动扫描辅助权重。 v2601双集IC为0.102929/0.113144，低于父v1601与v2401，相对最优十二个月IC全降，九轮训练及验证164.22分钟；不扩展该市场模块。 v2801双集IC为0.108349/0.120552，较v2401提高0.000571/0.001200，Rank IC下降0.001605/0.001643；选中25棵树，新增运行墙钟15.45分钟，不把微小晋级当作0.25目标已实现。 v2701双集IC为0.107730/0.119822，较父v2401变化-0.000048/+0.000471，验证IC未晋级，八轮训练及验证175.37分钟；新增字段与投影组合不自动继续微调。 v2901旧快照双集IC为0.107754/0.119117，均略低于父v2401；八轮训练及验证249.82分钟，不扩展数量尺度投影。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
-    "latest_candidate": "v3101-representation-pretrain-s42",
+    "latest_candidate": "v3201-field-grid-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "以独立阶段的因果行情表征学习检验监督噪声下的表示瓶颈；固定两轮预训练后撤去表征目标，保持收益网络和fast推理。v3001检验矩阵状态，v3101检验训练阶段分离，完整新快照结果前不自动扫描邻近参数。",
+    "next_design_hypothesis": "v3001检验矩阵关联状态，v3101检验固定表征预训练与收益微调分离，v3201检验日内持续字段节点和同步空间交互。保持三个机制独立，不因实现通过继续扩容或扫描邻近参数；完整新快照结果后再判断。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
     "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
     "next_input_normalization_note": "docs/causal-normalization-research-20261023.md",
@@ -121,7 +121,8 @@
     "next_associative_state_note": "docs/associative-state-research-20261024.md",
     "latest_contribution_diagnostic": "docs/prediction-update-research-20261024.md",
     "latest_contribution_conclusion": "v1601和v2401的四档标签幅度IC/Rank IC贡献均提高；v2801双集净IC增量来自最外侧约1%抵消其余约99%贡献下降，预测相关性仍约0.99。不改变原晋级准则，不自动扩展树参数；这些贡献分解仅描述旧快照冻结结果，新快照另行评价。",
-    "next_representation_pretraining_note": "docs/representation-pretraining-research-20261024.md"
+    "next_representation_pretraining_note": "docs/representation-pretraining-research-20261024.md",
+    "next_field_grid_note": "docs/field-grid-research-20261024.md"
   },
   "legacy_runs": [
     {
