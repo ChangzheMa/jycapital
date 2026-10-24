@@ -29,6 +29,24 @@ RESUME = False
 
 原文件及缓存不被覆盖或删除。下载到本地建议使用独立目录，例如`outputs/raw-data/jycapital-raw-20261024/`，也可以放到空间更充足的其他磁盘。不要直接覆盖现有`data/`；旧运行仍绑定其原始数据与缓存。
 
+## 新旧内容比较
+
+新目录到位后，用[比较入口](../scripts/compare-raw-snapshots.py)核验实际变化，例如：
+
+```powershell
+.venv-training/Scripts/python.exe scripts/compare-raw-snapshots.py --new-root outputs/raw-data/jycapital-raw-20261024 --output outputs/data-refresh/20261024/comparison.json
+```
+
+默认旧目录为当前仓库`data/`，可以用`--old-root`指定其他旧快照；中断后追加`--resume`。源清单或实现发生变化时使用新报告路径，不混合不同来源的比较记录。该命令在新数据完整落地后执行，本轮没有运行真实全量比较。
+
+入口先核对新文件与下载清单，再按月组织、按日对齐`date、instrument`，精确比较同类型业务字段。忽略行序、列序、Parquet压缩及元数据差异；字符串字典编码不当作业务类型变化，NaN位模式及正负零按逻辑值一致处理，NULL与NaN分别比较。新增／删除键、字段增删和真实类型变化单独记录，不靠隐式类型转换掩盖变化；不输出原始行值。
+
+报告按原训练／验证／测试区间区分：基础行情输入变化、成交笔数／前收盘价／复权因子变化、原始`vwap_return`或标签键变化、股票池成员键变化。VWAP表中其他未来辅助字段变化不会直接标成主标签变化，股票名称变化也不等同于成员变化。报告的变化标志仅提示需检查的组件，不能据此跳过训练入口的缓存身份校验。
+
+默认单线程，DuckDB工作内存限额512MB、临时文件限额1GB，可通过`--memory-limit`和`--max-temp-size`调整；这不是整个Python进程的峰值保证。比较过程不加载全市场输入数组，不启动训练，不改写原始数据、预处理或模型。`covers_required_protocol`必须为真，才能将报告用于整个固定协议的数据接入；小范围比较不能代替完整检查。
+
+[六项比较检查](../tests/test_raw_snapshot_comparison.py)覆盖不同编码／行列顺序的相同内容、细小数值变化、增删键、NULL／NaN／正负零、类型变化、异常键、标签辅助字段区分、完整CLI续传和文件保持。它们只证明比较实现，不证明尚未提供的新数据与旧数据相同或不同。
+
 ## 训练交接规则
 
 `experiments/research-policy.json`的`data_refresh`记录本次用户要求。等待新数据期间，[队列CLI](../scripts/research-queue.py)的`next`返回空，并在`status`提供`data_refresh_gate`原因；已完成记录、在训进程、恢复状态和模型源码均保持原样。当前控制器通过该CLI取得下一候选，本次没有停止或修改训练进程。

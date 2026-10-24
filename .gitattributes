@@ -87,3 +87,4 @@
 /scripts/analyze-prediction-update.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/redownload-raw-data.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /examples/redownload-raw-data.ipynb -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/compare-raw-snapshots.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
