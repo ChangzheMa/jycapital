@@ -1069,7 +1069,7 @@
   },
   "submission_directory": "submissions/v2801-neural-tree-s42-fast",
   "submission_validation": {
-    "checked_at": "2026-10-24T10:23:34+08:00",
+    "checked_at": "2026-10-24T10:41:19+08:00",
     "passed": true,
     "device": "cpu",
     "scope": "简化转换核验：逻辑审查、实际文本权重精确恢复、隔离合成窗口 fast／逐样本对照及独立复现源码导入；未重跑长行情区间或性能基准。",
@@ -1108,7 +1108,7 @@
     ],
     "prior_evidence": [
       "experiments/readiness/v2801.json",
-      "tests/test_v2801.py",
+      "tests/test_v2801_core.py",
       "tests/test_v2801_entrypoint.py",
       "docs/v303-inference-fast.md"
     ],
@@ -1120,7 +1120,7 @@
   },
   "submission_validations": [
     {
-      "checked_at": "2026-10-24T10:23:34+08:00",
+      "checked_at": "2026-10-24T10:41:19+08:00",
       "passed": true,
       "device": "cpu",
       "scope": "简化转换核验：逻辑审查、实际文本权重精确恢复、隔离合成窗口 fast／逐样本对照及独立复现源码导入；未重跑长行情区间或性能基准。",
@@ -1159,7 +1159,7 @@
       ],
       "prior_evidence": [
         "experiments/readiness/v2801.json",
-        "tests/test_v2801.py",
+        "tests/test_v2801_core.py",
         "tests/test_v2801_entrypoint.py",
         "docs/v303-inference-fast.md"
       ],
@@ -1170,7 +1170,7 @@
       "platform_execution_verified": false
     }
   ],
-  "submission_manifest_sha256": "01e46d6bab4baba2ea737224e1386ab922d7c9f359d292782d1c55f1e8d83355",
+  "submission_manifest_sha256": "5a14af92d32a752d053c3380ee60e2a7cd91f542146a29722911b836fe1e57ad",
   "submission_manifest_path": "experiments/v2801-neural-tree-s42-fast-submission.json",
   "export_purpose": "local_improvement",
   "export_reason": "本地验证主指标提高且覆盖未降低"

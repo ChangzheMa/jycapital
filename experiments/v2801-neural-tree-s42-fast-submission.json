@@ -417,9 +417,9 @@
     "v2801-model.json": "83990719f26727aaf21f48e66d503547be178fc6215c6f6c91e87f4292d29bf1",
     "v2801-submission.ipynb": "c8d46e4d324fb8d63841dbefcf480e6b9876b347a6a8836e0a9bee05be0d6a23"
   },
-  "verification_script_sha256": "23cd76682baa0b1fdf3819b4ba2fb59fbe93ef0fe315f27350ca34981438f101",
+  "verification_script_sha256": "9256736565e61cedabbb9a70f2761e9191ae70642ba1cc4be145aa33e16fd7d9",
   "validation": {
-    "checked_at": "2026-10-24T10:23:34+08:00",
+    "checked_at": "2026-10-24T10:41:19+08:00",
     "passed": true,
     "device": "cpu",
     "scope": "简化转换核验：逻辑审查、实际文本权重精确恢复、隔离合成窗口 fast／逐样本对照及独立复现源码导入；未重跑长行情区间或性能基准。",
@@ -458,7 +458,7 @@
     ],
     "prior_evidence": [
       "experiments/readiness/v2801.json",
-      "tests/test_v2801.py",
+      "tests/test_v2801_core.py",
       "tests/test_v2801_entrypoint.py",
       "docs/v303-inference-fast.md"
     ],
@@ -470,7 +470,7 @@
   },
   "validations": [
     {
-      "checked_at": "2026-10-24T10:23:34+08:00",
+      "checked_at": "2026-10-24T10:41:19+08:00",
       "passed": true,
       "device": "cpu",
       "scope": "简化转换核验：逻辑审查、实际文本权重精确恢复、隔离合成窗口 fast／逐样本对照及独立复现源码导入；未重跑长行情区间或性能基准。",
@@ -509,7 +509,7 @@
       ],
       "prior_evidence": [
         "experiments/readiness/v2801.json",
-        "tests/test_v2801.py",
+        "tests/test_v2801_core.py",
         "tests/test_v2801_entrypoint.py",
         "docs/v303-inference-fast.md"
       ],

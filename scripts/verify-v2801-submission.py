@@ -195,7 +195,7 @@ def verify(run, package):
             '每个时点的价格历史读取仅见已知前缀，参考是该查询最近有效价格；不存在使用日末价格的旁路。',
             '冻结父网络与25棵树保持完整数值和结构；树仅执行数值阈值比较，不依赖XGBoost。',
             '完整股票日共享编码，八个查询分别读取各自已知历史，输出父预测加树补充；具体速度倍数未测量。'],
-        'prior_evidence': ['experiments/readiness/v2801.json', 'tests/test_v2801.py', 'tests/test_v2801_entrypoint.py',
+        'prior_evidence': ['experiments/readiness/v2801.json', 'tests/test_v2801_core.py', 'tests/test_v2801_entrypoint.py',
                            'docs/v303-inference-fast.md'],
         'attachment_bytes': manifest['attachment_bytes'],
         'platform_execution_verified': False,
