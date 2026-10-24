@@ -132,6 +132,20 @@ class DownloadTests(unittest.TestCase):
         self.assertEqual(original['next'],{'run_id':'unstarted'})
         self.assertIs(queue.apply_data_refresh_gate(original,{}),original)
 
+    def test_gate_blocks_controller_fallback_from_candidate_list(self):
+        candidates=[{'run_id':'new','candidate_status':'ready','run_status':'not_started','readiness_error':None},
+                    {'run_id':'active','candidate_status':'ready','run_status':'running','readiness_error':None},
+                    {'run_id':'done','candidate_status':'ready','run_status':'complete','readiness_error':None}]
+        original={'next':candidates[0],'candidates':candidates,'active_count':1,'unevaluated_count':2}
+        gated=queue.apply_data_refresh_gate(original,{'data_refresh':{'block_new_training':True}})
+        ready=[row for row in gated['candidates'] if row.get('candidate_status')=='ready'
+               and row['run_status']=='not_started' and not row.get('readiness_error')]
+        selected=gated['next'] if gated['next'] else (ready[0] if ready else None)
+        self.assertIsNone(selected)
+        self.assertEqual(gated['candidates'][0]['source_candidate_status'],'ready')
+        self.assertEqual(gated['candidates'][1:],candidates[1:])
+        self.assertEqual(candidates[0]['candidate_status'],'ready')
+
     def test_standalone_notebook_embeds_current_script_and_runs_fixture(self):
         notebook=json.loads((ROOT/'examples/redownload-raw-data.ipynb').read_text(encoding='utf-8'))
         source=(ROOT/'scripts/redownload-raw-data.py').read_text(encoding='utf-8')

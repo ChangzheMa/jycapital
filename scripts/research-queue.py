@@ -17,6 +17,14 @@ def apply_data_refresh_gate(result, policy):
     if refresh.get("block_new_training", False):
         result = dict(result)
         result["next"] = None
+        # 既有控制器还会从status.candidates自行回退选择ready项。
+        # 只改变CLI的未启动候选视图，不能改写冻结清单、在训或完成状态。
+        result["candidates"] = [
+            dict(row, source_candidate_status=row["candidate_status"],
+                 candidate_status="waiting_for_data", data_refresh_pending=True)
+            if row.get("candidate_status") == "ready" and row.get("run_status") == "not_started"
+            else row for row in result.get("candidates", [])
+        ]
         result["data_refresh_gate"] = {
             "blocked": True, "status": refresh.get("status"),
             "reason": "用户要求后续新训练使用更新后的数据；等待下载、独立预处理及调度路径绑定。已有运行和已完成结果保持。",

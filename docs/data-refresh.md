@@ -51,6 +51,8 @@ RESUME = False
 
 `experiments/research-policy.json`的`data_refresh`记录本次用户要求。等待新数据期间，[队列CLI](../scripts/research-queue.py)的`next`返回空，并在`status`提供`data_refresh_gate`原因；已完成记录、在训进程、恢复状态和模型源码均保持原样。当前控制器通过该CLI取得下一候选，本次没有停止或修改训练进程。
 
+控制器还会从`status.candidates`回退选择任务，因此未启动ready候选的CLI视图也标记为`waiting_for_data`，并保留`source_candidate_status="ready"`。这只影响新任务发放，不修改`experiment.json`中的正式发布状态；在训、完成及原运行恢复视图保持。解除数据等待后视图自动恢复。
+
 新文件到本地后，由训练session按以下顺序接入：
 
 - 核对下载清单完整性和实际文件，先比较新旧内容。Parquet字节变化可能只是压缩或元数据不同，不能单凭文件SHA不同声称业务内容修订；重点明确行情、标签、股票池分别是否变化。
@@ -88,6 +90,6 @@ RESUME = False
 
 ## 已验证范围与来源
 
-[六项合成检查](../tests/test_raw_download.py)覆盖月末日内行、Float32／Float64／大整数／null原值保留、原标签、分卷恢复、下载中断续传、损坏文件拒绝、源计数差异、独立Notebook完整执行及仅阻止新任务发放。尚未在真实BigQuant账户运行下载，也未访问或迁移现有行情。
+[七项合成检查](../tests/test_raw_download.py)覆盖月末日内行、Float32／Float64／大整数／null原值保留、原标签、分卷恢复、下载中断续传、损坏文件拒绝、源计数差异、独立Notebook完整执行、新任务出口及控制器候选列表回退。用户随后在平台完成实际下载，交付文件的全量核验结果见[修订报告](raw-data-revision-20261024.md)。
 
 接口依据为[官方DAI文档](https://fudan.bigquant.com/wiki/doc/PLSbc1SbZX)中的`query(..., filters=..., compression=False).arrow()`，2026-10-24（UTC+08:00）核验；原BigQuant文档入口当次访问超时，使用同平台文档镜像。stock/e2e差异沿用[已有官方来源整理](bigquant-2026-end-to-end/data.md#23-本地训练下载数据)，本轮不更新104条历史字段字典或宣称获得新的源表schema。
