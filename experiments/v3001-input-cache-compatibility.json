@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-24T10:42:04+08:00",
+  "solution_id": "v3001",
+  "parent_run_id": "v2401-price-memory-s42",
+  "config_sha256": "606043ceeb22757fde6aab3bf34f485b556b11a5903377392044c6399107e15c",
+  "data_configuration_identical": true,
+  "provided_target_transform_unchanged": true,
+  "data_manifest_function_semantics_unchanged": true,
+  "base_loader_bytes_identical": true,
+  "parent_data_manifest_sha256": "dc924ad78b08594155ccd6b78cdd2dbe64578cc1410b18b47794f802c186bd5a",
+  "input_caches": {
+    "train": {
+      "key": "d35c64fdbaa59d9cf582099f87191eaa0db7ac2ceab01e212dfed0d0784ba5f3",
+      "base_key": "c760f3882029e185c69b39c92509beeeea3995e2214360a6196046d70158563b",
+      "manifest_sha256": "8fd9241b338df0732c2108d851eb211fdd8c4c45af8e7ead221c6b62d2ce8537",
+      "status": "complete"
+    },
+    "validation": {
+      "key": "925385ed8cfda8fe855018004e5093f64503d2dcb531ca0b79b96f7d08b6f6df",
+      "base_key": "b51e456d06d3a546b5de6b9cd0b5a68ff30677e16b8a0bef73868c43452d800c",
+      "manifest_sha256": "4f794255a245f905534c346ec893d82c3e8b31ca5c5a977219af3c182819c068",
+      "status": "complete"
+    },
+    "test": {
+      "key": "9921f36afc824e82a2dff4712137b1260e5c1189795dcbd3c1bdf2730290cabe",
+      "base_key": "749e20cfa1b1429cf312269707e42948e45dac6983b486914997ba32869b6da5",
+      "manifest_sha256": "4780c633f5f76320bcba4ec3edb3721095dcbb77d91f8277befcc1eba4fe2973",
+      "status": "complete"
+    }
+  },
+  "new_full_input_or_target_arrays": false,
+  "expected_new_numeric_disk_bytes": 0,
+  "model_training_performed": false,
+  "input_arrays_loaded": false,
+  "scope": "真实缓存只核对冻结清单和实际缓存键；未加载全量数组，正式加载仍核验数组身份。"
+}

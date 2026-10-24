@@ -98,15 +98,15 @@
     "next_design_priority": "major_gains_toward_both_split_ic_0_25",
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
-    "in_progress_delivery": "v2801双集结果与fast材料已归档，本地验证IC晋级但Rank IC下降。v2701尚无完整双集结果；v2901已ready，由训练session串行调度。",
+    "in_progress_delivery": "v2801双集结果与fast材料已归档并推送；v2701尚无完整结果，v2901与v3001已ready，由训练session串行调度。",
     "active_direction_note": "docs/early-market-context-research-20261023.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v2401验证/测试IC为0.107778/0.119352，较父版v1601提高0.002252/0.003092，十二个月IC同向提高；验证Rank IC IR下降，八轮训练及验证156.39分钟、增加30.98%。此前v1701至v2301均未超过v1601；不因本次小幅晋级停止探索遗漏的大方向。 v2501完整双集IC为0.106972/0.118160，较父版提高0.001446/0.001901但未超过v2401；后续查询训练Huber优于零基准1.281%，八轮训练及验证149.25分钟，不自动扫描辅助权重。 v2601双集IC为0.102929/0.113144，低于父v1601与v2401，相对最优十二个月IC全降，九轮训练及验证164.22分钟；不扩展该市场模块。 v2801双集IC为0.108349/0.120552，较v2401提高0.000571/0.001200，Rank IC下降0.001605/0.001643；选中25棵树，新增运行墙钟15.45分钟，不把微小晋级当作0.25目标已实现。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
-    "latest_candidate": "v2901-quantity-units-s42",
+    "latest_candidate": "v3001-associative-state-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "v2801的新树预测器有小幅正向IC证据且新增训练较快；继续独立检验v2901数量尺度信息，保留父全部输入和完整历史，不因已有微小增益停止探索。v2701无完整结果时等待，异常由训练session处理。",
+    "next_design_hypothesis": "v3001检验可覆盖旧关联的矩阵状态，保留v2401有效输入和价格历史读取，替换分层GRU；v2901独立检验数量尺度信息。保持三个未完成候选，完整结果到来后再据证据决定后续方向，不追加树或记忆参数扫描。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
     "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
     "next_input_normalization_note": "docs/causal-normalization-research-20261023.md",
@@ -116,7 +116,8 @@
     "next_future_return_note": "docs/dense-return-supervision-research-20261023.md",
     "next_omitted_input_note": "docs/unused-market-fields-research-20261023.md",
     "next_predictor_note": "docs/neural-tree-research-20261024.md",
-    "next_normalization_information_note": "docs/normalization-information-research-20261024.md"
+    "next_normalization_information_note": "docs/normalization-information-research-20261024.md",
+    "next_associative_state_note": "docs/associative-state-research-20261024.md"
   },
   "legacy_runs": [
     {

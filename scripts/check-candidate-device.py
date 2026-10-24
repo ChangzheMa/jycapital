@@ -42,7 +42,8 @@ def main():
         print(json.dumps({k: v for k, v in record.items() if k != "source_files"}, indent=2))
         return
     class_names = {"patch_transformer": "MultiFrequencyPatchTransformer", "factorized_mixer": "MultiFrequencyMixer",
-                   "hierarchical_gru": "MultiFrequencyGRU", "snapshot_mlp": "MultiFrequencySnapshotMLP"}
+                   "hierarchical_gru": "MultiFrequencyGRU", "snapshot_mlp": "MultiFrequencySnapshotMLP",
+                   "gated_delta": "MultiFrequencyDeltaNet"}
     torch.set_num_threads(config["training"]["cpu_threads"] if args.device == "cuda" else 1)
     torch.manual_seed(config["seed"])
     torch.use_deterministic_algorithms(config["training"]["deterministic"])
