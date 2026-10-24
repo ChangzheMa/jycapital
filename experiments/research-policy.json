@@ -149,5 +149,29 @@
     "research_action_without_complete_results": "wait_for_complete_evaluation_results",
     "research_scope": "完整评测结果的分析和模型改进探索；不接管训练进程、资源诊断、分配器调整、断点恢复或调度。",
     "partial_metrics_are_formal_results": false
+  },
+  "data_refresh": {
+    "requested_at": "2026-10-24",
+    "status": "awaiting_user_download",
+    "block_new_training": true,
+    "basis": "用户要求重新下载可能更新的原始训练数据，后续训练使用新数据，已完成模型不重跑。",
+    "download_entrypoint": "examples/redownload-raw-data.ipynb",
+    "download_backend": "BigQuant Notebook native DAI",
+    "default_interval": {
+      "start": "2020-01-01",
+      "stop": "2025-01-01"
+    },
+    "raw_snapshot_root": null,
+    "completed_runs": "preserve_original_results_and_weights_no_retraining",
+    "existing_started_runs": "keep_frozen_data_do_not_hot_swap",
+    "unstarted_runs": "wait_for_new_snapshot_and_preprocessing_then_use_explicit_new_paths",
+    "activation_owner": "training_session",
+    "activation_requirements": [
+      "download_manifest_complete_and_local_files_verified",
+      "new_training_and_holdout_preprocessing_complete",
+      "controller_passes_new_data_root_training_run_and_holdout_run",
+      "old_and_new_evaluation_snapshots_not_silently_compared"
+    ],
+    "notes": "不停止在训进程，不修改已发布模型源码或现有缓存；通过research-queue.py的下一任务出口等待新数据。"
   }
 }

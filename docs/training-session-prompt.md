@@ -2,6 +2,12 @@
 
 [持续研究约定](continuous-research.md) · [文档目录](README.md)
 
+## 当前新增要求：更新原始数据
+
+用户于2026-10-24确认将在BigQuant Notebook重新下载2020—2024原始行情、股票池和原标签，后续新训练使用更新数据，已完成模型不重跑。执行[数据更新交接](data-refresh.md)：下载和新预处理完成前，`research-queue.py next`通过`data_refresh_gate`返回空；已开始运行保留原冻结数据。由训练session核对下载目录并将控制器的`--data-root`、`--training-run`、`--holdout-run`及资源预检切换至新快照，记录绑定证据后再解除入口等待。不要覆盖旧数据／缓存，不重算`vwap_return`，不下载exposure；不把新旧评估快照的差值直接解释为模型改进。
+
+以下原提示词中的“复用现有预处理和缓存”，以本次数据快照绑定要求为准；不能跳过数据更新等待而沿旧路径发起下一训练。
+
 将下面整段发给当前已经调度 v201／v301 的 session：
 
 ```text

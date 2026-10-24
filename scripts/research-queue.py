@@ -11,6 +11,20 @@ sys.path.insert(0, str(ROOT / "common"))
 from research_queue import atomic_json, publish, record_result, snapshot
 
 
+def apply_data_refresh_gate(result, policy):
+    """用户要求新数据期间，不向现有控制器发放新的旧数据训练任务。"""
+    refresh = policy.get("data_refresh", {})
+    if refresh.get("block_new_training", False):
+        result = dict(result)
+        result["next"] = None
+        result["data_refresh_gate"] = {
+            "blocked": True, "status": refresh.get("status"),
+            "reason": "用户要求后续新训练使用更新后的数据；等待下载、独立预处理及调度路径绑定。已有运行和已完成结果保持。",
+            "instructions": "docs/data-refresh.md",
+        }
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="action", required=True)
@@ -35,6 +49,8 @@ def main():
                 parser.error("等待时长必须为正数")
             time.sleep(args.seconds)
         result = snapshot(ROOT)
+        policy = json.loads((ROOT / "experiments/research-policy.json").read_text(encoding="utf-8"))
+        result = apply_data_refresh_gate(result, policy)
         atomic_json(ROOT / "outputs/run-control/continuous-research/queue-status.json", result)
         if args.action == "next":
             result = result["next"]

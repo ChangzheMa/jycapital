@@ -24,9 +24,10 @@ Notebook 内核须安装对应依赖。根目录 dai.py 被 Git 忽略，重新�
 | cpt_jyc_2026_stock_bar30m | data/cpt_jyc_2026_stock_bar30m/*.parquet | 42 |
 | cpt_jyc_2026_instruments | data/cpt_jyc_2026_instruments.parquet | 3 |
 | cpt_jyc_2026_vwap | data/cpt_jyc_2026_vwap.parquet | 8 |
-| cpt_jyc_2026_exposure | data/cpt_jyc_2026_exposure.parquet | 48 |
 
 实际文件为原始五档 stock 口径，保留字段类型及空值，不再除以 100，不需股票 ID 映射。数据目录可用 `JYCAPITAL_DATA_DIR` 覆盖。全量来源和质量见 [数据一致性结论](data-validation.md)。
+
+exposure已按用户要求删除并禁用，上述一致性文档中的七表结果仅对应2026-09-30历史快照。2026-10-24重新下载入口及新训练数据切换见[数据更新说明](../data-refresh.md)：使用独立新目录，保留原始`vwap_return`，已完成模型不重跑；训练路径须显式切换，不能只修改DAI环境变量。
 
 ## 本地 DAI 支持范围
 

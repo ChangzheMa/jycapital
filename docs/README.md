@@ -78,6 +78,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 比赛要求 | [规则与赛程](bigquant-2026-end-to-end/rules.md)、[数据与字段](bigquant-2026-end-to-end/data.md) |
 | 来源及未决问题 | [官方来源](bigquant-2026-end-to-end/sources.md)、[待确认事项](bigquant-2026-end-to-end/open-questions.md) |
 | 本地使用与数据质量 | [本地环境](bigquant-2026-end-to-end/local-download.md)、[数据一致性结论](bigquant-2026-end-to-end/data-validation.md)、[验证摘要](bigquant-2026-end-to-end/data-validation-summary.json) |
+| 原始数据更新 | [BigQuant重新下载Notebook与后续训练切换](data-refresh.md)；新训练等待新数据接入，已完成模型保留原结果、不重跑 |
 | 结构化比赛资料 | [配置摘录](bigquant-2026-end-to-end/competition-config.json)、[字段 JSON](bigquant-2026-end-to-end/data-schemas.json)、[字段 CSV](bigquant-2026-end-to-end/data-dictionary.csv)，共 104 条字段记录 |
 | 实验与评估 | [开发约定](development.md)、[实验技能](../.agents/skills/jycapital-experiment/SKILL.md)、[查分技能](../.agents/skills/jycapital-scores/SKILL.md) |
 | 持续研究与串行调度 | [研究 session 与训练 session 的交接约定](continuous-research.md)、[训练监控 session 提示词](training-session-prompt.md)；候选通过各版本的 `experiment.json` 发布 |
