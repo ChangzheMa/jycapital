@@ -152,7 +152,7 @@
   },
   "data_refresh": {
     "requested_at": "2026-10-24",
-    "status": "awaiting_user_download",
+    "status": "comparing_downloaded_snapshot",
     "block_new_training": true,
     "basis": "用户要求重新下载可能更新的原始训练数据，后续训练使用新数据，已完成模型不重跑。",
     "download_entrypoint": "examples/redownload-raw-data.ipynb",
@@ -161,9 +161,9 @@
       "start": "2020-01-01",
       "stop": "2025-01-01"
     },
-    "raw_snapshot_root": null,
+    "raw_snapshot_root": "data/redownload/jycapital-raw-20261024",
     "completed_runs": "preserve_original_results_and_weights_no_retraining",
-    "existing_started_runs": "keep_frozen_data_do_not_hot_swap",
+    "existing_started_runs": "所有已启动运行继续绑定原数据，不重新执行或中途切换；包括当前v2901。",
     "unstarted_runs": "wait_for_new_snapshot_and_preprocessing_then_use_explicit_new_paths",
     "activation_owner": "training_session",
     "activation_requirements": [
@@ -172,6 +172,10 @@
       "controller_passes_new_data_root_training_run_and_holdout_run",
       "old_and_new_evaluation_snapshots_not_silently_compared"
     ],
-    "notes": "不停止在训进程，不修改已发布模型源码或现有缓存；通过research-queue.py的下一任务出口等待新数据。"
+    "notes": "不停止在训进程，不修改已发布模型源码或现有缓存；通过research-queue.py的下一任务出口等待新数据。",
+    "raw_manifest_sha256": "bbf9f62152d3783b7e46f50f437e957776bcd392ae3ede0db0bfd5abb9be8264",
+    "user_confirmed_download_at": "2026-10-24",
+    "comparison_report": "outputs/data-refresh/20261024/comparison.json",
+    "first_known_unstarted_candidate": "v3001-associative-state-s42"
   }
 }

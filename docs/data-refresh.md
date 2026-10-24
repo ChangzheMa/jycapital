@@ -2,7 +2,7 @@
 
 [文档目录](README.md) · [本地数据使用](bigquant-2026-end-to-end/local-download.md) · [训练session提示词](training-session-prompt.md)
 
-用户于2026-10-24要求重新下载可能更新的原始训练数据，后续训练使用更新数据，已完成模型不重跑；用户确认在**BigQuant Notebook**执行下载。当前状态是等待用户下载，不声称云端数据已经确认变更或新快照已经生效。
+用户于2026-10-24要求重新下载可能更新的原始训练数据，后续训练使用更新数据，已完成模型不重跑；用户确认在**BigQuant Notebook**执行下载。新快照已交付至`data/redownload/jycapital-raw-20261024/`。已经启动的v2901继续沿原数据完成，尚未启动的v3001等待新数据接入；新训练解除等待前须完成核对、预处理和实际启动路径绑定。
 
 ## 下载入口
 
@@ -65,6 +65,16 @@ RESUME = False
 .venv-training/Scripts/python.exe solutions/v3001/v3001_prepare.py --run-dir outputs/preprocessing/data-20261024/train --data-root <新原始数据目录> --protocol evaluation/protocols/local-v2-ic.json
 .venv-training/Scripts/python.exe solutions/v3001/v3001_apply.py --training-run outputs/preprocessing/data-20261024/train --run-dir outputs/preprocessing/data-20261024/holdout --data-root <新原始数据目录>
 ```
+
+实际接入优先使用[冻结执行入口](../scripts/prepare-refreshed-data.py)，将预处理源码复制到独立执行目录，避免研究工作区后续改动影响数据准备的续跑：
+
+```powershell
+.venv-training/Scripts/python.exe scripts/prepare-refreshed-data.py --new-root data/redownload/jycapital-raw-20261024 --comparison outputs/data-refresh/20261024/comparison.json --workspace outputs/data-refresh/20261024 --preprocessing-root outputs/preprocessing/data-20261024
+```
+
+该入口要求完整比较通过，随后串行执行训练统计拟合、训练数据转换及留出集转换，**不调用模型训练**。默认2线程、1GB DuckDB工作内存和32,768行处理批量，只调整执行资源，保持原始数据处理定义。旧数据、旧预处理和现有模型运行均不改写；中断时用相同参数追加`--resume`。归一化只在固定训练区间拟合，留出集复用其逐字节相同的统计量。
+
+完成后生成`outputs/data-refresh/20261024/data-binding.json`，其中包含新原始目录、训练及留出预处理目录、源码和数据证据对应的指纹。状态`prepared_for_scheduler`只表示数据准备完成，**不表示控制器已切换**；仍由训练session验证未来启动及资源预检使用这些路径后解除队列等待。已有运行及恢复继续使用其原命令和原数据。
 
 验证／测试日期划分不随下载改变。若标签或股票池的实际内容更新，新旧指标需按数据快照分组，不能把跨快照差值直接解释为模型改进，也不能为比较而自动重跑已完成模型；数据更新与网络改动分别记录。
 

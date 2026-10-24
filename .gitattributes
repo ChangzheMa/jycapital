@@ -88,3 +88,4 @@
 /scripts/redownload-raw-data.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /examples/redownload-raw-data.ipynb -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/compare-raw-snapshots.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/prepare-refreshed-data.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
