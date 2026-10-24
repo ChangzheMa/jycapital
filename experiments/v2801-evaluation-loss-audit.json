@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-24T05:12:36.394165+08:00",
+  "status": "complete_with_logged_diagnostic_loss_mislabel",
+  "scope": "Read-only post-training diagnostic using frozen selected weights predictions and original provided labels; no training, new prediction run or epoch selection",
+  "training": {
+    "finite_primary_rows": 7742958,
+    "mean": 1.7710899116552011e-19,
+    "std_ddof0": 1.0000000000000002,
+    "target_role": "actual original-label cross-section standardized FP64 training targets"
+  },
+  "splits": {
+    "validation": {
+      "rows": 936000,
+      "cache_primary_is_all_zero_placeholder": true,
+      "recorded_placeholder_mse": 0.02429222129993622,
+      "actual_unweighted_zscore_mse": 0.988586236997358,
+      "actual_unweighted_zscore_mae": 0.6985940874399892,
+      "zscore_finite_rows": 935224,
+      "zscore_undefined_sections": 0,
+      "zscore_ddof": 0,
+      "fixed_protocol_raw_label_mse": 0.02419796605286654,
+      "fixed_protocol_raw_label_mae": 0.09165898381922084,
+      "official_ic": 0.10834926399014258,
+      "official_rank_ic": 0.1025728771145128,
+      "coverage": 1.0
+    },
+    "test": {
+      "rows": 1000000,
+      "cache_primary_is_all_zero_placeholder": true,
+      "recorded_placeholder_mse": 0.030233465176274926,
+      "actual_unweighted_zscore_mse": 0.9871070645349875,
+      "actual_unweighted_zscore_mae": 0.6736287838187052,
+      "zscore_finite_rows": 998539,
+      "zscore_undefined_sections": 0,
+      "zscore_ddof": 0,
+      "fixed_protocol_raw_label_mse": 0.03013116145560976,
+      "fixed_protocol_raw_label_mae": 0.09887263699680983,
+      "official_ic": 0.12055211414616332,
+      "official_rank_ic": 0.10662132223417418,
+      "coverage": 1.0
+    }
+  },
+  "selected_best_epoch": 1,
+  "selected_boosting_rounds": 25,
+  "selected_by": "validation IC from real keys.vwap_return, not cached primary or placeholder MSE",
+  "source_evidence": {
+    "evaluation_cache": "common/geometry_evaluation_cache.py",
+    "feature_builder_sha256": "c6ea77ac6bb6ef2a1c3e3e2bb62e82a4a86297a27a560b7c3bd40cc96a5a7aec",
+    "boosting_source_sha256": "d62f1f60f6e5f69a6a93e6340fd6e9072a559c21b112c391e3d771086a719108",
+    "evaluation_cache_sha256": "babdfa698055e35393d1f3bc74c6ccdf13fbb59f6b7b343b548be3b43e8eaef3"
+  },
+  "original_run_files_unchanged": true,
+  "preserved_run_files": {
+    "best.pt": "c5cccd0971f9fbd754c55bd04ea041dba70941fb5f8971d16c4cefa3a02778c5",
+    "last.pt": "260dca95f71ac228541a976d8b9837f38c347572a455f10b260d239569cb7202",
+    "manifest.json": "f30e7cdad4c4e90e87819cd326d986d5240214d5717e08ab5151c72e06a2f48d",
+    "selection.json": "7a5d0a44e4fafc5906e802ceb3e49280102e2b61f7f6416d4240e675551e0656",
+    "history.csv": "140637133ff7613db89b391ed62ad9aa287dfe6e6bc072fcec8836544e97bd35",
+    "loss-consistency.json": "20ad1470556cee0efdd24be06e6e979d5c5327d14b6a890bc433ce03f128a321"
+  },
+  "limitations": [
+    "Logged validation_primary_mse_loss and test_primary_mse_loss use zero placeholders, not labels; do not compare them to standardized-label training MSE.",
+    "Official IC/Rank IC and raw-label MSE/MAE remain correctly evaluated against real labels; selection never uses this diagnostic loss.",
+    "Original history, checkpoints, selection and loss-consistency files are preserved; corrected diagnostics exist only in this sidecar."
+  ],
+  "source_audit_sha256": "4573f5bcd76c47890eee8d158ba19259fdaff43d735eb48ebccfb1bf5f3424ca",
+  "metric_scope": "local-v2-ic；原审计official_ic等字段指固定本地协议指标，不是平台成绩。"
+}

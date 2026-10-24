@@ -79,3 +79,6 @@
 /common/quantity_units_inputs.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /common/quantity_units_resident.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /common/quantity_units_evaluation_cache.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/export-v2801.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/verify-v2801-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/experiments/v2801*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

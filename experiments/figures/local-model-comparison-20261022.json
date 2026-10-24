@@ -1,8 +1,29 @@
 {
-  "generated_at": "2026-10-24T03:06:23.553357+08:00",
+  "generated_at": "2026-10-24T10:24:33.860832+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
+    {
+      "solution_id": "v2801",
+      "run_id": "v2801-neural-tree-s42",
+      "model_sha256": "c5cccd0971f9fbd754c55bd04ea041dba70941fb5f8971d16c4cefa3a02778c5",
+      "summary_file": "experiments/v2801-neural-tree.json",
+      "summary_content_sha256": "a0a32b264e807576a73a759250f0fd79cc8728e8c50e46d8002bfd3459518a2f",
+      "parameters": 2644432,
+      "epochs_completed": 5,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.10834926399014258,
+          "rank_ic_mean": 0.1025728771145128,
+          "ic_ir": 0.8798862438324854
+        },
+        "test": {
+          "ic_mean": 0.12055211414616332,
+          "rank_ic_mean": 0.10662132223417418,
+          "ic_ir": 0.8987424216914094
+        }
+      }
+    },
     {
       "solution_id": "v2401",
       "run_id": "v2401-price-memory-s42",
@@ -760,5 +781,5 @@
       }
     }
   ],
-  "image_sha256": "942eaf0c17a8497d90d4a1de658fd80a09b3f9c7358aaa7bcedea38a471b8465"
+  "image_sha256": "aa18ebaddb526406c18eddafb81fd9dc63b9845f1e9360ab910317a6f901530a"
 }

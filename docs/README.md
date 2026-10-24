@@ -4,7 +4,7 @@
 
 ## 冻结模型结果
 
-本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-24（UTC+08:00）本次归档，下表 52 个版本完成双集评估，其中 51 个完成训练、v1401 为无需新增训练的冻结组合，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261022.json)。
+本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-24（UTC+08:00）本次归档，下表 53 个版本完成双集评估，其中 52 个完成训练、v1401 为无需新增训练的冻结组合，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261022.json)。
 
 | 方案 | 参数量 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC | 结果 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -57,9 +57,11 @@
 | [v2101](../solutions/v2101/README.md#冻结结果) | 3,365,542 | 0.104543 | 0.103031 | 0.115779 | 0.104511 | 数量辅助任务在训练期优于持续性基准，但双集收益 IC 略降；九轮训练及验证约 286.66 分钟，不导出 |
 | [v2201](../solutions/v2201/README.md#冻结结果) | 4,528,944 | 0.103289 | 0.100989 | 0.113685 | 0.103281 | 同阶段跨日组织与扩容未改善双集 IC；各仅 1／6 个月提高，八轮训练及验证约 125.80 分钟，不导出 |
 | [v2301](../solutions/v2301/README.md#冻结结果) | 2,051,424 | 0.092152 | 0.091220 | 0.097902 | 0.091766 | 原始状态固定成员MLP明显降低训练成本，双集各六个月与八时点IC全降；十轮训练及验证25.97分钟，不导出 |
-| [v2401](../solutions/v2401/README.md#冻结结果与平台材料) | 2,641,743 | **0.107778** | **0.104178** | **0.119352** | **0.108264** | 当前本地验证IC最优；价格历史读取提高双集各六个月IC，验证Rank IC IR略降，八轮训练及验证156.39分钟，已导出fast |
+| [v2401](../solutions/v2401/README.md#冻结结果与平台材料) | 2,641,743 | **0.107778** | **0.104178** | **0.119352** | **0.108264** | 前一本地验证IC最优；价格历史读取提高双集各六个月IC，验证Rank IC IR略降，八轮训练及验证156.39分钟，已导出fast |
 | [v2501](../solutions/v2501/README.md#冻结结果) | 2,570,193 | 0.106972 | 0.104391 | 0.118160 | 0.106183 | 同日后续收益监督小幅改善父v1601，未超过v2401；八轮训练及验证149.25分钟，不默认导出 |
 | [v2601](../solutions/v2601/README.md#冻结结果) | 3,372,499 | 0.102929 | 0.100931 | 0.113144 | 0.102607 | 原始完整市场条件未改善；相对v2401十二个月IC全降，九轮训练及验证164.22分钟，不导出 |
+
+| [v2801](../solutions/v2801/README.md#冻结结果与平台材料) | 2,644,432 | **0.108349** | 0.102573 | **0.120552** | 0.106621 | 当前本地验证IC最优；固定v2401网络加25棵树，双集Rank IC下降，新增运行墙钟15.45分钟，已导出fast |
 
 v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401 的组件保持原验证选中的 EMA，组合规则预先固定，没有新的选模 epoch。测试期已在持续研究中观察过，本地指标不等同于平台官方成绩；信号持续性及换手代理见[本地诊断说明](signal-diagnostics.md)。
 
@@ -82,7 +84,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 磁盘与缓存保留 | [预处理组成、可清理资料及增长控制](storage-retention.md)；保护活跃依赖、正式权重和预测，跳过 Windows 目录联接 |
 | 原始输入结构研究 | [价格共同坐标审计及表征论文筛选](raw-input-research-20261022.md)；仅训练期行情诊断，不重算标签、不使用 exposure |
 | 遗漏行情字段研究 | [成交笔数与日级价格参考](unused-market-fields-research-20261023.md)；固定训练样本确认三个未用数值字段，组合候选[v2701](../solutions/v2701/README.md)已完成实现并发布ready |
-| 不同预测器研究 | [完整历史表示与梯度提升树](neural-tree-research-20261024.md)；[v2801](../solutions/v2801/README.md)已完成实现检查并发布ready，检验神经表示与学习阈值组合的互补性 |
+| 不同预测器研究 | [完整历史表示与梯度提升树](neural-tree-research-20261024.md)；[v2801](../solutions/v2801/README.md#冻结结果与平台材料)已完成，双集IC小幅晋级、Rank IC下降，fast已导出 |
 | 归一化信息研究 | [固定参数与数量绝对尺度](normalization-information-research-20261024.md)；[v2901](../solutions/v2901/README.md)已发布ready，保留父输入并用小型固定参数表补充数量尺度，不新增完整行情缓存 |
 | 共同价格坐标结果 | [v1601 冻结结果与 fast 材料](../solutions/v1601/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1601-gru.json)；参数量与父版相同，双集 IC／Rank IC 改善，新输入缓存可复用 |
 | 长期历史状态研究 | [长期上下文依据与正式结论](long-context-research-20261022.md)、[v1701 冻结结果](../solutions/v1701/README.md#冻结结果)、[比较摘要](../experiments/v1701-gru.json)；父版 IC 小幅改善，但耗时增加且未超过 v1601，不导出 |
@@ -104,10 +106,10 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 原始状态直接预测 | [TabM／TabPack核验与新机制](direct-state-research-20261023.md)、[v2301 原始状态MLP](../solutions/v2301/README.md)、[缓存复用](../experiments/v2301-input-cache-compatibility.json)；近期观测及历史收盘槽位直接进入固定8成员共享参数网络，成本降低但双集IC下降，不导出 |
 | 早期市场条件的证据边界 | [已有交互实验覆盖与新近论文复核](early-market-context-research-20261023.md)；区分晚期交互、原始状态条件化及训练组织，不据论文最大增幅直接新增候选 |
 | 跨 Bar 价格路径与完整历史读取 | [新结果约束、价格尺度与因果查询机制](price-path-research-20261023.md)、[训练统计分析](../experiments/price-path-scale-audit-20261023.json)；保留父输入，区分坐标与收益证据，优先复用已有 FP32 价格中心 |
-| 价格历史读取候选 | [v2401：完整GRU历史与价格相对位置读取](../solutions/v2401/README.md)、[输入缓存兼容性](../experiments/v2401-input-cache-compatibility.json)；264.17万参数，17项CPU检查通过，已发布ready，正式效果待评估 |
+| 价格历史读取候选 | [v2401：完整GRU历史与价格相对位置读取](../solutions/v2401/README.md)、[输入缓存兼容性](../experiments/v2401-input-cache-compatibility.json)；264.17万参数，双集IC改善，正式结果与fast材料已归档 |
 | 同日后续收益监督研究 | [标签组织与论文核验](dense-return-supervision-research-20261023.md)、[训练标签覆盖](../experiments/future-label-coverage-20261023.json)；27,100,313个严格后续监督对，保持原标签及主评测，不将重复配对当作新增独立数据 |
-| 同日后续收益监督候选 | [v2501：训练专用条件化后续收益头](../solutions/v2501/README.md)、[缓存复用](../experiments/v2501-input-cache-compatibility.json)；257.02万参数，15项CPU检查通过，已发布ready；推理只执行主预测 |
-| 原始市场条件候选 | [v2601：完整市场条件参与原始特征提取](../solutions/v2601/README.md)、[上下文与更新预算](../experiments/v2601-market-context-budget.json)、[缓存复用](../experiments/v2601-input-cache-compatibility.json)；337.25万参数，完整1000股上下文预检通过，同日多次目标批更新，已发布ready |
+| 同日后续收益监督候选 | [v2501：训练专用条件化后续收益头](../solutions/v2501/README.md)、[缓存复用](../experiments/v2501-input-cache-compatibility.json)；257.02万参数，双集未超过v2401，不导出；推理只执行主预测 |
+| 原始市场条件候选 | [v2601：完整市场条件参与原始特征提取](../solutions/v2601/README.md)、[上下文与更新预算](../experiments/v2601-market-context-budget.json)、[缓存复用](../experiments/v2601-input-cache-compatibility.json)；337.25万参数，双集IC低于父版与v2401，不导出 |
 | 分布适应与多模式研究 | [2026-10-22 文献与本地证据筛选](research-directions-20261022.md)、[v701 分预测时点比较](../experiments/v701-clock-comparison.json)；审查在线标签依赖，避免把价格预测或完整路由的效果直接套用于冻结推理 |
 | 日内编码复用可行性 | [训练股票日与八时点索引审计](../experiments/day-sharing-feasibility-20261021.json)；97 万组均含八时点，尚未测量实际加速 |
 | 持续研究首批候选 | [v202：Patch Mixer](../solutions/v202/README.md)、[v302：短片段分层 GRU](../solutions/v302/README.md)、[v102：时钟条件 Transformer 读出](../solutions/v102/README.md)；正式状态以候选清单和运行产物为准 |
