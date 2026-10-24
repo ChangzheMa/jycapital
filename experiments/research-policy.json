@@ -63,7 +63,7 @@
   },
   "checkpoint_selection": "local-v2-ic: validation ic_mean",
   "platform_candidate_selection": "仅按本地结果改进及生成候选材料：验证 IC 改善优先，同时比较稳定性、Rank IC、换手代理、互补性及效率；用户同步平台反馈后再纳入分析，不主动查询或等待平台成绩。",
-  "evaluation_policy": "训练目标可迭代；用于横向比较的官方标签、股票池、时间划分、覆盖要求保持固定。",
+  "evaluation_policy": "标签字段、股票池规则、时间划分和评估方法保持固定；提供数据的数值快照修订按已登记数据组隔离，不跨组直接作指标差。",
   "data_constraints": {
     "updated_at": "2026-10-22",
     "basis": "用户明确要求保留已提供 vwap_return 的计算方式，禁止使用已删除的 exposure 表。",
@@ -153,7 +153,7 @@
   },
   "data_refresh": {
     "requested_at": "2026-10-24",
-    "status": "preparing_new_snapshot",
+    "status": "ready_for_scheduler_binding",
     "block_new_training": true,
     "basis": "用户要求重新下载可能更新的原始训练数据，后续训练使用新数据，已完成模型不重跑。",
     "download_entrypoint": "examples/redownload-raw-data.ipynb",
@@ -188,6 +188,11 @@
     "preparation_launch_metadata": "outputs/data-refresh/20261024/preprocessing-launch.json",
     "evaluation_snapshot_registry": "experiments/data-snapshots.json",
     "first_new_cohort_result": "record_baseline_without_claiming_cross_snapshot_improvement",
-    "new_run_path_resolver": "scripts/training-data-paths.py --solution-id <version>"
+    "new_run_path_resolver": "scripts/training-data-paths.py --solution-id <version>",
+    "preprocessing_completed_at": "2026-10-24T16:08:16+08:00",
+    "preprocessing_validation": "experiments/data-preprocessing-20261024.json",
+    "prepared_binding_sha256": "b37080f33303d765ca54140df6e426cf5f9dbc60a2d3ab3408465a9b18a7bd34",
+    "resolved_new_run_example": "outputs/data-refresh/20261024/v3001-launch-data.json",
+    "controller_activation_verified": false
   }
 }

@@ -8,13 +8,13 @@
 
 以下原提示词中的“复用现有预处理和缓存”，以本次数据快照绑定要求为准；不能跳过数据更新等待而沿旧路径发起下一训练。
 
-用户随后交付目录`data/redownload/jycapital-raw-20261024/`，并再次明确已启动及已完成训练都不重做。研究session已完成全量比较，确认行情及978,832条提供标签有修订；预处理正在独立目录`outputs/preprocessing/data-20261024/`构建。v2901已经启动，保留原数据；v3001尚未启动，使用新数据。
+用户随后交付目录`data/redownload/jycapital-raw-20261024/`，并再次明确已启动及已完成训练都不重做。研究session已完成全量比较，确认行情及978,832条提供标签有修订；独立目录`outputs/preprocessing/data-20261024/`的训练和留出预处理已于16:08（UTC+08:00）完成。180个Parquet的结构、行数、大小及时间范围核对通过，统计量只拟合训练区间并完整冻结到留出集。v2901已经启动，保留原数据；v3001尚未启动，使用新数据。
 
 待`outputs/data-refresh/20261024/data-binding.json`就绪，调用`scripts/training-data-paths.py --solution-id v3001`取得三个新路径、指纹及新评估组参照列表。先将未来新任务的容量估算、启动命令和核验都绑定这些路径，再解除`data_refresh.block_new_training`。不要改动已启动运行的`runtime-frozen.py`、launch参数或缓存，也不要沿用旧全局CACHE参数。
 
 新标签快照没有可比的已完成模型时，更新后的`scripts/assess.py`记录`new_data_cohort_baseline`，不按旧标签的v2801成绩做差或自动晋级。旧父版只保留结构来源和保护检查，不要求新数据的标签/预处理SHA与旧父版相同；新运行自身的完整性核验仍必须通过。`experiments/data-snapshots.json`和`experiments/raw-data-refresh-20261024.json`保存修订证据，不能以此绕过来源核验或放宽覆盖。
 
-数据准备由研究session运行，进程身份保存在`outputs/data-refresh/20261024/preprocessing-launch.json`，阶段和冻结执行目录见`preprocessing-plan.json`；不要重复启动相同预处理。`data-binding.json`完成前继续等待新任务，原v2901照常完成。
+数据准备由研究session完成，冻结执行目录和阶段见`outputs/data-refresh/20261024/preprocessing-plan.json`，验证摘要为`experiments/data-preprocessing-20261024.json`；不要重复启动相同预处理。交接文件为`outputs/run-control/continuous-research/data-refresh-handoff.json`。`data-binding.json`已经就绪，下一步是你验证并切换未来任务的启动、容量估算及结果核验路径；原v2901保持原绑定。
 
 将下面整段发给当前已经调度 v201／v301 的 session：
 

@@ -25,9 +25,12 @@ def apply_data_refresh_gate(result, policy):
             if row.get("candidate_status") == "ready" and row.get("run_status") == "not_started"
             else row for row in result.get("candidates", [])
         ]
+        reason = ("新数据与独立预处理已完成，等待调度session验证新任务的实际路径及评估组绑定；已启动运行保持原数据。"
+                  if refresh.get("status") == "ready_for_scheduler_binding" else
+                  "用户要求后续新训练使用更新后的数据；等待下载、独立预处理及调度路径绑定。已有运行和已完成结果保持。")
         result["data_refresh_gate"] = {
             "blocked": True, "status": refresh.get("status"),
-            "reason": "用户要求后续新训练使用更新后的数据；等待下载、独立预处理及调度路径绑定。已有运行和已完成结果保持。",
+            "reason": reason,
             "instructions": "docs/data-refresh.md",
             "raw_snapshot_root": refresh.get("raw_snapshot_root"),
             "data_binding": refresh.get("future_data_binding"),
