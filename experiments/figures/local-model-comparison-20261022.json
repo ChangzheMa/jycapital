@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-24T13:33:19.365594+08:00",
+  "generated_at": "2026-10-24T17:11:41.489055+08:00",
   "scope": "固定本地协议下的已完成单种子运行；不代表平台成绩或统计显著性。",
   "summary_digest_format": "sha256-json-sort-keys-utf8-compact",
   "rows": [
@@ -42,6 +42,27 @@
           "ic_mean": 0.11935175870015119,
           "rank_ic_mean": 0.10826396603898258,
           "ic_ir": 0.8546070223242817
+        }
+      }
+    },
+    {
+      "solution_id": "v2901",
+      "run_id": "v2901-quantity-units-s42",
+      "model_sha256": "4ffd04d0e6dc9cedd9af7ff62cb2506e14f6f85ae736778bb0ef113f6c9e18b5",
+      "summary_file": "experiments/v2901-gru.json",
+      "summary_content_sha256": "4237518e133cf33d4fd01678ef527f74d0ad7e6cfb0f150b069aa4e54fff7be5",
+      "parameters": 2834517,
+      "epochs_completed": 8,
+      "metrics": {
+        "validation": {
+          "ic_mean": 0.10775431987249272,
+          "rank_ic_mean": 0.10452942822336495,
+          "ic_ir": 0.8601704637277978
+        },
+        "test": {
+          "ic_mean": 0.11911669271788691,
+          "rank_ic_mean": 0.10819001354668681,
+          "ic_ir": 0.8593077227338066
         }
       }
     },
@@ -802,5 +823,5 @@
       }
     }
   ],
-  "image_sha256": "8543f1cab226ce995f2beca4fac7809ef8ab6131f63e60524c1b8936f5dffe86"
+  "image_sha256": "55b7b787b8a70b3a5b4520818131b45a20bb05c4952a4ccdcf43d357725501e1"
 }
