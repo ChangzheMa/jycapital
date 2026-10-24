@@ -99,15 +99,15 @@
     "next_design_priority": "major_gains_toward_both_split_ic_0_25",
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
-    "in_progress_delivery": "v2701已完成并归档，未超过本地最优v2801，不导出；v2801 fast已交付。v2901与v3001保持ready，新训练按data_refresh等待更新数据接入。",
-    "active_direction_note": "docs/early-market-context-research-20261023.md",
+    "in_progress_delivery": "v2901已沿旧快照完成并归档，未晋级；v3001已使用修订数据启动。v3101分阶段表征预训练已发布ready，后续新运行继续绑定新数据。",
+    "active_direction_note": "docs/representation-pretraining-research-20261024.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
-    "evidence_update": "v2401验证/测试IC为0.107778/0.119352，较父版v1601提高0.002252/0.003092，十二个月IC同向提高；验证Rank IC IR下降，八轮训练及验证156.39分钟、增加30.98%。此前v1701至v2301均未超过v1601；不因本次小幅晋级停止探索遗漏的大方向。 v2501完整双集IC为0.106972/0.118160，较父版提高0.001446/0.001901但未超过v2401；后续查询训练Huber优于零基准1.281%，八轮训练及验证149.25分钟，不自动扫描辅助权重。 v2601双集IC为0.102929/0.113144，低于父v1601与v2401，相对最优十二个月IC全降，九轮训练及验证164.22分钟；不扩展该市场模块。 v2801双集IC为0.108349/0.120552，较v2401提高0.000571/0.001200，Rank IC下降0.001605/0.001643；选中25棵树，新增运行墙钟15.45分钟，不把微小晋级当作0.25目标已实现。 v2701双集IC为0.107730/0.119822，较父v2401变化-0.000048/+0.000471，验证IC未晋级，八轮训练及验证175.37分钟；新增字段与投影组合不自动继续微调。",
+    "evidence_update": "v2401验证/测试IC为0.107778/0.119352，较父版v1601提高0.002252/0.003092，十二个月IC同向提高；验证Rank IC IR下降，八轮训练及验证156.39分钟、增加30.98%。此前v1701至v2301均未超过v1601；不因本次小幅晋级停止探索遗漏的大方向。 v2501完整双集IC为0.106972/0.118160，较父版提高0.001446/0.001901但未超过v2401；后续查询训练Huber优于零基准1.281%，八轮训练及验证149.25分钟，不自动扫描辅助权重。 v2601双集IC为0.102929/0.113144，低于父v1601与v2401，相对最优十二个月IC全降，九轮训练及验证164.22分钟；不扩展该市场模块。 v2801双集IC为0.108349/0.120552，较v2401提高0.000571/0.001200，Rank IC下降0.001605/0.001643；选中25棵树，新增运行墙钟15.45分钟，不把微小晋级当作0.25目标已实现。 v2701双集IC为0.107730/0.119822，较父v2401变化-0.000048/+0.000471，验证IC未晋级，八轮训练及验证175.37分钟；新增字段与投影组合不自动继续微调。 v2901旧快照双集IC为0.107754/0.119117，均略低于父v2401；八轮训练及验证249.82分钟，不扩展数量尺度投影。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
-    "latest_candidate": "v3001-associative-state-s42",
+    "latest_candidate": "v3101-representation-pretrain-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "v2701的新字段组合与父版接近，不继续扫描投影。v2901独立检验数量尺度信息，v3001检验可覆盖旧关联的矩阵状态；两版保持发布配置，新训练先接入更新原始数据，旧完成模型不重跑。",
+    "next_design_hypothesis": "以独立阶段的因果行情表征学习检验监督噪声下的表示瓶颈；固定两轮预训练后撤去表征目标，保持收益网络和fast推理。v3001检验矩阵状态，v3101检验训练阶段分离，完整新快照结果前不自动扫描邻近参数。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
     "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
     "next_input_normalization_note": "docs/causal-normalization-research-20261023.md",
@@ -120,7 +120,8 @@
     "next_normalization_information_note": "docs/normalization-information-research-20261024.md",
     "next_associative_state_note": "docs/associative-state-research-20261024.md",
     "latest_contribution_diagnostic": "docs/prediction-update-research-20261024.md",
-    "latest_contribution_conclusion": "v1601和v2401的四档标签幅度IC/Rank IC贡献均提高；v2801双集净IC增量来自最外侧约1%抵消其余约99%贡献下降，预测相关性仍约0.99。不改变原晋级准则，不自动扩展树参数；v2901与v3001保持已发布配置等待正式结果。"
+    "latest_contribution_conclusion": "v1601和v2401的四档标签幅度IC/Rank IC贡献均提高；v2801双集净IC增量来自最外侧约1%抵消其余约99%贡献下降，预测相关性仍约0.99。不改变原晋级准则，不自动扩展树参数；这些贡献分解仅描述旧快照冻结结果，新快照另行评价。",
+    "next_representation_pretraining_note": "docs/representation-pretraining-research-20261024.md"
   },
   "legacy_runs": [
     {
@@ -153,8 +154,8 @@
   },
   "data_refresh": {
     "requested_at": "2026-10-24",
-    "status": "ready_for_scheduler_binding",
-    "block_new_training": true,
+    "status": "active",
+    "block_new_training": false,
     "basis": "用户要求重新下载可能更新的原始训练数据，后续训练使用新数据，已完成模型不重跑。",
     "download_entrypoint": "examples/redownload-raw-data.ipynb",
     "download_backend": "BigQuant Notebook native DAI",
@@ -193,6 +194,15 @@
     "preprocessing_validation": "experiments/data-preprocessing-20261024.json",
     "prepared_binding_sha256": "b37080f33303d765ca54140df6e426cf5f9dbc60a2d3ab3408465a9b18a7bd34",
     "resolved_new_run_example": "outputs/data-refresh/20261024/v3001-launch-data.json",
-    "controller_activation_verified": false
+    "controller_activation_verified": false,
+    "activated_at": "2026-10-24T16:37:38.694513+08:00",
+    "activation_evidence": "outputs/data-refresh/20261024/scheduler-binding-activation.json",
+    "activated_binding_sha256": "b37080f33303d765ca54140df6e426cf5f9dbc60a2d3ab3408465a9b18a7bd34",
+    "activated_paths": {
+      "data_root": "E:\\src\\jycapital\\data\\redownload\\jycapital-raw-20261024",
+      "training_run": "E:\\src\\jycapital\\outputs\\preprocessing\\data-20261024\\train",
+      "holdout_run": "E:\\src\\jycapital\\outputs\\preprocessing\\data-20261024\\holdout"
+    },
+    "controller_source_sha256": "751214715b15d30f031589ea2081de60368ac6ba90d713b1093d0a670bb28119"
   }
 }

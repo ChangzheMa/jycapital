@@ -93,3 +93,8 @@
 /experiments/data-snapshots.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/analyze-label-revision.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/training-data-paths.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/solutions/v3101/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/tests/test_v3101*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/export-v3101.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/verify-v3101-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/experiments/v3101*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

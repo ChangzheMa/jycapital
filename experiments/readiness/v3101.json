@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "solution_id": "v3101",
+  "status": "passed",
+  "checked_at": "2026-10-24T17:38:04+08:00",
+  "scope": "12项CPU检查覆盖双阶段训练、独立手算表征损失、时点退化、无标签采样、跨频遮挡、因果性、精确恢复、完整月内和全局入口及fast推理；另核对新数据缓存键和隔离依赖。",
+  "formal_training_performed": false,
+  "gpu_default_batch_pending": true,
+  "unique_tests_passed": 12,
+  "validation_runs": [
+    {
+      "scope": "完整test_v3101*.py集合",
+      "tests": 12,
+      "seconds": 50.829
+    }
+  ],
+  "checks": [
+    "test_defaults_and_parent_input_contract",
+    "test_pretraining_refactor_preserves_parent_parameters_and_predictions",
+    "test_text_roundtrip_preserves_memory_and_prediction",
+    "test_shared_heads_match_reference_and_are_causal",
+    "test_interrupted_group_cursor_restores_raw_ema_optimizer_and_rng",
+    "test_grouped_monthly_and_resident_full_synthetic_entrypoints",
+    "test_intraday_subrequest_keeps_earlier_exited_stock_context",
+    "test_loss_matches_independent_numpy_and_clock_only_is_penalized",
+    "test_mask_alignment_no_mutation_and_features_remain_causal",
+    "test_pretext_order_and_membership_ignore_label_validity",
+    "test_pretraining_resume_and_completed_stage_skip_are_exact",
+    "test_bfloat16_pretext_updates_encoder_only_and_projector_is_training_only"
+  ],
+  "test_files": {
+    "tests/test_v3101.py": "04df596889daa2ab7e0c0d7cb1a8ca8b08e98b9ccbb68159fbbc0d03b8b71c6f",
+    "tests/test_v3101_entrypoint.py": "05da86c322a472b2986c0d515f464f7930635c2aeb391aad256326281f58ec75",
+    "tests/test_v3101_predict.py": "208d7948f44d1defefda097dbacac3a9b09774a18f07abfc256703e960cdb20d",
+    "tests/test_v3101_pretraining.py": "42e5c07360dad6801870602f752b1179bfaa6326842d725682100ca980b00704"
+  },
+  "cpu_preflight": {
+    "status": "passed",
+    "scope": "synthetic_both_training_phases_and_fast",
+    "formal_training_performed": false,
+    "device": "cpu",
+    "step_seconds": {
+      "pretraining": [
+        1.2614334000027156,
+        1.1392311000017799,
+        1.1390710000050603
+      ],
+      "supervised": [
+        0.37805459999799496,
+        0.3503580000033253,
+        0.33593419999670004
+      ]
+    },
+    "pretraining_peak_allocated_bytes": null,
+    "supervised_peak_allocated_bytes": null,
+    "pretraining_stock_day_batch_size": 4,
+    "supervised_stock_day_batch_size": 2,
+    "inference_stock_day_batch_size": 4,
+    "pretraining_last_diagnostics": {
+      "loss": 24.741741180419922,
+      "invariance": 7.944247954583261e-06,
+      "variance": 0.989661693572998,
+      "covariance": 1.1709446745555852e-09,
+      "std_mean": 0.010338310152292252,
+      "dimensions_above_0_1_fraction": 0.0,
+      "valid_clocks": 8.0,
+      "present_queries": 32.0
+    },
+    "parameters": 2641743,
+    "solution_id": "v3101",
+    "checked_at": "2026-10-24T17:35:05+08:00"
+  },
+  "cpu_preflight_record": "outputs/checks/continuous-research/v3101-cpu-preflight.json",
+  "input_cache_compatibility": "experiments/v3101-input-cache-compatibility.json",
+  "workflow_tools": {
+    "scripts/check-candidate-device.py": "5898df0084a58bc82293aefd3b682ec41c128e239c80451366466df223e90c07",
+    "scripts/assess.py": "ff94b8b4e1cee6bfa9ebbf447ea9c1375e89aed5bed76ae903d5d4ca6d49da5c",
+    "scripts/training-data-paths.py": "e250b08b8466e964e5a6bc8f65294736fcbbf852fb3a1aaa6057182ab1728552",
+    "scripts/export-v3101.py": "1e937dd6fd20ab695b8c1f681fa9bdcf6654b7f8b164ccf0f1cc38c19e284aae",
+    "scripts/verify-v3101-submission.py": "2dea8e4c5ab010ea48d873313ce4444a310621c0753916c32997162b7aae91f0"
+  },
+  "model_checks": {
+    "parent_state_and_supervised_prediction_exact_before_pretraining": true,
+    "independent_numpy_loss_matches": true,
+    "clock_only_representation_penalized": true,
+    "cross_frequency_masks_aligned": true,
+    "source_arrays_not_modified": true,
+    "all_clock_future_gradients_zero": true,
+    "pretext_sampler_independent_of_label_values_and_validity": true,
+    "pretext_with_all_nan_labels_completes": true,
+    "pretraining_resume_model_projector_optimizer_rng_exact": true,
+    "completed_pretraining_skipped_on_resume": true,
+    "pretraining_identity_change_rejected": true,
+    "supervised_resume_raw_ema_optimizer_rng_exact": true,
+    "bf16_pretraining_encoder_gradients_finite": true,
+    "unused_expert_heads_unchanged_during_pretraining": true,
+    "text_tensor_roundtrip_exact": true
+  },
+  "input_checks": {
+    "new_snapshot_same_manifest_keys_match_v3001": true,
+    "cache_build_completion_checked": false,
+    "new_full_input_or_target_arrays": false,
+    "synthetic_monthly_and_global_entries_passed": true,
+    "memory_reserve_gib": 2.0
+  },
+  "platform_check": {
+    "scope": "动态股票池合成数据，24行整日和9行部分请求；不重复行情区间或速度基准。",
+    "fast_reference_and_partial_requests_match": true,
+    "labels_or_exposure_queried": false,
+    "isolated_notebook_runtime_without_training_dependencies": true,
+    "standalone_training_import_passed": true,
+    "pretraining_module_imported_by_runtime": false,
+    "runtime_sources": [
+      "common/price_geometry.py",
+      "common/price_memory_inputs.py",
+      "solutions/v3101/v1601_schema.py",
+      "solutions/v3101/v1601_data.py",
+      "solutions/v3101/v3101_schema.py",
+      "solutions/v3101/v3101_preprocessing.py",
+      "solutions/v3101/v3101_data.py",
+      "solutions/v3101/v3101_price_memory.py",
+      "solutions/v3101/v3101_model.py",
+      "solutions/v3101/v3101_text_artifact.py",
+      "solutions/v3101/v3101_fast.py",
+      "solutions/v3101/v3101_predict.py"
+    ]
+  },
+  "limitations": [
+    "仅实现验证，没有正式IC结果。",
+    "默认GPU双视图预训练、微调及推理批量由训练session在空闲时检查。",
+    "两轮表征预训练有额外计算；损失与表示方差不能证明收益预测改善。",
+    "只在修订数据组内比较；旧v2401为结构来源，不重训补基线。",
+    "遮挡和去时点均值不能保证表示不学到与收益无关的股票、波动或市场特征。"
+  ],
+  "source_files": {
+    "common/artifacts.py": "2147b8caac813c4504ea25abf2d016ccbec34dea51eacc41cb0c0284b59f79a9",
+    "common/coordinate_inputs.py": "dbfa175490242cef9053e81dfc0671c7ae55697a7dc343f1c4c9f3c8c5bfd4ed",
+    "common/coordinate_resident.py": "2272c67ad3e30e928a63ccf3b45d0c7680d2023963f57f48998954055e81ba7c",
+    "common/early_stopping.py": "98d6d0bffab58f6ae4c336579f9becc57800735d6d83cb3ebe7de9068dd4252b",
+    "common/geometry_evaluation_cache.py": "babdfa698055e35393d1f3bc74c6ccdf13fbb59f6b7b343b548be3b43e8eaef3",
+    "common/geometry_resident.py": "859a3e97246f60a1106a598981d6f72a237944a713e3afafdbab3fd7b6db60d0",
+    "common/price_geometry.py": "7cc91d1f829dead205df12254dd666950eb68d344e60589c024f2d7cd541eb7c",
+    "common/price_memory_evaluation_cache.py": "ffcf4c06bc13b4e3b761ffabd5e376f291e5ffa84f763d77c6f8db6fc5e59dbc",
+    "common/price_memory_inputs.py": "8431972dac0cd0a28258c94ed4b25b125ba5d0867284eec820ef585c60a538c4",
+    "common/price_memory_resident.py": "e2cf8ecb79f20b261a301c2836c5d73d73af5f819652d60c36320d8f8d47c23b",
+    "common/protocol_compatibility.py": "8ac97ca6c03754f7b0255fdbc2dc588b28192cef49eefdd4388335b1feabbc78",
+    "common/training_resources.py": "3d9015d07f00fffe82a1ad5bfb6bc0dad08aa1d348f4ec80af76e7c699e703b8",
+    "evaluation/baseline_evaluation.py": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
+    "evaluation/protocols/local-v2-ic.json": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
+    "solutions/v3101/config.json": "70999dae0f73913953798f298de84eb02134c551bccad3d6109f2b4f7448d569",
+    "solutions/v3101/model-config.json": "cede3e8b073541981ed8217d79e28a6c12e5ffd3d5d5777ffa301db2cf0ef2aa",
+    "solutions/v3101/requirements-inference.txt": "df3ca0a7991c22cae3cb027aea73444dc7dc15dfa440f85ce36dc5919ba0efa4",
+    "solutions/v3101/requirements-training.txt": "90ef13ed0269ddd9adf1af7d5cfeee4b2a1f4fff4a9e2b6c13141cf6f81f4930",
+    "solutions/v3101/requirements.txt": "2e3a5e071030fe54faab119b4934ef4f736cf18a857f8ee3d2e95b1f807afb72",
+    "solutions/v3101/v1601_data.py": "41b77fe6e9456428b10bd0bac17505b14a253f88faa5cb575aaf8cfbe9fa9992",
+    "solutions/v3101/v1601_schema.py": "c4546a9404da89b51c942bea9462e5b4def225238742d5db6af4929dbb1943c6",
+    "solutions/v3101/v3101_apply.py": "dae5c17f7cd332d9fd74e78606ef46e0af5b8c35f4d38bcc99f1f3a7db28353d",
+    "solutions/v3101/v3101_data.py": "dbc7b64d6d5288ea35ceb07acc108094481e95a61e4af351a960571c1a989d59",
+    "solutions/v3101/v3101_ema.py": "3dafc17368a5b24321abecda3fd6dc943503e4ed3e8f832daca6b55a568c9e5c",
+    "solutions/v3101/v3101_evaluation.py": "d5daee75b961da8948e2f14279fc3b81a9c1cc79a80ab3822fe675b2d13bf9bd",
+    "solutions/v3101/v3101_evaluation_cache.py": "f618226905cfa53bf5bc843c76d0d036f56a1f3f2a53dd44b8a368c2ab9cf949",
+    "solutions/v3101/v3101_fast.py": "fa282db6df326000ed9ec6a74e9c2f99ba3bf74f0b39ab0b13ec8b684a88e7f6",
+    "solutions/v3101/v3101_grouped.py": "45f88b16a43a7beb4e9fafec760adec84efef183e5c236c270c81bc9a6c8b238",
+    "solutions/v3101/v3101_loss.py": "2ecc8fea6b0bbb1a0f70ae215d2548f2d1a6669fb08e27b42f59d4cef6232803",
+    "solutions/v3101/v3101_model.py": "130f4b875ffce69c4cd6c25d6b60786858e3f1493fa73fc2b3c3f680c21dac27",
+    "solutions/v3101/v3101_notebook.py": "eb8edb2b6a14883108d4dbb4616c604373d07323bcfa453302909d450595ca40",
+    "solutions/v3101/v3101_objective.py": "9bfb7206edecf9de551a8bf199561c07a93e405f134b9018e84d3c69d150c05f",
+    "solutions/v3101/v3101_predict.py": "8302222dd01d66d00e186c530e535464c8c71d329d47ae552ec946a39c27d45e",
+    "solutions/v3101/v3101_predict_fast.py": "8302222dd01d66d00e186c530e535464c8c71d329d47ae552ec946a39c27d45e",
+    "solutions/v3101/v3101_predict_reference.py": "5967e162e7fdd38f5be9bf0d5658c07052728e9a1d3a6417e9751c3bff7d294c",
+    "solutions/v3101/v3101_prepare.py": "2feab278d984ca6dc632c2f1309ae27e89e57f4891a03e0ba45abb1b6043d5f9",
+    "solutions/v3101/v3101_preprocessing.py": "5b8a30476c0d68669a448973d9e21bc8ca790d11350edf87968d279a8d0734a3",
+    "solutions/v3101/v3101_pretraining.py": "afb1b59986af7f835491d62d175406a80fdf4bcc649ccf178f8f136b2359590d",
+    "solutions/v3101/v3101_price_memory.py": "906edaeff349b1dd4b3e66d7b43eccacb269c378f3d00e661cde8323fafaffa4",
+    "solutions/v3101/v3101_reproduce.py": "60eb9a6b499b2d8808b0d278adfd756fd5cba32b2202fca8030cbb64867da74f",
+    "solutions/v3101/v3101_resident.py": "52b0bae96fc6cd890d1e6131dc264fc12e29e8bbf7aa49bf2d70b9d495bb1668",
+    "solutions/v3101/v3101_schema.py": "aa33c93dae4a7ac11907cd4a42e2660ff9e3bb03c75c50ea59262731f40583d2",
+    "solutions/v3101/v3101_targets.py": "2ac6e1428a74f5155fe4b6ff8e8eaaf86d34ab7bea2148d16ee548d38264c342",
+    "solutions/v3101/v3101_temporal.py": "30272d0b71ac54cd04a943c249285e642bf510581a4f7387e4082a690be582cb",
+    "solutions/v3101/v3101_text_artifact.py": "12fa75ba31254804d39da8dcaa4ecf306d5e34d3a035c7ea02a225a9987e0d02",
+    "solutions/v3101/v3101_train.py": "54f9e37333860c5feb103cc05267c2005db342b86da27d972f7e17c601f40769"
+  }
+}
