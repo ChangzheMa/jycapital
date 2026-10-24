@@ -117,7 +117,9 @@
     "next_omitted_input_note": "docs/unused-market-fields-research-20261023.md",
     "next_predictor_note": "docs/neural-tree-research-20261024.md",
     "next_normalization_information_note": "docs/normalization-information-research-20261024.md",
-    "next_associative_state_note": "docs/associative-state-research-20261024.md"
+    "next_associative_state_note": "docs/associative-state-research-20261024.md",
+    "latest_contribution_diagnostic": "docs/prediction-update-research-20261024.md",
+    "latest_contribution_conclusion": "v1601和v2401的四档标签幅度IC/Rank IC贡献均提高；v2801双集净IC增量来自最外侧约1%抵消其余约99%贡献下降，预测相关性仍约0.99。不改变原晋级准则，不自动扩展树参数；v2901与v3001保持已发布配置等待正式结果。"
   },
   "legacy_runs": [
     {

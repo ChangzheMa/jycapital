@@ -87,6 +87,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 不同预测器研究 | [完整历史表示与梯度提升树](neural-tree-research-20261024.md)；[v2801](../solutions/v2801/README.md#冻结结果与平台材料)已完成，双集IC小幅晋级、Rank IC下降，fast已导出 |
 | 归一化信息研究 | [固定参数与数量绝对尺度](normalization-information-research-20261024.md)；[v2901](../solutions/v2901/README.md)已发布ready，保留父输入并用小型固定参数表补充数量尺度，不新增完整行情缓存 |
 | 关联状态研究 | [新近论文质量与矩阵记忆机制](associative-state-research-20261024.md)；[v3001](../solutions/v3001/README.md)已发布ready，替换分层GRU、保留价格输入及完整历史，323.67万参数，复用父缓存 |
+| 近期改进的增益来源 | [预测差正交分解与标签幅度贡献](prediction-update-research-20261024.md)；v1601／v2401四档贡献均改善，v2801的净IC增益来自最外侧约1%抵消其余下降，不修改冻结选模和晋级规则 |
 | 共同价格坐标结果 | [v1601 冻结结果与 fast 材料](../solutions/v1601/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1601-gru.json)；参数量与父版相同，双集 IC／Rank IC 改善，新输入缓存可复用 |
 | 长期历史状态研究 | [长期上下文依据与正式结论](long-context-research-20261022.md)、[v1701 冻结结果](../solutions/v1701/README.md#冻结结果)、[比较摘要](../experiments/v1701-gru.json)；父版 IC 小幅改善，但耗时增加且未超过 v1601，不导出 |
 | 盘前信息与交易阶段研究 | [日内效果、盘前输入覆盖及正式结果](session-input-research-20261022.md)、[只读审计结果](../experiments/session-input-audit-20261022.json)；信息覆盖缺口已检验，v1801 未带来稳定的开盘预测改善 |

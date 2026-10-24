@@ -1,0 +1,508 @@
+{
+  "computed_at": "2026-10-24T10:51:50+08:00",
+  "script_sha256": "1465aa1c655823abe2bfd354f8e18055ca750a34bbed99057a3cd3c26f8afe6d",
+  "parent_run_id": "v1601-price-geometry-s42",
+  "child_run_id": "v2401-price-memory-s42",
+  "source_hashes": {
+    "cpt_jyc_2026_instruments.parquet": "5913b48d9bd2c203708c2fc4301278dee6630baf8f0b7c012e4245bf01405a20",
+    "cpt_jyc_2026_vwap.parquet": "df2bdd9ec58cd6ce3b946af55e6f508b20d55e7dae6ab91290c48d34366f4448"
+  },
+  "method": "逐截面将中心化预测差正交分解为父方向和新增方向，并固定按真实标签幅度四档分解完整截面IC。",
+  "band_cutoffs": [
+    0.8,
+    0.95,
+    0.99
+  ],
+  "bands": [
+    "central_80pct",
+    "next_15pct",
+    "next_4pct",
+    "extreme_1pct"
+  ],
+  "tie_method": "average",
+  "model_training_performed": false,
+  "new_prediction_candidate": false,
+  "formal_metrics_modified": false,
+  "exposure_read": false,
+  "label_source": "直接使用已提供的vwap_return；不重算、替换或反推公式。",
+  "limitations": [
+    "标签幅度分档只用于事后解释，不能用于部署筛选或模型切换。",
+    "预测差包括两次冻结推理的数值差异，不强称逐行等于原生树输出。",
+    "正交方向表示与父分数线性不重合，不能据此证明加入了新的原始信息。",
+    "完整截面贡献包含预测分母变化，不是子组独立IC。",
+    "验证/测试均已在持续研究中观察；重采样未校正选模，不提供独立显著性结论。"
+  ],
+  "results": {
+    "validation": {
+      "prediction_sha256": {
+        "parent": "3c471f672a41d309884f1a1f942b36fa62f75465a0b38213d0e867bbdd03298e",
+        "child": "b0de4bac14c74fcaeb90cb74e40e7a25f35031b7ee4c0c8532e27d4de78da3c5"
+      },
+      "predicted_rows": 936000,
+      "evaluated_rows": 935224,
+      "cross_sections": 936,
+      "frozen_sections_reconstructed": true,
+      "mean": {
+        "parent_ic": 0.10552600428647893,
+        "child_ic": 0.10777784778577437,
+        "ic_delta": 0.002251843499295438,
+        "prediction_correlation": 0.9451682722967406,
+        "centered_update_to_parent_rms": 0.3244875859527404,
+        "parent_direction_coefficient": 0.9595451195343285,
+        "orthogonal_child_variance_share": 0.10529846760882622,
+        "orthogonal_ic_contribution": 0.007451599388608962,
+        "parent_direction_ic_change": -0.005199755889313521,
+        "intercept_update": -0.003351429950020841,
+        "parent_rank_ic": 0.10263980376862289,
+        "child_rank_ic": 0.1041777313786221,
+        "rank_ic_delta": 0.001537927609999209
+      },
+      "bands": {
+        "central_80pct": {
+          "parent": {
+            "ic": 0.022843650401959233,
+            "rank_ic": 0.04734478023457057,
+            "prediction_variance": 0.5521081452232491,
+            "label_variance": 0.2253347907916588,
+            "sample_fraction": 0.7998424384834137
+          },
+          "child": {
+            "ic": 0.02312769408484544,
+            "rank_ic": 0.04781513286300539,
+            "prediction_variance": 0.5505774194468354,
+            "label_variance": 0.2253347907916588,
+            "sample_fraction": 0.7998424384834137
+          },
+          "delta": {
+            "ic": 0.0002840436828862071,
+            "rank_ic": 0.0004703526284348253,
+            "prediction_variance": -0.0015307257764137772,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        },
+        "next_15pct": {
+          "parent": {
+            "ic": 0.03744808343792619,
+            "rank_ic": 0.03990472046059438,
+            "prediction_variance": 0.2126635364586342,
+            "label_variance": 0.298436716332894,
+            "sample_fraction": 0.1501160171534309
+          },
+          "child": {
+            "ic": 0.038151141221205165,
+            "rank_ic": 0.04043649721653745,
+            "prediction_variance": 0.21331742024152814,
+            "label_variance": 0.298436716332894,
+            "sample_fraction": 0.1501160171534309
+          },
+          "delta": {
+            "ic": 0.0007030577832789764,
+            "rank_ic": 0.0005317767559430697,
+            "prediction_variance": 0.0006538837828939381,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        },
+        "next_4pct": {
+          "parent": {
+            "ic": 0.03176256671145034,
+            "rank_ic": 0.01392685289861875,
+            "prediction_variance": 0.14118748834288522,
+            "label_variance": 0.23403088773424705,
+            "sample_fraction": 0.040033235490524316
+          },
+          "child": {
+            "ic": 0.0319956076947047,
+            "rank_ic": 0.014302403875860225,
+            "prediction_variance": 0.1391329961276871,
+            "label_variance": 0.23403088773424705,
+            "sample_fraction": 0.040033235490524316
+          },
+          "delta": {
+            "ic": 0.00023304098325435674,
+            "rank_ic": 0.00037555097724147404,
+            "prediction_variance": -0.002054492215198128,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        },
+        "extreme_1pct": {
+          "parent": {
+            "ic": 0.013471703735143167,
+            "rank_ic": 0.001463450174839198,
+            "prediction_variance": 0.09404082997523135,
+            "label_variance": 0.24219760514120023,
+            "sample_fraction": 0.010008308872631079
+          },
+          "child": {
+            "ic": 0.014503404785019066,
+            "rank_ic": 0.0016236974232190261,
+            "prediction_variance": 0.09697216418394937,
+            "label_variance": 0.24219760514120023,
+            "sample_fraction": 0.010008308872631079
+          },
+          "delta": {
+            "ic": 0.0010317010498758997,
+            "rank_ic": 0.00016024724837982807,
+            "prediction_variance": 0.0029313342087180227,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        }
+      },
+      "monthly": {
+        "2024-01": {
+          "parent_ic": 0.09962714536104347,
+          "child_ic": 0.10119006447810155,
+          "ic_delta": 0.001562919117058096,
+          "prediction_correlation": 0.9508857870534111,
+          "centered_update_to_parent_rms": 0.3084370692810508,
+          "parent_direction_coefficient": 0.9537375304140453,
+          "orthogonal_child_variance_share": 0.09509964852045498,
+          "orthogonal_ic_contribution": 0.0058870334774381245,
+          "parent_direction_ic_change": -0.004324114360380022,
+          "intercept_update": -0.002531061676159148,
+          "parent_rank_ic": 0.09091067038636097,
+          "child_rank_ic": 0.09407067407004338,
+          "rank_ic_delta": 0.0031600036836823956
+        },
+        "2024-02": {
+          "parent_ic": 0.0931220699052268,
+          "child_ic": 0.09603544460886973,
+          "ic_delta": 0.00291337470364294,
+          "prediction_correlation": 0.9083232709839811,
+          "centered_update_to_parent_rms": 0.4189275608976748,
+          "parent_direction_coefficient": 0.9418583256771901,
+          "orthogonal_child_variance_share": 0.17032782786536627,
+          "orthogonal_ic_contribution": 0.010703919697370123,
+          "parent_direction_ic_change": -0.007790544993727183,
+          "intercept_update": -0.011497661891962862,
+          "parent_rank_ic": 0.08334021142218268,
+          "child_rank_ic": 0.08604472170274885,
+          "rank_ic_delta": 0.002704510280566163
+        },
+        "2024-03": {
+          "parent_ic": 0.1251272670503555,
+          "child_ic": 0.1276606017610331,
+          "ic_delta": 0.0025333347106775922,
+          "prediction_correlation": 0.9521929247144928,
+          "centered_update_to_parent_rms": 0.30660873962179186,
+          "parent_direction_coefficient": 0.9788488460875174,
+          "orthogonal_child_variance_share": 0.09253979577164484,
+          "orthogonal_ic_contribution": 0.007824828630562473,
+          "parent_direction_ic_change": -0.005291493919884878,
+          "intercept_update": -0.0010147211941656017,
+          "parent_rank_ic": 0.13309808162779127,
+          "child_rank_ic": 0.1324016200403699,
+          "rank_ic_delta": -0.0006964615874213766
+        },
+        "2024-04": {
+          "parent_ic": 0.11560531804626284,
+          "child_ic": 0.11625633528050072,
+          "ic_delta": 0.0006510172342378805,
+          "prediction_correlation": 0.9477852892636879,
+          "centered_update_to_parent_rms": 0.3185647170477747,
+          "parent_direction_coefficient": 0.9577946114723114,
+          "orthogonal_child_variance_share": 0.10103592020724836,
+          "orthogonal_ic_contribution": 0.00621332936732104,
+          "parent_direction_ic_change": -0.005562312133083161,
+          "intercept_update": -0.0035410629365090146,
+          "parent_rank_ic": 0.10946173093805267,
+          "child_rank_ic": 0.10810632805135627,
+          "rank_ic_delta": -0.001355402886696398
+        },
+        "2024-05": {
+          "parent_ic": 0.11310885295752952,
+          "child_ic": 0.1131282878655673,
+          "ic_delta": 1.9434908037766168e-05,
+          "prediction_correlation": 0.9542530096215576,
+          "centered_update_to_parent_rms": 0.29986684897165816,
+          "parent_direction_coefficient": 0.9637817502055274,
+          "orthogonal_child_variance_share": 0.0889675030619332,
+          "orthogonal_ic_contribution": 0.004908390931050418,
+          "parent_direction_ic_change": -0.004888956023012648,
+          "intercept_update": -0.0023033067011273564,
+          "parent_rank_ic": 0.11715757997449272,
+          "child_rank_ic": 0.11932138752635515,
+          "rank_ic_delta": 0.0021638075518624253
+        },
+        "2024-06": {
+          "parent_ic": 0.08189253825596654,
+          "child_ic": 0.08814368438848767,
+          "ic_delta": 0.006251146132521138,
+          "prediction_correlation": 0.9475544253723491,
+          "centered_update_to_parent_rms": 0.32042651401979494,
+          "parent_direction_coefficient": 0.9562802857818395,
+          "orthogonal_child_variance_share": 0.10154772885336795,
+          "orthogonal_ic_contribution": 0.010263567857569305,
+          "parent_direction_ic_change": -0.004012421725048162,
+          "intercept_update": -0.0013564463719625902,
+          "parent_rank_ic": 0.07533016782429852,
+          "child_rank_ic": 0.07892529388497908,
+          "rank_ic_delta": 0.0035951260606805605
+        }
+      },
+      "exploratory_intervals": {
+        "ic_delta": {
+          "mean": 0.0022518434992954374,
+          "percentile_95": [
+            0.0006958112703219135,
+            0.003828679291894438
+          ],
+          "block_days": 5,
+          "draws": 2000,
+          "seed": 20261024,
+          "interpretation": "探索性日期块重采样；未校正历史选模和多次研究观察，不构成独立显著性证明。"
+        },
+        "rank_ic_delta": {
+          "mean": 0.001537927609999209,
+          "percentile_95": [
+            -0.0005050854623839591,
+            0.003061033773506426
+          ],
+          "block_days": 5,
+          "draws": 2000,
+          "seed": 20261024,
+          "interpretation": "探索性日期块重采样；未校正历史选模和多次研究观察，不构成独立显著性证明。"
+        }
+      }
+    },
+    "test": {
+      "prediction_sha256": {
+        "parent": "62d831f8e75b8e28bf54a164c7dea1d977b0ef11d8821725218b07557882514c",
+        "child": "db4e118c7ec4c69b2e616834e0d6fd50c5b1e362fd95ec3c14bc0326d94c11d1"
+      },
+      "predicted_rows": 1000000,
+      "evaluated_rows": 998539,
+      "cross_sections": 1000,
+      "frozen_sections_reconstructed": true,
+      "mean": {
+        "parent_ic": 0.11625947902475744,
+        "child_ic": 0.11935175870015119,
+        "ic_delta": 0.003092279675393743,
+        "prediction_correlation": 0.9416886813048139,
+        "centered_update_to_parent_rms": 0.333326872937276,
+        "parent_direction_coefficient": 0.9436272977831011,
+        "orthogonal_child_variance_share": 0.11183099858498485,
+        "orthogonal_ic_contribution": 0.008982255444163062,
+        "parent_direction_ic_change": -0.00588997576876932,
+        "intercept_update": -0.0015815204737977292,
+        "parent_rank_ic": 0.10419601366217873,
+        "child_rank_ic": 0.1082639660389826,
+        "rank_ic_delta": 0.0040679523768038595
+      },
+      "bands": {
+        "central_80pct": {
+          "parent": {
+            "ic": 0.019621599238098187,
+            "rank_ic": 0.0470949548018785,
+            "prediction_variance": 0.5167238263378653,
+            "label_variance": 0.20085601187033253,
+            "sample_fraction": 0.7997861052765072
+          },
+          "child": {
+            "ic": 0.02060856495146757,
+            "rank_ic": 0.0486695202553772,
+            "prediction_variance": 0.516546689412293,
+            "label_variance": 0.20085601187033253,
+            "sample_fraction": 0.7997861052765072
+          },
+          "delta": {
+            "ic": 0.0009869657133693838,
+            "rank_ic": 0.001574565453498697,
+            "prediction_variance": -0.00017713692557230765,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        },
+        "next_15pct": {
+          "parent": {
+            "ic": 0.036833342245878586,
+            "rank_ic": 0.04143279055709053,
+            "prediction_variance": 0.2125602461912101,
+            "label_variance": 0.27785771741938947,
+            "sample_fraction": 0.15015917726152508
+          },
+          "child": {
+            "ic": 0.03828663103507896,
+            "rank_ic": 0.04311500481932524,
+            "prediction_variance": 0.21251058345982463,
+            "label_variance": 0.27785771741938947,
+            "sample_fraction": 0.15015917726152508
+          },
+          "delta": {
+            "ic": 0.0014532887892003757,
+            "rank_ic": 0.0016822142622347075,
+            "prediction_variance": -4.9662731385485825e-05,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        },
+        "next_4pct": {
+          "parent": {
+            "ic": 0.035408590728484846,
+            "rank_ic": 0.013710991068769524,
+            "prediction_variance": 0.15816128467548965,
+            "label_variance": 0.23910317362396064,
+            "sample_fraction": 0.040042447269740024
+          },
+          "child": {
+            "ic": 0.03601089147127206,
+            "rank_ic": 0.014327068024375413,
+            "prediction_variance": 0.1570494985225056,
+            "label_variance": 0.23910317362396064,
+            "sample_fraction": 0.040042447269740024
+          },
+          "delta": {
+            "ic": 0.0006023007427872137,
+            "rank_ic": 0.0006160769556058897,
+            "prediction_variance": -0.0011117861529840456,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        },
+        "extreme_1pct": {
+          "parent": {
+            "ic": 0.024395946812295833,
+            "rank_ic": 0.001957277234440182,
+            "prediction_variance": 0.11255464279543503,
+            "label_variance": 0.2821830970863174,
+            "sample_fraction": 0.010012270192227708
+          },
+          "child": {
+            "ic": 0.024445671242332594,
+            "rank_ic": 0.0021523729399047457,
+            "prediction_variance": 0.11389322860537675,
+            "label_variance": 0.2821830970863174,
+            "sample_fraction": 0.010012270192227708
+          },
+          "delta": {
+            "ic": 4.9724430036760664e-05,
+            "rank_ic": 0.00019509570546456367,
+            "prediction_variance": 0.0013385858099417142,
+            "label_variance": 0.0,
+            "sample_fraction": 0.0
+          }
+        }
+      },
+      "monthly": {
+        "2024-07": {
+          "parent_ic": 0.10410957495117094,
+          "child_ic": 0.10899446527138719,
+          "ic_delta": 0.004884890320216258,
+          "prediction_correlation": 0.949859766899412,
+          "centered_update_to_parent_rms": 0.3132852116990007,
+          "parent_direction_coefficient": 0.9517812114796761,
+          "orthogonal_child_variance_share": 0.0973276455208447,
+          "orthogonal_ic_contribution": 0.009819831177314092,
+          "parent_direction_ic_change": -0.004934940857097831,
+          "intercept_update": -0.0011097901253917344,
+          "parent_rank_ic": 0.09470062053284799,
+          "child_rank_ic": 0.0988374388605678,
+          "rank_ic_delta": 0.004136818327719804
+        },
+        "2024-08": {
+          "parent_ic": 0.11545091627624192,
+          "child_ic": 0.11825897260146306,
+          "ic_delta": 0.002808056325221125,
+          "prediction_correlation": 0.949011803808144,
+          "centered_update_to_parent_rms": 0.31695072167569766,
+          "parent_direction_coefficient": 0.9527445845021071,
+          "orthogonal_child_variance_share": 0.09878349203504427,
+          "orthogonal_ic_contribution": 0.008256063386982997,
+          "parent_direction_ic_change": -0.0054480070617618755,
+          "intercept_update": -0.002293719547360279,
+          "parent_rank_ic": 0.09738466487712945,
+          "child_rank_ic": 0.10154028136504052,
+          "rank_ic_delta": 0.004155616487911078
+        },
+        "2024-09": {
+          "parent_ic": 0.09901483689180325,
+          "child_ic": 0.10190691711203717,
+          "ic_delta": 0.0028920802202339235,
+          "prediction_correlation": 0.9399564723049467,
+          "centered_update_to_parent_rms": 0.3408128192795943,
+          "parent_direction_coefficient": 0.9474452417753986,
+          "orthogonal_child_variance_share": 0.11539072105588546,
+          "orthogonal_ic_contribution": 0.007977237566736404,
+          "parent_direction_ic_change": -0.005085157346502477,
+          "intercept_update": -0.00838231178625408,
+          "parent_rank_ic": 0.06986970417343956,
+          "child_rank_ic": 0.07357727701292183,
+          "rank_ic_delta": 0.0037075728394822594
+        },
+        "2024-10": {
+          "parent_ic": 0.08910355941852773,
+          "child_ic": 0.09653135500413518,
+          "ic_delta": 0.007427795585607452,
+          "prediction_correlation": 0.9155413243816758,
+          "centered_update_to_parent_rms": 0.3963437405946785,
+          "parent_direction_coefficient": 0.9269792622955121,
+          "orthogonal_child_variance_share": 0.1574567988820765,
+          "orthogonal_ic_contribution": 0.013147411981937395,
+          "parent_direction_ic_change": -0.00571961639632994,
+          "intercept_update": 0.003171920960799487,
+          "parent_rank_ic": 0.08832867617076152,
+          "child_rank_ic": 0.09347443582187141,
+          "rank_ic_delta": 0.00514575965110988
+        },
+        "2024-11": {
+          "parent_ic": 0.14787074104226564,
+          "child_ic": 0.14867602094074642,
+          "ic_delta": 0.0008052798984807584,
+          "prediction_correlation": 0.9405575639288107,
+          "centered_update_to_parent_rms": 0.3365129402219074,
+          "parent_direction_coefficient": 0.9361345285312188,
+          "orthogonal_child_variance_share": 0.11434612842706338,
+          "orthogonal_ic_contribution": 0.008754373754079654,
+          "parent_direction_ic_change": -0.007949093855598895,
+          "intercept_update": -0.0006399892164825821,
+          "parent_rank_ic": 0.13448371648538485,
+          "child_rank_ic": 0.1380378658897892,
+          "rank_ic_delta": 0.003554149404404367
+        },
+        "2024-12": {
+          "parent_ic": 0.13670740744432214,
+          "child_ic": 0.1370185220039087,
+          "ic_delta": 0.0003111145595865695,
+          "prediction_correlation": 0.94979205388486,
+          "centered_update_to_parent_rms": 0.30959003316093536,
+          "parent_direction_coefficient": 0.9434614584364248,
+          "orthogonal_child_variance_share": 0.09723578974841693,
+          "orthogonal_ic_contribution": 0.006510438211363429,
+          "parent_direction_ic_change": -0.00619932365177686,
+          "intercept_update": -0.0002769970958276901,
+          "parent_rank_ic": 0.13465119143899315,
+          "child_rank_ic": 0.13847932633291363,
+          "rank_ic_delta": 0.0038281348939204875
+        }
+      },
+      "exploratory_intervals": {
+        "ic_delta": {
+          "mean": 0.0030922796753937425,
+          "percentile_95": [
+            0.0013249295312274538,
+            0.0047727091118490595
+          ],
+          "block_days": 5,
+          "draws": 2000,
+          "seed": 20261024,
+          "interpretation": "探索性日期块重采样；未校正历史选模和多次研究观察，不构成独立显著性证明。"
+        },
+        "rank_ic_delta": {
+          "mean": 0.00406795237680386,
+          "percentile_95": [
+            0.0027281730221720723,
+            0.005176113492743115
+          ],
+          "block_days": 5,
+          "draws": 2000,
+          "seed": 20261024,
+          "interpretation": "探索性日期块重采样；未校正历史选模和多次研究观察，不构成独立显著性证明。"
+        }
+      }
+    }
+  },
+  "tree_training_structure": null
+}

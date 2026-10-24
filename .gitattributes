@@ -84,3 +84,4 @@
 /experiments/v2801*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /solutions/v3001/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /tests/test_v3001*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
+/scripts/analyze-prediction-update.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
