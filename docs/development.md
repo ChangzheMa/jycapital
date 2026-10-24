@@ -60,6 +60,8 @@ x=\min\left(12,\max\left(4,\left\lceil0.6e_{\text{best}}\right\rceil\right)\righ
 
 本地指标不包含平台 BARRA、交易成本和压力场景评分。损失定义见 [Pearson IC](v4-ic-loss-plan.md)，官方评分口径见 [比赛规则](bigquant-2026-end-to-end/rules.md#6-评分)。
 
+2026-10-24原始标签修订后，运行按[数据快照登记](../experiments/data-snapshots.json)分组。已有结果保持原值，不跨修订标签直接作指标差；只有核验完整的数据修订证据才能登记首个新组基线。首个结果记录为`new_data_cohort_baseline`且不自动晋级，后续仍严格按同组验证IC改善及覆盖判定；旧父版只保留结构来源。细节见[修订结果](raw-data-revision-20261024.md)和[切换流程](data-refresh.md)。
+
 ## 训练入口
 
 本地查询使用 `.venv`，训练使用 `.venv-training`；依赖见各版本的 `requirements*.txt`，实际环境保存在运行记录中。预处理入口为对应版本的 `prepare`／`apply` 脚本。v2—v7 的现有输入可复用冻结目录 `outputs/preprocessing/v2-20261010/` 与 `outputs/preprocessing/v2-holdout-20261011/`；来源见 [训练摘要](../experiments/v2-preprocessing.json)和[验证／测试摘要](../experiments/v2-holdout-preprocessing.json)。

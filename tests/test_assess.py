@@ -2,6 +2,7 @@
 
 import importlib.util
 import json
+import shutil
 from pathlib import Path
 import sys
 import tempfile
@@ -158,6 +159,73 @@ class AssessmentTest(unittest.TestCase):
                     assessor.record(result)
                 self.assertTrue((experiments / f"{version}-{suffix}.json").is_file())
                 self.assertFalse((experiments / f"{version}-tcn.json").exists())
+
+    def register_revision(self, root, run, experiments):
+        for name in ('parent','new'):
+            path=root/'outputs/runs'/name/'protocol.json'
+            protocol=json.loads(path.read_text())
+            protocol.update(label_column='vwap_return',splits={
+                'train':{'start':'2020-01-01','stop':'2024-01-01'},
+                'validation':{'start':'2024-01-01','stop':'2024-07-01'},
+                'test':{'start':'2024-07-01','stop':'2025-01-01'}})
+            write(path,protocol)
+        data=json.loads((run/'data-manifest.json').read_text())
+        data['files'][1]['sha256']='revised-labels'
+        write(run/'data-manifest.json',data)
+        sources={'pool':'pool','labels':'revised-labels'}
+        proof={'covers_required_protocol':True,'new_evaluation_sources':sources,
+               'scope':{'start':'2020-01-01','stop':'2025-01-01'},
+               'impact_by_split':{split:{'label_values_or_keys_changed':True,'universe_keys_changed':False}
+                                  for split in ('validation','test')}}
+        write(experiments/'revision-proof.json',proof)
+        registry={'label_column':'vwap_return','snapshots':[
+            {'id':'old','evaluation_sources':{'pool':'pool','labels':'labels'}},
+            {'id':'new','evaluation_sources':sources,'allow_first_cohort_baseline':True,
+             'allow_parent_in_other_cohort':True,'proof':'experiments/revision-proof.json',
+             'proof_sha256':assessor.sha256(experiments/'revision-proof.json')}]}
+        write(experiments/'data-snapshots.json',registry)
+
+    def test_verified_new_label_cohort_records_baseline_without_promotion(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();run,experiments=self.fixture(root,.9,.9)
+            self.register_revision(root,run,experiments)
+            with patch.object(assessor,'ROOT',root):result=assessor.assess(run,experiments)
+            self.assertFalse(result['candidate']);self.assertEqual(result['decision'],'new_data_cohort_baseline')
+            self.assertIsNone(result['criterion']['local_best']);self.assertEqual(result['references'],[])
+            self.assertTrue(result['baseline_eligible']);self.assertEqual(result['data_snapshot_id'],'new')
+            self.assertEqual(result['non_comparable_parent']['run_id'],'parent')
+
+    def test_new_cohort_uses_only_new_cohort_history(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();run,experiments=self.fixture(root,.03,.03)
+            self.register_revision(root,run,experiments)
+            baseline=root/'outputs/runs/new-baseline';shutil.copytree(run,baseline)
+            for split in ('validation','test'):
+                p=baseline/'evaluation'/split/'metrics.json';m=json.loads(p.read_text());m['rank_ic_mean']=.02;write(p,m)
+            pd.DataFrame({'run_id':['parent','new-baseline'],
+                'run_path':['outputs/runs/parent','outputs/runs/new-baseline']}).to_csv(experiments/'runs.csv',index=False)
+            with patch.object(assessor,'ROOT',root):result=assessor.assess(run,experiments)
+            self.assertTrue(result['candidate']);self.assertEqual(result['criterion']['local_best'],.02)
+            self.assertEqual([r['run_id'] for r in result['references']],['new-baseline'])
+
+    def test_changed_data_without_registered_proof_still_fails(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();run,experiments=self.fixture(root,.9,.9)
+            self.register_revision(root,run,experiments)
+            (experiments/'data-snapshots.json').unlink()
+            with patch.object(assessor,'ROOT',root),self.assertRaisesRegex(ValueError,'没有可核验'):
+                assessor.assess(run,experiments)
+
+    def test_revision_does_not_hide_changed_evaluator_or_bad_proof(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();run,experiments=self.fixture(root,.9,.9)
+            self.register_revision(root,run,experiments)
+            p=run/'manifest.json';m=json.loads(p.read_text());m['source']['files']['evaluation/baseline_evaluation.py']='different';write(p,m)
+            with patch.object(assessor,'ROOT',root),self.assertRaisesRegex(ValueError,'评估器不同'):
+                assessor.assess(run,experiments)
+            write(experiments/'revision-proof.json',{'altered':True})
+            with patch.object(assessor,'ROOT',root),self.assertRaisesRegex(ValueError,'证据指纹'):
+                assessor.assess(run,experiments)
 
 
 if __name__ == "__main__":

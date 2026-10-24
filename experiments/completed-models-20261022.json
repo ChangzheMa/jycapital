@@ -75,7 +75,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v1-20261010-s42"
+      "run_path": "outputs/runs/v1-20261010-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2-20261011-s42",
@@ -149,7 +150,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v2-20261011-s42"
+      "run_path": "outputs/runs/v2-20261011-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v3-20261014-s42",
@@ -223,7 +225,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v3-20261014-s42"
+      "run_path": "outputs/runs/v3-20261014-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v4-20261014-s42",
@@ -301,7 +304,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v4-20261014-s42"
+      "run_path": "outputs/runs/v4-20261014-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v5-20261015-s42",
@@ -379,7 +383,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v5-20261015-s42"
+      "run_path": "outputs/runs/v5-20261015-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v6-20261015-s42",
@@ -457,7 +462,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v6-20261015-s42"
+      "run_path": "outputs/runs/v6-20261015-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v7-20261016-no-layernorm-s42",
@@ -543,7 +549,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v7-20261016-no-layernorm-s42"
+      "run_path": "outputs/runs/v7-20261016-no-layernorm-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v7a-no-mask-s42",
@@ -629,7 +636,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v7a-no-mask-s42"
+      "run_path": "outputs/runs/v7a-no-mask-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v7b-no-mask-flatten-s42",
@@ -715,7 +723,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v7b-no-mask-flatten-s42"
+      "run_path": "outputs/runs/v7b-no-mask-flatten-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v7c-replicate-padding-s42",
@@ -801,7 +810,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v7c-replicate-padding-s42"
+      "run_path": "outputs/runs/v7c-replicate-padding-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v7d-dense-kernels-s42",
@@ -887,7 +897,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v7d-dense-kernels-s42"
+      "run_path": "outputs/runs/v7d-dense-kernels-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v7e-zscore-huber-s42",
@@ -973,7 +984,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v7e-zscore-huber-s42"
+      "run_path": "outputs/runs/v7e-zscore-huber-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v7f-one-hot-clock-s42",
@@ -1059,7 +1071,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v7f-one-hot-clock-s42"
+      "run_path": "outputs/runs/v7f-one-hot-clock-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v8-combined-s42",
@@ -1145,7 +1158,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v8-combined-s42"
+      "run_path": "outputs/runs/v8-combined-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v9-trading-day-windows-s42",
@@ -1231,7 +1245,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v9-trading-day-windows-s42"
+      "run_path": "outputs/runs/v9-trading-day-windows-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v101-global-fp16-migrated-s42",
@@ -1321,7 +1336,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v101-global-fp16-migrated-s42"
+      "run_path": "outputs/runs/v101-global-fp16-migrated-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v201-global-fp16-s42",
@@ -1407,7 +1423,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v201-global-fp16-s42"
+      "run_path": "outputs/runs/v201-global-fp16-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v301-global-fp16-s42",
@@ -1493,7 +1510,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v301-global-fp16-s42"
+      "run_path": "outputs/runs/v301-global-fp16-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v202-patch-mixer-s42",
@@ -1579,7 +1597,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v202-patch-mixer-s42"
+      "run_path": "outputs/runs/v202-patch-mixer-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v302-patch-gru-s42",
@@ -1665,7 +1684,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v302-patch-gru-s42"
+      "run_path": "outputs/runs/v302-patch-gru-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v102-clock-readout-s42",
@@ -1751,7 +1771,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v102-clock-readout-s42"
+      "run_path": "outputs/runs/v102-clock-readout-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v303-huber-delta2-s42",
@@ -1837,7 +1858,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v303-huber-delta2-s42"
+      "run_path": "outputs/runs/v303-huber-delta2-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v304-clock-gated-gru-s42",
@@ -1923,7 +1945,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v304-clock-gated-gru-s42"
+      "run_path": "outputs/runs/v304-clock-gated-gru-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v305-fine-patch-gru-s42",
@@ -2009,7 +2032,8 @@
           "rank_ic_undefined_cross_sections": 0
         }
       },
-      "run_path": "outputs/runs/v305-fine-patch-gru-s42"
+      "run_path": "outputs/runs/v305-fine-patch-gru-s42",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v401-rank-target-gru-s42",
@@ -2095,7 +2119,8 @@
       "config_sha256": "7604e37026d34cc8277cfa518e0c4baf24aa02e8c3441eb23eeb8c74d5479224",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "8a0abf385764efaefc7c425d009420585bd936c96d27b4fe85d7d563142dcb29"
+      "model_sha256": "8a0abf385764efaefc7c425d009420585bd936c96d27b4fe85d7d563142dcb29",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v306-huber-delta4-s42",
@@ -2181,7 +2206,8 @@
       "config_sha256": "e779f9e3cc430cddd8787c66e543fef2d0b94470ba2b073d6c750b703989db32",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "fe4baa616b6dae95d394a6beffc0b0449885833f84c4bab4c45daebb777b0a9b"
+      "model_sha256": "fe4baa616b6dae95d394a6beffc0b0449885833f84c4bab4c45daebb777b0a9b",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v501-ema-gru-s42",
@@ -2270,7 +2296,8 @@
       "config_sha256": "7632811c3323728353d842538cec764c1cf86747cf886d6eedba585aa2624cea",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "ee86ea2fb408c92c4509c85b5e13230b4cce327adfa2726e13839c412196afce"
+      "model_sha256": "ee86ea2fb408c92c4509c85b5e13230b4cce327adfa2726e13839c412196afce",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v402-blended-target-gru-s42",
@@ -2356,7 +2383,8 @@
       "config_sha256": "d16b6e870e2306f42c5111e9b4b7554a4bacf4c02a61ae98bcb2cd26540b8121",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "fe30fb150870e5d1168f0509b3cc9a745b1509fdd3c42536a87f91f7a2cda735"
+      "model_sha256": "fe30fb150870e5d1168f0509b3cc9a745b1509fdd3c42536a87f91f7a2cda735",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v601-causal-tcn-gru-s42",
@@ -2442,7 +2470,8 @@
       "config_sha256": "d59e5f6f9b1ae85a51f27da993e9eaa48dddc5a577056191b93e5959c7ff1105",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "2d64a7ce202501b07725b98f1274a105fc44704de7da4c1222030dcf0044c7fa"
+      "model_sha256": "2d64a7ce202501b07725b98f1274a105fc44704de7da4c1222030dcf0044c7fa",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v801-market-context-s42",
@@ -2531,7 +2560,8 @@
       "config_sha256": "f3b792d9bd686571fe4483e16c135801a557fd7b8872f05376aa206b85ec38b9",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "77dd455039d0876d82246af75f52077a0efbd5dd1b3d2d4440a916a0be391ca1"
+      "model_sha256": "77dd455039d0876d82246af75f52077a0efbd5dd1b3d2d4440a916a0be391ca1",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v701-wide-day-gru-s42",
@@ -2620,7 +2650,8 @@
       "config_sha256": "9ccf98e9403caff74ed2dbf0f4a3fea0aabbebb34baaa045738e1a8d51870fb7",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "20de738b8ee01b3dd2240737bf4e44b8719496666bfc43b871094178e1bdbb55"
+      "model_sha256": "20de738b8ee01b3dd2240737bf4e44b8719496666bfc43b871094178e1bdbb55",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v802-joint-market-gru-s42",
@@ -2709,7 +2740,8 @@
       "config_sha256": "2465fbb7a6b273ad8c6cb63cbaeff90893fd732d1a4b9a913af67c1b15389664",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "5dd1a42a87ab9275eb8dac1174c962f2244b193abc6fb9f2ae8e97cbbe07fb2e"
+      "model_sha256": "5dd1a42a87ab9275eb8dac1174c962f2244b193abc6fb9f2ae8e97cbbe07fb2e",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v901-current-multifrequency-s42",
@@ -2798,7 +2830,8 @@
       "config_sha256": "c4edf7eca9c65dcc13ff2874c4511b1d5c1bafcf57e68084037b36b1bffbfc81",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "cdcbd41dc3d0fc3efc86f8fbd0308841f7ba71f8d6fcb280ced354335682b06a"
+      "model_sha256": "cdcbd41dc3d0fc3efc86f8fbd0308841f7ba71f8d6fcb280ced354335682b06a",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1001-temporal-experts-s42",
@@ -2887,7 +2920,8 @@
       "config_sha256": "e4494c2bbb71ed7a20a0e9a6c2050b526984f73e138560d6aecc1268a103e667",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "926e32d5cc8dfd7342ce362f26c1dfe201160f9cf8b78df18a80c5dde9b5853a"
+      "model_sha256": "926e32d5cc8dfd7342ce362f26c1dfe201160f9cf8b78df18a80c5dde9b5853a",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1101-structured-fields-s42",
@@ -2976,7 +3010,8 @@
       "config_sha256": "b900489bf28c08619f5e6b043e4dd8a96aef26d7c8506f78236a5930132eaecf",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "fae2ed405cc228d50bb39b4ea6f06a08d5b23978fb7bda677cdb72770db46dde"
+      "model_sha256": "fae2ed405cc228d50bb39b4ea6f06a08d5b23978fb7bda677cdb72770db46dde",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1002-current-temporal-experts-s42",
@@ -3065,7 +3100,8 @@
       "config_sha256": "663c86e8f461914111984188c016525837cb8dd09ebbdf8ddd8ced443a099832",
       "protocol_sha256": "2b05408e330b0ab51e3126538ef8f75ef53ea63404d1e6da5e92bd6a9364df67",
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
-      "model_sha256": "5f61413f1651eac718a239da255659e62628a5ab6d455705bf86a84fcc4c29eb"
+      "model_sha256": "5f61413f1651eac718a239da255659e62628a5ab6d455705bf86a84fcc4c29eb",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1102-structured-temporal-experts-s42",
@@ -3155,7 +3191,8 @@
       "parameters": 2518992,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "b7c9eead34daf719080fa98f42d7dcc07a5136c0dd74238a65a6c9278c62ad0c",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1401-frozen-equal-ensemble-s42",
@@ -3261,7 +3298,8 @@
       "parameters": 4715286,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "558b3b20b1562783e25b4885040330bf4f94a68a0fa59b873dcfeeaff8e96302",
-      "additional_training": false
+      "additional_training": false,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1201-student-mixture-s42",
@@ -3351,7 +3389,8 @@
       "parameters": 2419092,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "97e199e29a3382fefba467b356480406de2c254496a67f8f147e92d02d77f7db",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1301-complete-cross-section-s42",
@@ -3441,7 +3480,8 @@
       "parameters": 2418576,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "e7863b8b577f437429e2cd22fbf69817908bb10b24d45fa1c953a5327b5644c3",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1501-market-space-time-s42",
@@ -3532,7 +3572,8 @@
       "parameters": 3141398,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "3a17c3e665a42f33ac3bf2bdd5f865f36c38e1a1ae8611d1296d11d097f8cf5a",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1601-price-geometry-s42",
@@ -3622,7 +3663,8 @@
       "parameters": 2518992,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "24314ff62d4bdd5821be14ebe7a225c5f95d64c06402caee30d99333c37c0d5b",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1801-preopen-phase-s42",
@@ -3712,7 +3754,8 @@
       "parameters": 2956338,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "2e1a7a694d3824e64975a638dcef11d211ce796f6cc0f302e4235b3d8d798ec9",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1701-long-history-s42",
@@ -3802,7 +3845,8 @@
       "parameters": 2863057,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "ec032a10272b917ffcabadba24db85e68daf05d03ad1e2f44c993bc4a6d46a66",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v1901-latent-factor-s42",
@@ -3892,7 +3936,8 @@
       "parameters": 2643973,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "cf951eaff6eae357dcc9d804eb239dd806575f73da40afebcbba26ca9122ecf9",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2101-quantity-state-s42",
@@ -3982,7 +4027,8 @@
       "parameters": 3365542,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "85b8ff16faaac28224b1a42df1de6f86ca5ee7e57925dedfbe1d901daf3c70e0",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2001-causal-normalization-s42",
@@ -4072,7 +4118,8 @@
       "parameters": 2584290,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "a528de069a14b0118905447000f79612d318ade16854366fd44e341a60e14112",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2201-phase-aligned-s42",
@@ -4162,7 +4209,8 @@
       "parameters": 4528944,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "fd538a4bc8cd23af190831d9126e7a6a143efb51be3c690b84406ea77d5ec449",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2301-direct-state-s42",
@@ -4252,7 +4300,8 @@
       "parameters": 2051424,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "b1e6596c830286ec38bfecf9cead93f6bb340b6e8d4f5f07e7d7fe6e45a4e4d7",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2401-price-memory-s42",
@@ -4342,7 +4391,8 @@
       "parameters": 2641743,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "b5e2902a62ed9480f1a0559363fc377f0b172eb278839b1abda10223068d4439",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2501-future-returns-s42",
@@ -4432,7 +4482,8 @@
       "parameters": 2570193,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "cee815910ff74ccff3c0e0f56c20dd831b92362d6757a1c4b8f98ecdb098d4f4",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2601-raw-market-s42",
@@ -4522,7 +4573,8 @@
       "parameters": 3372499,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "3dadbddaa8f2ea6f3741349113f16a8214f74dd9511f290f3e3f7629f826891e",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2801-neural-tree-s42",
@@ -4615,7 +4667,8 @@
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "c5cccd0971f9fbd754c55bd04ea041dba70941fb5f8971d16c4cefa3a02778c5",
       "additional_training": true,
-      "training_kind": "boosting_on_frozen_neural_features"
+      "training_kind": "boosting_on_frozen_neural_features",
+      "data_snapshot_id": "legacy-before-20261024"
     },
     {
       "run_id": "v2701-trade-reference-s42",
@@ -4705,7 +4758,8 @@
       "parameters": 2805333,
       "evaluator_sha256": "af8cda0304970ab9722b0d8ae1a613e303445f8005b0b5cf683e0b419fff5c79",
       "model_sha256": "372f53a79f14dbe14a9f81c1c0b70bb87e28574a3af62a4d5a79e1e7844de96a",
-      "additional_training": true
+      "additional_training": true,
+      "data_snapshot_id": "legacy-before-20261024"
     }
   ],
   "completion_scope": "包含完成训练及双集评估的模型，以及单独标注 additional_training=false 的冻结组合。"

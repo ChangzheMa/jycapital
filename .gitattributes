@@ -89,3 +89,7 @@
 /examples/redownload-raw-data.ipynb -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/compare-raw-snapshots.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /scripts/prepare-refreshed-data.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/experiments/raw-data-refresh-20261024.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/experiments/data-snapshots.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/analyze-label-revision.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/training-data-paths.py -text whitespace=trailing-space,space-before-tab,cr-at-eol

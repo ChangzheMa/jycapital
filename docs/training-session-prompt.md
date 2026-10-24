@@ -8,6 +8,14 @@
 
 以下原提示词中的“复用现有预处理和缓存”，以本次数据快照绑定要求为准；不能跳过数据更新等待而沿旧路径发起下一训练。
 
+用户随后交付目录`data/redownload/jycapital-raw-20261024/`，并再次明确已启动及已完成训练都不重做。研究session已完成全量比较，确认行情及978,832条提供标签有修订；预处理正在独立目录`outputs/preprocessing/data-20261024/`构建。v2901已经启动，保留原数据；v3001尚未启动，使用新数据。
+
+待`outputs/data-refresh/20261024/data-binding.json`就绪，调用`scripts/training-data-paths.py --solution-id v3001`取得三个新路径、指纹及新评估组参照列表。先将未来新任务的容量估算、启动命令和核验都绑定这些路径，再解除`data_refresh.block_new_training`。不要改动已启动运行的`runtime-frozen.py`、launch参数或缓存，也不要沿用旧全局CACHE参数。
+
+新标签快照没有可比的已完成模型时，更新后的`scripts/assess.py`记录`new_data_cohort_baseline`，不按旧标签的v2801成绩做差或自动晋级。旧父版只保留结构来源和保护检查，不要求新数据的标签/预处理SHA与旧父版相同；新运行自身的完整性核验仍必须通过。`experiments/data-snapshots.json`和`experiments/raw-data-refresh-20261024.json`保存修订证据，不能以此绕过来源核验或放宽覆盖。
+
+数据准备由研究session运行，进程身份保存在`outputs/data-refresh/20261024/preprocessing-launch.json`，阶段和冻结执行目录见`preprocessing-plan.json`；不要重复启动相同预处理。`data-binding.json`完成前继续等待新任务，原v2901照常完成。
+
 将下面整段发给当前已经调度 v201／v301 的 session：
 
 ```text
@@ -69,3 +77,9 @@ v2801为新的`neural_boosted_trees`家族，入口`solutions/v2801/v2801_train.
 - epoch是25次提升的验证块，最多48块。`initial-validation.json`记录第0块父基准，`selection.json`给出选中树数及完成提升次数；最佳可为零树，不伪造EMA更新数。
 - 每个验证块用`seed + epoch`重建提升器，正常运行和恢复遵循同一路径。`last.pt`包含模型JSON、实际训练配置和选择状态；已完成选择而只剩测试时，恢复不再次拟合树。
 - 仍保持一次正式运行、完整验证选模和冻结测试、无标签重算及无exposure。完成后核验原始父权重保持、完整预测键、逐截面／月度指标、树数与选择重放，并按新权重来源`frozen_parent_ema_plus_boosted_trees`交接。研究session不接管训练异常。
+
+## v3001与新数据交接
+
+v3001家族为`gated_delta`，模型类为`MultiFrequencyDeltaNet`，3,236,715参数；数据输入仍为77通道的价格历史契约，默认64／128股票日。设备预检公共入口已支持本家族；训练损失、EMA、股票日游标和动态早停沿用原神经训练流程。控制器的模型恢复／核验应使用实际模型类，不能按GRU类名硬编码。
+
+此候选尚未启动，按照本页新数据要求绑定`jycapital-raw-20261024`。同组历史参照列表由`training-data-paths.py`返回，首个新组结果只有数据基线、没有跨快照数值参照。旧v2401仍是设计父版和保护对象；不重训它，也不把父版旧标签哈希要求强加给新数据。

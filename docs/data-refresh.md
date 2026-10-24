@@ -59,7 +59,7 @@ RESUME = False
 - 调度启动参数必须显式绑定新的`--data-root`、`--training-run`、`--holdout-run`，资源预检也读取新目录。不能仅修改本地DAI的环境变量，因为训练入口使用显式路径。新运行的数据清单保留新来源与获取时间。
 - 完成预处理并确认控制器实际使用新路径后，训练session在`data_refresh`记录实际路径、清单指纹和绑定证据，再将`block_new_training`改为`false`并更新状态。不要只解除入口等待而继续沿用旧控制器路径。
 
-如确认需要完整重建，可复用当前输入契约的预处理入口；以下为训练session的后续命令模板，本轮没有执行：
+已确认行情和标签都有内容修订，见[全量结果](raw-data-revision-20261024.md)。直接命令模板如下；本次使用后面的冻结执行入口完成相同数据处理阶段：
 
 ```powershell
 .venv-training/Scripts/python.exe solutions/v3001/v3001_prepare.py --run-dir outputs/preprocessing/data-20261024/train --data-root <新原始数据目录> --protocol evaluation/protocols/local-v2-ic.json
@@ -75,6 +75,14 @@ RESUME = False
 该入口要求完整比较通过，随后串行执行训练统计拟合、训练数据转换及留出集转换，**不调用模型训练**。默认2线程、1GB DuckDB工作内存和32,768行处理批量，只调整执行资源，保持原始数据处理定义。旧数据、旧预处理和现有模型运行均不改写；中断时用相同参数追加`--resume`。归一化只在固定训练区间拟合，留出集复用其逐字节相同的统计量。
 
 完成后生成`outputs/data-refresh/20261024/data-binding.json`，其中包含新原始目录、训练及留出预处理目录、源码和数据证据对应的指纹。状态`prepared_for_scheduler`只表示数据准备完成，**不表示控制器已切换**；仍由训练session验证未来启动及资源预检使用这些路径后解除队列等待。已有运行及恢复继续使用其原命令和原数据。
+
+调度器可调用[新运行路径解析器](../scripts/training-data-paths.py)：
+
+```powershell
+.venv-training/Scripts/python.exe scripts/training-data-paths.py --solution-id v3001
+```
+
+它只接受尚无运行目录、也没有正式启动记录的ready候选，核对新数据清单、比较证据、预处理配置和摘要，返回显式训练参数以及同评估数据组的历史run列表。已启动v2901会被此入口拒绝，应继续使用自己的原恢复命令。新运行省略旧全局`--resident-cache`参数，由对应加载器生成新缓存键；控制器的资源估算和结果核验也需使用新路径及评估组。该解析器不启动训练、不改变队列等待状态。
 
 验证／测试日期划分不随下载改变。若标签或股票池的实际内容更新，新旧指标需按数据快照分组，不能把跨快照差值直接解释为模型改进，也不能为比较而自动重跑已完成模型；数据更新与网络改动分别记录。
 

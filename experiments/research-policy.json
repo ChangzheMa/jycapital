@@ -21,7 +21,8 @@
     "latest_best_run_id": "v2801-neural-tree-s42",
     "latest_evidence": "experiments/v2801-ic-target-gap.json",
     "validation_gap": 0.14165073600985742,
-    "test_gap": 0.12944788585383668
+    "test_gap": 0.12944788585383668,
+    "latest_best_scope": "原始旧快照；2026-10-24新快照标签已变化，新数据成绩须另建可比组。"
   },
   "solution_root": "solutions",
   "candidate_manifest": "experiment.json",
@@ -152,7 +153,7 @@
   },
   "data_refresh": {
     "requested_at": "2026-10-24",
-    "status": "comparing_downloaded_snapshot",
+    "status": "preparing_new_snapshot",
     "block_new_training": true,
     "basis": "用户要求重新下载可能更新的原始训练数据，后续训练使用新数据，已完成模型不重跑。",
     "download_entrypoint": "examples/redownload-raw-data.ipynb",
@@ -176,6 +177,17 @@
     "raw_manifest_sha256": "bbf9f62152d3783b7e46f50f437e957776bcd392ae3ede0db0bfd5abb9be8264",
     "user_confirmed_download_at": "2026-10-24",
     "comparison_report": "outputs/data-refresh/20261024/comparison.json",
-    "first_known_unstarted_candidate": "v3001-associative-state-s42"
+    "first_known_unstarted_candidate": "v3001-associative-state-s42",
+    "comparison_sha256": "dfb91cea67bbc0e77a74e402c49cc8692ee3559b4f9c1500a7b0460e8dd89eaf",
+    "preprocessing_root": "outputs/preprocessing/data-20261024",
+    "preprocessing_plan": "outputs/data-refresh/20261024/preprocessing-plan.json",
+    "future_data_binding": "outputs/data-refresh/20261024/data-binding.json",
+    "observed_primary_label_changes": 978832,
+    "evaluation_cohort_transition_required": true,
+    "preparation_owner": "research_session",
+    "preparation_launch_metadata": "outputs/data-refresh/20261024/preprocessing-launch.json",
+    "evaluation_snapshot_registry": "experiments/data-snapshots.json",
+    "first_new_cohort_result": "record_baseline_without_claiming_cross_snapshot_improvement",
+    "new_run_path_resolver": "scripts/training-data-paths.py --solution-id <version>"
   }
 }

@@ -19,6 +19,40 @@ METRICS = ("ic_mean", "rank_ic_mean", "ic_ir", "rank_ic_ir", "mse", "mae", "cove
            "rank_ic_undefined_cross_sections")
 
 
+def registered_data_snapshot(run, experiments):
+    """仅按已登记的标签/股票池指纹识别数据组，不放宽compare的可比性检查。"""
+    registry_path = Path(experiments) / "data-snapshots.json"
+    if not registry_path.exists():
+        return None
+    registry = read_json(registry_path)
+    protocol, data = read_json(run / "protocol.json"), read_json(run / "data-manifest.json")
+    if protocol.get("label_column") != registry["label_column"]:
+        return None
+    tables = {protocol["universe_table"], protocol["label_table"]}
+    actual = {Path(item["path"]).stem: item["sha256"] for item in data["files"] if Path(item["path"]).stem in tables}
+    matches = [s for s in registry["snapshots"] if s["evaluation_sources"] == actual]
+    if len(matches) > 1:
+        raise ValueError("评估数据快照登记存在歧义")
+    if not matches:
+        return None
+    snapshot = matches[0]
+    if snapshot.get("allow_first_cohort_baseline") or snapshot.get("allow_parent_in_other_cohort"):
+        proof_path = (ROOT / snapshot["proof"]).resolve()
+        if not proof_path.is_relative_to(ROOT.resolve()) or sha256(proof_path) != snapshot["proof_sha256"]:
+            raise ValueError("数据修订证据指纹不符")
+        proof = read_json(proof_path)
+        if proof.get("covers_required_protocol") is not True or proof["new_evaluation_sources"] != actual:
+            raise ValueError("数据修订证据不覆盖当前评估来源")
+        if not any(proof["impact_by_split"][split]["label_values_or_keys_changed"] or
+                   proof["impact_by_split"][split]["universe_keys_changed"] for split in ("validation", "test")):
+            raise ValueError("没有评估标签/成员修订证据，不能跳过原基线")
+        for split in ("validation", "test"):
+            interval = protocol["splits"][split]
+            if not proof["scope"]["start"] <= interval["start"][:10] < interval["stop"][:10] <= proof["scope"]["stop"]:
+                raise ValueError("评估区间超出数据修订证据范围")
+    return snapshot
+
+
 def resources(run):
     env = read_json(run / "environment.json")
     selection = read_json(run / "selection.json")
@@ -42,6 +76,7 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
     protocol = read_json(run / "protocol.json")
     if manifest["status"] != "complete":
         raise ValueError("必须先完成训练和验证／测试")
+    snapshot = registered_data_snapshot(run, experiments)
     index = pd.read_csv(experiments / "runs.csv")
     comparable, excluded = [], []
     for row in index.to_dict("records"):
@@ -54,17 +89,35 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
             comparable.append(path)
         except (ValueError, FileNotFoundError) as error:
             excluded.append({"run_id": row["run_id"], "reason": str(error)})
-    if not comparable:
+    if not comparable and not (snapshot and snapshot.get("allow_first_cohort_baseline")):
         raise ValueError("没有可核验的历史参照；不能跳过已有基线作晋级判断")
     metric = protocol["selection_metric"]
-    best = max(comparable, key=lambda p: read_json(p / "evaluation/validation/metrics.json")[metric])
-    roles = {best.name: {"path": best, "roles": ["local_best"]}}
+    best = max(comparable, key=lambda p: read_json(p / "evaluation/validation/metrics.json")[metric]) if comparable else None
+    roles = {best.name: {"path": best, "roles": ["local_best"]}} if best else {}
+    non_comparable_parent = None
     parent_id = manifest.get("parent_run_id")
     if parent_id:
         parent = next((p for p in comparable if p.name == parent_id), None)
         if parent is None:
-            raise ValueError("父版本的可比性未通过")
-        roles.setdefault(parent_id, {"path": parent, "roles": []})["roles"].append("parent")
+            if not (snapshot and snapshot.get("allow_parent_in_other_cohort")):
+                raise ValueError("父版本的可比性未通过")
+            parent_path = ROOT / "outputs/runs" / parent_id
+            parent_manifest = read_json(parent_path / "manifest.json")
+            parent_snapshot = registered_data_snapshot(parent_path, experiments)
+            if (parent_manifest["status"] != "complete" or parent_snapshot is None
+                    or parent_snapshot["id"] == snapshot["id"]):
+                raise ValueError("父版不可比的原因不能归为已登记的数据快照变更")
+            validate_protocol_compatibility(protocol, read_json(parent_path / "protocol.json"),
+                                           allow_selection_metric_change=allow_selection_metric_change)
+            evaluator = "evaluation/baseline_evaluation.py"
+            if parent_manifest["source"]["files"][evaluator] != manifest["source"]["files"][evaluator]:
+                raise ValueError("评估器不同，不能仅按数据修订处理")
+            for split in ("validation", "test"):
+                read_json(parent_path / "evaluation" / split / "metrics.json")
+            non_comparable_parent = {"run_id": parent_id, "role": "design_parent_only",
+                "reason": "父版不属于当前可比评估数据；保留结构来源，不计算跨标签快照的分数差。"}
+        else:
+            roles.setdefault(parent_id, {"path": parent, "roles": []})["roles"].append("parent")
     # 平台最优必须由有评分口径的可信记录选定，不能将运行确认当作分数。
     submissions = pd.read_csv(experiments / "submissions.csv")
     if submissions.platform_score.notna().any():
@@ -105,9 +158,12 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
                 "months": len(monthly), "monthly": monthly.to_dict("records"),
             }
         comparisons.append(entry)
-    best_metric = read_json(best / "evaluation/validation/metrics.json")[metric]
+    best_metric = read_json(best / "evaluation/validation/metrics.json")[metric] if best else None
     coverage_ok &= all(v["coverage_violations"] == 0 for v in current.values())
-    candidate = bool(current["validation"][metric] > best_metric and coverage_ok and
+    if best is None:
+        coverage_ok &= all(v["coverage"] == v["min_cross_section_coverage"] == 1. for v in current.values())
+        defined_sections_ok &= all(v["ic_undefined_cross_sections"] == 0 for v in current.values())
+    candidate = bool(best is not None and current["validation"][metric] > best_metric and coverage_ok and
                      (defined_sections_ok or metric != "ic_mean"))
     result = {
         "solution_id": manifest["solution_id"], "run_id": run.name, "status": "complete",
@@ -118,7 +174,8 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
         "selection": manifest["selection"], "metrics": current,
         "references": comparisons, "excluded_runs": excluded, "platform_best": None,
         "platform_status": "暂无可信平台成绩", "candidate": candidate,
-        "decision": "local_improvement_candidate" if candidate else "no_local_improvement",
+        "decision": ("new_data_cohort_baseline" if best is None else
+                     "local_improvement_candidate" if candidate else "no_local_improvement"),
         "criterion": {"metric": "validation." + metric, "new": current["validation"][metric],
                       "local_best": best_metric, "coverage_not_reduced": coverage_ok,
                       "undefined_ic_sections_not_increased": defined_sections_ok},
@@ -126,6 +183,14 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
         "exported": False, "run_path": run.relative_to(ROOT).as_posix(),
         "limitations": ["仅一个种子，未进行统计显著性或消融验证", "研究变量以各运行的冻结配置为准，多项改动的效果只针对整体方案，不能分别归因", "测试期为持续研究中已观察区间，未用于本次 checkpoint 选择", "本地指标不包含平台 BARRA 处理及官方评分"],
     }
+    if snapshot is not None:
+        result["data_snapshot_id"] = snapshot["id"]
+        result["data_snapshot_evidence"] = {key: snapshot[key] for key in ("proof", "proof_sha256") if key in snapshot}
+    if non_comparable_parent is not None:
+        result["non_comparable_parent"] = non_comparable_parent
+    if best is None:
+        result["baseline_eligible"] = bool(coverage_ok and defined_sections_ok)
+        result["limitations"].append("这是经核验的新标签/成员快照首个结果，没有可比历史模型；只建立基线，不自动晋级或导出，不重跑旧模型。")
     checks = run / "implementation-checks.json"
     if checks.exists():
         saved = read_json(checks)
@@ -171,6 +236,8 @@ def record(result):
            "validation_ic": metrics["validation"]["ic_mean"], "validation_rank_ic": metrics["validation"]["rank_ic_mean"],
            "test_ic": metrics["test"]["ic_mean"], "test_rank_ic": metrics["test"]["rank_ic_mean"],
            "test_coverage": metrics["test"]["coverage"], "model_sha256": selection["model_sha256"], "run_path": result["run_path"]}
+    if result.get("data_snapshot_id"):
+        row["data_snapshot_id"] = result["data_snapshot_id"]
     index = pd.concat([index.loc[index.run_id != row["run_id"]], pd.DataFrame([row])], ignore_index=True)
     index.to_csv(path, index=False, encoding="utf-8-sig")
 

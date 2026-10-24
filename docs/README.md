@@ -2,9 +2,11 @@
 
 本仓库保存 BigQuant 2026 年进益资本杯端到端赛道的规则、数据说明、模型方案和冻结结果。比赛 ID：`45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca`。
 
-## 冻结模型结果
+## 旧数据快照的冻结模型结果
 
 本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-24（UTC+08:00）本次归档，下表 54 个版本完成双集评估，其中 53 个完成训练、v1401 为无需新增训练的冻结组合，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261022.json)。
+
+以下成绩属于`legacy-before-20261024`旧快照。用户新下载数据中的行情及`vwap_return`已修订，见[全量核对与新评估分组](raw-data-revision-20261024.md)。新模型成绩将按新快照单独比较，已启动和已完成训练不重跑；不能直接将两组IC作差。
 
 | 方案 | 参数量 | 验证 IC | 验证 Rank IC | 测试 IC | 测试 Rank IC | 结果 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -80,6 +82,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 来源及未决问题 | [官方来源](bigquant-2026-end-to-end/sources.md)、[待确认事项](bigquant-2026-end-to-end/open-questions.md) |
 | 本地使用与数据质量 | [本地环境](bigquant-2026-end-to-end/local-download.md)、[数据一致性结论](bigquant-2026-end-to-end/data-validation.md)、[验证摘要](bigquant-2026-end-to-end/data-validation-summary.json) |
 | 原始数据更新 | [BigQuant重新下载Notebook、新旧内容比较与训练切换](data-refresh.md)；按日精确比较原值，区分编码与内容变化；新训练等待新数据接入，已完成模型保留原结果、不重跑 |
+| 本次原始数据修订结果 | [行情及11:00／14:30标签变化](raw-data-revision-20261024.md)、[全量摘要](../experiments/raw-data-refresh-20261024.json)、[评估数据组登记](../experiments/data-snapshots.json)；新数据首个结果单独建立基线 |
 | 结构化比赛资料 | [配置摘录](bigquant-2026-end-to-end/competition-config.json)、[字段 JSON](bigquant-2026-end-to-end/data-schemas.json)、[字段 CSV](bigquant-2026-end-to-end/data-dictionary.csv)，共 104 条字段记录 |
 | 实验与评估 | [开发约定](development.md)、[实验技能](../.agents/skills/jycapital-experiment/SKILL.md)、[查分技能](../.agents/skills/jycapital-scores/SKILL.md) |
 | 持续研究与串行调度 | [研究 session 与训练 session 的交接约定](continuous-research.md)、[训练监控 session 提示词](training-session-prompt.md)；候选通过各版本的 `experiment.json` 发布 |

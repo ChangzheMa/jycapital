@@ -21,6 +21,9 @@ def apply_data_refresh_gate(result, policy):
             "blocked": True, "status": refresh.get("status"),
             "reason": "用户要求后续新训练使用更新后的数据；等待下载、独立预处理及调度路径绑定。已有运行和已完成结果保持。",
             "instructions": "docs/data-refresh.md",
+            "raw_snapshot_root": refresh.get("raw_snapshot_root"),
+            "data_binding": refresh.get("future_data_binding"),
+            "new_run_path_resolver": "scripts/training-data-paths.py --solution-id <version>",
         }
     return result
 

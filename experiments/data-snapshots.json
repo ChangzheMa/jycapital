@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "label_column": "vwap_return",
+  "snapshots": [
+    {
+      "id": "legacy-before-20261024",
+      "evaluation_sources": {
+        "cpt_jyc_2026_instruments": "5913b48d9bd2c203708c2fc4301278dee6630baf8f0b7c012e4245bf01405a20",
+        "cpt_jyc_2026_vwap": "df2bdd9ec58cd6ce3b946af55e6f508b20d55e7dae6ab91290c48d34366f4448"
+      },
+      "allow_first_cohort_baseline": false
+    },
+    {
+      "id": "jycapital-raw-20261024",
+      "evaluation_sources": {
+        "cpt_jyc_2026_instruments": "e64aadd62fd877d94df1d18f97493dd4e8de938cc1f7c325b456bdd6b0b7d3a5",
+        "cpt_jyc_2026_vwap": "c19a14a697fcd003a3b829aa01f5ec8b4d9f24f8bc69225aa00785d7b4b86013"
+      },
+      "allow_first_cohort_baseline": true,
+      "allow_parent_in_other_cohort": true,
+      "proof": "experiments/raw-data-refresh-20261024.json",
+      "proof_sha256": "f96a25204aeb56a3d3703e8e922ab73d108abd927dc94b11b40341282a919bd9",
+      "basis": "用户要求后续训练切换修订数据，已经启动和完成的模型不重跑。首个新快照结果作为基线，不自动宣称跨快照改善。"
+    }
+  ]
+}
