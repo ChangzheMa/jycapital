@@ -107,3 +107,9 @@
 /tests/test_clock_specialization.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 /solutions/v3301/** -text whitespace=trailing-space,space-before-tab,cr-at-eol,-blank-at-eof
 /tests/test_v3301_design.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/tests/test_v3301*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/export-v3301.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/verify-v3301-submission.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/experiments/v3301*-submission.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/scripts/assess.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+/tests/test_assess.py -text whitespace=trailing-space,space-before-tab,cr-at-eol

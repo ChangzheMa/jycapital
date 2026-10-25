@@ -16,7 +16,7 @@
 
 [本次平台观察](../experiments/platform-score-observations-20261025.json)于2026-10-25 11:47（UTC+08:00）取得：按文件名对应v2401公榜0.45659、v2801为0.44651，当前11条记录私榜均为空。没有平台上传内容哈希，不按文件名回填精确run／权重或平台最优索引。
 
-下一方案已形成[v3301分时点设计稿](../solutions/v3301/README.md)，仅完成设计和读出原型，不发布ready，不自动启动训练。具体证据见[分时点研究](clock-specialization-research-20261025.md)。
+下一方案[v3301分时点预测器](../solutions/v3301/README.md)已按用户后续请求补齐代码和CPU验证，正式训练交由训练session。具体证据见[分时点研究](clock-specialization-research-20261025.md)。
 
 ## 旧数据快照的冻结模型结果
 
@@ -111,7 +111,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 关联状态研究 | [新近论文质量与矩阵记忆机制](associative-state-research-20261024.md)；[v3001](../solutions/v3001/README.md)已完成新快照首个基线，双集IC0.105520／0.113956，训练及验证534.73分钟，不继续扩容 |
 | 分阶段表征研究 | [预训练与收益微调分离](representation-pretraining-research-20261024.md)；[v3101冻结结果](../solutions/v3101/README.md#冻结结果)超过新数据首个基线，尚不能单独归因于预训练 |
 | 盘口时空组织研究 | [持续字段节点与论文适用边界](field-grid-research-20261024.md)；[v3201冻结结果及fast材料](../solutions/v3201/README.md#冻结结果与平台材料)，新快照验证IC最优 |
-| 分时点预测器设计 | [验证选时点诊断与方案取舍](clock-specialization-research-20261025.md)、[v3301设计稿](../solutions/v3301/README.md)；共享冻结编码器和八套独立预测器，未发布训练 |
+| 分时点预测器设计 | [验证选时点诊断与方案取舍](clock-specialization-research-20261025.md)、[v3301实现与调度说明](../solutions/v3301/README.md)；共享冻结编码器和八套独立预测器，本session不启动正式训练 |
 | 近期改进的增益来源 | [预测差正交分解与标签幅度贡献](prediction-update-research-20261024.md)；v1601／v2401四档贡献均改善，v2801的净IC增益来自最外侧约1%抵消其余下降，不修改冻结选模和晋级规则 |
 | 共同价格坐标结果 | [v1601 冻结结果与 fast 材料](../solutions/v1601/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1601-gru.json)；参数量与父版相同，双集 IC／Rank IC 改善，新输入缓存可复用 |
 | 长期历史状态研究 | [长期上下文依据与正式结论](long-context-research-20261022.md)、[v1701 冻结结果](../solutions/v1701/README.md#冻结结果)、[比较摘要](../experiments/v1701-gru.json)；父版 IC 小幅改善，但耗时增加且未超过 v1601，不导出 |

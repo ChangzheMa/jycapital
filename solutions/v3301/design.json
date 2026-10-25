@@ -1,9 +1,9 @@
 {
   "solution_id": "v3301",
   "series": "v330x",
-  "status": "design_only_not_registered_for_training",
+  "status": "implemented",
   "created_at": "2026-10-25",
-  "scope": "用户本次要求分时点可行性分析和下一版设计；未发布ready，未启动正式训练。",
+  "scope": "用户要求生成完整v3301代码，正式训练由其他session控制；本session仅实施和合成验证。",
   "proposed_run_id": "v3301-clock-specialists-s42",
   "parent_run_id": "v3201-field-grid-s42",
   "parent_model_sha256": "a30086445b8e2b88e392c03a0bb208e4e0b2e2e8164d8096e00263b697363cff",
@@ -110,11 +110,14 @@
     "distinct_parameter_storage",
     "single_clock_gradients_and_update_leave_other_readouts_unchanged"
   ],
-  "not_implemented": [
-    "feature_cache_builder",
-    "serial_training_and_per_clock_selection_entrypoint",
-    "combined_selection_assessment_adapter",
-    "full_platform_export_and_resume_integration"
-  ],
-  "research_basis": "docs/clock-specialization-research-20261025.md"
+  "not_implemented": [],
+  "research_basis": "docs/clock-specialization-research-20261025.md",
+  "implementation": {
+    "model_config": "model-config.json",
+    "entrypoint": "v3301_train.py",
+    "completion_verifier": "v3301_verify.py",
+    "feature_cache": "v3301_cache.py",
+    "training": "v3301_fit.py",
+    "runtime": "v3301_model.py"
+  }
 }

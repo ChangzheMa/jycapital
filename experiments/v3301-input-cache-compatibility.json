@@ -1,0 +1,23 @@
+{
+  "solution_id": "v3301",
+  "checked_at": "2026-10-25T13:07:11+08:00",
+  "parent_run_id": "v3201-field-grid-s42",
+  "parent_model_sha256": "a30086445b8e2b88e392c03a0bb208e4e0b2e2e8164d8096e00263b697363cff",
+  "config_sha256": "cbab8342672637979ce8ace9e1de8a183721fe170585e9eb2018076cc21aa8fd",
+  "parent_data_manifest_sha256": "42142a303a5f727c054eb4eae5c2aaf77cd2de3c0fbe9a5dd301ac92586807c4",
+  "raw_input_cache_keys": {
+    "train": "a07a7561bfe1aa710398efb829eba4af61d1e1476a7b2f15cfb82d8ee644ef29",
+    "validation": "1a0f81ef97f9f34b758458d1ec78d9303aa2352ede6c95cc58f096a7ce0a3b9e",
+    "test": "dff18c6e1e4914213e9d9ba33f11babcedac9f953fd8040ac2f0016ebebec20a"
+  },
+  "provided_label_transform_unchanged": true,
+  "parent_vendor_source_bytes_verified": true,
+  "all_eight_readouts_exactly_initialized": true,
+  "synthetic_actual_parent_max_difference": 8.940696716308594e-08,
+  "new_full_raw_input_arrays": false,
+  "new_learned_feature_cache_required": true,
+  "estimated_feature_array_bytes": 14893056000,
+  "raw_input_arrays_loaded": false,
+  "formal_training_performed": false,
+  "scope": "读取已选父参数和来源清单，仅合成窗口核对初始化及真实缓存键；未构建真实表示缓存。"
+}

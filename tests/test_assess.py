@@ -142,6 +142,27 @@ class AssessmentTest(unittest.TestCase):
             self.assertEqual(len(lines), 3)
             self.assertTrue(index.read_bytes().startswith(b"\xef\xbb\xbf"))
 
+    def test_clock_specialists_record_composite_selection_without_single_epoch(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            run, experiments = self.fixture(root, .08, .09)
+            manifest = json.loads((run / 'manifest.json').read_text())
+            selected = {'best_epoch': None, 'model_sha256': 'synthetic-model',
+                        'selection_kind': 'independent_clock_validation',
+                        'selected_epochs_by_clock': {'09:30': 0, '10:00': 4}}
+            manifest.update(solution_id='v3301', selection=selected)
+            write(run / 'manifest.json', manifest)
+            write(run / 'selection.json', selected)
+            write(run / 'config.json', {'seed': 42, 'model': {'family': 'clock_specialists'}})
+            with patch.object(assessor, 'ROOT', root):
+                result = assessor.assess(run, experiments)
+                assessor.record(result)
+            saved = json.loads((experiments / 'v3301-clock-specialists.json').read_text(encoding='utf-8'))
+            self.assertIsNone(saved['selection']['best_epoch'])
+            self.assertEqual(saved['selection']['selected_epochs_by_clock'], selected['selected_epochs_by_clock'])
+            rows = pd.read_csv(experiments / 'runs.csv', dtype=str, keep_default_na=False)
+            self.assertEqual(rows.loc[rows.run_id == 'new', 'best_epoch'].iloc[0], '')
+
     def test_new_families_compare_and_record_without_tcn_filename(self):
         for version, family, suffix in (("v101", "patch_transformer", "patch-transformer"),
                                          ("v201", "factorized_mixer", "mixer"),

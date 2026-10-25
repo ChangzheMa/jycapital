@@ -99,15 +99,15 @@
     "next_design_priority": "major_gains_toward_both_split_ic_0_25",
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
-    "in_progress_delivery": "v3001/v3101/v3201均已完成新快照双集评估；v3201为当前新组最优，fast材料已生成并核验。v3301仅为用户本次要求的分时点设计与原型，未发布ready。",
+    "in_progress_delivery": "v3201 fast已交付；用户后续要求生成v3301完整代码，缓存、串行分时点训练、恢复和导出已实现，正式训练交由训练session。",
     "active_direction_note": "docs/clock-specialization-research-20261025.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v2401验证/测试IC为0.107778/0.119352，较父版v1601提高0.002252/0.003092，十二个月IC同向提高；验证Rank IC IR下降，八轮训练及验证156.39分钟、增加30.98%。此前v1701至v2301均未超过v1601；不因本次小幅晋级停止探索遗漏的大方向。 v2501完整双集IC为0.106972/0.118160，较父版提高0.001446/0.001901但未超过v2401；后续查询训练Huber优于零基准1.281%，八轮训练及验证149.25分钟，不自动扫描辅助权重。 v2601双集IC为0.102929/0.113144，低于父v1601与v2401，相对最优十二个月IC全降，九轮训练及验证164.22分钟；不扩展该市场模块。 v2801双集IC为0.108349/0.120552，较v2401提高0.000571/0.001200，Rank IC下降0.001605/0.001643；选中25棵树，新增运行墙钟15.45分钟，不把微小晋级当作0.25目标已实现。 v2701双集IC为0.107730/0.119822，较父v2401变化-0.000048/+0.000471，验证IC未晋级，八轮训练及验证175.37分钟；新增字段与投影组合不自动继续微调。 v2901旧快照双集IC为0.107754/0.119117，均略低于父v2401；八轮训练及验证249.82分钟，不扩展数量尺度投影。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
-    "latest_candidate": "v3201-field-grid-s42",
+    "latest_candidate": "v3301-clock-specialists-s42",
     "cache_growth_policy": "新系列使用共享稳定输入实现；相同输入不随网络版本复制缓存，语义变化须新键，不修改在训依赖。当前只记录清理建议，不自动删除资料。",
     "next_long_context_direction_note": "docs/long-context-research-20261022.md",
-    "next_design_hypothesis": "v3001检验矩阵关联状态，v3101检验固定表征预训练与收益微调分离，v3201检验日内持续字段节点和同步空间交互。保持三个机制独立，不因实现通过继续扩容或扫描邻近参数；完整新快照结果后再判断。",
+    "next_design_hypothesis": "v3301以冻结v3201表示和八套独立读出检验时点特定的收益映射；等待该版完整结果，不自动恢复持续研究或新增其他方向。",
     "next_session_input_direction_note": "docs/session-input-research-20261022.md",
     "next_supervision_direction_note": "docs/future-supervision-research-20261022.md",
     "next_input_normalization_note": "docs/causal-normalization-research-20261023.md",
@@ -209,8 +209,8 @@
   },
   "research_session_state": {
     "status": "paused",
-    "basis": "用户已暂停并清除持续目标；2026-10-25只授权平台查分、候选素材及分时点方案设计。",
+    "basis": "用户已暂停并清除持续目标；本次明确要求生成v3301代码，不由研究session启动训练。",
     "automatic_monitoring_enabled": false,
-    "new_candidate_publication_this_request": false
+    "new_candidate_publication_this_request": true
   }
 }

@@ -212,6 +212,10 @@ def assess(run, experiments=ROOT / "experiments", *, allow_selection_metric_chan
 
 def result_filename(solution_id, model_family=None):
     """新结果家族在分析入口登记，保留已冻结公共训练依赖。"""
+    if model_family == "clock_specialists":
+        if not re.fullmatch(r"[a-z][a-z0-9_-]*", solution_id):
+            raise ValueError("非法方案标识")
+        return solution_id + "-clock-specialists.json"
     if model_family == "gated_delta":
         if not re.fullmatch(r"[a-z][a-z0-9_-]*", solution_id):
             raise ValueError("非法方案标识")
