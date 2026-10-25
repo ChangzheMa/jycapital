@@ -26,6 +26,7 @@
 | [v1401-frozen-equal-ensemble-s42-fast](v1401-frozen-equal-ensemble-s42-fast/v1401-submission.ipynb) | **同目录三个文件**：`v1401-submission.ipynb`、`v1002-model.json`、`v1101-model.json` | 原本地总体 IC 最优，保留为固定组合对照；共享预处理、双主干 fast，新增训练为零；[清单](../experiments/v1401-frozen-equal-ensemble-s42-fast-submission.json)、[结果与代价](../solutions/v1401/README.md) |
 | [v1601-price-geometry-s42-fast](v1601-price-geometry-s42-fast/v1601-submission.ipynb) | `v1601-submission.ipynb`、`v1601-model.json` | 前一本地最优、可作对照；第 4 轮 EMA，共同价格坐标、单主干 fast；测试 Rank IC IR 和换手代理有代价；[清单](../experiments/v1601-price-geometry-s42-fast-submission.json)、[冻结结果](../solutions/v1601/README.md#冻结结果与平台材料) |
 | [v2401-price-memory-s42-fast](v2401-price-memory-s42-fast/v2401-submission.ipynb) | `v2401-submission.ipynb`、`v2401-model.json` | 保留为父版及Rank IC对照；第4轮EMA，完整父输入与因果价格历史读取，默认fast；[清单](../experiments/v2401-price-memory-s42-fast-submission.json)、[结果与代价](../solutions/v2401/README.md#冻结结果与平台材料) |
+| [v3201-field-grid-s42-fast](v3201-field-grid-s42-fast/) | `v3201-submission.ipynb`＋`v3201-model.json` | 新快照当前验证IC最优；[简化核验与指纹](../experiments/v3201-field-grid-s42-fast-submission.json)，未上传平台 |
 
 | [v2801-neural-tree-s42-fast](v2801-neural-tree-s42-fast/v2801-submission.ipynb) | `v2801-submission.ipynb`、`v2801-model.json` | **当前本地验证IC最优候选**；冻结v2401网络加25棵树，双集Rank IC下降，默认fast；[清单](../experiments/v2801-neural-tree-s42-fast-submission.json)、[结果与限制](../solutions/v2801/README.md#冻结结果与平台材料) |
 
@@ -66,3 +67,9 @@ v901 fast 的 JSON 为 30,498,868 字节、Notebook 为 8,917 字节。按用户
 材料随 Git 分发；`.gitattributes` 保持提交文件原始字节。重新打包时须更新清单并核验冻结权重和推理一致性，具体格式与验证要求见开发约定。行情、离线预测答案、缓存和凭据不进入提交材料。
 
 长期未出分的处理依据、获取日期与状态限制统一见[来源记录](../docs/bigquant-2026-end-to-end/sources.md)和[未决事项](../docs/bigquant-2026-end-to-end/open-questions.md)。
+
+## 2026-10-25新增候选与平台观察
+
+v3201已完成新快照完整评测，验证／测试IC为0.108467／0.119415，优先提交。两文件分别为7,212和41,274,962字节；保留文件名并上传到同一目录，选择Notebook。文本参数位精确恢复，隔离合成fast／参考差不超过5.96×10⁻⁸；未重复长行情或速度基准，平台效果未知。
+
+用户本次要求查询平台分：11:47（UTC+08:00）接口返回11条记录，按文件名对应v2401公榜0.45659、v2801为0.44651、v1601为0.44109，私榜均为空。完整原始指标和提交ID见[本次观察](../experiments/platform-score-observations-20261025.json)。文件名及大小不能代替上传内容哈希，未据此修改精确run／权重绑定或平台最优索引。

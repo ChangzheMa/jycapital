@@ -1,0 +1,326 @@
+{
+  "computed_at": "2026-10-25T11:54:18+08:00",
+  "run_id": "v3001-associative-state-s42",
+  "data_snapshot_id": "jycapital-raw-20261024",
+  "analysis_source": "scripts/analyze-ic-target-gap.py",
+  "analysis_source_sha256": "7f9133b66c6245eede81700cfa085109339bc82eadc715ff12eced15ca2b0e20",
+  "target_ic_mean": 0.25,
+  "results": [
+    {
+      "split": "validation",
+      "ic_mean": 0.10552002396607274,
+      "rank_ic_mean": 0.10298515994571883,
+      "target": 0.25,
+      "absolute_gap": 0.14447997603392726,
+      "target_multiple_of_current": 2.36921856727763,
+      "coverage": 1.0,
+      "cross_sections": 936,
+      "clock_weighted_mean_reconstructs_frozen_metric": true,
+      "any_single_clock_perfect_ceiling": 0.22660714003672627,
+      "all_single_clock_perfect_scenarios_below_target": true,
+      "fraction_sections_at_or_above_target": 0.13247863247863248,
+      "fraction_negative_sections": 0.202991452991453,
+      "clocks": [
+        {
+          "clock": "09:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.03130307143477168,
+          "rank_ic_mean": 0.04924202103534657,
+          "gap_to_target": 0.21869692856522832,
+          "overall_if_only_this_clock_reaches_target": 0.13285714003672627,
+          "overall_if_only_this_clock_is_perfect": 0.22660714003672627,
+          "required_this_clock_ic_if_others_fixed": 1.1871428797061898,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2812424183664612
+        },
+        {
+          "clock": "10:00",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.1231181230649209,
+          "rank_ic_mean": 0.12281301397198228,
+          "gap_to_target": 0.1268818769350791,
+          "overall_if_only_this_clock_reaches_target": 0.12138025858295763,
+          "overall_if_only_this_clock_is_perfect": 0.21513025858295765,
+          "required_this_clock_ic_if_others_fixed": 1.2789579313363388,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.268125982419297
+        },
+        {
+          "clock": "10:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.10005493867336704,
+          "rank_ic_mean": 0.09966771539554732,
+          "gap_to_target": 0.14994506132663296,
+          "overall_if_only_this_clock_reaches_target": 0.12426315663190186,
+          "overall_if_only_this_clock_is_perfect": 0.21801315663190185,
+          "required_this_clock_ic_if_others_fixed": 1.2558947469447852,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2714207230466618
+        },
+        {
+          "clock": "11:00",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.08905588290597947,
+          "rank_ic_mean": 0.09475478022702127,
+          "gap_to_target": 0.1609441170940205,
+          "overall_if_only_this_clock_reaches_target": 0.1256380386028253,
+          "overall_if_only_this_clock_is_perfect": 0.2193880386028253,
+          "required_this_clock_ic_if_others_fixed": 1.2448956911773976,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2729920167277172
+        },
+        {
+          "clock": "11:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.11830745324915028,
+          "rank_ic_mean": 0.10312972029799969,
+          "gap_to_target": 0.13169254675084974,
+          "overall_if_only_this_clock_reaches_target": 0.12198159230992896,
+          "overall_if_only_this_clock_is_perfect": 0.21573159230992894,
+          "required_this_clock_ic_if_others_fixed": 1.2741472615205685,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2688132209644071
+        },
+        {
+          "clock": "13:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.10793983359215915,
+          "rank_ic_mean": 0.10652142842598629,
+          "gap_to_target": 0.14206016640784086,
+          "overall_if_only_this_clock_reaches_target": 0.12327754476705284,
+          "overall_if_only_this_clock_is_perfect": 0.21702754476705283,
+          "required_this_clock_ic_if_others_fixed": 1.2637796418635774,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2702943094868344
+        },
+        {
+          "clock": "14:00",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.06626505297392633,
+          "rank_ic_mean": 0.0722307902004641,
+          "gap_to_target": 0.18373494702607368,
+          "overall_if_only_this_clock_reaches_target": 0.12848689234433194,
+          "overall_if_only_this_clock_is_perfect": 0.22223689234433194,
+          "required_this_clock_ic_if_others_fixed": 1.2221048612453445,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.27624784957515336
+        },
+        {
+          "clock": "14:30",
+          "sections": 117,
+          "weight": 0.125,
+          "ic_mean": 0.20811583583430712,
+          "rank_ic_mean": 0.17552181001140305,
+          "gap_to_target": 0.04188416416569288,
+          "overall_if_only_this_clock_reaches_target": 0.11075554448678435,
+          "overall_if_only_this_clock_is_perfect": 0.20450554448678435,
+          "required_this_clock_ic_if_others_fixed": 1.3639556441057252,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2559834520236704
+        }
+      ],
+      "monthly": [
+        {
+          "month": "2024-01",
+          "sections": 176,
+          "ic_mean": 0.1021704519278404,
+          "rank_ic_mean": 0.09820578223208795
+        },
+        {
+          "month": "2024-02",
+          "sections": 120,
+          "ic_mean": 0.09506678908707666,
+          "rank_ic_mean": 0.08672496916391384
+        },
+        {
+          "month": "2024-03",
+          "sections": 168,
+          "ic_mean": 0.12440551796008076,
+          "rank_ic_mean": 0.1306593664199302
+        },
+        {
+          "month": "2024-04",
+          "sections": 160,
+          "ic_mean": 0.11217037703113945,
+          "rank_ic_mean": 0.1096189790624035
+        },
+        {
+          "month": "2024-05",
+          "sections": 160,
+          "ic_mean": 0.1131703133200159,
+          "rank_ic_mean": 0.1176663328132734
+        },
+        {
+          "month": "2024-06",
+          "sections": 152,
+          "ic_mean": 0.081724281111951,
+          "rank_ic_mean": 0.06833205446065199
+        }
+      ],
+      "source_hashes": {
+        "metrics.json": "70ddd53abe5f2b02d8e1cd58a976aba99a1657d6c85a1c76dfce6adff324ab49",
+        "cross-sections.parquet": "31586d1cf5598c07b24f5e7ade0540d4328e182c617339c8ff3a0986212183a1"
+      }
+    },
+    {
+      "split": "test",
+      "ic_mean": 0.11395555896141303,
+      "rank_ic_mean": 0.10392759915815748,
+      "target": 0.25,
+      "absolute_gap": 0.13604444103858698,
+      "target_multiple_of_current": 2.1938376879416084,
+      "coverage": 1.0,
+      "cross_sections": 1000,
+      "clock_weighted_mean_reconstructs_frozen_metric": true,
+      "any_single_clock_perfect_ceiling": 0.23547670735938306,
+      "all_single_clock_perfect_scenarios_below_target": true,
+      "fraction_sections_at_or_above_target": 0.158,
+      "fraction_negative_sections": 0.209,
+      "clocks": [
+        {
+          "clock": "09:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.027830812816239798,
+          "rank_ic_mean": 0.04221781254604821,
+          "gap_to_target": 0.2221691871837602,
+          "overall_if_only_this_clock_reaches_target": 0.14172670735938306,
+          "overall_if_only_this_clock_is_perfect": 0.23547670735938306,
+          "required_this_clock_ic_if_others_fixed": 1.1161863411249355,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.28173845531196573
+        },
+        {
+          "clock": "10:00",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.10480628607225476,
+          "rank_ic_mean": 0.11044996413867661,
+          "gap_to_target": 0.14519371392774524,
+          "overall_if_only_this_clock_reaches_target": 0.13210477320238118,
+          "overall_if_only_this_clock_is_perfect": 0.22585477320238118,
+          "required_this_clock_ic_if_others_fixed": 1.1931618143809506,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.270741959132535
+        },
+        {
+          "clock": "10:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.10477874053302161,
+          "rank_ic_mean": 0.10085964278173014,
+          "gap_to_target": 0.1452212594669784,
+          "overall_if_only_this_clock_reaches_target": 0.13210821639478532,
+          "overall_if_only_this_clock_is_perfect": 0.22585821639478532,
+          "required_this_clock_ic_if_others_fixed": 1.1931342688417175,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.27074589420956835
+        },
+        {
+          "clock": "11:00",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.09275885350249335,
+          "rank_ic_mean": 0.09315281187796051,
+          "gap_to_target": 0.15724114649750665,
+          "overall_if_only_this_clock_reaches_target": 0.13361070227360136,
+          "overall_if_only_this_clock_is_perfect": 0.22736070227360136,
+          "required_this_clock_ic_if_others_fixed": 1.181114381811189,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2724630209282152
+        },
+        {
+          "clock": "11:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.14175511973117833,
+          "rank_ic_mean": 0.13972292626840613,
+          "gap_to_target": 0.10824488026882167,
+          "overall_if_only_this_clock_reaches_target": 0.12748616899501575,
+          "overall_if_only_this_clock_is_perfect": 0.22123616899501575,
+          "required_this_clock_ic_if_others_fixed": 1.230110648039874,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2654635543241174
+        },
+        {
+          "clock": "13:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.13190723996055803,
+          "rank_ic_mean": 0.11131979758576914,
+          "gap_to_target": 0.11809276003944197,
+          "overall_if_only_this_clock_reaches_target": 0.12871715396634328,
+          "overall_if_only_this_clock_is_perfect": 0.22246715396634328,
+          "required_this_clock_ic_if_others_fixed": 1.2202627682692537,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.26687039429134884
+        },
+        {
+          "clock": "14:00",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.09218729569606823,
+          "rank_ic_mean": 0.0808423769185939,
+          "gap_to_target": 0.15781270430393177,
+          "overall_if_only_this_clock_reaches_target": 0.1336821469994045,
+          "overall_if_only_this_clock_is_perfect": 0.2274321469994045,
+          "required_this_clock_ic_if_others_fixed": 1.180542824004764,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2725446720434188
+        },
+        {
+          "clock": "14:30",
+          "sections": 125,
+          "weight": 0.125,
+          "ic_mean": 0.2156201233794901,
+          "rank_ic_mean": 0.15285546114807513,
+          "gap_to_target": 0.0343798766205099,
+          "overall_if_only_this_clock_reaches_target": 0.11825304353897677,
+          "overall_if_only_this_clock_is_perfect": 0.21200304353897675,
+          "required_this_clock_ic_if_others_fixed": 1.303975651688186,
+          "required_other_clocks_ic_if_this_clock_fixed": 0.2549114109457871
+        }
+      ],
+      "monthly": [
+        {
+          "month": "2024-07",
+          "sections": 184,
+          "ic_mean": 0.10717319112191329,
+          "rank_ic_mean": 0.09570258105321353
+        },
+        {
+          "month": "2024-08",
+          "sections": 176,
+          "ic_mean": 0.11036644290924759,
+          "rank_ic_mean": 0.09190731056966399
+        },
+        {
+          "month": "2024-09",
+          "sections": 152,
+          "ic_mean": 0.09944254398436614,
+          "rank_ic_mean": 0.07587046157562967
+        },
+        {
+          "month": "2024-10",
+          "sections": 144,
+          "ic_mean": 0.09015128112221608,
+          "rank_ic_mean": 0.09110671115374099
+        },
+        {
+          "month": "2024-11",
+          "sections": 168,
+          "ic_mean": 0.1406886731838465,
+          "rank_ic_mean": 0.13045504829830482
+        },
+        {
+          "month": "2024-12",
+          "sections": 176,
+          "ic_mean": 0.13112755443661603,
+          "rank_ic_mean": 0.13394609604747554
+        }
+      ],
+      "source_hashes": {
+        "metrics.json": "b1cef63bca7851afb00d441b9a789e9434690f1fdd9107f25eb91bb7796d9a92",
+        "cross-sections.parquet": "25579b8273b92edf3c0b02259e74175215ea098b54a811d19f958846b6749a5f"
+      }
+    }
+  ],
+  "references": [],
+  "model_training_performed": false,
+  "formal_metrics_modified": false,
+  "raw_market_data_read": false,
+  "label_table_read": false,
+  "exposure_read": false
+}

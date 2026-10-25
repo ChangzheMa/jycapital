@@ -18,11 +18,11 @@
     "research_note": "docs/ic-target-research-20261023.md",
     "reporting": "每次完整结果报告双集距目标的绝对差距、相对最优变化、时点及月份表现；小幅晋级和材料交付不代表目标完成。",
     "continuous_research_stop_condition": "用户叫停",
-    "latest_best_run_id": "v2801-neural-tree-s42",
-    "latest_evidence": "experiments/v2801-ic-target-gap.json",
-    "validation_gap": 0.14165073600985742,
-    "test_gap": 0.12944788585383668,
-    "latest_best_scope": "原始旧快照；2026-10-24新快照标签已变化，新数据成绩须另建可比组。"
+    "latest_best_run_id": "v3201-field-grid-s42",
+    "latest_evidence": "experiments/v3201-ic-target-gap.json",
+    "validation_gap": 0.14153304960607052,
+    "test_gap": 0.1305845001033311,
+    "latest_best_scope": "jycapital-raw-20261024新快照；旧模型保持原结果，不跨快照作分差。"
   },
   "solution_root": "solutions",
   "candidate_manifest": "experiment.json",
@@ -99,8 +99,8 @@
     "next_design_priority": "major_gains_toward_both_split_ic_0_25",
     "avoid_automatic_refinement_of_current_family": true,
     "required_before_new_family": "先提出当前方法可能遗漏的机制，核查输入与评估证据及高质量论文，再用一个有区分度的方案检验；阴性结果不自动排除整个方向。",
-    "in_progress_delivery": "旧快照结果已归档；v3001使用修订数据在训，v3101分阶段表征预训练和v3201持续字段节点均已ready，正式训练由监控session串行执行。",
-    "active_direction_note": "docs/field-grid-research-20261024.md",
+    "in_progress_delivery": "v3001/v3101/v3201均已完成新快照双集评估；v3201为当前新组最优，fast材料已生成并核验。v3301仅为用户本次要求的分时点设计与原型，未发布ready。",
+    "active_direction_note": "docs/clock-specialization-research-20261025.md",
     "decision_diagnostic_note": "docs/portfolio-diagnostics.md",
     "evidence_update": "v2401验证/测试IC为0.107778/0.119352，较父版v1601提高0.002252/0.003092，十二个月IC同向提高；验证Rank IC IR下降，八轮训练及验证156.39分钟、增加30.98%。此前v1701至v2301均未超过v1601；不因本次小幅晋级停止探索遗漏的大方向。 v2501完整双集IC为0.106972/0.118160，较父版提高0.001446/0.001901但未超过v2401；后续查询训练Huber优于零基准1.281%，八轮训练及验证149.25分钟，不自动扫描辅助权重。 v2601双集IC为0.102929/0.113144，低于父v1601与v2401，相对最优十二个月IC全降，九轮训练及验证164.22分钟；不扩展该市场模块。 v2801双集IC为0.108349/0.120552，较v2401提高0.000571/0.001200，Rank IC下降0.001605/0.001643；选中25棵树，新增运行墙钟15.45分钟，不把微小晋级当作0.25目标已实现。 v2701双集IC为0.107730/0.119822，较父v2401变化-0.000048/+0.000471，验证IC未晋级，八轮训练及验证175.37分钟；新增字段与投影组合不自动继续微调。 v2901旧快照双集IC为0.107754/0.119117，均略低于父v2401；八轮训练及验证249.82分钟，不扩展数量尺度投影。",
     "next_input_direction_note": "docs/raw-input-research-20261022.md",
@@ -122,7 +122,8 @@
     "latest_contribution_diagnostic": "docs/prediction-update-research-20261024.md",
     "latest_contribution_conclusion": "v1601和v2401的四档标签幅度IC/Rank IC贡献均提高；v2801双集净IC增量来自最外侧约1%抵消其余约99%贡献下降，预测相关性仍约0.99。不改变原晋级准则，不自动扩展树参数；这些贡献分解仅描述旧快照冻结结果，新快照另行评价。",
     "next_representation_pretraining_note": "docs/representation-pretraining-research-20261024.md",
-    "next_field_grid_note": "docs/field-grid-research-20261024.md"
+    "next_field_grid_note": "docs/field-grid-research-20261024.md",
+    "next_clock_specialization_note": "docs/clock-specialization-research-20261025.md"
   },
   "legacy_runs": [
     {
@@ -205,5 +206,11 @@
       "holdout_run": "E:\\src\\jycapital\\outputs\\preprocessing\\data-20261024\\holdout"
     },
     "controller_source_sha256": "751214715b15d30f031589ea2081de60368ac6ba90d713b1093d0a670bb28119"
+  },
+  "research_session_state": {
+    "status": "paused",
+    "basis": "用户已暂停并清除持续目标；2026-10-25只授权平台查分、候选素材及分时点方案设计。",
+    "automatic_monitoring_enabled": false,
+    "new_candidate_publication_this_request": false
   }
 }

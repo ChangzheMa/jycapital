@@ -1,0 +1,447 @@
+{
+  "source": "bigquant_submissions_api",
+  "endpoint": "https://bigquant.com/bigapis/alphathon/v1/submissions",
+  "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+  "queried_at": "2026-10-25T11:47:18+08:00",
+  "pages_fetched": 1,
+  "total_pages": 1,
+  "total": 11,
+  "returned": 11,
+  "submissions": [
+    {
+      "id": "f26e0b32-341e-4deb-b594-4f795110d551",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-24T10:51:45.631615+08:00",
+      "updated_at": "2026-10-25T11:44:42.491542+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v2801-submission.ipynb",
+          "size": 8777
+        },
+        {
+          "name": "v2801-model.json",
+          "size": 48040217
+        }
+      ],
+      "public_score": {
+        "raw": "0.44651",
+        "value": 0.44651,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.60134363759305,
+        "ic_mean": 0.09346784588404644,
+        "turnover": 0.6418312757201646,
+        "sharpe_ratio": 45.59340980973736,
+        "stress_stability": 1.2844565800171006
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "1cb5338a-6bc1-4ae8-8a96-8e87c523568b",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-23T23:46:43.835702+08:00",
+      "updated_at": "2026-10-25T11:44:42.216476+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v2401-submission.ipynb",
+          "size": 7175
+        },
+        {
+          "name": "v2401-model.json",
+          "size": 45113148
+        }
+      ],
+      "public_score": {
+        "raw": "0.45659",
+        "value": 0.45659,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.6035391910170451,
+        "ic_mean": 0.09454151622151911,
+        "turnover": 0.6414638447971782,
+        "sharpe_ratio": 45.892870394285715,
+        "stress_stability": 1.2973153782912576
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "4259760b-adc9-4eda-a8f0-2eb476eec451",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-23T01:01:22.315043+08:00",
+      "updated_at": "2026-10-25T11:44:40.496643+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1601-submission.ipynb",
+          "size": 10164
+        },
+        {
+          "name": "v1601-model.json",
+          "size": 43403545
+        }
+      ],
+      "public_score": {
+        "raw": "0.44109",
+        "value": 0.44109,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.6006950397786148,
+        "ic_mean": 0.09233474862112434,
+        "turnover": 0.6476690182245738,
+        "sharpe_ratio": 45.82229819691119,
+        "stress_stability": 1.2962970214861709
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "8b73b3f9-c401-44a7-a18e-fb7ac03715bf",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T12:34:55.065316+08:00",
+      "updated_at": "2026-10-25T11:44:39.755886+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1401-submission.ipynb",
+          "size": 27976
+        },
+        {
+          "name": "v1002-model.json",
+          "size": 41994269
+        },
+        {
+          "name": "v1101-model.json",
+          "size": 40277558
+        }
+      ],
+      "public_score": {
+        "raw": "0.36357",
+        "value": 0.36357,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4991618159279994,
+        "ic_mean": 0.0824932689478555,
+        "turnover": 0.6361699000587889,
+        "sharpe_ratio": 43.593698442450346,
+        "stress_stability": 1.2140412493075203
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "b6aec48e-52bf-4ff6-9e6c-f4301c563a15",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T10:17:35.672501+08:00",
+      "updated_at": "2026-10-25T11:44:39.614406+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1002-submission.ipynb",
+          "size": 12408
+        },
+        {
+          "name": "v1002-model.json",
+          "size": 41994269
+        }
+      ],
+      "public_score": {
+        "raw": "0.34031",
+        "value": 0.34031,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4857763913116997,
+        "ic_mean": 0.08051151475050629,
+        "turnover": 0.642336860670194,
+        "sharpe_ratio": 42.95033336459083,
+        "stress_stability": 1.202424764819705
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "90cfdcf4-1f4d-44da-b743-5cef874ab61f",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T09:52:39.325259+08:00",
+      "updated_at": "2026-10-25T11:44:39.569748+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1101-submission.ipynb",
+          "size": 9156
+        },
+        {
+          "name": "v1101-model.json",
+          "size": 40277558
+        }
+      ],
+      "public_score": {
+        "raw": "0.35659",
+        "value": 0.35659,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4756114818219903,
+        "ic_mean": 0.07967013169636308,
+        "turnover": 0.6338007054673721,
+        "sharpe_ratio": 44.60516037050449,
+        "stress_stability": 1.195819203214037
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "ac65d739-6835-41d0-b6db-b9f494c5a053",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T09:52:07.533859+08:00",
+      "updated_at": "2026-10-25T11:44:39.538183+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v1001-submission.ipynb",
+          "size": 9283
+        },
+        {
+          "name": "v1001-model.json",
+          "size": 42023924
+        }
+      ],
+      "public_score": {
+        "raw": "0.35233",
+        "value": 0.35233,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.477602208507934,
+        "ic_mean": 0.07917551518219312,
+        "turnover": 0.6186507936507936,
+        "sharpe_ratio": 41.6713433761114,
+        "stress_stability": 1.2235464476800677
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "04b53a49-7b19-472b-945a-63f942501e35",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-22T09:51:31.876399+08:00",
+      "updated_at": "2026-10-25T11:44:39.516287+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v901-model.json",
+          "size": 30498868
+        },
+        {
+          "name": "v901-submission.ipynb",
+          "size": 8875
+        }
+      ],
+      "public_score": {
+        "raw": "0.35426",
+        "value": 0.35426,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4666549070255863,
+        "ic_mean": 0.07753456321648339,
+        "turnover": 0.6337889476778364,
+        "sharpe_ratio": 44.83595749352717,
+        "stress_stability": 1.20232354943687
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "a2227dba-066c-4f0b-bb0e-bf4e6a74eb37",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-21T17:28:44.541636+08:00",
+      "updated_at": "2026-10-25T11:44:39.313672+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v501-model.json",
+          "size": 15281251
+        },
+        {
+          "name": "v501-submission.ipynb",
+          "size": 8853
+        }
+      ],
+      "public_score": {
+        "raw": "0.29341",
+        "value": 0.29341,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.3694095873619063,
+        "ic_mean": 0.07268578557137917,
+        "turnover": 0.617254556143445,
+        "sharpe_ratio": 40.31443546573449,
+        "stress_stability": 1.1159147041544135
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "69ba04f6-45e2-41cb-bdc5-fe393a82058f",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-21T14:43:38.387021+08:00",
+      "updated_at": "2026-10-25T11:44:39.154957+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v303-model.json",
+          "size": 15278129
+        },
+        {
+          "name": "v303-submission.ipynb",
+          "size": 8509
+        }
+      ],
+      "public_score": {
+        "raw": "0.28295",
+        "value": 0.28295,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.3741551686338396,
+        "ic_mean": 0.07240311400526576,
+        "turnover": 0.6367225161669606,
+        "sharpe_ratio": 41.22305995978623,
+        "stress_stability": 1.1142953494962773
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    },
+    {
+      "id": "c4ad5583-6c12-4296-87db-ab89672bebea",
+      "competition_id": "45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca",
+      "created_at": "2026-10-19T16:09:07.239855+08:00",
+      "updated_at": "2026-10-25T11:44:37.701055+08:00",
+      "selected_for_private": false,
+      "files": [
+        {
+          "name": "v7e-submission.ipynb",
+          "size": 7342
+        },
+        {
+          "name": "v7e-model.json",
+          "size": 44707826
+        }
+      ],
+      "public_score": {
+        "raw": "0.29922",
+        "value": 0.29922,
+        "state": "available"
+      },
+      "public_score_data": {
+        "ic_ir": 1.4322315423908765,
+        "ic_mean": 0.07216794075826705,
+        "turnover": 0.6291563786008232,
+        "sharpe_ratio": 36.274662354635325,
+        "stress_stability": 1.217428697242544
+      },
+      "public_unrecognized_metric_fields": [],
+      "public_invalid_metric_fields": [],
+      "private_score": {
+        "raw": null,
+        "value": null,
+        "state": "missing"
+      },
+      "private_score_data": {},
+      "private_unrecognized_metric_fields": [],
+      "private_invalid_metric_fields": []
+    }
+  ],
+  "local_binding_status": "filename_observation_only_no_uploaded_content_hash",
+  "local_indices_updated": false
+}

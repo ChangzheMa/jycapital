@@ -1,0 +1,393 @@
+{
+  "computed_at": "2026-10-25T11:56:26+08:00",
+  "script_sha256": "be1be27980c747ef5b7b208df3359b7ac08cc8c9730822d6f25ccad9202ef703",
+  "baseline": "v3201-field-grid-s42",
+  "source_hashes": {
+    "validation": {
+      "v3001-associative-state-s42": "31586d1cf5598c07b24f5e7ade0540d4328e182c617339c8ff3a0986212183a1",
+      "v3101-representation-pretrain-s42": "f317f36b82dd01322db79230633d16daccc96e4338e5c0c4bfc18dac43d12cbe",
+      "v3201-field-grid-s42": "c73051101eb63eda5188a92b1d24b6a46b6cbd7e1e0ae2da41e27825091afc69"
+    },
+    "test": {
+      "v3001-associative-state-s42": "25579b8273b92edf3c0b02259e74175215ea098b54a811d19f958846b6749a5f",
+      "v3101-representation-pretrain-s42": "fa842020838e27a39c31bf9b7d1abbb222976db876080c2310fbdea9c718b51c",
+      "v3201-field-grid-s42": "f7c9b9efb056a44e63c37d59333255934dfd4f5a082015174cda0891809aed0c"
+    }
+  },
+  "choices_from_validation_only": {
+    "09:30": "v3201-field-grid-s42",
+    "10:00": "v3101-representation-pretrain-s42",
+    "10:30": "v3101-representation-pretrain-s42",
+    "11:00": "v3101-representation-pretrain-s42",
+    "11:30": "v3201-field-grid-s42",
+    "13:30": "v3001-associative-state-s42",
+    "14:00": "v3201-field-grid-s42",
+    "14:30": "v3201-field-grid-s42"
+  },
+  "results": {
+    "validation": {
+      "baseline": {
+        "ic_mean": 0.10846695039392948,
+        "rank_ic_mean": 0.10515513410572692,
+        "ic_ir": 0.8450274486736907,
+        "rank_ic_ir": 0.887554083336866
+      },
+      "validation_selected_route": {
+        "ic_mean": 0.11040479381975472,
+        "rank_ic_mean": 0.1059004819371993,
+        "ic_ir": 0.8593461362420606,
+        "rank_ic_ir": 0.8966363602216215
+      },
+      "route_minus_baseline": {
+        "ic_mean": 0.0019378434258252447,
+        "rank_ic_mean": 0.0007453478314723705,
+        "ic_ir": 0.014318687568369848,
+        "rank_ic_ir": 0.009082276884755491
+      },
+      "clock_metrics": {
+        "v3001-associative-state-s42": {
+          "09:30": {
+            "ic": 0.03130307143477168,
+            "rank_ic": 0.04924202103534657
+          },
+          "10:00": {
+            "ic": 0.1231181230649209,
+            "rank_ic": 0.12281301397198228
+          },
+          "10:30": {
+            "ic": 0.10005493867336704,
+            "rank_ic": 0.09966771539554732
+          },
+          "11:00": {
+            "ic": 0.08905588290597947,
+            "rank_ic": 0.09475478022702127
+          },
+          "11:30": {
+            "ic": 0.11830745324915028,
+            "rank_ic": 0.10312972029799969
+          },
+          "13:30": {
+            "ic": 0.10793983359215915,
+            "rank_ic": 0.10652142842598629
+          },
+          "14:00": {
+            "ic": 0.06626505297392633,
+            "rank_ic": 0.0722307902004641
+          },
+          "14:30": {
+            "ic": 0.20811583583430712,
+            "rank_ic": 0.17552181001140305
+          }
+        },
+        "v3101-representation-pretrain-s42": {
+          "09:30": {
+            "ic": 0.026245335682966327,
+            "rank_ic": 0.0417334037038066
+          },
+          "10:00": {
+            "ic": 0.12668298913331738,
+            "rank_ic": 0.12549513101345394
+          },
+          "10:30": {
+            "ic": 0.10429895019268173,
+            "rank_ic": 0.10038560335409263
+          },
+          "11:00": {
+            "ic": 0.09294842159150614,
+            "rank_ic": 0.09826458499375659
+          },
+          "11:30": {
+            "ic": 0.11361291964040121,
+            "rank_ic": 0.09662678517230189
+          },
+          "13:30": {
+            "ic": 0.10680899691120903,
+            "rank_ic": 0.10404733741798776
+          },
+          "14:00": {
+            "ic": 0.07331571633439903,
+            "rank_ic": 0.07782771399215517
+          },
+          "14:30": {
+            "ic": 0.21572001370709126,
+            "rank_ic": 0.1808439727581342
+          }
+        },
+        "v3201-field-grid-s42": {
+          "09:30": {
+            "ic": 0.03952588143824187,
+            "rank_ic": 0.04613985402531861
+          },
+          "10:00": {
+            "ic": 0.12628312609557754,
+            "rank_ic": 0.12722677470946203
+          },
+          "10:30": {
+            "ic": 0.09862947107100067,
+            "rank_ic": 0.09716759109113697
+          },
+          "11:00": {
+            "ic": 0.08811369166437195,
+            "rank_ic": 0.09697528302978145
+          },
+          "11:30": {
+            "ic": 0.11904637459920277,
+            "rank_ic": 0.10881829279936306
+          },
+          "13:30": {
+            "ic": 0.10334115827211224,
+            "rank_ic": 0.10333431630512994
+          },
+          "14:00": {
+            "ic": 0.07402920515157699,
+            "rank_ic": 0.07721569172180155
+          },
+          "14:30": {
+            "ic": 0.21876669485935168,
+            "rank_ic": 0.18436326916382173
+          }
+        }
+      }
+    },
+    "test": {
+      "baseline": {
+        "ic_mean": 0.1194154998966689,
+        "rank_ic_mean": 0.1079696295874085,
+        "ic_ir": 0.8495847245497764,
+        "rank_ic_ir": 0.8389296698701466
+      },
+      "validation_selected_route": {
+        "ic_mean": 0.11977013377815275,
+        "rank_ic_mean": 0.10709851034110503,
+        "ic_ir": 0.8574004379000131,
+        "rank_ic_ir": 0.8384115097847438
+      },
+      "route_minus_baseline": {
+        "ic_mean": 0.0003546338814838512,
+        "rank_ic_mean": -0.0008711192463034673,
+        "ic_ir": 0.007815713350236675,
+        "rank_ic_ir": -0.0005181600854028412
+      },
+      "clock_metrics": {
+        "v3001-associative-state-s42": {
+          "09:30": {
+            "ic": 0.027830812816239798,
+            "rank_ic": 0.04221781254604821
+          },
+          "10:00": {
+            "ic": 0.10480628607225476,
+            "rank_ic": 0.11044996413867661
+          },
+          "10:30": {
+            "ic": 0.10477874053302161,
+            "rank_ic": 0.10085964278173014
+          },
+          "11:00": {
+            "ic": 0.09275885350249335,
+            "rank_ic": 0.09315281187796051
+          },
+          "11:30": {
+            "ic": 0.14175511973117833,
+            "rank_ic": 0.13972292626840613
+          },
+          "13:30": {
+            "ic": 0.13190723996055803,
+            "rank_ic": 0.11131979758576914
+          },
+          "14:00": {
+            "ic": 0.09218729569606823,
+            "rank_ic": 0.0808423769185939
+          },
+          "14:30": {
+            "ic": 0.2156201233794901,
+            "rank_ic": 0.15285546114807513
+          }
+        },
+        "v3101-representation-pretrain-s42": {
+          "09:30": {
+            "ic": 0.030574591735688973,
+            "rank_ic": 0.044754643574056674
+          },
+          "10:00": {
+            "ic": 0.10611377218076469,
+            "rank_ic": 0.10994008472729246
+          },
+          "10:30": {
+            "ic": 0.11633996198342138,
+            "rank_ic": 0.10991600604551212
+          },
+          "11:00": {
+            "ic": 0.0998678858791746,
+            "rank_ic": 0.09620753240499282
+          },
+          "11:30": {
+            "ic": 0.14755015339925243,
+            "rank_ic": 0.1418421228625649
+          },
+          "13:30": {
+            "ic": 0.13526524578397434,
+            "rank_ic": 0.11724421867909385
+          },
+          "14:00": {
+            "ic": 0.09884645992305811,
+            "rank_ic": 0.08461742901418422
+          },
+          "14:30": {
+            "ic": 0.21436355356134007,
+            "rank_ic": 0.15381115794297553
+          }
+        },
+        "v3201-field-grid-s42": {
+          "09:30": {
+            "ic": 0.03263895450964881,
+            "rank_ic": 0.03544068375449858
+          },
+          "10:00": {
+            "ic": 0.1039749820517445,
+            "rank_ic": 0.10748270418263116
+          },
+          "10:30": {
+            "ic": 0.11209377389377372,
+            "rank_ic": 0.10963261879141026
+          },
+          "11:00": {
+            "ic": 0.10447061668675416,
+            "rank_ic": 0.09980728634761452
+          },
+          "11:30": {
+            "ic": 0.15042352391172878,
+            "rank_ic": 0.1455361573748016
+          },
+          "13:30": {
+            "ic": 0.13085241631977548,
+            "rank_ic": 0.11742976541233835
+          },
+          "14:00": {
+            "ic": 0.10161601804078194,
+            "rank_ic": 0.0870786730156938
+          },
+          "14:30": {
+            "ic": 0.21925371375914388,
+            "rank_ic": 0.16134914782027973
+          }
+        }
+      },
+      "conditional_ic_interval": {
+        "block_trading_days": 5,
+        "repetitions": 2000,
+        "seed": 42,
+        "mean_delta": 0.00035463388148385317,
+        "percentile_95_interval": [
+          -0.0009117097498747301,
+          0.0017751076575903866
+        ],
+        "scope": "固定已选权重和验证时点规则的条件区间，未校正历史模型搜索及选择偏差。"
+      }
+    }
+  },
+  "formal_model_created": false,
+  "model_training_performed": false,
+  "raw_data_or_label_table_read": false,
+  "predictions_modified": false,
+  "limitations": [
+    "权重已按整个验证期选择，留月分析不是完全独立的外层验证。",
+    "完整验证选择结果有选择偏差，测试只套用固定规则；研究已观察测试期。",
+    "现有模型按时点切换的互补性不证明独立训练八个网络一定有效。",
+    "这只是逐截面分解，不是正式组合结果或平台提交；未评价切换后的换手。"
+  ],
+  "leave_one_validation_month_out": {
+    "months": [
+      {
+        "held_month": "2024-01",
+        "choices_from_other_validation_months": {
+          "09:30": "v3201-field-grid-s42",
+          "10:00": "v3101-representation-pretrain-s42",
+          "10:30": "v3101-representation-pretrain-s42",
+          "11:00": "v3101-representation-pretrain-s42",
+          "11:30": "v3001-associative-state-s42",
+          "13:30": "v3001-associative-state-s42",
+          "14:00": "v3201-field-grid-s42",
+          "14:30": "v3201-field-grid-s42"
+        },
+        "held_ic_delta": -0.0014995212262043367
+      },
+      {
+        "held_month": "2024-02",
+        "choices_from_other_validation_months": {
+          "09:30": "v3201-field-grid-s42",
+          "10:00": "v3201-field-grid-s42",
+          "10:30": "v3101-representation-pretrain-s42",
+          "11:00": "v3101-representation-pretrain-s42",
+          "11:30": "v3001-associative-state-s42",
+          "13:30": "v3101-representation-pretrain-s42",
+          "14:00": "v3201-field-grid-s42",
+          "14:30": "v3201-field-grid-s42"
+        },
+        "held_ic_delta": 0.005294893665627201
+      },
+      {
+        "held_month": "2024-03",
+        "choices_from_other_validation_months": {
+          "09:30": "v3201-field-grid-s42",
+          "10:00": "v3101-representation-pretrain-s42",
+          "10:30": "v3101-representation-pretrain-s42",
+          "11:00": "v3101-representation-pretrain-s42",
+          "11:30": "v3201-field-grid-s42",
+          "13:30": "v3001-associative-state-s42",
+          "14:00": "v3201-field-grid-s42",
+          "14:30": "v3201-field-grid-s42"
+        },
+        "held_ic_delta": 0.0007712856596804596
+      },
+      {
+        "held_month": "2024-04",
+        "choices_from_other_validation_months": {
+          "09:30": "v3201-field-grid-s42",
+          "10:00": "v3201-field-grid-s42",
+          "10:30": "v3101-representation-pretrain-s42",
+          "11:00": "v3101-representation-pretrain-s42",
+          "11:30": "v3201-field-grid-s42",
+          "13:30": "v3001-associative-state-s42",
+          "14:00": "v3201-field-grid-s42",
+          "14:30": "v3201-field-grid-s42"
+        },
+        "held_ic_delta": -0.0005877213900514905
+      },
+      {
+        "held_month": "2024-05",
+        "choices_from_other_validation_months": {
+          "09:30": "v3201-field-grid-s42",
+          "10:00": "v3101-representation-pretrain-s42",
+          "10:30": "v3101-representation-pretrain-s42",
+          "11:00": "v3101-representation-pretrain-s42",
+          "11:30": "v3201-field-grid-s42",
+          "13:30": "v3001-associative-state-s42",
+          "14:00": "v3101-representation-pretrain-s42",
+          "14:30": "v3201-field-grid-s42"
+        },
+        "held_ic_delta": 0.0007438753450756536
+      },
+      {
+        "held_month": "2024-06",
+        "choices_from_other_validation_months": {
+          "09:30": "v3201-field-grid-s42",
+          "10:00": "v3101-representation-pretrain-s42",
+          "10:30": "v3101-representation-pretrain-s42",
+          "11:00": "v3101-representation-pretrain-s42",
+          "11:30": "v3201-field-grid-s42",
+          "13:30": "v3001-associative-state-s42",
+          "14:00": "v3101-representation-pretrain-s42",
+          "14:30": "v3201-field-grid-s42"
+        },
+        "held_ic_delta": 0.00114104876375494
+      }
+    ],
+    "summary": {
+      "ic_mean": 0.1092142490475451,
+      "rank_ic_mean": 0.10484822110647779,
+      "ic_ir": 0.8470383635529326,
+      "rank_ic_ir": 0.8824055412217544
+    },
+    "improved_months": 4
+  }
+}

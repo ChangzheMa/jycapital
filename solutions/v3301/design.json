@@ -1,0 +1,120 @@
+{
+  "solution_id": "v3301",
+  "series": "v330x",
+  "status": "design_only_not_registered_for_training",
+  "created_at": "2026-10-25",
+  "scope": "用户本次要求分时点可行性分析和下一版设计；未发布ready，未启动正式训练。",
+  "proposed_run_id": "v3301-clock-specialists-s42",
+  "parent_run_id": "v3201-field-grid-s42",
+  "parent_model_sha256": "a30086445b8e2b88e392c03a0bb208e4e0b2e2e8164d8096e00263b697363cff",
+  "parent_config_sha256": "f1b906ea6b10b299e065597a253b8bba65610563d502d5a9adc1d77c7da5970c",
+  "data_snapshot_id": "jycapital-raw-20261024",
+  "seed": 42,
+  "clocks": [
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "13:30",
+    "14:00",
+    "14:30"
+  ],
+  "architecture": {
+    "frozen_shared_modules": [
+      "encoders",
+      "price_memories",
+      "frequency_embedding",
+      "frequency_fusion",
+      "shared"
+    ],
+    "feature_dim": 384,
+    "private_modules_per_clock": [
+      "experts",
+      "router"
+    ],
+    "private_initialization": "exact_copy_of_selected_parent_ema_readout",
+    "shared_parameters": 2129356,
+    "parameters_per_clock": 223052,
+    "private_parameters_total": 1784416,
+    "inference_parameters_total": 3913772,
+    "trainable_parameters_per_serial_stage": 223052
+  },
+  "data": {
+    "target": "provided_vwap_return_raw_zscore_and_rank_zscore",
+    "new_label_formula": false,
+    "exposure_allowed": false,
+    "features": "frozen_parent_shared_activation_before_experts_and_router",
+    "feature_precision": "float32",
+    "fit_split": "train_2020_2023",
+    "feature_cache_estimate_bytes": 14893056000,
+    "feature_cache_estimate_excludes": "键、标签、元数据及缓存构建临时文件",
+    "memory_reserve_gib": 2.0
+  },
+  "training": {
+    "formal_attempts": 1,
+    "serial_clock_stages": 8,
+    "epochs_maximum_per_clock": 100,
+    "batch_size_per_clock": 512,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "objective": "time_weighted_huber_rank_balanced_experts",
+    "primary_huber_delta": 2.0,
+    "auxiliary_rank_weight": 0.2,
+    "expert_loss_weight": 0.1,
+    "router_loss_weight": 0.01,
+    "temporal_weighting": {
+      "mode": "training_calendar_age",
+      "half_life_days": 730.0,
+      "floor": 0.25,
+      "anchor": "exclusive_training_stop"
+    },
+    "early_stopping": {
+      "mode": "best_epoch_fraction",
+      "fraction": 0.6,
+      "minimum": 4,
+      "maximum": 12,
+      "rounding": "ceil",
+      "improvement": "strict"
+    },
+    "ema": {
+      "base_decay": 0.9999,
+      "reference_clock_samples": 64,
+      "step_decay": "base_decay ** (valid_clock_samples_in_step / 64)",
+      "warmup_epochs_per_clock": 1
+    },
+    "initial_validation_candidate": "selected_parent_readout_for_same_clock",
+    "selection": "independent_validation_ic_per_clock_only",
+    "test": "evaluate_combined_eight_selected_heads_once_after_all_selections_freeze"
+  },
+  "inference": {
+    "execution": "shared_frozen_stock_day_encoder_then_exact_clock_head",
+    "unknown_clock": "error",
+    "parameter_shards_allowed": true,
+    "maximum_parameter_file_bytes": 50000000,
+    "weights_updated_at_inference": false
+  },
+  "resume_contract": [
+    "frozen_parent_hash",
+    "data_and_feature_cache_identity",
+    "active_clock",
+    "epoch_and_sample_cursor",
+    "active_optimizer_and_ema",
+    "torch_numpy_rng",
+    "per_clock_early_stopping",
+    "completed_clock_checkpoints"
+  ],
+  "prototype_verified": [
+    "eight_readouts_initially_match_parent_outputs",
+    "distinct_parameter_storage",
+    "single_clock_gradients_and_update_leave_other_readouts_unchanged"
+  ],
+  "not_implemented": [
+    "feature_cache_builder",
+    "serial_training_and_per_clock_selection_entrypoint",
+    "combined_selection_assessment_adapter",
+    "full_platform_export_and_resume_integration"
+  ],
+  "research_basis": "docs/clock-specialization-research-20261025.md"
+}

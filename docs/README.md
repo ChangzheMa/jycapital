@@ -2,6 +2,22 @@
 
 本仓库保存 BigQuant 2026 年进益资本杯端到端赛道的规则、数据说明、模型方案和冻结结果。比赛 ID：`45b41c7a-0ac8-42e9-9fe3-0c33dcfb9bca`。
 
+## 新数据快照的当前结果
+
+2026-10-25完成归档：新快照`jycapital-raw-20261024`已有3版完整结果，连同旧快照55版共58版。三版均按验证IC选中第4轮EMA、完成8轮，双集覆盖和最低截面覆盖均100%，未定义IC／Rank IC截面为0。
+
+| 模型 | 验证IC | 验证Rank IC | 测试IC | 测试Rank IC | 训练及验证成本 | 当前决定 |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| [v3001](../solutions/v3001/README.md#冻结结果) | 0.105520 | 0.102985 | 0.113956 | 0.103928 | 534.73分钟 | 新数据组首个基线，不导出 |
+| [v3101](../solutions/v3101/README.md#冻结结果) | 0.107454 | 0.103153 | 0.118615 | 0.107292 | 226.31分钟，含固定预训练62.43分钟 | 超过首个基线，但随后被v3201超过，保留对照 |
+| [v3201](../solutions/v3201/README.md#冻结结果与平台材料) | **0.108467** | **0.105155** | **0.119415** | **0.107970** | 224.92分钟 | 当前新快照最优，已准备fast材料 |
+
+这些数值不能与下方旧快照直接作差。v3201相对v3101双集IC增加0.001013／0.000800，IC IR及Rank IC IR也提高，但本地换手代理更高；三者的结构和训练机制不同，不作单一模块归因。当前目标仍为双集IC0.25，尚未达到。
+
+[本次平台观察](../experiments/platform-score-observations-20261025.json)于2026-10-25 11:47（UTC+08:00）取得：按文件名对应v2401公榜0.45659、v2801为0.44651，当前11条记录私榜均为空。没有平台上传内容哈希，不按文件名回填精确run／权重或平台最优索引。
+
+下一方案已形成[v3301分时点设计稿](../solutions/v3301/README.md)，仅完成设计和读出原型，不发布ready，不自动启动训练。具体证据见[分时点研究](clock-specialization-research-20261025.md)。
+
 ## 旧数据快照的冻结模型结果
 
 本地研究采用 2020—2023 年训练、2024 年上半年验证、下半年测试；股票池和最低截面覆盖率均为 100%。截至 2026-10-24（UTC+08:00）本次归档，下表 55 个版本完成双集评估，其中 54 个完成训练、v1401 为无需新增训练的冻结组合，各模型保持原先选出的权重；完整指标和指纹见[冻结汇总](../experiments/completed-models-20261022.json)。
@@ -82,7 +98,7 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 比赛要求 | [规则与赛程](bigquant-2026-end-to-end/rules.md)、[数据与字段](bigquant-2026-end-to-end/data.md) |
 | 来源及未决问题 | [官方来源](bigquant-2026-end-to-end/sources.md)、[待确认事项](bigquant-2026-end-to-end/open-questions.md) |
 | 本地使用与数据质量 | [本地环境](bigquant-2026-end-to-end/local-download.md)、[数据一致性结论](bigquant-2026-end-to-end/data-validation.md)、[验证摘要](bigquant-2026-end-to-end/data-validation-summary.json) |
-| 原始数据更新 | [BigQuant重新下载Notebook、新旧内容比较与训练切换](data-refresh.md)；按日精确比较原值，区分编码与内容变化；新训练等待新数据接入，已完成模型保留原结果、不重跑 |
+| 原始数据更新 | [BigQuant重新下载Notebook、新旧内容比较与训练切换](data-refresh.md)；按日精确比较原值，区分编码与内容变化；后续新训练使用已验收的新快照，旧模型保留原结果、不重跑 |
 | 本次原始数据修订结果 | [行情及11:00／14:30标签变化](raw-data-revision-20261024.md)、[全量摘要](../experiments/raw-data-refresh-20261024.json)、[评估数据组登记](../experiments/data-snapshots.json)；新数据首个结果单独建立基线 |
 | 结构化比赛资料 | [配置摘录](bigquant-2026-end-to-end/competition-config.json)、[字段 JSON](bigquant-2026-end-to-end/data-schemas.json)、[字段 CSV](bigquant-2026-end-to-end/data-dictionary.csv)，共 104 条字段记录 |
 | 实验与评估 | [开发约定](development.md)、[实验技能](../.agents/skills/jycapital-experiment/SKILL.md)、[查分技能](../.agents/skills/jycapital-scores/SKILL.md) |
@@ -92,9 +108,10 @@ v1—v3 按验证 Rank IC 选模，其他训练版本按验证 IC 选模；v1401
 | 遗漏行情字段研究 | [成交笔数与日级价格参考](unused-market-fields-research-20261023.md)；固定训练样本确认三个未用数值字段，[v2701冻结结果](../solutions/v2701/README.md#冻结结果)与父版接近，未超过当前最优，不导出 |
 | 不同预测器研究 | [完整历史表示与梯度提升树](neural-tree-research-20261024.md)；[v2801](../solutions/v2801/README.md#冻结结果与平台材料)已完成，双集IC小幅晋级、Rank IC下降，fast已导出 |
 | 归一化信息研究 | [固定参数与数量绝对尺度](normalization-information-research-20261024.md)；[v2901冻结结果](../solutions/v2901/README.md#冻结结果)未超过旧快照最优，新增完整行情数组为零但训练成本增加，不导出 |
-| 关联状态研究 | [新近论文质量与矩阵记忆机制](associative-state-research-20261024.md)；[v3001](../solutions/v3001/README.md)已发布ready，替换分层GRU、保留价格输入及完整历史，323.67万参数，复用父缓存 |
-| 分阶段表征研究 | [预训练与收益微调分离](representation-pretraining-research-20261024.md)；[v3101](../solutions/v3101/README.md)保持264.17万参数推理网络，增加固定两轮训练期遮挡表征学习，正式效果待评估 |
-| 盘口时空组织研究 | [持续字段节点与论文适用边界](field-grid-research-20261024.md)；[v3201](../solutions/v3201/README.md)交替进行节点时间递推与同Bar交互，235.24万参数，保留完整历史和原监督，正式效果待评估 |
+| 关联状态研究 | [新近论文质量与矩阵记忆机制](associative-state-research-20261024.md)；[v3001](../solutions/v3001/README.md)已完成新快照首个基线，双集IC0.105520／0.113956，训练及验证534.73分钟，不继续扩容 |
+| 分阶段表征研究 | [预训练与收益微调分离](representation-pretraining-research-20261024.md)；[v3101冻结结果](../solutions/v3101/README.md#冻结结果)超过新数据首个基线，尚不能单独归因于预训练 |
+| 盘口时空组织研究 | [持续字段节点与论文适用边界](field-grid-research-20261024.md)；[v3201冻结结果及fast材料](../solutions/v3201/README.md#冻结结果与平台材料)，新快照验证IC最优 |
+| 分时点预测器设计 | [验证选时点诊断与方案取舍](clock-specialization-research-20261025.md)、[v3301设计稿](../solutions/v3301/README.md)；共享冻结编码器和八套独立预测器，未发布训练 |
 | 近期改进的增益来源 | [预测差正交分解与标签幅度贡献](prediction-update-research-20261024.md)；v1601／v2401四档贡献均改善，v2801的净IC增益来自最外侧约1%抵消其余下降，不修改冻结选模和晋级规则 |
 | 共同价格坐标结果 | [v1601 冻结结果与 fast 材料](../solutions/v1601/README.md#冻结结果与平台材料)、[比较摘要](../experiments/v1601-gru.json)；参数量与父版相同，双集 IC／Rank IC 改善，新输入缓存可复用 |
 | 长期历史状态研究 | [长期上下文依据与正式结论](long-context-research-20261022.md)、[v1701 冻结结果](../solutions/v1701/README.md#冻结结果)、[比较摘要](../experiments/v1701-gru.json)；父版 IC 小幅改善，但耗时增加且未超过 v1601，不导出 |
